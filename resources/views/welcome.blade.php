@@ -1,9 +1,3 @@
-<?php
-
-echo '<h1> Hello </h1>';
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
