@@ -18,3 +18,9 @@ Route::get('/about', 'PagesController@about');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
+Route::get('/adminauth', 'PagesController@adminauth');
+
+Route::get('/staffauth', 'PagesController@staffauth');
+
+Route::get('/studauth', 'PagesController@studauth');

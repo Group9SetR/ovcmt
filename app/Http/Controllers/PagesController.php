@@ -13,6 +13,16 @@ class PagesController extends Controller
 
     public function about()
     {
-        return view('about');
+        return view('pages.about');
+    }
+
+    public function adminauth() {
+        return view('pages.adminauth');
+    }
+    public function staffauth() {
+        return view('pages.staffauth');
+    }
+    public function studauth() {
+        return view('pages.studauth');
     }
 }

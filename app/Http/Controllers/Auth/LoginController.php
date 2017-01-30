@@ -26,13 +26,11 @@ class LoginController extends Controller
      */
     protected function redirectTo() {
         if (Auth::user()->usertype == 'student') {
-            return view('pages.studauth');
+            return '/studauth';
         } elseif (Auth::user()->usertype == 'admin') {
-            return view('pages.adminauth');
+            return '/adminauth';
         } elseif (Auth::user()->usertype == 'staff') {
-            return view('pages.staffauth');
-        } else {
-            return view('home');
+            return '/staffauth';
         }
     }
 
