@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -21,11 +22,19 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login.
-     *
-     * @var string
+     * Where to redirect users after login
      */
-    protected $redirectTo = 'pages/loginSuccess';
+    protected function redirectTo() {
+        if (Auth::user()->usertype == 'student') {
+            return view('pages.studauth');
+        } elseif (Auth::user()->usertype == 'admin') {
+            return view('pages.adminauth');
+        } elseif (Auth::user()->usertype == 'staff') {
+            return view('pages.staffauth');
+        } else {
+            return view('home');
+        }
+    }
 
     /**
      * Create a new controller instance.
