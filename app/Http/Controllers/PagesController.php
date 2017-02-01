@@ -27,4 +27,8 @@ class PagesController extends Controller
         return view('pages.studauth');
     }
 
+    public function register() {
+        return view('auth.register');
+    }
+
 }
