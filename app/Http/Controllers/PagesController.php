@@ -16,6 +16,7 @@ class PagesController extends Controller
         return view('pages.about');
     }
 
+
     public function adminauth() {
         return view('pages.adminauth');
     }
@@ -25,4 +26,5 @@ class PagesController extends Controller
     public function studauth() {
         return view('pages.studauth');
     }
+
 }

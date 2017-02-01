@@ -24,3 +24,5 @@ Route::get('/adminauth', 'PagesController@adminauth');
 Route::get('/staffauth', 'PagesController@staffauth');
 
 Route::get('/studauth', 'PagesController@studauth');
+
+Route::get('/register', 'PagesController@studauth');
