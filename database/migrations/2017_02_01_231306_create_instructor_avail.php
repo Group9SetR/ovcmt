@@ -29,6 +29,8 @@ class CreateInstructorAvail extends Migration
 
             $table->boolean('fri_am');
             $table->boolean('fri_pm');
+
+            $table->primary('instructor_id');
         });
     }
 

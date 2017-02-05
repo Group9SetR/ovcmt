@@ -17,6 +17,7 @@ class CreateCourse extends Migration
             $table->string('course_id');
             $table->string('course_name');
             $table->string('course_amen_req');
+            $table->primary('course_id');
         });
     }
 

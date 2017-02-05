@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRoom extends Migration
+class CreateWeekSchedule extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateRoom extends Migration
      */
     public function up()
     {
-        Schema::create('room', function (Blueprint $table) {
-            $table->string('room_id');
-            $table->string('room_name');
-            $table->string('room_amen');
-            $table->primary('room_id');
+        Schema::create('week_schedule', function (Blueprint $table) {
+            $table->string('week_schedule_id');
+            $table->string('day_schedule_id');
+            $table->date('date');
+            $table->primary('week_schedule_id');
         });
     }
 
@@ -28,6 +28,6 @@ class CreateRoom extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('room');
+        Schema::dropIfExists('week_schedule');
     }
 }

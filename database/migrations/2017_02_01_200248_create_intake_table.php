@@ -17,6 +17,7 @@ class CreateIntakeTable extends Migration
             $table->string('intake_id');
             $table->date('start_date');
             $table->date('end_date');
+            $table->primary('intake_id');
         });
     }
 

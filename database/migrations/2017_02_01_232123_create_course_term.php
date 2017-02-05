@@ -17,6 +17,7 @@ class CreateCourseTerm extends Migration
             $table->string('course_id');
             $table->string('intake_id');
             $table->string('instructor_id');
+            $table->primary(['course_id', 'intake_id']);
         });
     }
 
