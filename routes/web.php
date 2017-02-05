@@ -26,3 +26,7 @@ Route::get('/staffauth', 'PagesController@staffauth');
 Route::get('/studauth', 'PagesController@studauth');
 
 Route::get('/register', 'PagesController@register');
+
+Route::get('/tolschedualview', 'PagesController@tolschedualview');
+
+Route::get('/addschedual', 'PagesController@addschedual');

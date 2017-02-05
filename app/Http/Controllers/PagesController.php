@@ -26,9 +26,17 @@ class PagesController extends Controller
     public function studauth() {
         return view('pages.studauth');
     }
+    public function tolschedualview(){
+        return view('pages.tolschedualview');
+    }
+
+    public function addschedual(){
+        return view('pages.addschedual');
+    }
 
     public function register() {
         return view('auth.register');
     }
+
 
 }
