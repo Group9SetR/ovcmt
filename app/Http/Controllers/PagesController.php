@@ -34,6 +34,14 @@ class PagesController extends Controller
         return view('pages.addschedual');
     }
 
+    public function schedual_student(){
+        return view('pages.schedual_student');
+    }
+
+    public function schedual_staff(){
+        return view('pages.schedual_staff');
+    }
+
     public function register() {
         return view('auth.register');
     }
