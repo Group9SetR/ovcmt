@@ -20,17 +20,21 @@
             <h2>Staff name</h2><br><br>
             <ul class="nav nav-pills nav-stacked">
                 <li class="active"><a href="{{ url('/schedual_staff') }}" onClick="">Schedual View</a></li>
-
             </ul><br>
-
         </div>
-
-
     </div>
 </div>
 
 <footer class="container-fluid">
-    <p>Footer Text</p>
+    <div>
+        <a id="footerLinks" href="http://www.ovcmt.com/index.php">Home</a>
+        <a id="footerLinks" href="http://www.ovcmt.com/index.php/about">About</a>
+        <a id="footerLinks" href="http://www.ovcmt.com/index.php/apply/request-information-application">Apply</a>
+        <a id="footerLinks" href="http://www.ovcmt.com/index.php/alumni">Alumni</a>
+        <a id="footerLinks" href="http://www.ovcmt.com/index.php/clinic">Clinic</a>
+        <a id="footerLinks" href="http://www.ovcmt.com/index.php/shopl">Shop</a>
+        <a id="footerLinks" href="http://www.ovcmt.com/index.php/about/location-contact-info">Contact</a>
+    </div>
 </footer>
 
 </body>

@@ -1,5 +1,7 @@
 
-.row.content {height: 1500px}
+.row.content {
+    height: 100%;
+}
 
 /* Set gray background color and 100% height */
 .sidenav {
@@ -7,11 +9,18 @@
     height: 100%;
 }
 
-/* Set black background color, white text and some padding */
+/* Set black background color, white text and some padding, set position fixed to bottom*/
 footer {
     background-color: #555;
     color: white;
     padding: 15px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}
+
+footer > div {
+    text-align: center;
 }
 
 /* On small screens, set height to 'auto' for sidenav and grid */
@@ -21,4 +30,8 @@ footer {
         padding: 15px;
     }
     .row.content {height: auto;}
+}
+
+#footerLinks {
+    color: white;
 }

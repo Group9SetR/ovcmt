@@ -21,16 +21,12 @@
             <h2>Admin name</h2><br><br>
             <ul class="nav nav-pills nav-stacked">
                 <li class="active"><a href="{{ url('/tolschedualview') }}" onClick="">Total Schedual View</a></li>
-
             </ul><br>
             <ul class="nav nav-pills nav-stacked">
                 <li class="active"><a  href="{{ url('/addschedual') }}" onClick="">Add schedual</a></li>
-
             </ul><br>
-
             <ul class="nav nav-pills nav-stacked">
                 <li class="active"><a href="#section1">Add user</a></li>
-
             </ul><br>
         </div>
 
@@ -38,14 +34,20 @@
             <h4><small>Total View Scedual Download</small></h4>
             <hr>
             <h2>Download Schedual</h2>
-
-
         </div>
     </div>
 </div>
 
 <footer class="container-fluid">
-    <p>Footer Text</p>
+    <div>
+        <a id="footerLinks" href="http://www.ovcmt.com/index.php">Home</a>
+        <a id="footerLinks" href="http://www.ovcmt.com/index.php/about">About</a>
+        <a id="footerLinks" href="http://www.ovcmt.com/index.php/apply/request-information-application">Apply</a>
+        <a id="footerLinks" href="http://www.ovcmt.com/index.php/alumni">Alumni</a>
+        <a id="footerLinks" href="http://www.ovcmt.com/index.php/clinic">Clinic</a>
+        <a id="footerLinks" href="http://www.ovcmt.com/index.php/shopl">Shop</a>
+        <a id="footerLinks" href="http://www.ovcmt.com/index.php/about/location-contact-info">Contact</a>
+    </div>
 </footer>
 
 </body>
