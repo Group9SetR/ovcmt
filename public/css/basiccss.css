@@ -35,3 +35,12 @@ footer > div {
 #footerLinks {
     color: white;
 }
+
+table {
+    border: 1px solid black;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid black;
+}

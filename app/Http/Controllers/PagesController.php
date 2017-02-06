@@ -42,9 +42,12 @@ class PagesController extends Controller
         return view('pages.schedual_staff');
     }
 
+    public function editSchedule() {
+        return view('pages.editSchedule');
+    }
+
     public function register() {
         return view('auth.register');
     }
-
 
 }

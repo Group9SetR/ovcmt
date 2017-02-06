@@ -4,7 +4,7 @@
         <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Total view Schedual</title>
+    <title>Master View Schedule</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -18,16 +18,16 @@
 <div class="container-fluid">
     <div class="row content">
         <div class="col-sm-3 sidenav">
-            <h2>Admin name</h2><br><br>
+            <h2>Student view</h2><br><br>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="{{ url('/schedual_student') }}" onClick="">Schedual View</a></li>
+                <li class="active"><a href="{{ url('/schedual_student') }}" onClick="">Schedule View</a></li>
             </ul>
         </div>
 
         <div class="col-sm-9">
-            <h4><small>Scedual Download</small></h4>
+            <h4><small>Schedule Download</small></h4>
             <hr>
-            <h2>Download Schedual</h2>
+            <h2>Download Schedule</h2>
         </div>
     </div>
 </div>

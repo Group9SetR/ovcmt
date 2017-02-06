@@ -34,3 +34,5 @@ Route::get('/addschedual', 'PagesController@addschedual');
 Route::get('/schedual_student', 'PagesController@schedual_student');
 
 Route::get('/schedual_staff', 'PagesController@schedual_staff');
+
+Route::get('/editSchedule', 'PagesController@editSchedule');

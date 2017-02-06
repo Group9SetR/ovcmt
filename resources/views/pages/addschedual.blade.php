@@ -4,7 +4,7 @@
         <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Add schedual page</title>
+    <title>Add schedule page</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -20,18 +20,21 @@
         <div class="col-sm-3 sidenav">
             <h2>Admin name</h2><br><br>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="{{ url('/tolschedualview') }}" onClick="">Total Schedual View</a></li>
+                <li class="active"><a href="{{ url('/tolschedualview') }}" onClick="">Total Schedule View</a></li>
             </ul><br>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a  href="{{ url('/addschedual') }}" onClick="">Add schedual</a></li>
+                <li class="active"><a  href="{{ url('/addschedual') }}" onClick="">Add schedule</a></li>
             </ul><br>
             <ul class="nav nav-pills nav-stacked">
                 <li class="active"><a href="#section1">Add user</a></li>
             </ul><br>
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active"><a href="{{ url('/editSchedule') }}" onClick="">Edit schedule</a></li>
+            </ul><br>
         </div>
 
         <div class="col-sm-9">
-            <h4><small>Add shedual</small></h4>
+            <h4><small>Add schedule</small></h4>
             <hr>
             <h2>make form</h2>
         </div>

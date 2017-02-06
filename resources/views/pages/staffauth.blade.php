@@ -4,7 +4,7 @@
         <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>staff page</title>
+    <title>Staff Page</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -19,7 +19,7 @@
         <div class="col-sm-3 sidenav">
             <h2>Staff name</h2><br><br>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="{{ url('/schedual_staff') }}" onClick="">Schedual View</a></li>
+                <li class="active"><a href="{{ url('/schedual_staff') }}" onClick="">Schedule View</a></li>
             </ul><br>
         </div>
     </div>
