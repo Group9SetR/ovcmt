@@ -23,13 +23,13 @@
                 <li class="active"><a href="{{ url('/tolschedualview') }}" onClick="">Total Schedule View</a></li>
             </ul><br>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a  href="{{ url('/addschedual') }}" onClick="">Add schedule</a></li>
+                <li class="active"><a  href="{{ url('/addschedual') }}" onClick="">Add Schedule</a></li>
             </ul><br>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#section1">Add user</a></li>
+                <li class="active"><a href="#section1">Add User</a></li>
             </ul><br>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="{{ url('/editSchedule') }}" onClick="">Edit schedule</a></li>
+                <li class="active"><a href="{{ url('/editSchedule') }}" onClick="">Edit Schedule</a></li>
             </ul><br>
         </div>
 
@@ -37,18 +37,52 @@
             <h4><small>Total View Schedule Download</small></h4>
             <hr>
             <h2>Download Schedule</h2>
+            <table>
+                <table>
+                    <tr>
+                        <th>Date</th>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+                    </tr>
+                </table>
+            </table>
+            <br>
+            <form action="#somePage.php">
+                <button type="submit">Download</button>
+            </form>
         </div>
     </div>
 </div>
 
+<!--
+Dan > Was wondering if links should redirect to new tab?
+-->
 <footer class="container-fluid">
     <div>
-        <a id="footerLinks" href="http://www.ovcmt.com/index.php">Home</a>
-        <a id="footerLinks" href="http://www.ovcmt.com/index.php/about">About</a>
-        <a id="footerLinks" href="http://www.ovcmt.com/index.php/apply/request-information-application">Apply</a>
-        <a id="footerLinks" href="http://www.ovcmt.com/index.php/alumni">Alumni</a>
-        <a id="footerLinks" href="http://www.ovcmt.com/index.php/clinic">Clinic</a>
-        <a id="footerLinks" href="http://www.ovcmt.com/index.php/shopl">Shop</a>
+        <a id="footerLinks" href="http://www.ovcmt.com/index.php">Home</a> -
+        <a id="footerLinks" href="http://www.ovcmt.com/index.php/about">About</a> -
+        <a id="footerLinks" href="http://www.ovcmt.com/index.php/apply/request-information-application">Apply</a> -
+        <a id="footerLinks" href="http://www.ovcmt.com/index.php/alumni">Alumni</a> -
+        <a id="footerLinks" href="http://www.ovcmt.com/index.php/clinic">Clinic</a> -
+        <a id="footerLinks" href="http://www.ovcmt.com/index.php/shopl">Shop</a> -
         <a id="footerLinks" href="http://www.ovcmt.com/index.php/about/location-contact-info">Contact</a>
     </div>
 </footer>

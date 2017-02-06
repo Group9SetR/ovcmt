@@ -20,23 +20,23 @@
         <div id="scheduleFunctionsBox" class="col-sm-3 sidenav">
             <h2>Admin name</h2><br><br>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="{{ url('/tolschedualview') }}" onClick="">Total schedule view</a></li>
+                <li class="active"><a href="{{ url('/tolschedualview') }}" onClick="">Total Schedule View</a></li>
             </ul><br>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a  href="{{ url('/addschedual') }}" onClick="">Add schedule</a></li>
+                <li class="active"><a  href="{{ url('/addschedual') }}" onClick="">Add Schedule</a></li>
             </ul><br>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#section1">Add user</a></li>
+                <li class="active"><a href="#section1">Add User</a></li>
             </ul><br>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="{{ url('/editSchedule') }}" onClick="">Edit schedule</a></li>
+                <li class="active"><a href="{{ url('/editSchedule') }}" onClick="">Edit Schedule</a></li>
             </ul><br>
         </div>
         <div class="col-sm-9">
             <h4><small>Edit schedule</small></h4>
             <hr>
             <h2>Drag and drop? Or whatever functionality to alter selected schedule.</h2>
-            Placeholder schedule
+            <b>Placeholder schedule</b>
             <table>
                 <table>
                     <tr>
@@ -51,13 +51,23 @@
                         <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
                     </tr>
                     <tr>
-                        <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td style="background-color: dodgerblue;">Course</td>
+                        <td>&nbsp;</td>
+                        <td style="background-color: orange;">Course</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
                     </tr>
                     <tr>
                         <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
                     </tr>
                     <tr>
-                        <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td style="background-color: limegreen;">Course</td>
+                        <td>&nbsp;</td>
+                        <td style="background-color: gray">Etc.</td>
+                        <td>&nbsp;</td>
                     </tr>
                     <tr>
                         <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
@@ -75,6 +85,9 @@
     </div>
 </div>
 
+<!--
+Dan > Was wondering if links should redirect to new tab?
+-->
 <footer class="container-fluid">
     <div>
         <a id="footerLinks" href="http://www.ovcmt.com/index.php">Home</a> -
