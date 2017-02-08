@@ -20,7 +20,7 @@
         <div class="col-sm-3 sidenav">
             <h2>Admin name</h2><br><br>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="{{ url('/schedual_staff') }}" onClick="">Schedule View</a></li>
+                <li class="active"><a href="{{ url('/schedulestaff') }}" onClick="">Schedule View</a></li>
             </ul>
         </div>
 

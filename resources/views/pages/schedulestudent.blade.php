@@ -4,7 +4,7 @@
         <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Add schedule page</title>
+    <title>Master View Schedule</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -18,29 +18,16 @@
 <div class="container-fluid">
     <div class="row content">
         <div class="col-sm-3 sidenav">
-            <h2>Admin name</h2><br><br>
+            <h2>Student view</h2><br><br>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="{{ url('/tolschedualview') }}" onClick="">Total Schedule View</a></li>
-            </ul><br>
-            <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a  href="{{ url('/addschedual') }}" onClick="">Add Schedule</a></li>
-            </ul><br>
-            <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#section1">Add User</a></li>
-            </ul><br>
-            <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="{{ url('/editSchedule') }}" onClick="">Edit Schedule</a></li>
-            </ul><br>
+                <li class="active"><a href="{{ url('/schedulestudent') }}" onClick="">Schedule View</a></li>
+            </ul>
         </div>
 
         <div class="col-sm-9">
-            <h4><small>Add schedule</small></h4>
+            <h4><small>Schedule Download</small></h4>
             <hr>
-            <h2>make form</h2>
-            <form action="#somePage.php">
-                <button type="submit">Upload</button>
-                <button type="submit">Delete</button>
-            </form>
+            <h2>Download Schedule</h2>
         </div>
     </div>
 </div>

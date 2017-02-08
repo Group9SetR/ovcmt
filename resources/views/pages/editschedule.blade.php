@@ -20,16 +20,16 @@
         <div id="scheduleFunctionsBox" class="col-sm-3 sidenav">
             <h2>Admin name</h2><br><br>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="{{ url('/tolschedualview') }}" onClick="">Total Schedule View</a></li>
+                <li class="active"><a href="{{ url('/masterscheduleview') }}" onClick="">Total Schedule View</a></li>
             </ul><br>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a  href="{{ url('/addschedual') }}" onClick="">Add Schedule</a></li>
+                <li class="active"><a  href="{{ url('/addschedule') }}" onClick="">Add Schedule</a></li>
             </ul><br>
             <ul class="nav nav-pills nav-stacked">
                 <li class="active"><a href="#section1">Add User</a></li>
             </ul><br>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="{{ url('/editSchedule') }}" onClick="">Edit Schedule</a></li>
+                <li class="active"><a href="{{ url('/editschedule') }}" onClick="">Edit Schedule</a></li>
             </ul><br>
         </div>
         <div class="col-sm-9">
