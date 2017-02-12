@@ -31,8 +31,8 @@ Route::get('/tolschedualview', 'PagesController@tolschedualview');
 
 Route::get('/addschedual', 'PagesController@addschedual');
 
-Route::get('/schedual_student', 'PagesController@schedual_student');
+Route::get('/schedulestudent', 'PagesController@schedulestudent');
 
-Route::get('/schedual_staff', 'PagesController@schedual_staff');
+Route::get('/schedulestaff.', 'PagesController@schedulestaff.');
 
 Route::get('/editSchedule', 'PagesController@editSchedule');

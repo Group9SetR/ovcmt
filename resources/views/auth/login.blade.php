@@ -140,12 +140,16 @@
                                             </div>
                                             <div class="form-group">
                                                 <input type="submit" class="btn btn-lg btn-primary btn-block" value="Log in">
+
+
                                             </div>
                                         </div>
                                     </div>
                                 </fieldset>
                             </form>
                         </div>
+
+
 
                         <div class="panel-footer ">
                             Don't have an account! <a href="{{ url('register') }}" onClick=""> Sign Up Here </a>

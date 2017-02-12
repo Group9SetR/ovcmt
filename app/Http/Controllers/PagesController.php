@@ -34,12 +34,12 @@ class PagesController extends Controller
         return view('pages.addschedual');
     }
 
-    public function schedual_student(){
-        return view('pages.schedual_student');
+    public function schedulestudent(){
+        return view('pages.schedulestudent');
     }
 
-    public function schedual_staff(){
-        return view('pages.schedual_staff');
+    public function schedulestaff(){
+        return view('pages.schedulestaff.');
     }
 
     public function editSchedule() {
