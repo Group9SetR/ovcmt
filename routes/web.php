@@ -27,12 +27,14 @@ Route::get('/studauth', 'PagesController@studauth');
 
 Route::get('/register', 'PagesController@register');
 
-Route::get('/tolschedualview', 'PagesController@tolschedualview');
+Route::get('/masterscheduleview', 'PagesController@masterscheduleview');
 
-Route::get('/addschedual', 'PagesController@addschedual');
+Route::get('/addschedule', 'PagesController@addschedule');
 
 Route::get('/schedulestudent', 'PagesController@schedulestudent');
 
-Route::get('/schedulestaff.', 'PagesController@schedulestaff.');
+Route::get('/schedulestaff', 'PagesController@schedulestaff.');
 
-Route::get('/editSchedule', 'PagesController@editSchedule');
+Route::get('/editschedule', 'PagesController@editschedule');
+
+// Route::post('/login', 'LoginController@login');
