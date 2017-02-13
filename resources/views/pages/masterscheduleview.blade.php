@@ -1,10 +1,9 @@
 @extends('layouts.app')
-
-@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Master Schedule</title>
+    <title>Master Schedule Page</title>
+    @section('content')
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -13,14 +12,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="/css/basiccss.css" rel="stylesheet">
 </head>
-<body>
 
+<body>
 <div class="container-fluid">
     <div class="row content">
         <div class="col-sm-3 sidenav">
             <h2>Admin name</h2><br><br>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="{{ url('/masterscheduleview') }}" onClick="">Total Schedule View</a></li>
+                <li class="active"><a href="{{ url('/masterscheduleview') }}" onClick="">Master Schedule</a></li>
             </ul><br>
             <ul class="nav nav-pills nav-stacked">
                 <li class="active"><a  href="{{ url('/addschedule') }}" onClick="">Add Schedule</a></li>
@@ -34,7 +33,7 @@
         </div>
 
         <div class="col-sm-9">
-            <h4><small>Total View Schedule Download</small></h4>
+            <h4><small>Master Schedule Download</small></h4>
             <hr>
             <h2>Download Schedule</h2>
             <table>
@@ -72,21 +71,18 @@
     </div>
 </div>
 
-<!--
-Dan > Was wondering if links should redirect to new tab?
--->
 <footer class="container-fluid">
     <div>
-        <a id="footerLinks" href="http://www.ovcmt.com/index.php">Home</a> -
-        <a id="footerLinks" href="http://www.ovcmt.com/index.php/about">About</a> -
-        <a id="footerLinks" href="http://www.ovcmt.com/index.php/apply/request-information-application">Apply</a> -
-        <a id="footerLinks" href="http://www.ovcmt.com/index.php/alumni">Alumni</a> -
-        <a id="footerLinks" href="http://www.ovcmt.com/index.php/clinic">Clinic</a> -
-        <a id="footerLinks" href="http://www.ovcmt.com/index.php/shopl">Shop</a> -
-        <a id="footerLinks" href="http://www.ovcmt.com/index.php/about/location-contact-info">Contact</a>
+        <a id="footerLinks" target="_blank" href="http://www.ovcmt.com/index.php">Home</a> -
+        <a id="footerLinks" target="_blank" href="http://www.ovcmt.com/index.php/about">About</a> -
+        <a id="footerLinks" target="_blank" href="http://www.ovcmt.com/index.php/apply/request-information-application">Apply</a> -
+        <a id="footerLinks" target="_blank" href="http://www.ovcmt.com/index.php/alumni">Alumni</a> -
+        <a id="footerLinks" target="_blank" href="http://www.ovcmt.com/index.php/clinic">Clinic</a> -
+        <a id="footerLinks" target="_blank" href="http://www.ovcmt.com/index.php/shopl">Shop</a> -
+        <a id="footerLinks" target="_blank" href="http://www.ovcmt.com/index.php/about/location-contact-info">Contact</a>
     </div>
 </footer>
-
 </body>
+
 </html>
 @endsection
