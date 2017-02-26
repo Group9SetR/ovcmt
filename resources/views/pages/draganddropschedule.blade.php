@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Edit Schedule Page</title>
+    <title>Drag and Drop Schedule Page</title>
     @section('content')
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -49,7 +49,7 @@
             </ul><br>
         </div>
         <div class="col-sm-6">
-            <h4><small>Edit schedule</small></h4>
+            <h4><small>Drag and drop schedule</small></h4>
             <hr>
             <h2>Placeholder schedule</h2>
             <table>

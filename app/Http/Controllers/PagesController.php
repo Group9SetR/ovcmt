@@ -53,4 +53,7 @@ class PagesController extends Controller
     public function addcourse() {
         return view('pages.addcourse');
     }
+    public function draganddropschedule() {
+        return view('pages.draganddropschedule');
+    }
 }
