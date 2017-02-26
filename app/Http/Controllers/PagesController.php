@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 class PagesController extends Controller
 {
+
+
     public function home()
     {
         return view('welcome');
@@ -41,6 +43,9 @@ class PagesController extends Controller
     }
     public function editSchedule() {
         return view('pages.editschedule');
+    }
+    public function manageInstructor() {
+        return view('pages.manageInstructor');
     }
     public function register() {
         return view('auth.register');

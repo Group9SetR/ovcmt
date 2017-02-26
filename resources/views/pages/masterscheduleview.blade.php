@@ -25,7 +25,7 @@
                 <li class="active"><a  href="{{ url('/addschedule') }}" onClick="">Add Schedule</a></li>
             </ul><br>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#section1">Add User</a></li>
+                <li class="active"><a href="{{ url('/manageInstructor') }}" onClick="">Manage Instructor</a></li>
             </ul><br>
             <ul class="nav nav-pills nav-stacked">
                 <li class="active"><a href="{{ url('/editschedule') }}" onClick="">Edit Schedule</a></li>

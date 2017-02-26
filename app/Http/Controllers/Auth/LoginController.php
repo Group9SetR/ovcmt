@@ -24,6 +24,8 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
+
+
     /**
      * Where to redirect users after login
      */
@@ -89,13 +91,13 @@ class LoginController extends Controller
                 }
             } else {
                 // incorrect password
-                echo "<h1 style='color: red;'>incorrect password</h1> <br>";
-                // return redirect()->action('LoginController@login');
+               // echo "<h1 style='color: red;'>incorrect password</h1> <br>";
+                 return redirect()->action('LoginController@login');
             }
         } else {
             // email is not registered
-            echo "<h1 style='color: red;'>email is not registered</h1> <br>";
-            // return redirect()->action('LoginController@login');
+            //echo "<h1 style='color: red;'>email is not registered</h1> <br>";
+             return redirect()->action('LoginController@login');
         }
     }
 }
