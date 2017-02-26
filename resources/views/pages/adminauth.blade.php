@@ -22,13 +22,13 @@
                 <li class="active"><a href="{{ url('/masterscheduleview') }}" onClick="">Master Schedule</a></li>
             </ul><br>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a  href="{{ url('/addschedule') }}" onClick="">Add schedule</a></li>
+                <li class="active"><a  href="{{ url('/addschedule') }}" onClick="">Add Schedule</a></li>
             </ul><br>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#section1">Add user</a></li>
+                <li class="active"><a href="#section1">Add User</a></li>
             </ul><br>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="{{ url('/editschedule') }}" onClick="">Edit schedule</a></li>
+                <li class="active"><a href="{{ url('/editschedule') }}" onClick="">Edit Schedule</a></li>
             </ul><br>
         </div>
         <div class="col-sm-9">

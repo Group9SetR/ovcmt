@@ -1,3 +1,7 @@
+<?php
+    echo "current php version " . phpversion();
+?>
+
 @extends('layouts.app')
 <!DOCTYPE html>
 <html lang="en">

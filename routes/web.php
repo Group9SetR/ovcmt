@@ -37,4 +37,6 @@ Route::get('/schedulestaff', 'PagesController@schedulestaff');
 
 Route::get('/editschedule', 'PagesController@editschedule');
 
+Route::get('/addcourse', 'PagesController@addcourse');
+
 // Route::post('/login', 'LoginController@login');
