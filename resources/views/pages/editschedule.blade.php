@@ -12,22 +12,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="/css/basiccss.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script>
-        $( function() {
-            $( "#draggable" ).draggable({ snap: ".ui-widget-header", snapMode: "outer" });
-        } );
+    <script>		function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            ev.target.appendChild(document.getElementById(data));
+        }
     </script>
-    <style>
-        .draggable { width: 90px; height: 80px; padding: 5px; float: left; margin: 0 10px 10px 0; font-size: .9em; }
-        .ui-widget-header p, .ui-widget-content p { margin: 0; }
-        #snaptarget { height: 140px; }
-    </style>
 </head>
 
 <body>
@@ -58,7 +59,7 @@
                         <th>Date</th>
                     </tr>
                     <tr>
-                        <td id="snaptarget" class="ui-widget-header">to be</td>
+                        <td><div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">To be</div></td>
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
@@ -83,9 +84,7 @@
             </form>
         </div>
         <div class="col-sm-4">
-            <div id="draggable" class="draggable ui-widget-content">
-                <p>Hydro 1</p>
-            </div>
+            <div id="drag1" draggable="true" ondragstart="drag(event)">Hello</div>
         </div>
     </div>
 </div>
