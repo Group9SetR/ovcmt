@@ -11,7 +11,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="/css/basiccss.css" rel="stylesheet">
-    <script>		function allowDrop(ev) {
+    <script>
+        function allowDrop(ev) {
             ev.preventDefault();
         }
 
@@ -48,28 +49,112 @@
                 <li class="active"><a href="{{ url('/draganddropschedule') }}" onClick="">Create New Schedule from Drag and Drop</a></li>
             </ul><br>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-9">
             <h4><small>Drag and drop schedule</small></h4>
             <hr>
-            <h2>Placeholder schedule</h2>
+            <h4>Courses</h4>
+            <table ondrop="drop(event)" ondragover="allowDrop(event)">
+                <tr>
+                    <td>1 - &nbsp;<div id="drag1" draggable="true" ondragstart="drag(event)" style="border: .25px solid black;">Course 1</div></td>
+                    <td>2 - &nbsp;<div id="drag2" draggable="true" ondragstart="drag(event)" style="border: .25px solid black;">Course 2</div></td>
+                    <td>3 - &nbsp;<div id="drag3" draggable="true" ondragstart="drag(event)" style="border: .25px solid black;">Course 3</div></td>
+                    <td>4 - &nbsp;<div id="drag4" draggable="true" ondragstart="drag(event)" style="border: .25px solid black;">Course 4</div></td>
+                    <td>5 - &nbsp;<div id="drag5" draggable="true" ondragstart="drag(event)" style="border: .25px solid black;">Course 5</div></td>
+                </tr>
+                <tr>
+                    <td>6 - &nbsp;<div id="drag6" draggable="true" ondragstart="drag(event)" style="border: .25px solid black;">Course 6</div></td>
+                    <td>7 - &nbsp;<div id="drag7" draggable="true" ondragstart="drag(event)" style="border: .25px solid black;">Course 7</div></td>
+                    <td>8 - &nbsp;<div id="drag8" draggable="true" ondragstart="drag(event)" style="border: .25px solid black;">Course 8</div></td>
+                    <td>9 - &nbsp;<div id="drag9" draggable="true" ondragstart="drag(event)" style="border: .25px solid black;">Course 9</div></td>
+                    <td>10 - &nbsp;<div id="drag10" draggable="true" ondragstart="drag(event)" style="border: .25px solid black;">Course 10</div></td>
+                </tr>
+                <!--
+                <div class="col-sm-4">
+                    <div id="drag1" draggable="true" ondragstart="drag(event)">Hello</div>
+                </div>
+                -->
+            </table>
+
+            <h4>Schedule</h4>
             <table>
-                <table>
+                <table ondrop="drop(event)" ondragover="allowDrop(event)">
                     <tr>
-                        <th>Date</th>
+                        <th>&nbsp;</th>
+                        <th>Rm P1</th>
+                        <th>Rm P2</th>
+                        <th>Rm A1</th>
+                        <th>Rm P2</th>
                     </tr>
                     <tr>
-                        <td><div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">To be</div></td>
+                        <td>MON - AM</td>
+                        <div>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        </div>
                     </tr>
                     <tr>
+                        <td>MON - PM</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
                         <td>&nbsp;</td>
                     </tr>
                     <tr>
+                        <td>TUE - AM</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
                         <td>&nbsp;</td>
                     </tr>
                     <tr>
+                        <td>TUE - PM</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
                         <td>&nbsp;</td>
                     </tr>
                     <tr>
+                        <td>WED - AM</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>WED - PM</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>THU - AM</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>THU - PM</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>FRI - AM</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>FRI - PM</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
                         <td>&nbsp;</td>
                     </tr>
                 </table>
@@ -81,9 +166,6 @@
                 <button type="submit" class="btn btn-warning">Redo</button>
                 <button type="submit" class="btn btn-danger">Discard changes</button>
             </form>
-        </div>
-        <div class="col-sm-4">
-            <div id="drag1" draggable="true" ondragstart="drag(event)">Hello</div>
         </div>
     </div>
 </div>
