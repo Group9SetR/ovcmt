@@ -33,7 +33,7 @@ Route::get('/addschedule', 'PagesController@addschedule');
 
 Route::get('/schedulestudent', 'PagesController@schedulestudent');
 
-Route::get('/schedulestaff', 'PagesController@schedulestaff.');
+Route::get('/schedulestaff', 'PagesController@schedulestaff');
 
 Route::get('/editschedule', 'PagesController@editschedule');
 
