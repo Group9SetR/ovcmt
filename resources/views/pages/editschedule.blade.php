@@ -1,3 +1,7 @@
+<?php
+    echo "current php version " . phpversion();
+?>
+
 @extends('layouts.app')
 <!DOCTYPE html>
 <html lang="en">
@@ -8,15 +12,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="/css/basiccss.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $( function() {
+            $( "#draggable" ).draggable({ snap: ".ui-widget-header", snapMode: "outer" });
+        } );
+    </script>
+    <style>
+        .draggable { width: 90px; height: 80px; padding: 5px; float: left; margin: 0 10px 10px 0; font-size: .9em; }
+        .ui-widget-header p, .ui-widget-content p { margin: 0; }
+        #snaptarget { height: 140px; }
+    </style>
 </head>
 
 <body>
 <div class="container-fluid">
     <div class="row content">
-        <div id="scheduleFunctionsBox" class="col-sm-3 sidenav">
+        <div id="scheduleFunctionsBox" class="col-sm-2 sidenav">
             <h2>Admin name</h2><br><br>
             <ul class="nav nav-pills nav-stacked">
                 <li class="active"><a href="{{ url('/masterscheduleview') }}" onClick="">Master Schedule</a></li>
@@ -31,7 +48,7 @@
                 <li class="active"><a href="{{ url('/editschedule') }}" onClick="">Edit Schedule</a></li>
             </ul><br>
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-6">
             <h4><small>Edit schedule</small></h4>
             <hr>
             <h2>Placeholder schedule</h2>
@@ -39,36 +56,21 @@
                 <table>
                     <tr>
                         <th>Date</th>
-                        <th>Monday</th>
-                        <th>Tuesday</th>
-                        <th>Wednesday</th>
-                        <th>Thursday</th>
-                        <th>Friday</th>
                     </tr>
                     <tr>
-                        <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+                        <td id="snaptarget" class="ui-widget-header">to be</td>
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
-                        <td style="background-color: dodgerblue;">Course</td>
-                        <td>&nbsp;</td>
-                        <td style="background-color: orange;">Course</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td style="background-color: limegreen;">Course</td>
-                        <td>&nbsp;</td>
-                        <td style="background-color: gray">Etc.</td>
+                    </tr>
+                    <tr>
                         <td>&nbsp;</td>
                     </tr>
                     <tr>
-                        <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+                        <td>&nbsp;</td>
                     </tr>
                 </table>
             </table>
@@ -79,6 +81,11 @@
                 <button type="submit" class="btn btn-warning">Redo</button>
                 <button type="submit" class="btn btn-danger">Discard changes</button>
             </form>
+        </div>
+        <div class="col-sm-4">
+            <div id="draggable" class="draggable ui-widget-content">
+                <p>Hydro 1</p>
+            </div>
         </div>
     </div>
 </div>
