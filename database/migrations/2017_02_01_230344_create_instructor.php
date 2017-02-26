@@ -14,10 +14,10 @@ class CreateInstructor extends Migration
     public function up()
     {
         Schema::create('instructor', function (Blueprint $table) {
-            $table->string('instructor_id');
+            $table->increments('id');
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->primary('instructor_id');
         });
     }

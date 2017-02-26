@@ -37,10 +37,8 @@
             <h4><small>Manage Instructors </small></h4>
             <hr>
             <h2>make form</h2>
-            <form action="#somePage.php">
-                <button type="submit">Upload</button>
-                <button type="submit">Delete</button>
-            </form>
+
+
         </div>
     </div>
 </div>
