@@ -36,10 +36,10 @@
         <div class="col-sm-9">
             <h4><small>Manage Instructors </small></h4>
             <hr>
-<<<<<<< HEAD
+
             <h2>make form</h2>
 
-=======
+
             <h2>Add a New Instructor</h2>
             <button href="#addInstructForm" class="btn btn-action" data-toggle="collapse">Add Instructor</button>
             <div class="collapse" id="addInstructForm">
@@ -75,7 +75,7 @@
                 </form>
             </div>
             <h2>Display Instructors</h2>
->>>>>>> 0190e194763484850818ed7bb803d353fff20b79
+
 
         </div>
     </div>
