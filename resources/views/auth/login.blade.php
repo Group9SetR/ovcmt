@@ -151,7 +151,7 @@
 
 
 
-                        <div class="panel-footer ">
+                        <div class="panel-footer">
                             Don't have an account! <a href="{{ url('register') }}" onClick=""> Sign Up Here </a>
                         </div>
 
