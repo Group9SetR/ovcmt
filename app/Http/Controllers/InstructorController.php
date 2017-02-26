@@ -11,5 +11,7 @@ use Illuminate\Http\Request;
 
 class InstructorController extends Controller
 {
-    //
+    public function addInstructor() {
+        $instructor = Instructor::create(['first_name' => 'hansol', 'last_name' => 'lee', 'email' => 'afhd@fakjds.com']);
+    }
 }

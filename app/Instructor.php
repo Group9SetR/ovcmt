@@ -2,21 +2,10 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\Instructor as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class Instructor extends Authenticatable
+class Instructor extends Model
 {
-    use Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'first_name', 'last_name', 'email',
-    ];
-
-
+    protected $timestamps = false;
+    protected $fillable = ['first_name', 'last_name', 'email'];
 }
