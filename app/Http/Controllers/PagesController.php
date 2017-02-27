@@ -44,9 +44,7 @@ class PagesController extends Controller
     public function editSchedule() {
         return view('pages.editschedule');
     }
-    public function manageInstructor() {
-        return view('pages.manageInstructor');
-    }
+
     public function register() {
         return view('auth.register');
     }
