@@ -18,12 +18,12 @@ class InstructorController extends Controller
     public function store(Request $req)
     {
 
-        $user = new Instructor;
+        $instructor = new Instructor;
 
-        $user->first_name = $req->first_name;
-        $user->last_name = $req->last_name;
-        $user->email = $req->email;
-        $user->save();
+        $instructor->first_name = $req->first_name;
+        $instructor->last_name = $req->last_name;
+        $instructor->email = $req->email;
+        $instructor->save();
 
         return Redirect::back();
 
