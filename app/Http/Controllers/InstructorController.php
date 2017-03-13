@@ -15,26 +15,27 @@ use DB;
 class InstructorController extends Controller
 {
 
-    public function insert(Request $reg)
+    public function store(Request $req)
     {
-    /*
+
         $user = new Instructor;
 
-        $user ->first_name =Input('first_name');
-        $user ->last_name =Input::post("last_name");
-        $user ->email =Input::post("email");
-        $user ->save();
+        $user->first_name = $req->first_name;
+        $user->last_name = $req->last_name;
+        $user->email = $req->email;
+        $user->save();
 
         return Redirect::back();
-*/
-        $id = null;
+
+/*      $id = null;
         $first_name = $reg -> input('first_name');
         $last_name = $reg -> input('last_name');
         $email = $reg -> input('email');
 
         $data = array("instructor_id"=>$id,"first_name"=>$first_name, "last_name" =>$last_name, "email" => $email);
 
-        DB::table('instructor')-> insert($data);
+        DB::table('instructor')-> insert($data);*/
+
 
 
 
