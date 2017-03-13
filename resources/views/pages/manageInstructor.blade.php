@@ -43,6 +43,8 @@
 
         {!! Form::open(['url' => 'manageInstructor']) !!}
             {!! Form::open() !!}
+
+                {{csrf_field()}}
                 <div class="form-group">
                 {!! Form::label('first_name', 'First Name:') !!}
                 {!! Form::text('first_name', null, ['class' => 'form-control']) !!}

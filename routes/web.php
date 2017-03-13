@@ -44,6 +44,8 @@ Route::get('/draganddropschedule', 'PagesController@draganddropschedule');
 
 Route::get('/manageInstructor', 'InstructorController@manageInstructor');
 
-Route::post('manageInstructor', 'InstructorController@store');
+//Route::get('index', 'InstructorController@index');
+
+Route::post('/manageInstructor', 'InstructorController@insert');
 
 // Route::post('/login', 'LoginController@login');
