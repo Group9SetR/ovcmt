@@ -5,6 +5,10 @@
 /.idea
 Homestead.json
 Homestead.yaml
+composer.json
+composer.lock
+Vagrantfile
+/.vagrant
 .env
 /bootstrap/compiled.php
 /vendor
@@ -33,5 +37,3 @@ composer.phar
 
 /node_modules
 
-
-.env
