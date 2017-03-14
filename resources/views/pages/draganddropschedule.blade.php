@@ -1,34 +1,22 @@
 @extends('layouts.app')
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Drag and Drop Schedule Page</title>
-    @section('content')
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link href="/css/basiccss.css" rel="stylesheet">
-    <script>
-        function allowDrop(ev) {
-            ev.preventDefault();
-        }
+@section('content')
+<script>
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
 
-        function drag(ev) {
-            ev.dataTransfer.setData("text", ev.target.id);
-        }
+    function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+    }
 
-        function drop(ev) {
-            ev.preventDefault();
-            var data = ev.dataTransfer.getData("text");
-            ev.target.appendChild(document.getElementById(data));
-        }
-    </script>
-</head>
+    function drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        ev.target.appendChild(document.getElementById(data));
+    }
+</script>
 
-<body>
 <div class="container-fluid">
     <div class="row content">
         <div id="scheduleFunctionsBox" class="col-sm-2 sidenav">
@@ -186,7 +174,4 @@
         <a id="footerLinks" target="_blank" href="http://www.ovcmt.com/index.php/about/location-contact-info">Contact</a>
     </div>
 </footer>
-</body>
-
-</html>
 @endsection
