@@ -4,6 +4,7 @@
 <div class="container-fluid">
     <div class="row content">
         <div id="scheduleFunctionsBox" class="col-sm-3 sidenav">
+            <h2>Admin name</h2><br><br>
             <ul class="nav nav-pills nav-stacked">
                 <li class="active"><a href="{{ url('/masterscheduleview') }}" onClick="">Master Schedule</a></li>
             </ul><br>

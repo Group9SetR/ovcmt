@@ -76,9 +76,8 @@
                             </div>
                         </div>
 
-
+                        <label for="usertype" class="cold-md-4 control-label">Select Account Type</label>
                         <div class="form-group">
-                            <label for="usertype" class="cold-md-4 control-label">Select Account Type</label>
                             <div class ="col-md-6">
                                 <input type="radio" name="usertype" value="student" checked> Student<br>
                                 <input type="radio" name="usertype" value="staff"> Staff<br>

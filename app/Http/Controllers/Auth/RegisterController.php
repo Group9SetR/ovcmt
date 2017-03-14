@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Auth;
 use App\User;
 
 class RegisterController extends Controller
@@ -25,10 +26,16 @@ class RegisterController extends Controller
 
     /**
      * Where to redirect users after registration.
-     *
-     * @var string
      */
-    protected $redirectTo = '/home';
+    protected function redirectTo() {
+        if (Auth::user()->usertype == 'student') {
+            return '/studauth';
+        } else if (Auth::user()->usertype == 'staff') {
+            return '/staffauth';
+        } else if (Auth::user()->usertype == 'admin') {
+            return '/adminauth';
+        }
+    }
 
     /**
      * Create a new controller instance.

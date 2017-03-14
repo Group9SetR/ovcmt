@@ -117,7 +117,4 @@
         <a id="footerLinks" target="_blank" href="http://www.ovcmt.com/index.php/about/location-contact-info">Contact</a>
     </div>
 </footer>
-
-</body>
-</html>
 @endsection
