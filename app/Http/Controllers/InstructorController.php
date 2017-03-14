@@ -25,7 +25,7 @@ class InstructorController extends Controller
         $instructor->email = $req->email;
         $instructor->save();
 
-        return Redirect::back();
+        return redirect()->action('InstructorController@manageInstructor');
 
 /*      $id = null;
         $first_name = $reg -> input('first_name');
