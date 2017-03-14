@@ -49,3 +49,4 @@ Route::get('/manageCourse', 'CourseController@manageCourse');
 
 Route::post('/manageCourse', 'CourseController@store');
 
+Route::get('/test','Tester@index');
