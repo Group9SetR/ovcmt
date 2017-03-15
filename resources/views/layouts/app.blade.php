@@ -84,6 +84,10 @@
         @yield('content')
     </div>
 
+    <footer class="container-fluid">
+        @include('includes.footer')
+    </footer>
+
     <!-- Scripts -->
     <script src="/js/app.js"></script>
 </body>
