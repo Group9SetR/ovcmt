@@ -5,8 +5,6 @@
 /.idea
 Homestead.json
 Homestead.yaml
-composer.json
-composer.lock
 Vagrantfile
 /.vagrant
 .vagrant/
