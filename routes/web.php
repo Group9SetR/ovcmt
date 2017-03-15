@@ -29,7 +29,7 @@ Route::get('/studauth', 'PagesController@studauth');
 
 Route::get('/masterscheduleview', 'PagesController@masterscheduleview');
 
-Route::get('/addschedule', 'PagesController@addschedule');
+Route::get('/addschedule', 'ScheduleController@index');
 
 Route::get('/schedulestudent', 'PagesController@schedulestudent');
 
