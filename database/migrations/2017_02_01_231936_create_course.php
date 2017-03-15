@@ -13,7 +13,7 @@ class CreateCourse extends Migration
      */
     public function up()
     {
-        Schema::create('course', function (Blueprint $table) {
+        Schema::create('courses', function (Blueprint $table) {
             $table->string('course_id');
             $table->tinyInteger('sessions_days');
             $table->string('course_type');
