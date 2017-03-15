@@ -26,10 +26,17 @@ class AssignController extends Controller
     public function getCourseInstructors() {
         $courseinstructor = DB::table('courses AS c')
             ->join('course_instructor AS ci', 'c.crs_id', '=', 'ci.crs_id')
-            ->join('instructor AS i', 'ci.instruct_id', '=', 'i.instruct_id')
+            ->join('instructor AS i', 'ci.instructor_id', '=', 'i.instructor_id')
             ->select('')
             ->get();
         return $courseinstructor;
+    }
+
+    public function store(Request $req) {
+        DB::table('course_instructor')
+            ->insert(['crs_id' => $req->crs_id, 'instructor_id' => $req->instructor_id]);
+
+        return redirect()->action('AssignController@index');
     }
 
     public function index() {
