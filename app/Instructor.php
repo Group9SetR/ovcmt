@@ -8,5 +8,5 @@ class Instructor extends Model
 {
     public $timestamps = false;
 
-    protected $fillable = ['first_name', 'last_name', 'email'];
+    protected $fillable = ['first_name', 'email'];
 }

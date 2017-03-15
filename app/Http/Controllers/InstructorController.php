@@ -17,7 +17,6 @@ class InstructorController extends Controller
         $instructor = new Instructor;
 
         $instructor->first_name = $req->first_name;
-        $instructor->last_name = $req->last_name;
         $instructor->email = $req->email;
         $instructor->save();
 
@@ -26,14 +25,21 @@ class InstructorController extends Controller
 
     }
 
+    public function listInstructors() {
+        return DB::table('instructors')
+            ->select('instructor_id', 'first_name')
+            ->get();
+    }
+
     public function index()
     {
-        return view('pages.manageInstructor');
-
+        $instructors = $this->listInstructors();
+        return view('pages.manageInstructor', compact('instructors'));
     }
 
     public function manageInstructor() {
-        return view('pages.manageInstructor');
+        $instructors = $this->listInstructors();
+        return view('pages.manageInstructor', compact('instructors'));
     }
 
 
