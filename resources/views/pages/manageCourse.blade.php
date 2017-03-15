@@ -34,11 +34,15 @@
                 {!! Form::submit('Add course',['class'=> 'btn btn-primary form-control']) !!}
             </div>
 
-
+            {!! Form::close() !!}
             <hr/>
             <h2>Display Course</h2>
-        {!! Form::close() !!}
-
+            <?php
+            $courses = DB::table('course')->pluck('crs_id');
+            foreach($courses as $x) {
+                echo '<h3>' . $x . '</h3>' . ', ';
+            }
+            ?>
         </div>
     </div>
 </div>
