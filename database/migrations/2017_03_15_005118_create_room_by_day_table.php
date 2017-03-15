@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateYearSchedule extends Migration
+class CreateRoomByDayTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateYearSchedule extends Migration
      */
     public function up()
     {
-        Schema::create('year_schedule', function (Blueprint $table) {
-            $table->string('term_schedule_id');
-            $table->string('year');
-            $table->primary(['term_schedule_id', 'year']);
+        Schema::create('rooms_by_days', function (Blueprint $table) {
+            $table->string('room_id');
+            $table->date('cdate');
+            $table->integer('am_crn');
+            $table->integer('pm_crn');
+            $table->primary(['room_id','cdate']);
         });
     }
 
@@ -27,6 +29,6 @@ class CreateYearSchedule extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('year_schedule');
+        Schema::dropIfExists('rooms_by_days');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInstructorAvail extends Migration
+class CreateInstructAvailTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,24 +13,24 @@ class CreateInstructorAvail extends Migration
      */
     public function up()
     {
-        Schema::create('instr_avail', function (Blueprint $table) {
-            $table->string('instructor_id');
+        Schema::create('instruct_avails', function (Blueprint $table) {
+            $table->integer('instruct_id');
+            $table->date('date_start');
             $table->boolean('mon_am');
             $table->boolean('mon_pm');
 
-            $table->boolean('tue_am');
-            $table->boolean('tue_pm');
+            $table->boolean('tues_am');
+            $table->boolean('tues_pm');
 
             $table->boolean('wed_am');
             $table->boolean('wed_pm');
 
-            $table->boolean('thu_am');
-            $table->boolean('thu_pm');
+            $table->boolean('thurs_am');
+            $table->boolean('thurs_pm');
 
             $table->boolean('fri_am');
             $table->boolean('fri_pm');
-
-            $table->primary('instructor_id');
+            $table->primary(['instruct_id', 'date_start']);
         });
     }
 
@@ -41,6 +41,6 @@ class CreateInstructorAvail extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('instr_avail');
+        Schema::dropIfExists('instruct_avails');
     }
 }

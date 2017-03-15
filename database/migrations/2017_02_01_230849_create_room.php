@@ -13,10 +13,9 @@ class CreateRoom extends Migration
      */
     public function up()
     {
-        Schema::create('room', function (Blueprint $table) {
+        Schema::create('rooms', function (Blueprint $table) {
             $table->string('room_id');
-            $table->string('room_name');
-            $table->string('room_amen');
+            $table->string('room_type');
             $table->primary('room_id');
         });
     }

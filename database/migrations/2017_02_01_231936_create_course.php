@@ -15,8 +15,9 @@ class CreateCourse extends Migration
     {
         Schema::create('course', function (Blueprint $table) {
             $table->string('course_id');
-            $table->string('course_name');
-            $table->string('course_amen_req');
+            $table->tinyInteger('sessions_days');
+            $table->string('course_type');
+            $table->tinyInteger('term_no');
             $table->primary('course_id');
         });
     }
