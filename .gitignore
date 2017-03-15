@@ -9,6 +9,7 @@ composer.json
 composer.lock
 Vagrantfile
 /.vagrant
+.vagrant/
 .env
 /bootstrap/compiled.php
 /vendor
@@ -22,18 +23,10 @@ Vagrantfile
 
 
 composer.phar
-
-
 .DS_Store
-
-
 /.idea
 /_ide_helper.php
-
-
 /app/config/packages
 /public/packages
-
-
 /node_modules
 
