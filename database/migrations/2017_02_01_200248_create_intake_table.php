@@ -14,10 +14,9 @@ class CreateIntakeTable extends Migration
     public function up()
     {
         Schema::create('intakes', function (Blueprint $table) {
-            $table->integer('intake_id');
+            $table->increments('intake_id');
             $table->date('start_date');
             $table->char('intake_no');
-            $table->primary('intake_id');
         });
     }
 

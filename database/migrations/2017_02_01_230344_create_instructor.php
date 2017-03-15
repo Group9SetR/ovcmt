@@ -14,10 +14,9 @@ class CreateInstructor extends Migration
     public function up()
     {
         Schema::create('instructors', function (Blueprint $table) {
-            $table->integer('instructor_id');
+            $table->increments('instructor_id');
             $table->string('first_name');
             $table->string('email')->unique();
-            $table->primary('instructor_id');
         });
     }
 

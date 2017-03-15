@@ -14,7 +14,7 @@ class CreateTermTable extends Migration
     public function up()
     {
         Schema::create('terms', function (Blueprint $table) {
-            $table->integer('term_id');
+            $table->increments('term_id');
             $table->date('term_start_date');
             $table->integer('intake_id');
             $table->tinyInteger('term_no');
@@ -22,7 +22,6 @@ class CreateTermTable extends Migration
             $table->tinyInteger('course_weeks');
             $table->tinyInteger('exam_weeks');
             $table->tinyInteger('holidays');
-            $table->primary('term_id');
         });
     }
 

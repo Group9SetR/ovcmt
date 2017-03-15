@@ -14,12 +14,11 @@ class CreateCourseOfferingsTable extends Migration
     public function up()
     {
         Schema::create('course_offerings', function (Blueprint $table) {
-            $table->integer('crn');
+            $table->increments('crn');
             $table->integer('term_id');
             $table->string('crs_id');
             $table->integer('instructor_id');
             $table->integer('ta_id');
-            $table->primary('crn');
         });
     }
 
