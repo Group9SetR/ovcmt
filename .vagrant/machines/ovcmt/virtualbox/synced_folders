@@ -1,1 +1,0 @@
-{"virtualbox":{"/home/vagrant/Code/ovcmt":{"type":null,"mount_options":[],"guestpath":"/home/vagrant/Code/ovcmt","hostpath":"C:/Users/Matthew/Desktop/COMP3900/ovcmt","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"C:/Users/Matthew/Desktop/COMP3900/ovcmt","disabled":false,"__vagrantfile":true}}}
