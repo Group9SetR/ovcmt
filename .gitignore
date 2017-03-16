@@ -11,6 +11,7 @@ Vagrantfile
 .env
 /bootstrap/compiled.php
 /vendor
+/config/database.php
 
 
 /build/logs

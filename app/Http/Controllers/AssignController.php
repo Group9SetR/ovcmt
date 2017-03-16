@@ -29,6 +29,7 @@ class AssignController extends Controller
             ->join('instructor AS i', 'ci.instructor_id', '=', 'i.instructor_id')
             ->select('')
             ->get();
+//        TODO: add select fields
         return $courseinstructor;
     }
 
