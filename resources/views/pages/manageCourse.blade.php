@@ -18,16 +18,21 @@
             {{csrf_field()}}
             <div class="form-group">
                 {!! Form::label('course_id', 'Course Id:') !!}
-                {!! Form::text('last_name', null, ['class' => 'form-control']) !!}
+                {!! Form::text('course_id', null, ['class' => 'form-control']) !!}
             </div>
             <div class="form-group">
-                {!! Form::label('course_name', 'Course Name:') !!}
-                {!! Form::text('first_name', null, ['class' => 'form-control']) !!}
+                {!! Form::label('sessions_days', 'Session Days:') !!}
+                {!! Form::text('sessions_days', null, ['class' => 'form-control']) !!}
             </div>
 
             <div class="form-group">
-                {!! Form::label('course_amen_req', 'Course_amen_req:') !!}
-                {!! Form::text('email', null, ['class' => 'form-control']) !!}
+                {!! Form::label('course_type', 'Course Type:') !!}
+                {!! Form::text('course_type', null, ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
+                {!! Form::label('term_no', 'Term No:') !!}
+                {!! Form::text('term_no', null, ['class' => 'form-control']) !!}
             </div>
 
             <div class="form-group">
@@ -36,13 +41,25 @@
 
             {!! Form::close() !!}
             <hr/>
-            <h2>Display Course</h2>
-            <?php
-            $courses = DB::table('courses')->pluck('course_id');
-            foreach($courses as $x) {
-                echo '<h3>' . $x . '</h3>' . ', ';
-            }
-            ?>
+            <h2>Display Courses</h2>
+            <table>
+                <thead>
+                <th>Course ID</th>
+                <th>Sessions days</th>
+                <th>Course Type</th>
+                <th>Term No</th>
+                </thead>
+                <tbody>
+                @foreach($courses as $course)
+                    <tr>
+                        <td>{{$course->course_id}}</td>
+                        <td>{{$course->sessions_days}}</td>
+                        <td>{{$course->course_type}}</td>
+                        <td>{{$course->term_no}}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
