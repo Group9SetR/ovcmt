@@ -38,7 +38,7 @@
             <hr/>
             <h2>Display Course</h2>
             <?php
-            $courses = DB::table('course')->pluck('crs_id');
+            $courses = DB::table('courses')->pluck('course_id');
             foreach($courses as $x) {
                 echo '<h3>' . $x . '</h3>' . ', ';
             }

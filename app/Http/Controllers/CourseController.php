@@ -12,8 +12,10 @@ class CourseController extends Controller
         $course = new Course;
 
         $course->course_id = $req->course_id;
-        $course->course_name = $req->course_name;
-        $course->course_amen_req = $req->course_amen_req;
+        $course->session_days = $req->session_days;
+        $course->course_type = $req->course_type;
+        $course->term_no = $req->term_no;
+
         $course->save();
 
 
