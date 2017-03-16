@@ -8,11 +8,11 @@ class AssignController extends Controller
 {
     public function getCourses() {
         $courses = DB::table('courses')
-            ->whereNotIn('crs_id', function($query)
+            ->whereNotIn('course_id', function($query)
             {
                 $query->select(DB::raw(1))
-                    ->from('course_instructor')
-                    ->whereRaw('course_instructor.crs_id = course.crs_id');
+                    ->from('course_instructors')
+                    ->whereRaw('course_instructors.course_id = course.course_id');
             })
             ->get();
         return $courses;
@@ -25,8 +25,8 @@ class AssignController extends Controller
 
     public function getCourseInstructors() {
         $courseinstructor = DB::table('courses AS c')
-            ->join('course_instructor AS ci', 'c.crs_id', '=', 'ci.crs_id')
-            ->join('instructor AS i', 'ci.instructor_id', '=', 'i.instructor_id')
+            ->join('course_instructors AS ci', 'c.course_id', '=', 'ci.course_id')
+            ->join('instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
             ->select('')
             ->get();
 //        TODO: add select fields
@@ -34,8 +34,8 @@ class AssignController extends Controller
     }
 
     public function store(Request $req) {
-        DB::table('course_instructor')
-            ->insert(['crs_id' => $req->crs_id, 'instructor_id' => $req->instructor_id]);
+        DB::table('course_instructors')
+            ->insert(['course_id' => $req->course_id, 'instructor_id' => $req->instructor_id]);
 
         return redirect()->action('AssignController@index');
     }
