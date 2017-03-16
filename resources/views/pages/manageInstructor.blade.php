@@ -63,16 +63,31 @@
 
             <h2>Display Instructors</h2>
             <table>
-                <thead><th>ID</th><th>Name</th></thead>
+                <thead>
+                    <th>ID</th><th>Name</th>
+                    <th>Mon AM</th><th>Tues AM</th><th>Wed AM</th><th>Thurs AM</th><th>Fri AM</th>
+                    <th>Mon PM</th><th>Tues PM</th><th>Wed PM</th><th>Thurs PM</th><th>Fri PM</th>
+                </thead>
                 <tbody>
                 @foreach($instructors as $instructor)
                     <tr>
                         <td>{{$instructor->instructor_id}}</td>
                         <td>{{$instructor->first_name}}</td>
+                        <td>{{$instructor->mon_am}}</td>
+                        <td>{{$instructor->tues_am}}</td>
+                        <td>{{$instructor->wed_am}}</td>
+                        <td>{{$instructor->thurs_am}}</td>
+                        <td>{{$instructor->fri_am}}</td>
+                        <td>{{$instructor->mon_pm}}</td>
+                        <td>{{$instructor->tues_pm}}</td>
+                        <td>{{$instructor->wed_pm}}</td>
+                        <td>{{$instructor->thurs_pm}}</td>
+                        <td>{{$instructor->fri_pm}}</td>
                     </tr>
                 @endforeach
                 </tbody>
             </table>
+
         </div>
     </div>
 </div>

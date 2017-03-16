@@ -12,14 +12,16 @@ class InstructorController extends Controller
 {
     public function store(Request $req)
     {
+        //Save Instructor
         $instructor = new Instructor;
         $instructor->first_name = $req->first_name;
         $instructor->email = $req->email;
         $instructor->save();
 
+        //Save InstructAvail
         $latestInstructorId = $this->getLastInsertedInstructorId()->instructor_id;
         $instructAvail = new InstructAvail;
-        $instructAvail->instruct_id = $latestInstructorId;
+        $instructAvail->instructor_id = $latestInstructorId;
         $instructAvail->date_start = $req->date_start;
         $availability = $this->getAvailabilityFromCheckboxes($req);
         $this->setInstructorAvailability($instructAvail, $availability);
@@ -55,8 +57,9 @@ class InstructorController extends Controller
     }
 
     public function listInstructors() {
-        return DB::table('instructors')
-            ->select('instructor_id', 'first_name')
+        return DB::table('instructors as i')
+            ->join('instruct_avails as ia', 'i.instructor_id', '=', 'ia.instructor_id')
+            ->select('i.instructor_id', 'i.first_name', 'ia.*')
             ->get();
     }
 
