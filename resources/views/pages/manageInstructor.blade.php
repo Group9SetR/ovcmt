@@ -27,6 +27,10 @@
                     </div>
                 <p>Check all time slots for which instructor is available:</p>
                 <div class="form-group">
+                    {!! Form::label('date_start', 'Date effective:') !!}
+                    {!! Form::date('date_start') !!}
+                </div>
+                <div class="form-group">
                 <table>
                     <tr>
                         <th>Time</th><th>Mon</th><th>Tues</th><th>Wed</th><th>Thurs</th><th>Fri</th>
