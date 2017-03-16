@@ -33,4 +33,6 @@ class CourseController extends Controller
         return view('pages.manageCourse', compact('courses'));
     }
 
+
+
 }
