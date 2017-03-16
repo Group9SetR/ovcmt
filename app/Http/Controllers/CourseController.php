@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests;
+use DB;
 
 class CourseController extends Controller
 {
@@ -22,13 +24,21 @@ class CourseController extends Controller
         return redirect()->action('CourseController@manageCourse');
 
     }
-    public function index()
-    {
-        return view('pages.manageCourse');
+
+    public function listCourses() {
+        return DB::table('courses')
+            ->select('course_id', 'sessions_days', 'course_type', 'term_no')
+            ->get();
+    }
+
+    public function index() {
+        $courses = $this->listCourses();
+        return view('pages.manageCourse', compact('courses'));
 
     }
 
     public function manageCourse() {
-        return view('pages.manageCourse');
+        $courses = $this->listCourses();
+        return view('pages.manageCourse', compact('courses'));
     }
 }
