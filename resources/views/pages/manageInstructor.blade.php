@@ -15,8 +15,6 @@
             <div class="collapse" id="addNewInstructor">
                 <h2>Add a New Instructor</h2>
             {!! Form::open(['url' => 'manageInstructor']) !!}
-                {!! Form::open() !!}
-
                     {{csrf_field()}}
                     <div class="form-group">
                     {!! Form::label('first_name', 'First Name:') !!}
@@ -27,9 +25,6 @@
                     {!! Form::label('email', 'Email:') !!}
                     {!! Form::text('email', null, ['class' => 'form-control']) !!}
                     </div>
-
-
-
                 <p>Check all time slots for which instructor is available:</p>
                 <div class="form-group">
                 <table>
@@ -38,23 +33,23 @@
                     </tr>
                     <tr>
                         <td>Morn</td>
-                        <td><input type="checkbox" name="instructAvail[]" value="mon_am"></td>
-                        <td><input type="checkbox" name="instructAvail[]" value="tues_am"></td>
-                        <td><input type="checkbox" name="instructAvail[]" value="wed_am"></td>
-                        <td><input type="checkbox" name="instructAvail[]" value="th_am"></td>
-                        <td><input type="checkbox" name="instructAvail[]" value="fri_am"></td>
+                        <td>{!! Form::checkbox('instructAvail[]', '0', false) !!}</td>
+                        <td>{!! Form::checkbox('instructAvail[]', '1', false) !!}</td>
+                        <td>{!! Form::checkbox('instructAvail[]', '2', false) !!}</td>
+                        <td>{!! Form::checkbox('instructAvail[]', '3', false) !!}</td>
+                        <td>{!! Form::checkbox('instructAvail[]', '4', false) !!}</td>
+
                     </tr>
                     <tr>
                         <td>Aft</td>
-                        <td><input type="checkbox" name="instructAvail[]" value="mon_pm"></td>
-                        <td><input type="checkbox" name="instructAvail[]" value="tues_pm"></td>
-                        <td><input type="checkbox" name="instructAvail[]" value="wed_pm"></td>
-                        <td><input type="checkbox" name="instructAvail[]" value="thurs_pm"></td>
-                        <td><input type="checkbox" name="instructAvail[]" value="fri_pm"></td>
+                        <td>{!! Form::checkbox('instructAvail[]', '5', false) !!}</td>
+                        <td>{!! Form::checkbox('instructAvail[]', '6', false) !!}</td>
+                        <td>{!! Form::checkbox('instructAvail[]', '7', false) !!}</td>
+                        <td>{!! Form::checkbox('instructAvail[]', '8', false) !!}</td>
+                        <td>{!! Form::checkbox('instructAvail[]', '9', false) !!}</td>
                     </tr>
                 </table>
                 </div>
-
                 <div class="form-group">
                     {!! Form::submit('Add instructor',['class'=> 'btn btn-primary form-control']) !!}
                 </div>
@@ -64,10 +59,7 @@
 
             <h2>Display Instructors</h2>
             <table>
-                <thead>
-                    <th>ID</th>
-                    <th>Name</th>
-                </thead>
+                <thead><th>ID</th><th>Name</th></thead>
                 <tbody>
                 @foreach($instructors as $instructor)
                     <tr>
