@@ -38,9 +38,13 @@ Route::get('/addcourse', 'PagesController@addcourse');
 
 Route::get('/draganddropschedule', 'PagesController@draganddropschedule');
 
+
 /* InstructorController */
 
 Route::get('/manageInstructor', 'InstructorController@manageInstructor');
+
+Route::get('/manageInstructor', 'InstructorController@index');
+
 
 Route::post('/manageInstructor', 'InstructorController@store');
 
