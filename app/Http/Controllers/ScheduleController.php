@@ -11,7 +11,7 @@ class ScheduleController extends Controller
     public function generateCourses()
     {
         $courseofferings = DB::table('courses AS c')
-            ->join('course_offerings AS co', 'c.course_id', '=', 'co.crs_id')
+            ->join('course_offerings AS co', 'c.course_id', '=', 'co.course_id')
             ->select('c.course_id AS course_id', 'c.sessions_days AS sessions_days', 'c.course_type AS course_type', 'c.term_no AS term_no', 'co.instructor_id AS instructor_id', 'co.ta_id AS ta_id')
             ->get();
         return $courseofferings;

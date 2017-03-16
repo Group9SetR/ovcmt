@@ -16,8 +16,8 @@ class CreateRoomByDayTable extends Migration
         Schema::create('rooms_by_days', function (Blueprint $table) {
             $table->string('room_id');
             $table->date('cdate');
-            $table->integer('am_crn');
-            $table->integer('pm_crn');
+            $table->integer('am_crn')->nullable();
+            $table->integer('pm_crn')->nullable();
             $table->primary(['room_id','cdate']);
         });
     }

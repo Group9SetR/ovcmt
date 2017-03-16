@@ -20,8 +20,8 @@ class CreateCalendarDateTable extends Migration
             $table->smallInteger('cyear');
             $table->tinyInteger('cdayOfWeek');
             $table->tinyInteger('cweek');
-            $table->binary('isWeekday');
-            $table->binary('isHoliday');
+            $table->boolean('isWeekday');
+            $table->boolean('isHoliday');
             $table->string('holidayDesc');
             $table->primary('cdate');
         });
