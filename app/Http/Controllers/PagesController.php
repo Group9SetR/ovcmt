@@ -44,15 +44,12 @@ class PagesController extends Controller
     public function editSchedule() {
         return view('pages.editschedule');
     }
-    /*
-    public function register() {
-        return view('auth.register');
-    }
-    */
     public function addcourse() {
         return view('pages.addcourse');
     }
     public function draganddropschedule() {
         return view('pages.draganddropschedule');
     }
+
+
 }
