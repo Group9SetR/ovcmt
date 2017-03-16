@@ -36,8 +36,13 @@ class ScheduleController extends Controller
 
     public function index()
     {
+
+        return view('pages.addschedule');
+    }
+
+    public function dragDrop() {
         $courseofferings = $this->generateCourses();
         $offeringswithsessions = $this->calculateDiff($courseofferings);
-        return view('pages.addschedule', compact('courseofferings','offeringswithsessions'));
+        return view('pages.dragDrop', compact('courseofferings','offeringswithsessions'));
     }
 }
