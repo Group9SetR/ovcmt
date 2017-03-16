@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use DB;
+
 use App\Course;
-use App\Http\Requests;
 use Illuminate\Http\Request;
+use App\Http\Requests;
+use DB;
 
 
 class CourseController extends Controller
@@ -27,20 +28,27 @@ class CourseController extends Controller
 
     }
 
-    public function listCourse() {
+
+    public function listCourses() {
+
         return DB::table('courses')
             ->select('course_id', 'sessions_days', 'course_type', 'term_no')
             ->get();
     }
+
     public function index()
     {
-
         return view('pages.manageCourse');
-
     }
 
-    public function manageCourse() {
-        $courses = $this->listCourse();
+
+
+    public function manageCourse()
+    {
+
+        $courses = $this->listCourses();
+
         return view('pages.manageCourse', compact('courses'));
     }
+
 }

@@ -10,10 +10,13 @@
         <div class="col-sm-6">
             <h4><small>Manage Course </small></h4>
             <hr>
-            <h2>Add a New Course</h2>
+            <button href="#addNewCourse" class="btn btn-default" data-toggle="collapse">Add Course</button>
+            <div class="collapse" id="addNewCourse">
+                <h2>Add a New Course</h2>
 
-            {!! Form::open(['url' => 'manageCourse']) !!}
-            {!! Form::open() !!}
+                {!! Form::open(['url' => 'manageCourse']) !!}
+                {!! Form::open() !!}
+
 
             {{csrf_field()}}
             <div class="form-group">
@@ -35,8 +38,11 @@
                 {!! Form::text('term_no', null, ['class' => 'form-control']) !!}
             </div>
 
-            <div class="form-group">
-                {!! Form::submit('Add course',['class'=> 'btn btn-primary form-control']) !!}
+
+
+                <div class="form-group">
+                    {!! Form::submit('Add course',['class'=> 'btn btn-primary form-control']) !!}
+                </div>
             </div>
 
             {!! Form::close() !!}
@@ -44,10 +50,13 @@
             <h2>Display Courses</h2>
             <table>
                 <thead>
+
                 <th>Course ID</th>
                 <th>Sessions days</th>
                 <th>Course Type</th>
                 <th>Term No</th>
+
+
                 </thead>
                 <tbody>
                 @foreach($courses as $course)
