@@ -46,6 +46,7 @@
                     <tr>
                         <td>MON - AM</td>
                         <div>
+                            <!-- {!! Form::text('room_id', null, ['class' => 'form-control']) !!} -->
                             <td></td>
                             <td></td>
                             <td></td>
@@ -127,7 +128,7 @@
 
             <div class="col-sm-4">
                 <h2>Course List</h2>
-                @foreach($courseList as $course)
+                @foreach($offeringswithsessions as $course)
                     <div class="panel panel-default" id="slid" draggable="true" ondragstart="drag(event)">
                         <div class="panel-heading">
                             {{$course->course_id}}

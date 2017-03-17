@@ -22,8 +22,8 @@ class ScheduleController extends Controller
     public function generateCourses()
     {
         $courseofferings = DB::table('courses AS c')
-            ->join('course_offerings AS co', 'c.course_id', '=', 'co.crs_id')
-            ->select('c.course_id AS course_id', 'c.sessions_days AS sessions_days', 'c.course_type AS course_type', 'c.term_no AS term_no', 'co.instructor_id AS instructor_id', 'co.ta_id AS ta_id')
+            ->join('course_offerings AS co', 'c.course_id', '=', 'co.course_id')
+            ->select('co.crn AS crn', 'c.course_id AS course_id', 'c.sessions_days AS sessions_days', 'c.course_type AS course_type', 'c.term_no AS term_no', 'co.instructor_id AS instructor_id', 'co.ta_id AS ta_id')
             ->get();
         return $courseofferings;
     }
@@ -31,10 +31,10 @@ class ScheduleController extends Controller
     public function calculateDiff($courseofferings) {
         foreach ($courseofferings as $offering) {
             $count = DB::table('rooms_by_days')
-                ->count()
-                ->where('am_crn', $offering->course_id)
-                ->orwhere('pm_crn', $offering->course_id);
-
+                ->select(DB::raw('COUNT(*) AS crn_count, start_date'))
+                ->where('am_crn', $offering->crn)
+                ->orwhere('pm_crn', $offering->crn)
+                ->groupBy();
             $offering->sessions_days = $offering->sessions_days - $count;
         }
         return $courseofferings;
