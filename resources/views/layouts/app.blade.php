@@ -96,7 +96,7 @@
         $(document).ready(function() {
             // Check if window is vertically scrollable
             if ($(document).height() > $(window).height()) {
-                $('footer').css('position', 'relative')
+                $('footer').css('position', 'relative');
             }
         });
     </script>
