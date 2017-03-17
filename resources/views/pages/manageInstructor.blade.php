@@ -62,17 +62,21 @@
             <hr/>
 
             <h2>Display Instructors</h2>
-            <table>
-                <thead>
-                    <th>ID</th><th>Name</th>
-                    <th>Mon AM</th><th>Tues AM</th><th>Wed AM</th><th>Thurs AM</th><th>Fri AM</th>
-                    <th>Mon PM</th><th>Tues PM</th><th>Wed PM</th><th>Thurs PM</th><th>Fri PM</th>
+            <table class="table table-striped table-bordered table-hover table-condensed">
+                <thead class="thead-default">
+                <tr>
+                    <th>ID</th><th>Name</th><th>Date</th>
+                    <th>Mon AM</th><th>Tues AM</th><th>Wed AM</th><th>Thur AM</th><th>Fri AM</th>
+                    <th>Mon PM</th><th>Tues PM</th><th>Wed PM</th><th>Thur PM</th><th>Fri PM</th>
+                    <th></th>
+                </tr>
                 </thead>
                 <tbody>
                 @foreach($instructors as $instructor)
                     <tr>
-                        <td>{{$instructor->instructor_id}}</td>
+                        <th>{{$instructor->instructor_id}}</th>
                         <td>{{$instructor->first_name}}</td>
+                        <td>{{$instructor->date_start}}</td>
                         <td>{{$instructor->mon_am}}</td>
                         <td>{{$instructor->tues_am}}</td>
                         <td>{{$instructor->wed_am}}</td>
@@ -83,11 +87,89 @@
                         <td>{{$instructor->wed_pm}}</td>
                         <td>{{$instructor->thurs_pm}}</td>
                         <td>{{$instructor->fri_pm}}</td>
+                        <td>
+                            <button class="btn btn-action open-EditInstructorDialog"
+                                    data-toggle="modal"
+                                    data-id="{{$instructor->instructor_id}}"
+                                    data-name="{{$instructor->first_name}}"
+                                    data-target="#editInstructorModal"
+                            >Edit</button>
+                        </td>
+
                     </tr>
+
+
                 @endforeach
                 </tbody>
             </table>
 
+            <div class="modal fade" id="editInstructorModal" tabindex="-1" role="dialog" aria-labeleledby="editInstructorModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="editInstructorModalLabel">Edit</h4>
+                        </div>
+                        <div class="modal-body">
+                            {!! Form::open(['url' => 'manageInstructor']) !!}
+                            <p>New Availability</p>
+                            <div class="form-group">
+                                {!! Form::hidden('modal_instructor_id', '', array('id'=>'modal_instructor_id')) !!}
+
+                                {!! Form::label('modal_instructor_name', 'Instructor:') !!}
+                                {!! Form::text('modal_instructor_name', '', array('id'=>'modal_instructor_name'))!!}
+                            </div>
+                            <div class="form-group">
+                                {!! Form::label('modal_instruct_avail_start_date', 'Effective date:') !!}
+                                {!! Form::date('modal_instruct_avail_start_date')!!}
+                            </div>
+                            <div class="form-group">
+                                <table>
+                                    <tr>
+                                        <th>Time</th><th>Mon</th><th>Tues</th><th>Wed</th><th>Thurs</th><th>Fri</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Morn</td>
+                                        <td>{!! Form::checkbox('instructAvail[]', '0', false) !!}</td>
+                                        <td>{!! Form::checkbox('instructAvail[]', '1', false) !!}</td>
+                                        <td>{!! Form::checkbox('instructAvail[]', '2', false) !!}</td>
+                                        <td>{!! Form::checkbox('instructAvail[]', '3', false) !!}</td>
+                                        <td>{!! Form::checkbox('instructAvail[]', '4', false) !!}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Aft</td>
+                                        <td>{!! Form::checkbox('instructAvail[]', '5', false) !!}</td>
+                                        <td>{!! Form::checkbox('instructAvail[]', '6', false) !!}</td>
+                                        <td>{!! Form::checkbox('instructAvail[]', '7', false) !!}</td>
+                                        <td>{!! Form::checkbox('instructAvail[]', '8', false) !!}</td>
+                                        <td>{!! Form::checkbox('instructAvail[]', '9', false) !!}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            {!! Form::close() !!}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <span class="pull-right">
+                                <button type="button" class="btn btn-primary">
+                                    Edit
+                                </button>
+                            </span>
+                        </div>
+                        <script>
+                            $(document).on('click', '.open-EditInstructorDialog', function() {
+                                var instructor_id = $(this).data('id');
+                                var instructor_name = $(this).data('name');
+                                console.log(instructor_id);
+                                console.log(instructor_name);
+                                $('.modal-body #modal_instructor_id').attr('value',instructor_id);
+                                $('.modal-body #modal_instructor_name').attr('value',instructor_name);
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
