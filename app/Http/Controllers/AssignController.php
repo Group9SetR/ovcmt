@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Instructor;
 
 class AssignController extends Controller
 {
@@ -12,7 +14,7 @@ class AssignController extends Controller
             {
                 $query->select(DB::raw(1))
                     ->from('course_instructors')
-                    ->whereRaw('course_instructors.course_id = course.course_id');
+                    ->whereRaw('course_instructors.course_id = courses.course_id');
             })
             ->get();
         return $courses;
@@ -43,6 +45,6 @@ class AssignController extends Controller
     public function index() {
         $courses = $this->getCourses();
         $instructors = $this->getInstructors();
-        return view('pages.addschedule', compact('courses','instructors', 'courseinstructor'));
+        return view('pages.assign', compact('courses','instructors', 'courseinstructor'));
     }
 }

@@ -37,8 +37,6 @@ Route::get('/schedulestaff', 'PagesController@schedulestaff');
 
 Route::get('/editschedule', 'PagesController@editschedule');
 
-Route::get('/addcourse', 'PagesController@addcourse');
-
 Route::get('/draganddropschedule', 'PagesController@draganddropschedule');
 
 Route::get('/manageInstructor', 'InstructorController@manageInstructor');
@@ -47,6 +45,8 @@ Route::post('/manageInstructor', 'InstructorController@store');
 
 Route::get('/manageCourse', 'CourseController@manageCourse');
 
-Route::post('/manageCourse', 'CourseController@store');
+Route::get('/manageCourse', 'CourseController@manageCourse');
 
-Route::get('/test','Tester@index');
+Route::get('/assign', 'AssignController@index');
+
+
