@@ -58,6 +58,8 @@ Route::post('/manageCourse', 'CourseController@store');
 
 Route::get('/dragDrop', 'ScheduleController@dragDrop');
 
+// Route::post('/dragDrop', 'ScheduleController@store');
+
 Route::get('/addschedule', 'ScheduleController@index');
 
 Route::get('/test','Tester@index');
