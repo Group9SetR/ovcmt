@@ -11,6 +11,7 @@
 |
 */
 
+/* PagesController */
 Route::get('/', 'PagesController@home');
 
 Route::get('/about', 'PagesController@about');
@@ -25,11 +26,7 @@ Route::get('/staffauth', 'PagesController@staffauth');
 
 Route::get('/studauth', 'PagesController@studauth');
 
-// Route::get('/register', 'PagesController@register');
-
 Route::get('/masterscheduleview', 'PagesController@masterscheduleview');
-
-Route::get('/addschedule', 'ScheduleController@index');
 
 Route::get('/schedulestudent', 'PagesController@schedulestudent');
 
@@ -39,9 +36,17 @@ Route::get('/editschedule', 'PagesController@editschedule');
 
 Route::get('/draganddropschedule', 'PagesController@draganddropschedule');
 
+
+/* InstructorController */
+
 Route::get('/manageInstructor', 'InstructorController@manageInstructor');
 
+Route::get('/manageInstructor', 'InstructorController@index');
+
+
 Route::post('/manageInstructor', 'InstructorController@store');
+
+/* CourseController */
 
 Route::get('/manageCourse', 'CourseController@manageCourse');
 
@@ -50,3 +55,12 @@ Route::get('/manageCourse', 'CourseController@manageCourse');
 Route::get('/assign', 'AssignController@index');
 
 
+/* ScheduleController */
+
+Route::get('/dragDrop', 'ScheduleController@dragDrop');
+
+// Route::post('/dragDrop', 'ScheduleController@store');
+
+Route::get('/addschedule', 'ScheduleController@index');
+
+Route::get('/test','Tester@index');

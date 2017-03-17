@@ -6,7 +6,6 @@
                 @include('includes.sidebar')
             </div>
 
-
         <div class="col-sm-6">
             <h4><small>Manage Course </small></h4>
             <hr>
@@ -16,7 +15,6 @@
 
                 {!! Form::open(['url' => 'manageCourse']) !!}
                 {!! Form::open() !!}
-
 
             {{csrf_field()}}
             <div class="form-group">
@@ -37,9 +35,6 @@
                 {!! Form::label('term_no', 'Term No:') !!}
                 {!! Form::text('term_no', null, ['class' => 'form-control']) !!}
             </div>
-
-
-
                 <div class="form-group">
                     {!! Form::submit('Add course',['class'=> 'btn btn-primary form-control']) !!}
                 </div>
@@ -50,13 +45,10 @@
             <h2>Display Courses</h2>
             <table>
                 <thead>
-
                 <th>Course ID</th>
                 <th>Sessions days</th>
                 <th>Course Type</th>
                 <th>Term No</th>
-
-
                 </thead>
                 <tbody>
                 @foreach($courses as $course)
@@ -72,6 +64,4 @@
         </div>
     </div>
 </div>
-
-
 @endsection

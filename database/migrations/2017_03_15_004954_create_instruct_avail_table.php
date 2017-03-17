@@ -14,7 +14,7 @@ class CreateInstructAvailTable extends Migration
     public function up()
     {
         Schema::create('instruct_avails', function (Blueprint $table) {
-            $table->integer('instruct_id');
+            $table->integer('instructor_id');
             $table->date('date_start');
             $table->boolean('mon_am');
             $table->boolean('mon_pm');
@@ -30,7 +30,7 @@ class CreateInstructAvailTable extends Migration
 
             $table->boolean('fri_am');
             $table->boolean('fri_pm');
-            $table->primary(['instruct_id', 'date_start']);
+            $table->primary(['instructor_id', 'date_start']);
         });
     }
 

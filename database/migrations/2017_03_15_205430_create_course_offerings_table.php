@@ -16,7 +16,7 @@ class CreateCourseOfferingsTable extends Migration
         Schema::create('course_offerings', function (Blueprint $table) {
             $table->increments('crn');
             $table->integer('term_id');
-            $table->string('crs_id');
+            $table->string('course_id');
             $table->integer('instructor_id');
             $table->integer('ta_id');
         });

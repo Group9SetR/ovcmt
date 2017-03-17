@@ -25,7 +25,7 @@
     </script>
 </head>
 <body>
-    <div id="app">
+    <div class="wrapper" id="app">
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
@@ -84,11 +84,20 @@
         @yield('content')
     </div>
 
-    <footer class="container-fluid">
+    <div class="push"></div>
+    <footer class="container-fluid footer">
         @include('includes.footer')
     </footer>
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Check if window is vertically scrollable
+            if ($(document).height() > $(window).height()) {
+                $('footer').css('position', 'relative');
+            }
+        });
+    </script>
 </body>
 </html>

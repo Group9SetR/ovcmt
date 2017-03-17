@@ -1,136 +1,44 @@
 @extends('layouts.app')
 @section('content')
-<script>
-    function allowDrop(ev) {
-        ev.preventDefault();
-    }
 
-    function drag(ev) {
-        ev.dataTransfer.setData("text", ev.target.id);
-    }
-
-    function drop(ev) {
-        ev.preventDefault();
-        var data = ev.dataTransfer.getData("text");
-        ev.target.appendChild(document.getElementById(data));
-    }
-
-    $(document).ready(function() {
-        $("div[id^='slid']").attr('id', function(i) {
-            return "slide" + ++i;
-        });
-    });
-</script>
     <div class="container-fluid">
         <div class="row content">
             <div class="col-sm-2 sidenav">
                 @include('includes.sidebar')
             </div>
-            <div class="col-sm-9">
-                <h4><small>Add schedule</small></h4>
-                <hr>
-                <h2>Display schedule</h2>
-                <form action="#somePage.php">
-                    <button type="submit">Upload</button>
-                    <button type="submit">Delete</button>
-                </form>
-            </div>
-        <div class="col-sm-6">
-            <h4><small>Add schedule</small></h4>
-            <hr>
-            <h2>Display schedule</h2>
-            <table ondrop="drop(event)" ondragover="allowDrop(event)">
-                <tr>
-                    <th>&nbsp;</th>
-                    <th>Rm P1</th>
-                    <th>Rm P2</th>
-                    <th>Rm A1</th>
-                    <th>Rm P2</th>
-                </tr>
-                <tr>
-                    <td>MON - AM</td>
-                    <div>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </div>
-                </tr>
-                <tr>
-                    <td >MON - PM</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>TUE - AM</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>TUE - PM</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>WED - AM</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>WED - PM</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>THU - AM</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>THU - PM</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>FRI - AM</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>FRI - PM</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-            </table>
-        </div>
-        <div class="col-sm-3">
-            @foreach($offeringswithsessions as $course)
-                <div class="panel panel-default" id="slid" draggable="true" ondragstart="drag(event)">
-                    <div class="panel-heading">{{$course->crs_id}}</div>
-                    <div class="panel-body">Sessions Days: {{$course->sessions_days}} && Type: {{$course->type}}</div>
-                </div>
-            @endforeach
 
-        </div>
-    </div>
+            <div class="col-sm-6">
+                <h4><small>Select Term</small></h4>
+                <hr>
+                <h3>Select Term</h3>
+
+                <div class="input-group-btn select" id="select1">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <span class="selected">Term 1</span> <span class="caret"></span></button>
+                    <ul class="dropdown-menu option" role="menu">
+                        <li id="1"><a href="#">Term 1</a></li>
+                        <li id="2"><a href="#">Term 2</a></li>
+                        <li id="3"><a href="#">Term 3</a></li>
+                        <li id="4"><a href="#">Term 4</a></li>
+                    </ul>
+                </div>
+
+                <script>
+                    $('body').on('click','.option li',function(){
+                        var i = $(this).parents('.select').attr('id');
+                        var v = $(this).children().text();
+                        var o = $(this).attr('id');
+                        $('#'+i+' .selected').attr('id',o);
+                        $('#'+i+' .selected').text(v);
+                    });
+                </script>
+                <br><br><br><br><br>
+                <div class="btn pull-right">
+                <a href="{{ url('/dragDrop') }}" class="btn btn-primary" role="button">Next</a>
+                </div>
+            </div>
+
+
 
 
 @endsection
