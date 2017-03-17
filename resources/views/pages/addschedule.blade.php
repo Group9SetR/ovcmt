@@ -34,7 +34,7 @@
                 </script>
                 <br><br><br><br><br>
                 <div class="btn pull-right">
-                <a href="{{ url('/dragDrop') }}" class="btn btn-primary" role="button">Next</a>
+                <a href="{{ url('/assign') }}" class="btn btn-primary" role="button">Next</a>
                 </div>
             </div>
 

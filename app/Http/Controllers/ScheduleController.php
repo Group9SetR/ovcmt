@@ -56,4 +56,9 @@ class ScheduleController extends Controller
         $offeringswithsessions = $this->calculateDiff($courseofferings);
         return view('pages.dragDrop', compact('courseofferings','offeringswithsessions', 'courseList'));
     }
+
+    public function assign() {
+
+        return view('pages.assign');
+    }
 }

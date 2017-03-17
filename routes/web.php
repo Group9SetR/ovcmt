@@ -59,6 +59,8 @@ Route::get('/assign', 'AssignController@index');
 
 Route::get('/dragDrop', 'ScheduleController@dragDrop');
 
+Route::get('/assign', 'ScheduleController@assign');
+
 // Route::post('/dragDrop', 'ScheduleController@store');
 
 Route::get('/addschedule', 'ScheduleController@index');
