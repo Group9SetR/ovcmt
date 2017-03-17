@@ -24,7 +24,7 @@
             <div class="col-sm-4 offset-2">
                 <h4><small>Edit Assigned Instructors by Course</small></h4>
                 <hr>
-                @foreach($courseinstructors as $ci)
+{{--                @foreach($courseinstructors as $ci)
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             {{$ci->course_id}}
@@ -33,7 +33,7 @@
                             <b>ID:</b> {{$instructor->instructor_id}} <b>Email:</b> {{$instructor->email}}
                         </div>
                     </div>
-                @endforeach
+                @endforeach--}}
             </div>
         </div>
     </div>
