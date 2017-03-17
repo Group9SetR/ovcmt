@@ -6,6 +6,7 @@ use App\Instructor;
 use App\InstructAvail;
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use App\Course;
 use DB;
 
 class InstructorController extends Controller
@@ -65,6 +66,7 @@ class InstructorController extends Controller
 
     public function index() {
         $instructors = $this->listInstructors();
-        return view('pages.manageInstructor', compact('instructors'));
+        $courses = Course::all();
+        return view('pages.manageInstructor', compact('instructors', 'courses'));
     }
 }
