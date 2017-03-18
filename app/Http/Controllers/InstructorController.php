@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Instructor;
-use App\InstructAvail;
+use App\Course;
 use App\Http\Requests;
-use Illuminate\Http\Request;
+use App\InstructAvail;
+use App\Instructor;
 use DB;
+use Illuminate\Http\Request;
 
 class InstructorController extends Controller
 {
@@ -26,6 +27,10 @@ class InstructorController extends Controller
         $availability = $this->getAvailabilityFromCheckboxes($req);
         $this->setInstructorAvailability($instructAvail, $availability);
         $instructAvail->save();
+
+        $courseinstructor = new CourseInstructor();
+        $courseinstructor->instructor_id = $latestInstructorId;
+        // TODO: finish insert, handle multiple courses
 
         return redirect()->action('InstructorController@index');
     }
@@ -65,6 +70,7 @@ class InstructorController extends Controller
 
     public function index() {
         $instructors = $this->listInstructors();
-        return view('pages.manageInstructor', compact('instructors'));
+        $courses = Course::all();
+        return view('pages.manageInstructor', compact('instructors', 'courses'));
     }
 }

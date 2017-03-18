@@ -26,13 +26,14 @@ class AssignController extends Controller
     }
 
     public function getCourseInstructors() {
-        $courseinstructor = DB::table('courses AS c')
-            ->join('course_instructors AS ci', 'c.course_id', '=', 'ci.course_id')
-            ->join('instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
-            ->select('')
+        $courseofferings = DB::table('courses AS c')
+            ->join('course_offerings AS co', 'c.course_id', '=', 'co.course_id')
+            ->join('instructors AS i', 'co.instructor_id', '=', 'i.instructor_id')
+            ->select('c.course_id AS course_id', 'co.instructor_id as instructor_id', 'i.first_name as first_name',
+                'i.email as email')
             ->get();
 //        TODO: add select fields
-        return $courseinstructor;
+        return $courseofferings;
     }
 
     public function store(Request $req) {
@@ -45,6 +46,6 @@ class AssignController extends Controller
     public function index() {
         $courses = $this->getCourses();
         $instructors = $this->getInstructors();
-        return view('pages.assign', compact('courses','instructors', 'courseinstructor'));
+        return view('pages.assign', compact('courses','instructors'));
     }
 }

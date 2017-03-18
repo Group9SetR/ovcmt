@@ -110,7 +110,7 @@
                                 <td ondragover="allowDrop(event)" name="M1-pm[]"></td>
                                 <td ondragover="allowDrop(event)" name="M1-pm[]"></td>
                             </tr>
-                            <tr class="drag_schedule_row">                                
+                            <tr class="drag_schedule_row">
                                 <th class='drag_schedule_row_head'>A1-PM</th>
                                 <td ondragover="allowDrop(event)" name="A1-pm[]"></td>
                                 <td ondragover="allowDrop(event)" name="A1-pm[]"></td>
@@ -136,6 +136,12 @@
                             </tr>
                             </tbody>
                         </table>
+                        <div class="form-group">
+                        {!! Form::submit('Save',['class'=> 'btn btn-primary ']) !!}
+                        <!-- {!! Form::submit('Clear',['class'=> 'btn btn-primary']) !!} -->
+                            <a href="dragDrop"><button class='btn btn-primary'>Clear</button></a>
+                        </div>
+                        {{ Form::close() }}
                         @foreach ($amRoomsByWeek as $timeslot)
                             <script>
                                 var dayOfWeek ='<?php echo $timeslot->cdayOfWeek;?>';
@@ -161,15 +167,7 @@
                                 document.getElementsByName(sb)[dayOfWeek].append(coursePanel);
                             </script>
                         @endforeach
-                        <br>
-                        <div class="form-group">
-                        {!! Form::submit('Save',['class'=> 'btn btn-primary ']) !!}
-                        <!-- {!! Form::submit('Clear',['class'=> 'btn btn-primary']) !!} -->
-                            <a href="dragDrop"><button class='btn btn-primary'>Clear</button></a>
-                        </div>
-                        {{ Form::close() }}
                     </div>
-
                     <div class="col-sm-2 drag_course_offering_list" ondragover="allowDrop(event)" ondrop="drop(event)">
                         @foreach($courseofferings as $course)
                             <div class="panel panel-default drag_course_offering" id="slid" draggable="true" ondragstart="drag(event)">
@@ -186,8 +184,6 @@
                     </div>
                 </div>
             </div>
-            <br>
-
-
         </div>
+    </div>
 @endsection
