@@ -85,6 +85,7 @@
         @yield('content')
     </div>
 
+    <br><br><br>
     <div class="push"></div>
     <footer class="container-fluid footer">
         @include('includes.footer')
