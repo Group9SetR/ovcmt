@@ -83,6 +83,7 @@
                             {!! Form::open(['url' => 'manageCourse']) !!}
                             <p>Edit Course</p>
                             <div class="form-group">
+                                <!-- TODO grab course data - not working right now -->
                                 <div class="row">
                                     <div class="col-sm-3">
                                         {!! Form::label('modal_courseid_name', 'Course Id:') !!}<br>
@@ -106,6 +107,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
                             <span class="pull-right">
+                                <!-- TODO update database info once saved and edited -->
                                 <button type="button" class="btn btn-primary">
                                     Edit
                                 </button>
