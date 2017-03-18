@@ -43,17 +43,19 @@ Route::get('/manageInstructor', 'InstructorController@manageInstructor');
 
 Route::get('/manageInstructor', 'InstructorController@index');
 
-
 Route::post('/manageInstructor', 'InstructorController@store');
+
+Route::post('/showInstructorDetails', 'AjaxController@instructorDetails');
 
 /* CourseController */
 
 Route::get('/manageCourse', 'CourseController@manageCourse');
 
-Route::get('/manageCourse', 'CourseController@manageCourse');
+Route::get('/manageCourse', 'CourseController@index');
+
+Route::post('/manageCourse', 'CourseController@store');
 
 Route::get('/assign', 'AssignController@index');
-
 
 /* ScheduleController */
 
