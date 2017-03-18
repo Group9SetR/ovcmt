@@ -54,9 +54,20 @@
                     </tr>
                 </table>
                 </div>
+
+                <h4>Teachable Courses</h4>
+
+               
+
+
+
+
+
                 <div class="form-group">
                     {!! Form::submit('Add instructor',['class'=> 'btn btn-primary form-control']) !!}
                 </div>
+
+
             </div> <!-- Close the add instructor div-->
             {!! Form::close() !!}
             <hr/>
