@@ -13,9 +13,7 @@
             <div class="collapse" id="addNewCourse">
                 <h2>Add a New Course</h2>
 
-                {!! Form::open(['url' => 'manageCourse']) !!}
-                {!! Form::open() !!}
-
+            {!! Form::open(['url' => 'manageCourse']) !!}
             {{csrf_field()}}
             <div class="form-group">
                 {!! Form::label('course_id', 'Course Id:') !!}
@@ -43,7 +41,7 @@
             {!! Form::close() !!}
             <hr/>
             <h2>Display Courses</h2>
-            <table class="table table-striped table-bordered table-hover table-condensed text-center">
+            <table id="myTable" class="table table-striped table-bordered table-hover table-condensed text-center">
                 <thead class="thead-default">
                     <th class="text-center">Course ID</th>
                     <th class="text-center">Sessions days</th>
