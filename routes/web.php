@@ -51,10 +51,11 @@ Route::post('/showInstructorDetails', 'AjaxController@instructorDetails');
 
 Route::get('/manageCourse', 'CourseController@manageCourse');
 
-Route::get('/manageCourse', 'CourseController@manageCourse');
+Route::get('/manageCourse', 'CourseController@index');
+
+Route::post('/manageCourse', 'CourseController@store');
 
 Route::get('/assign', 'AssignController@index');
-
 
 /* ScheduleController */
 

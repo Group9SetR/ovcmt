@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\CourseInstructor;
-use App\Instructor;
-use App\InstructAvail;
-use App\Http\Requests;
-use Illuminate\Http\Request;
 use App\Course;
+use App\Http\Requests;
+use App\InstructAvail;
+use App\Instructor;
 use DB;
+use Illuminate\Http\Request;
 
 class InstructorController extends Controller
 {

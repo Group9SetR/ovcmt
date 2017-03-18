@@ -13,9 +13,7 @@
             <div class="collapse" id="addNewCourse">
                 <h2>Add a New Course</h2>
 
-                {!! Form::open(['url' => 'manageCourse']) !!}
-                {!! Form::open() !!}
-
+            {!! Form::open(['url' => 'manageCourse']) !!}
             {{csrf_field()}}
             <div class="form-group">
                 {!! Form::label('course_id', 'Course Id:') !!}
@@ -43,7 +41,7 @@
             {!! Form::close() !!}
             <hr/>
             <h2>Display Courses</h2>
-            <table class="table table-striped table-bordered table-hover table-condensed text-center">
+            <table id="myTable" class="table table-striped table-bordered table-hover table-condensed text-center">
                 <thead class="thead-default">
                     <th class="text-center">Course ID</th>
                     <th class="text-center">Sessions days</th>
@@ -85,6 +83,7 @@
                             {!! Form::open(['url' => 'manageCourse']) !!}
                             <p>Edit Course</p>
                             <div class="form-group">
+                                <!-- TODO grab course data - not working right now -->
                                 <div class="row">
                                     <div class="col-sm-3">
                                         {!! Form::label('modal_courseid_name', 'Course Id:') !!}<br>
@@ -108,6 +107,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
                             <span class="pull-right">
+                                <!-- TODO update database info once saved and edited -->
                                 <button type="button" class="btn btn-primary">
                                     Edit
                                 </button>

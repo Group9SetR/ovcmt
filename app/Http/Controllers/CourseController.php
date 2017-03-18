@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Course;
-use Illuminate\Http\Request;
 use App\Http\Requests;
-use DB;
-
+use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
@@ -22,17 +19,14 @@ class CourseController extends Controller
         return redirect()->action('CourseController@manageCourse');
     }
 
+    public function listCourses() {
+        $courseList = Course::all();
+        return $courseList;
+    }
+
     public function index()
     {
-        return view('pages.manageCourse');
-    }
-
-    public function manageCourse()
-    {
-        $courses = Course::all();
+        $courses = $this->listCourses();
         return view('pages.manageCourse', compact('courses'));
     }
-
-
-
 }
