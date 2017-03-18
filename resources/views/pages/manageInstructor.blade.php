@@ -6,8 +6,6 @@
         <div class="col-sm-2 sidenav">
             @include('includes.sidebar')
         </div>
-
-
         <div class="col-sm-6">
             <h4><small>Manage Instructors </small></h4>
             <hr>
@@ -161,8 +159,6 @@
                             $(document).on('click', '.open-EditInstructorDialog', function() {
                                 var instructor_id = $(this).data('id');
                                 var instructor_name = $(this).data('name');
-                                console.log(instructor_id);
-                                console.log(instructor_name);
                                 $('.modal-body #modal_instructor_id').attr('value',instructor_id);
                                 $('.modal-body #modal_instructor_name').attr('value',instructor_name);
                             });
