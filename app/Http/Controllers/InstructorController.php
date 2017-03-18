@@ -28,6 +28,10 @@ class InstructorController extends Controller
         $this->setInstructorAvailability($instructAvail, $availability);
         $instructAvail->save();
 
+        $courseinstructor = new CourseInstructor();
+        $courseinstructor->instructor_id = $latestInstructorId;
+        // TODO: finish insert, handle multiple courses
+
         return redirect()->action('InstructorController@index');
     }
 
