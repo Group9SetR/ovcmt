@@ -178,10 +178,11 @@
                                     data: {"instructor_id" : instructor_id},
                                     dataType: 'json',
                                     success: function(data){
+                                        $('#courseListing').empty();
                                         for (var i = 0; i < data[0].length; i++) {
                                             var panel = "<div class='panel panel-default'><div class='panel-heading'>" + data[0][i]['course_id']
                                                 + "</div> <div class='panel-body'>" + "Intake: " + data[0][i]['intake_no'] + "</div></div>";
-                                            $('.modal-body #courseListing').append(panel);
+                                            $('#courseListing').append(panel);
                                         }
                                     }
                                 });
