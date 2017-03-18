@@ -148,6 +148,10 @@
                                 </table>
                             </div>
                             {!! Form::close() !!}
+                            <div>
+                                <h4>Courses this instructor can teach</h4>
+                                <div id="courseListing"></div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -159,10 +163,28 @@
                         </div>
                         <script>
                             $(document).on('click', '.open-EditInstructorDialog', function() {
+                                $.ajaxSetup({
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    }
+                                });
                                 var instructor_id = $(this).data('id');
                                 var instructor_name = $(this).data('name');
                                 $('.modal-body #modal_instructor_id').attr('value',instructor_id);
                                 $('.modal-body #modal_instructor_name').attr('value',instructor_name);
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/showInstructorDetails',
+                                    data: {"instructor_id" : instructor_id},
+                                    dataType: 'json',
+                                    success: function(data){
+                                        for (var i = 0; i < data[0].length; i++) {
+                                            var panel = "<div class='panel panel-default'><div class='panel-heading'>" + data[0][i]['course_id']
+                                                + "</div> <div class='panel-body'>" + "Intake: " + data[0][i]['intake_no'] + "</div></div>";
+                                            $('.modal-body #courseListing').append(panel);
+                                        }
+                                    }
+                                });
                             });
                         </script>
                     </div>
