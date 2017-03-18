@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CourseInstructor;
 use App\Instructor;
 use App\InstructAvail;
 use App\Http\Requests;
@@ -27,6 +28,10 @@ class InstructorController extends Controller
         $availability = $this->getAvailabilityFromCheckboxes($req);
         $this->setInstructorAvailability($instructAvail, $availability);
         $instructAvail->save();
+
+        $courseinstructor = new CourseInstructor();
+        $courseinstructor->instructor_id = $latestInstructorId;
+        // TODO: finish insert, handle multiple courses
 
         return redirect()->action('InstructorController@index');
     }
