@@ -128,7 +128,7 @@
 
             <div class="col-sm-4">
                 <h2>Course List</h2>
-                @foreach($offeringswithsessions as $course)
+                @foreach($courseList as $course)
                     <div class="panel panel-default" id="slid" draggable="true" ondragstart="drag(event)">
                         <div class="panel-heading">
                             {{$course->course_id}}
