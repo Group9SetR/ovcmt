@@ -68,6 +68,14 @@ class InstructorController extends Controller
             ->get();
     }
 
+    public function edit(Request $req) {
+        $instructor = Instructor::where('instructor_id', $req->modal_instructor_id)->first();
+        $instructor->first_name = $req->modal_instructor_name;
+        //TODO: EMAIL?!
+        $instructor->save();
+        return redirect()->action('InstructorController@index');
+    }
+
     public function index() {
         $instructors = $this->listInstructors();
         $courses = Course::all();

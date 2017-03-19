@@ -11,62 +11,74 @@
 |
 */
 
-/* PagesController */
-Route::get('/', 'PagesController@home');
+/* Admin Routes*/
+Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
+{
+    Route::get('/adminauth', 'PagesController@adminauth');
+    Route::get('/masterscheduleview', 'PagesController@masterscheduleview');
+    Route::get('/editschedule', 'PagesController@editschedule');
 
-Route::get('/about', 'PagesController@about');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index');
-
-Route::get('/adminauth', 'PagesController@adminauth');
-
-Route::get('/staffauth', 'PagesController@staffauth');
-
-Route::get('/studauth', 'PagesController@studauth');
-
-Route::get('/masterscheduleview', 'PagesController@masterscheduleview');
-
-Route::get('/schedulestudent', 'PagesController@schedulestudent');
-
-Route::get('/schedulestaff', 'PagesController@schedulestaff');
-
-Route::get('/editschedule', 'PagesController@editschedule');
-
-Route::get('/draganddropschedule', 'PagesController@draganddropschedule');
+    Route::get('/draganddropschedule', 'PagesController@draganddropschedule');
 
 
-/* InstructorController */
+    /* InstructorController */
 
-Route::get('/manageInstructor', 'InstructorController@manageInstructor');
+    Route::get('/manageInstructor', 'InstructorController@manageInstructor');
 
-Route::get('/manageInstructor', 'InstructorController@index');
+    Route::get('/manageInstructor', 'InstructorController@index');
 
-Route::post('/manageInstructor', 'InstructorController@store');
+    Route::post('/manageInstructor', 'InstructorController@store');
 
-Route::post('/showInstructorDetails', 'AjaxController@instructorDetails');
+    Route::post('/editInstructor', 'InstructorController@edit');
 
-/* CourseController */
+    Route::post('/showInstructorDetails', 'AjaxController@instructorDetails');
 
-Route::get('/manageCourse', 'CourseController@manageCourse');
+    /* CourseController */
 
-Route::get('/manageCourse', 'CourseController@index');
+    Route::get('/manageCourse', 'CourseController@manageCourse');
 
-Route::post('/manageCourse', 'CourseController@store');
+    Route::get('/manageCourse', 'CourseController@index');
+
+    Route::post('/manageCourse', 'CourseController@store');
+
+    Route::get('/assign', 'AssignController@index');
+
+    /* ScheduleController */
+
+    Route::get('/dragDrop', 'ScheduleController@index');
+
+    Route::post('/dragDrop', 'ScheduleController@displayRoomsByWeek');
+
+// Route::post('/dragDrop', 'ScheduleController@store');
+
+    Route::get('/addschedule', 'ScheduleController@index');
+});
+
+/* Staff Routes*/
+Route::group(['middleware' => 'App\Http\Middleware\StaffMiddleware'], function()
+{
+    Route::get('/staffauth', 'PagesController@staffauth');
+    Route::get('/schedulestaff', 'PagesController@schedulestaff');
+});
 
 Route::post('/updateCourse', 'CourseController@updateCourse');
 
 Route::get('/assign', 'AssignController@index');
+/* Student Routes*/
+Route::group(['middleware' => 'App\Http\Middleware\StudentMiddleware'], function()
+{
+    Route::get('/studauth', 'PagesController@studauth');
+    Route::get('/schedulestudent', 'PagesController@schedulestudent');
+});
 
-/* ScheduleController */
+/* Public Pages */
 
-Route::get('/dragDrop', 'ScheduleController@index');
+Auth::routes();
 
-Route::post('/dragDrop', 'ScheduleController@displayRoomsByWeek');
+Route::get('/', 'PagesController@home');
 
-// Route::post('/dragDrop', 'ScheduleController@store');
+Route::get('/about', 'PagesController@about');
 
-Route::get('/addschedule', 'ScheduleController@index');
+Route::get('/home', 'HomeController@index');
 
 Route::get('/test','Tester@index');
