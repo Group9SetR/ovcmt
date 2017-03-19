@@ -41,6 +41,7 @@ class InstructorController extends Controller
 
     public function getAvailabilityFromCheckboxes($req) {
         $checkboxes = $req->instructAvail;
+
         $availability = array_fill(0,10,0);
         foreach($checkboxes as $avail) {
             $availability[$avail] = 1;
@@ -73,6 +74,19 @@ class InstructorController extends Controller
         $instructor->first_name = $req->modal_instructor_name;
         //TODO: EMAIL?!
         $instructor->save();
+        DB::table('instruct_avails')
+            ->where('instructor_id', $req->modal_instructor_id)
+            ->where('date_start', $req->modal_instruct_avail_start_date)
+            ->update(['mon_am' => isset($req->modal_mon_am)? 1 : 0,
+                      'tues_am' => isset($req->modal_tues_am)? 1 : 0,
+                      'wed_am' => isset($req->modal_wed_am)? 1 : 0,
+                      'thurs_am' => isset($req->modal_thurs_am)? 1 : 0,
+                      'fri_am' => isset($req->modal_fri_am)? 1 : 0,
+                      'mon_pm' => isset($req->modal_mon_pm)? 1 : 0,
+                      'tues_pm' => isset($req->modal_tues_pm)? 1 : 0,
+                      'wed_pm' => isset($req->modal_wed_pm)? 1 : 0,
+                      'thurs_pm' => isset($req->modal_thurs_pm)? 1 : 0,
+                      'fri_pm' => isset($req->modal_fri_pm)? 1 : 0]);
         return redirect()->action('InstructorController@index');
     }
 
