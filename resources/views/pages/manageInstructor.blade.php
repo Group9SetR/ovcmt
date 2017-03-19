@@ -55,21 +55,74 @@
                 </table>
                 </div>
 
-                <h4>Teachable Courses</h4>
-
-               
-
-
-
-
-
                 <div class="form-group">
                     {!! Form::submit('Add instructor',['class'=> 'btn btn-primary form-control']) !!}
                 </div>
 
+                {!! Form::close() !!}
+
+
+                <hr>
+                <h4>Teachable Courses</h4>
+                <br>
+                <h5>Assign Course </h5>
+
+                {!! Form::open(['url' => 'courseInstructor']) !!}
+                <div class="form-group">
+                    {!! Form::hidden('modal_instructor_id', '', array('id'=>'modal_instructor_id')) !!}
+
+                    <select id="course_id">
+                        @foreach($courses as $course)
+                            <option value=$course>{{$course->course_id}}</option>
+                        @endforeach
+                    </select>
+
+                     &nbsp &nbsp Option A
+                    <input type="radio" id = "a" name ="intake_no" value ="A" checked="checked" />
+
+                    &nbsp &nbsp Option B
+                    <input type="radio" id = "b" name ="intake_no" value ="B" />
+                    &nbsp
+
+                    | &nbsp &nbsp Instructor
+                    <input type="radio" id = "inst" name ="instructor_type" value ="Instructor" checked="checked"/>
+                    &nbsp &nbsp TA
+                    <input type="radio" id = "ta" name ="instructor_type" value ="TA" />
+
+                    <button type="button" id="button" class="btn btn-info" onclick="myFunction()">add</button>
+
+                    <p id="demo"></p>
+
+                </div>
+
+
+
+                <script>
+                    function myFunction() {
+                        var course_id = document.getElementById("course_id");
+                        course_id = course_id.options[course_id.selectedIndex].text;
+
+                        if (document.getElementById("a").checked){
+                            intake_no = document.getElementById('a').value;
+                        }else {
+                            intake_no = document.getElementById('b').value;
+                        }
+                        if (document.getElementById("inst").checked){
+                            instructor_type = document.getElementById('inst').value;
+                        }else if (document.getElementById("ta").checked){
+                            instructor_type = document.getElementById('ta').value;
+                        }
+                        var myArray = [ course_id, intake_no, instructor_type];
+
+                        document.getElementById("demo").innerHTML = myArray;
+
+                    }
+                </script>
+
+                {!! Form::close() !!}
 
             </div> <!-- Close the add instructor div-->
-            {!! Form::close() !!}
+
             <hr/>
 
             <h2>Display Instructors</h2>

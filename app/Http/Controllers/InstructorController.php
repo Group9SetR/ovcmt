@@ -61,6 +61,8 @@ class InstructorController extends Controller
         $instructAvail->fri_pm = $availability[9];
     }
 
+
+
     public function listInstructors() {
         return DB::table('instructors as i')
             ->join('instruct_avails as ia', 'i.instructor_id', '=', 'ia.instructor_id')
