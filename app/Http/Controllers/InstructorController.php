@@ -24,12 +24,20 @@ class InstructorController extends Controller
         $instructAvail = new InstructAvail;
         $instructAvail->instructor_id = $latestInstructorId;
         $instructAvail->date_start = $req->date_start;
-        $availability = $this->getAvailabilityFromCheckboxes($req);
-        $this->setInstructorAvailability($instructAvail, $availability);
+        $instructAvail->mon_am = isset($req->mon_am) ? 1 : 0;
+        $instructAvail->tues_am = isset($req->tues_am) ? 1 : 0;
+        $instructAvail->wed_am = isset($req->wed_am) ? 1 : 0;
+        $instructAvail->thurs_am = isset($req->thurs_am) ? 1 : 0;
+        $instructAvail->fri_am = isset($req->fri_am) ? 1 : 0;
+        $instructAvail->mon_pm = isset($req->mon_pm) ? 1 : 0;
+        $instructAvail->tues_pm = isset($req->tues_pm) ? 1 : 0;
+        $instructAvail->wed_pm = isset($req->wed_pm) ? 1 : 0;
+        $instructAvail->thurs_pm = isset($req->thurs_pm) ? 1 : 0;
+        $instructAvail->fri_pm = isset($req->fri_pm) ? 1 : 0;
         $instructAvail->save();
 
-        $courseinstructor = new CourseInstructor();
-        $courseinstructor->instructor_id = $latestInstructorId;
+        /*$courseinstructor = new CourseInstructor();
+        $courseinstructor->instructor_id = $latestInstructorId;*/
         // TODO: finish insert, handle multiple courses
 
         return redirect()->action('InstructorController@index');

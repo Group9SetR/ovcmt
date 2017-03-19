@@ -35,20 +35,20 @@
                     </tr>
                     <tr>
                         <td>Morn</td>
-                        <td>{!! Form::checkbox('instructAvail[]', '0', false) !!}</td>
-                        <td>{!! Form::checkbox('instructAvail[]', '1', false) !!}</td>
-                        <td>{!! Form::checkbox('instructAvail[]', '2', false) !!}</td>
-                        <td>{!! Form::checkbox('instructAvail[]', '3', false) !!}</td>
-                        <td>{!! Form::checkbox('instructAvail[]', '4', false) !!}</td>
+                        <td>{!! Form::checkbox('mon_am') !!}</td>
+                        <td>{!! Form::checkbox('tues_am') !!}</td>
+                        <td>{!! Form::checkbox('wed_am') !!}</td>
+                        <td>{!! Form::checkbox('thurs_am') !!}</td>
+                        <td>{!! Form::checkbox('fri_am') !!}</td>
 
                     </tr>
                     <tr>
                         <td>Aft</td>
-                        <td>{!! Form::checkbox('instructAvail[]', '5', false) !!}</td>
-                        <td>{!! Form::checkbox('instructAvail[]', '6', false) !!}</td>
-                        <td>{!! Form::checkbox('instructAvail[]', '7', false) !!}</td>
-                        <td>{!! Form::checkbox('instructAvail[]', '8', false) !!}</td>
-                        <td>{!! Form::checkbox('instructAvail[]', '9', false) !!}</td>
+                        <td>{!! Form::checkbox('mon_pm') !!}</td>
+                        <td>{!! Form::checkbox('tues_pm') !!}</td>
+                        <td>{!! Form::checkbox('wed_pm') !!}</td>
+                        <td>{!! Form::checkbox('thurs_pm') !!}</td>
+                        <td>{!! Form::checkbox('fri_pm') !!}</td>
                     </tr>
                 </table>
                 </div>
