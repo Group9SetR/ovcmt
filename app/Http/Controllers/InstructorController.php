@@ -6,6 +6,7 @@ use App\Course;
 use App\Http\Requests;
 use App\InstructAvail;
 use App\Instructor;
+use App\CourseInstructor;
 use DB;
 use Illuminate\Http\Request;
 
@@ -28,12 +29,27 @@ class InstructorController extends Controller
         $this->setInstructorAvailability($instructAvail, $availability);
         $instructAvail->save();
 
-        $courseinstructor = new CourseInstructor();
-        $courseinstructor->instructor_id = $latestInstructorId;
-        // TODO: finish insert, handle multiple courses
 
         return redirect()->action('InstructorController@index');
     }
+
+    public function assign(Request $req)
+    {
+        //Assign course to instructor
+        $latestInstructorId = $this->getLastInsertedInstructorId()->instructor_id;
+        $courseinstructor = new CourseInstructor();
+        $courseinstructor->instructor_id = $latestInstructorId;
+        $courseinstructor->course_id = $req->course_id;
+        $courseinstructor->intake_no = $req->intake_no;
+        $courseinstructor->instructor_type = $req->instructor_type;
+        $courseinstructor->save();
+
+        return redirect()->action('InstructorController@index');
+        // TODO: finish insert, handle multiple courses
+    }
+
+
+
 
     public function getLastInsertedInstructorId() {
         return DB::table('instructors')->select('instructor_id')->orderBy('instructor_id', 'DESC')->first();
@@ -81,6 +97,8 @@ class InstructorController extends Controller
     public function index() {
         $instructors = $this->listInstructors();
         $courses = Course::all();
-        return view('pages.manageInstructor', compact('instructors', 'courses'));
+        return view('pages.manageInstructor', compact('instructors', 'courses', 'courseInstructor'));
     }
+
+
 }

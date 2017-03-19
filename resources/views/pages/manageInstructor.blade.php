@@ -69,9 +69,10 @@
                 <div class="form-group">
                     {!! Form::hidden('modal_instructor_id', '', array('id'=>'modal_instructor_id')) !!}
 
-                    <select id="course_id">
+
+                    <select id="course_id" name ="course_id">
                         @foreach($courses as $course)
-                            <option value=$course>{{$course->course_id}}</option>
+                            <option value=course name = "$course->course_id">{{$course->course_id}}</option>
                         @endforeach
                     </select>
 
@@ -86,35 +87,61 @@
                     <input type="radio" id = "inst" name ="instructor_type" value ="Instructor" checked="checked"/>
                     &nbsp &nbsp TA
                     <input type="radio" id = "ta" name ="instructor_type" value ="TA" />
+                    <br><br>
 
-                    <button type="button" id="button" class="btn btn-info" onclick="myFunction()">add</button>
+                    <div class="form-group">
+                        {!! Form::submit('Assign course',['class'=> 'btn btn-primary ', 'id'=>'addbtn']) !!}
+                    </div>
 
                     <p id="demo"></p>
 
+                    <h5>display assigned course</h5>
+
+
                 </div>
 
-
-
                 <script>
-                    function myFunction() {
-                        var course_id = document.getElementById("course_id");
-                        course_id = course_id.options[course_id.selectedIndex].text;
 
-                        if (document.getElementById("a").checked){
-                            intake_no = document.getElementById('a').value;
-                        }else {
-                            intake_no = document.getElementById('b').value;
-                        }
-                        if (document.getElementById("inst").checked){
-                            instructor_type = document.getElementById('inst').value;
-                        }else if (document.getElementById("ta").checked){
-                            instructor_type = document.getElementById('ta').value;
-                        }
-                        var myArray = [ course_id, intake_no, instructor_type];
 
-                        document.getElementById("demo").innerHTML = myArray;
+                        $(document).ready(function() {
+                            $('#addbtn').click(function(){
 
-                    }
+                                var course_id = document.getElementById("course_id");
+                                course_id = course_id.options[course_id.selectedIndex].text;
+
+                                if (document.getElementById("a").checked){
+                                    intake_no = document.getElementById('a').value;
+                                }else {
+                                    intake_no = document.getElementById('b').value;
+                                }
+                                if (document.getElementById("inst").checked){
+                                    instructor_type = document.getElementById('inst').value;
+                                }else if (document.getElementById("ta").checked){
+                                    instructor_type = document.getElementById('ta').value;
+                                }
+                                var myArray = [ course_id, intake_no, instructor_type];
+
+                                document.getElementById("demo").innerHTML = myArray;
+
+                                /*
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/showCourseInstructorDetail',
+                                    data: {"instructor_id" : instructor_id},
+                                    dataType: 'json',
+                                    data: {id: currentValue, _token: $('input[name="_token"]').val()},
+                                    success: function(data){
+                                        alert(data);
+                                    },
+                                    error: function(){},
+                                });
+                                */
+                            });
+                        });
+
+
+
+
                 </script>
 
                 {!! Form::close() !!}
