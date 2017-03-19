@@ -12,19 +12,35 @@
         function drop(ev, el) {
             ev.preventDefault();
             var data = ev.dataTransfer.getData("text");
+            /*TODO Change naming of copies so you can easily retrace and find the original -- even when it is hidden*/
             /*TODO Implement a deletion button on all drag_course_offering*/
             /*TODO If a copydrop is deleted, increment the sessions counter*/
             if(document.getElementById(data).classList.contains('drag_course_offering_listing')) {
                 var nodeCopy = document.getElementById(data).cloneNode(true);
-                nodeCopy.id = data+'-'; /* We cannot use the same ID */
+                nodeCopy.id = 'dropcop'; /* We cannot use the same ID */
                 nodeCopy.classList.remove('drag_course_offering_listing');
-                /*TODO This is a course listing so we need to decrement the sessions for each copydrop*/
-                var theId = '#'+data;
-                /*TODO Also need to remove the sessions from the copied element.*/
-                ev.target.appendChild(nodeCopy);
+                var text = $('#'+data+' .drag_course_offering_listing_sessions_days').contents().filter(function() {
+                    return this.nodeType == Node.TEXT_NODE;
+                }).text();
+                var sessionsDays = parseInt(text)-1;
+                if(sessionsDays>0) {
+                    $('#'+data+' .drag_course_offering_listing_sessions_days').first()[0].innerHTML = sessionsDays;
+                    ev.target.appendChild(nodeCopy);
+                    $('#'+nodeCopy.id+' .drag_course_offering_listing_sessions').remove();
+                } else if(sessionsDays==0){
+                    /*TODO hide that listing as an option*/
+                    $('#'+data+' .drag_course_offering_listing_sessions_days').first()[0].innerHTML = sessionsDays;
+                    ev.target.appendChild(nodeCopy);
+                    $('#'+nodeCopy.id+' .drag_course_offering_listing_sessions').remove();
+                    $('#'+data).hide();
+                }
+
             } else {
                 el.appendChild(document.getElementById(data));
             }
+            $("div[id^='dropcop']").attr('id', function(i) {
+                return "dropcopy" + ++i;
+            });
         }
 
         $(document).ready(function() {
@@ -161,6 +177,7 @@
                                 dayOfWeek--;
                                 var room_id ='<?php echo $timeslot->room_id;?>';
                                 var crn='<?php echo $timeslot->am_crn;?>';
+                                var course_id ='<?php echo $timeslot->am_course_id;?>';
                                 var sb = room_id+'-'+'am[]';
                                 var coursePanel= document.createElement('DIV');
                                 coursePanel.className=['panel panel-default drag_course_offering'];
@@ -171,12 +188,11 @@
                                 coursePanel.setAttribute('ondragover', 'return false;');
                                 var coursePanelHeading=document.createElement('DIV');
                                 coursePanelHeading.className='panel-heading';
-                                coursePanelHeading.append(document.createElement('P').appendChild(document.createTextNode(dayOfWeek+sb)));
-                                console.log(crn);
+                                var heading = document.createElement('P');
+                                coursePanelHeading.append(document.createElement('P').appendChild(document.createTextNode(course_id + ' CRN:' +crn)));
                                 coursePanel.append(coursePanelHeading);
                                 var coursePanelBody = document.createElement('DIV');
                                 coursePanelBody.className=['panel-body drag_course_offering_panel'];
-                                coursePanelBody.append(document.createElement('P').appendChild(document.createTextNode('Sessions:\n')));
                                 coursePanelBody.append(document.createElement('P').appendChild(document.createTextNode('Term:\n')));
                                 coursePanelBody.append(document.createElement('P').appendChild(document.createTextNode('Type:\n')));
                                 coursePanel.append(coursePanelBody);
@@ -192,8 +208,8 @@
                                     {{$course->course_id}} <b>CRN:</b>{{$course->crn}}
                                 </div>
                                 <div class="panel-body drag_course_offering_panel">
-                                    <b class='drag_course_offering_listing_sessions'>Sessions:</b>
-                                        <span class='course_offering_listing_sessions_days'>{{$course->sessions_days}}</span><br>
+                                    <b class='drag_course_offering_listing_sessions'>Sessions:
+                                        <span class='drag_course_offering_listing_sessions_days'>{{$course->sessions_days}}</span><br></b>
                                     <b>Term: </b> {{$course->term_no}} <br>
                                     <b>Type:</b> {{$course->course_type}}
                                 </div>

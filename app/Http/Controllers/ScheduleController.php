@@ -50,9 +50,10 @@ class ScheduleController extends Controller
     }
 
     public function getAMScheduleByWeek($year, $week) {
-        $amRoomsByWeek = DB::table('rooms_by_days AS r')
+        $amRoomsByWeek = DB::table('course_offerings AS co')
+            ->join('rooms_by_days AS r', 'co.crn', '=', 'r.am_crn')
             ->join('calendar_dates AS c', 'r.cdate','=','c.cdate')
-            ->select('r.room_id AS room_id', 'r.cdate AS date', 'r.am_crn AS am_crn','c.cdayOfWeek AS cdayOfWeek')
+            ->select('r.room_id AS room_id', 'r.cdate AS date', 'r.am_crn AS am_crn','co.course_id AS am_course_id', 'c.cdayOfWeek AS cdayOfWeek')
             ->where([
                 ["c.cyear", $year],
                 ["c.cweek",$week]

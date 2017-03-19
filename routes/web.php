@@ -42,7 +42,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 
     Route::get('/manageCourse', 'CourseController@index');
 
-    Route::post('/manageCourse', 'CourseController@store');
+    Route::post('/manageCourseStore', 'CourseController@store');
 
     Route::post('/manageCourse', 'CourseController@updateCourse');
 
