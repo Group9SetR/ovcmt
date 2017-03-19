@@ -11,10 +11,10 @@ class CourseController extends Controller
     public function store(Request $req)
     {
         $course = new Course;
-        $course->course_id = $req->course_id;
-        $course->sessions_days = $req->sessions_days;
-        $course->course_type = $req->course_type;
-        $course->term_no = $req->term_no;
+        $course->course_id = $req->course_id2;
+        $course->sessions_days = $req->sessions_days2;
+        $course->course_type = $req->course_type2;
+        $course->term_no = $req->term_no2;
         $course->save();
         return redirect()->action('CourseController@manageCourse');
     }
@@ -28,7 +28,6 @@ class CourseController extends Controller
     {
         if (Course::find($req->course_id)) {
             $course = Course::find($req->course_id);
-            // $course->course_id = $req->course_id;
             $course->sessions_days = $req->sessions_days;
             $course->course_type = $req->course_type;
             $course->term_no = $req->term_no;
