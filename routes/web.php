@@ -41,6 +41,8 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 
     Route::post('/manageCourse', 'CourseController@store');
 
+    Route::post('/manageCourse', 'CourseController@updateCourse');
+
     Route::get('/assign', 'AssignController@index');
 
     /* ScheduleController */
