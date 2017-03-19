@@ -55,6 +55,8 @@ Route::get('/manageCourse', 'CourseController@index');
 
 Route::post('/manageCourse', 'CourseController@store');
 
+Route::post('/updateCourse', 'CourseController@updateCourse');
+
 Route::get('/assign', 'AssignController@index');
 
 /* ScheduleController */
