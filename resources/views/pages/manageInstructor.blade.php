@@ -131,19 +131,19 @@
                                     </tr>
                                     <tr>
                                         <td>Morn</td>
-                                        <td>{!! Form::checkbox('instructAvail[]', '0', false) !!}</td>
-                                        <td>{!! Form::checkbox('instructAvail[]', '1', false) !!}</td>
-                                        <td>{!! Form::checkbox('instructAvail[]', '2', false) !!}</td>
-                                        <td>{!! Form::checkbox('instructAvail[]', '3', false) !!}</td>
-                                        <td>{!! Form::checkbox('instructAvail[]', '4', false) !!}</td>
+                                        <td>{!! Form::checkbox('instructEditAvail[]', '0', false) !!}</td>
+                                        <td>{!! Form::checkbox('instructEditAvail[]', '1', false) !!}</td>
+                                        <td>{!! Form::checkbox('instructEditAvail[]', '2', false) !!}</td>
+                                        <td>{!! Form::checkbox('instructEditAvail[]', '3', false) !!}</td>
+                                        <td>{!! Form::checkbox('instructEditAvail[]', '4', false) !!}</td>
                                     </tr>
                                     <tr>
                                         <td>Aft</td>
-                                        <td>{!! Form::checkbox('instructAvail[]', '5', false) !!}</td>
-                                        <td>{!! Form::checkbox('instructAvail[]', '6', false) !!}</td>
-                                        <td>{!! Form::checkbox('instructAvail[]', '7', false) !!}</td>
-                                        <td>{!! Form::checkbox('instructAvail[]', '8', false) !!}</td>
-                                        <td>{!! Form::checkbox('instructAvail[]', '9', false) !!}</td>
+                                        <td>{!! Form::checkbox('instructEditAvail[]', '5', false) !!}</td>
+                                        <td>{!! Form::checkbox('instructEditAvail[]', '6', false) !!}</td>
+                                        <td>{!! Form::checkbox('instructEditAvail[]', '7', false) !!}</td>
+                                        <td>{!! Form::checkbox('instructEditAvail[]', '8', false) !!}</td>
+                                        <td>{!! Form::checkbox('instructEditAvail[]', '9', false) !!}</td>
                                     </tr>
                                 </table>
                             </div>
@@ -179,10 +179,34 @@
                                     dataType: 'json',
                                     success: function(data){
                                         $('#courseListing').empty();
-                                        for (var i = 0; i < data[0].length; i++) {
-                                            var panel = "<div class='panel panel-default'><div class='panel-heading'>" + data[0][i]['course_id']
-                                                + "</div> <div class='panel-body'>" + "Intake: " + data[0][i]['intake_no'] + "</div></div>";
+                                        for (let i = 0; i < data['courses'].length; i++) {
+                                            var panel = "<div class='panel panel-default'><div class='panel-heading'>" + data['courses'][i]['course_id']
+                                                + "</div> <div class='panel-body'>" + "Intake: " + data['courses'][i]['intake_no'] + "</div></div>";
                                             $('#courseListing').append(panel);
+                                        }
+                                        $('input:checkbox[name="instructEditAvail[]"]').attr('checked', false);
+                                        console.log(data['avail'][0]);
+                                        for (let i = 0; i < data['avail'].length; i++) {
+                                            $('input:checkbox[name="instructEditAvail[]"][value="0"]')
+                                                .prop('checked', (data['avail'][i]['mon_am'] == 1) ? true : false);
+                                            $('input:checkbox[name="instructEditAvail[]"][value="1"]')
+                                                .prop('checked', (data['avail'][i]['tues_am'] == 1) ? true : false);
+                                            $('input:checkbox[name="instructEditAvail[]"][value="2"]')
+                                                .prop('checked', (data['avail'][i]['wed_am'] == 1) ? true : false);
+                                            $('input:checkbox[name="instructEditAvail[]"][value="3"]')
+                                                .prop('checked', (data['avail'][i]['thurs_am'] == 1) ? true : false);
+                                            $('input:checkbox[name="instructEditAvail[]"][value="4"]')
+                                                .prop('checked', (data['avail'][i]['fri_am'] == 1) ? true : false);
+                                            $('input:checkbox[name="instructEditAvail[]"][value="5"]')
+                                                .prop('checked', (data['avail'][i]['mon_pm'] == 1) ? true : false);
+                                            $('input:checkbox[name="instructEditAvail[]"][value="6"]')
+                                                .prop('checked', (data['avail'][i]['tues_pm'] == 1) ? true : false);
+                                            $('input:checkbox[name="instructEditAvail[]"][value="7"]')
+                                                .prop('checked', (data['avail'][i]['wed_pm'] == 1) ? true : false);
+                                            $('input:checkbox[name="instructEditAvail[]"][value="8"]')
+                                                .prop('checked', (data['avail'][i]['thurs_pm'] == 1) ? true : false);
+                                            $('input:checkbox[name="instructEditAvail[]"][value="9"]')
+                                                .prop('checked', (data['avail'][i]['fri_pm'] == 1) ? true : false);
                                         }
                                     }
                                 });
