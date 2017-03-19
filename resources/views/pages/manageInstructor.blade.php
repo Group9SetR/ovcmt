@@ -182,30 +182,29 @@
                                                 + "</div> <div class='panel-body'>" + "Intake: " + data['courses'][i]['intake_no'] + "</div></div>";
                                             $('#courseListing').append(panel);
                                         }
-                                        $('input:checkbox[name="instructEditAvail[]"]').attr('checked', false);
-                                        console.log(data['avail'][0]);
-                                        for (let i = 0; i < data['avail'].length; i++) {
-                                            $('input:checkbox[name="instructEditAvail[]"][value="0"]')
-                                                .prop('checked', (data['avail'][i]['mon_am'] == 1) ? true : false);
-                                            $('input:checkbox[name="instructEditAvail[]"][value="1"]')
-                                                .prop('checked', (data['avail'][i]['tues_am'] == 1) ? true : false);
-                                            $('input:checkbox[name="instructEditAvail[]"][value="2"]')
-                                                .prop('checked', (data['avail'][i]['wed_am'] == 1) ? true : false);
-                                            $('input:checkbox[name="instructEditAvail[]"][value="3"]')
-                                                .prop('checked', (data['avail'][i]['thurs_am'] == 1) ? true : false);
-                                            $('input:checkbox[name="instructEditAvail[]"][value="4"]')
-                                                .prop('checked', (data['avail'][i]['fri_am'] == 1) ? true : false);
-                                            $('input:checkbox[name="instructEditAvail[]"][value="5"]')
-                                                .prop('checked', (data['avail'][i]['mon_pm'] == 1) ? true : false);
-                                            $('input:checkbox[name="instructEditAvail[]"][value="6"]')
-                                                .prop('checked', (data['avail'][i]['tues_pm'] == 1) ? true : false);
-                                            $('input:checkbox[name="instructEditAvail[]"][value="7"]')
-                                                .prop('checked', (data['avail'][i]['wed_pm'] == 1) ? true : false);
-                                            $('input:checkbox[name="instructEditAvail[]"][value="8"]')
-                                                .prop('checked', (data['avail'][i]['thurs_pm'] == 1) ? true : false);
-                                            $('input:checkbox[name="instructEditAvail[]"][value="9"]')
-                                                .prop('checked', (data['avail'][i]['fri_pm'] == 1) ? true : false);
-                                        }
+                                        var avail = data['avail'][0];
+                                        $('input[name="modal_instruct_avail_start_date"]').val(avail['date_start']);
+                                        $('input:checkbox[name="instructEditAvail[]"][value="0"]')
+                                            .prop('checked', (avail['mon_am'] == 1) ? true : false);
+                                        $('input:checkbox[name="instructEditAvail[]"][value="1"]')
+                                            .prop('checked', (avail['tues_am'] == 1) ? true : false);
+                                        $('input:checkbox[name="instructEditAvail[]"][value="2"]')
+                                            .prop('checked', (avail['wed_am'] == 1) ? true : false);
+                                        $('input:checkbox[name="instructEditAvail[]"][value="3"]')
+                                            .prop('checked', (avail['thurs_am'] == 1) ? true : false);
+                                        $('input:checkbox[name="instructEditAvail[]"][value="4"]')
+                                            .prop('checked', (avail['fri_am'] == 1) ? true : false);
+                                        $('input:checkbox[name="instructEditAvail[]"][value="5"]')
+                                            .prop('checked', (avail['mon_pm'] == 1) ? true : false);
+                                        $('input:checkbox[name="instructEditAvail[]"][value="6"]')
+                                            .prop('checked', (avail['tues_pm'] == 1) ? true : false);
+                                        $('input:checkbox[name="instructEditAvail[]"][value="7"]')
+                                            .prop('checked', (avail['wed_pm'] == 1) ? true : false);
+                                        $('input:checkbox[name="instructEditAvail[]"][value="8"]')
+                                            .prop('checked', (avail['thurs_pm'] == 1) ? true : false);
+                                        $('input:checkbox[name="instructEditAvail[]"][value="9"]')
+                                            .prop('checked', (avail['fri_pm'] == 1) ? true : false);
+
                                     }
                                 });
                             });
