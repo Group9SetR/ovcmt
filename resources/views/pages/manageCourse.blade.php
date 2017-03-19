@@ -16,26 +16,28 @@
             {!! Form::open(['url' => 'manageCourse']) !!}
             {{csrf_field()}}
             <div class="form-group">
-                {!! Form::label('course_id', 'Course Id:') !!}
-                {!! Form::text('course_id', null, ['class' => 'form-control']) !!}
-            </div>
-            <div class="form-group">
-                {!! Form::label('sessions_days', 'Session Days:') !!}
-                {!! Form::text('sessions_days', null, ['class' => 'form-control']) !!}
+                {!! Form::label('course_id2', 'Course Id:') !!}
+                {!! Form::text('course_id2', null, ['class' => 'form-control']) !!}
             </div>
 
             <div class="form-group">
-                {!! Form::label('course_type', 'Course Type:') !!}
-                {!! Form::text('course_type', null, ['class' => 'form-control']) !!}
+                {!! Form::label('sessions_days2', 'Session Days:') !!}
+                {!! Form::text('sessions_days2', null, ['class' => 'form-control']) !!}
             </div>
 
             <div class="form-group">
-                {!! Form::label('term_no', 'Term No:') !!}
-                {!! Form::text('term_no', null, ['class' => 'form-control']) !!}
+                {!! Form::label('course_type2', 'Course Type:') !!}
+                {!! Form::text('course_type2', null, ['class' => 'form-control']) !!}
             </div>
-                <div class="form-group">
-                    {!! Form::submit('Add course',['class'=> 'btn btn-primary form-control']) !!}
-                </div>
+
+            <div class="form-group">
+                {!! Form::label('term_no2', 'Term No:') !!}
+                {!! Form::text('term_no2', null, ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
+                {!! Form::submit('Add course',['class'=> 'btn btn-primary form-control']) !!}
+            </div>
             </div>
 
             {!! Form::close() !!}
@@ -79,50 +81,35 @@
                                 <span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="editCourseModalLabel">Edit</h4>
                         </div>
+
+                        {!! Form::open(['url' => 'updateCourse']) !!}
                         <div class="modal-body">
-                            {!! Form::open(['url' => 'manageCourse']) !!}
                             <p>Edit Course</p>
                             <div class="form-group">
-                                <!-- TODO grab course data - not working right now -->
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        {!! Form::label('modal_courseid_name', 'Course Id:') !!}<br>
-                                        {!! Form::label('modal_sessionDays_name', 'Session Days:') !!}<br>
-                                        {!! Form::label('modal_courseType_name', 'Course Type:') !!}<br>
-                                        {!! Form::label('modal_termNo_name', 'Term No:') !!}
-                                    </div>
-                                    <div class="col-sm-3">
-                                        {!! Form::text('modal_courseid_name', '', array('id'=>'modal_courseid_name'))!!}
-                                        {!! Form::text('modal_sessionDays_name', '', array('id'=>'modal_sessionDays_name'))!!}
-                                        {!! Form::text('modal_courseType_name', '', array('id'=>'modal_courseType_name'))!!}
-                                        {!! Form::text('modal_termNo_name', '', array('id'=>'modal_termNo_name'))!!}
-                                    </div>
-                                </div>
+                                {!! Form::label('course_id', 'Course Id:') !!}
+                                {!! Form::text('course_id', '', array('id'=>'modal_courseid_name'))!!}<br>
+                                {!! Form::label('sessions_days', 'Session Days:') !!}
+                                {!! Form::text('sessions_days', '', array('id'=>'modal_sessionDays_name'))!!}<br>
+                                {!! Form::label('course_type', 'Course Type:') !!}
+                                {!! Form::text('course_type', '', array('id'=>'modal_courseType_name'))!!}<br>
+                                {!! Form::label('term_no', 'Term No:') !!}
+                                {!! Form::text('term_no', '', array('id'=>'modal_termNo_name'))!!}
                             </div>
-                            <div class="form-group">
-
-                            </div>
-                            {!! Form::close() !!}
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-                            <span class="pull-right">
-                                <!-- TODO update database info once saved and edited -->
-                                <button type="button" class="btn btn-primary">
-                                    Edit
-                                </button>
-                            </span>
+                            <div class="form-group">
+                                {!! Form::submit('Edit',['class'=> 'btn btn-primary form-control']) !!}
+                            </div>
                         </div>
+                        {!! Form::close() !!}
+
                         <script>
                             $(document).on('click', '.open-EditCourseDialog', function() {
                                 var course_id = $(this).data('courseid');
                                 var session_days = $(this).data('sessiondays');
                                 var course_type = $(this).data('coursetype');
                                 var term_no = $(this).data('termno');
-                                console.log(course_id);
-                                console.log(session_days);
-                                console.log(course_type);
-                                console.log(term_no);
                                 $('.modal-body #modal_courseid_name').attr('value', course_id);
                                 $('.modal-body #modal_sessionDays_name').attr('value', session_days);
                                 $('.modal-body #modal_courseType_name').attr('value', course_type);

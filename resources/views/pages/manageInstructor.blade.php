@@ -35,20 +35,20 @@
                     </tr>
                     <tr>
                         <td>Morn</td>
-                        <td>{!! Form::checkbox('instructAvail[]', '0', false) !!}</td>
-                        <td>{!! Form::checkbox('instructAvail[]', '1', false) !!}</td>
-                        <td>{!! Form::checkbox('instructAvail[]', '2', false) !!}</td>
-                        <td>{!! Form::checkbox('instructAvail[]', '3', false) !!}</td>
-                        <td>{!! Form::checkbox('instructAvail[]', '4', false) !!}</td>
+                        <td>{!! Form::checkbox('mon_am') !!}</td>
+                        <td>{!! Form::checkbox('tues_am') !!}</td>
+                        <td>{!! Form::checkbox('wed_am') !!}</td>
+                        <td>{!! Form::checkbox('thurs_am') !!}</td>
+                        <td>{!! Form::checkbox('fri_am') !!}</td>
 
                     </tr>
                     <tr>
                         <td>Aft</td>
-                        <td>{!! Form::checkbox('instructAvail[]', '5', false) !!}</td>
-                        <td>{!! Form::checkbox('instructAvail[]', '6', false) !!}</td>
-                        <td>{!! Form::checkbox('instructAvail[]', '7', false) !!}</td>
-                        <td>{!! Form::checkbox('instructAvail[]', '8', false) !!}</td>
-                        <td>{!! Form::checkbox('instructAvail[]', '9', false) !!}</td>
+                        <td>{!! Form::checkbox('mon_pm') !!}</td>
+                        <td>{!! Form::checkbox('tues_pm') !!}</td>
+                        <td>{!! Form::checkbox('wed_pm') !!}</td>
+                        <td>{!! Form::checkbox('thurs_pm') !!}</td>
+                        <td>{!! Form::checkbox('fri_pm') !!}</td>
                     </tr>
                 </table>
                 </div>
@@ -110,11 +110,10 @@
                             <h4 class="modal-title" id="editInstructorModalLabel">Edit</h4>
                         </div>
                         <div class="modal-body">
-                            {!! Form::open(['url' => 'manageInstructor']) !!}
+                            {!! Form::open(['url' => 'editInstructor']) !!}
                             <p>New Availability</p>
                             <div class="form-group">
                                 {!! Form::hidden('modal_instructor_id', '', array('id'=>'modal_instructor_id')) !!}
-
                                 {!! Form::label('modal_instructor_name', 'Instructor:') !!}
                                 {!! Form::text('modal_instructor_name', '', array('id'=>'modal_instructor_name'))!!}
                             </div>
@@ -129,23 +128,22 @@
                                     </tr>
                                     <tr>
                                         <td>Morn</td>
-                                        <td>{!! Form::checkbox('instructAvail[]', '0', false) !!}</td>
-                                        <td>{!! Form::checkbox('instructAvail[]', '1', false) !!}</td>
-                                        <td>{!! Form::checkbox('instructAvail[]', '2', false) !!}</td>
-                                        <td>{!! Form::checkbox('instructAvail[]', '3', false) !!}</td>
-                                        <td>{!! Form::checkbox('instructAvail[]', '4', false) !!}</td>
+                                        <td>{!! Form::checkbox('modal_mon_am') !!}</td>
+                                        <td>{!! Form::checkbox('modal_tues_am') !!}</td>
+                                        <td>{!! Form::checkbox('modal_wed_am') !!}</td>
+                                        <td>{!! Form::checkbox('modal_thurs_am') !!}</td>
+                                        <td>{!! Form::checkbox('modal_fri_am') !!}</td>
                                     </tr>
                                     <tr>
                                         <td>Aft</td>
-                                        <td>{!! Form::checkbox('instructAvail[]', '5', false) !!}</td>
-                                        <td>{!! Form::checkbox('instructAvail[]', '6', false) !!}</td>
-                                        <td>{!! Form::checkbox('instructAvail[]', '7', false) !!}</td>
-                                        <td>{!! Form::checkbox('instructAvail[]', '8', false) !!}</td>
-                                        <td>{!! Form::checkbox('instructAvail[]', '9', false) !!}</td>
+                                        <td>{!! Form::checkbox('modal_mon_pm') !!}</td>
+                                        <td>{!! Form::checkbox('modal_tues_pm') !!}</td>
+                                        <td>{!! Form::checkbox('modal_wed_pm') !!}</td>
+                                        <td>{!! Form::checkbox('modal_thurs_pm') !!}</td>
+                                        <td>{!! Form::checkbox('modal_fri_pm') !!}</td>
                                     </tr>
                                 </table>
                             </div>
-                            {!! Form::close() !!}
                             <div>
                                 <h4>Courses this instructor can teach</h4>
                                 <div id="courseListing"></div>
@@ -154,10 +152,9 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             <span class="pull-right">
-                                <button type="button" class="btn btn-primary">
-                                    Edit
-                                </button>
+                                {!! Form::submit('Edit',['class'=> 'btn btn-primary form-control']) !!}
                             </span>
+                            {!! Form::close() !!}
                         </div>
                         <script>
                             $(document).on('click', '.open-EditInstructorDialog', function() {
@@ -177,11 +174,33 @@
                                     dataType: 'json',
                                     success: function(data){
                                         $('#courseListing').empty();
-                                        for (var i = 0; i < data[0].length; i++) {
-                                            var panel = "<div class='panel panel-default'><div class='panel-heading'>" + data[0][i]['course_id']
-                                                + "</div> <div class='panel-body'>" + "Intake: " + data[0][i]['intake_no'] + "</div></div>";
+                                        for (let i = 0; i < data['courses'].length; i++) {
+                                            var panel = "<div class='panel panel-default'><div class='panel-heading'>" + data['courses'][i]['course_id']
+                                                + "</div> <div class='panel-body'>" + "Intake: " + data['courses'][i]['intake_no'] + "</div></div>";
                                             $('#courseListing').append(panel);
                                         }
+                                        var avail = data['avail'][0];
+                                        $('input[name="modal_instruct_avail_start_date"]').val(avail['date_start']);
+                                        $('input:checkbox[name="modal_mon_am"]')
+                                            .prop('checked', (avail['mon_am'] == 1) ? true : false);
+                                        $('input:checkbox[name="modal_tues_am"]')
+                                            .prop('checked', (avail['tues_am'] == 1) ? true : false);
+                                        $('input:checkbox[name="modal_wed_am"]')
+                                            .prop('checked', (avail['wed_am'] == 1) ? true : false);
+                                        $('input:checkbox[name="modal_thurs_am"]')
+                                            .prop('checked', (avail['thurs_am'] == 1) ? true : false);
+                                        $('input:checkbox[name="modal_fri_am"]')
+                                            .prop('checked', (avail['fri_am'] == 1) ? true : false);
+                                        $('input:checkbox[name="modal_mon_pm"]')
+                                            .prop('checked', (avail['mon_pm'] == 1) ? true : false);
+                                        $('input:checkbox[name="modal_tues_pm"]')
+                                            .prop('checked', (avail['tues_pm'] == 1) ? true : false);
+                                        $('input:checkbox[name="modal_wed_pm"]')
+                                            .prop('checked', (avail['wed_pm'] == 1) ? true : false);
+                                        $('input:checkbox[name="modal_thurs_pm"]')
+                                            .prop('checked', (avail['thurs_pm'] == 1) ? true : false);
+                                        $('input:checkbox[name="modal_fri_pm"]')
+                                            .prop('checked', (avail['fri_pm'] == 1) ? true : false);
                                     }
                                 });
                             });

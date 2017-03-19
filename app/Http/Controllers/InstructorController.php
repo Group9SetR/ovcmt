@@ -24,12 +24,20 @@ class InstructorController extends Controller
         $instructAvail = new InstructAvail;
         $instructAvail->instructor_id = $latestInstructorId;
         $instructAvail->date_start = $req->date_start;
-        $availability = $this->getAvailabilityFromCheckboxes($req);
-        $this->setInstructorAvailability($instructAvail, $availability);
+        $instructAvail->mon_am = isset($req->mon_am) ? 1 : 0;
+        $instructAvail->tues_am = isset($req->tues_am) ? 1 : 0;
+        $instructAvail->wed_am = isset($req->wed_am) ? 1 : 0;
+        $instructAvail->thurs_am = isset($req->thurs_am) ? 1 : 0;
+        $instructAvail->fri_am = isset($req->fri_am) ? 1 : 0;
+        $instructAvail->mon_pm = isset($req->mon_pm) ? 1 : 0;
+        $instructAvail->tues_pm = isset($req->tues_pm) ? 1 : 0;
+        $instructAvail->wed_pm = isset($req->wed_pm) ? 1 : 0;
+        $instructAvail->thurs_pm = isset($req->thurs_pm) ? 1 : 0;
+        $instructAvail->fri_pm = isset($req->fri_pm) ? 1 : 0;
         $instructAvail->save();
 
-        $courseinstructor = new CourseInstructor();
-        $courseinstructor->instructor_id = $latestInstructorId;
+        /*$courseinstructor = new CourseInstructor();
+        $courseinstructor->instructor_id = $latestInstructorId;*/
         // TODO: finish insert, handle multiple courses
 
         return redirect()->action('InstructorController@index');
@@ -41,6 +49,7 @@ class InstructorController extends Controller
 
     public function getAvailabilityFromCheckboxes($req) {
         $checkboxes = $req->instructAvail;
+
         $availability = array_fill(0,10,0);
         foreach($checkboxes as $avail) {
             $availability[$avail] = 1;
@@ -66,6 +75,27 @@ class InstructorController extends Controller
             ->join('instruct_avails as ia', 'i.instructor_id', '=', 'ia.instructor_id')
             ->select('i.instructor_id', 'i.first_name', 'ia.*')
             ->get();
+    }
+
+    public function edit(Request $req) {
+        $instructor = Instructor::where('instructor_id', $req->modal_instructor_id)->first();
+        $instructor->first_name = $req->modal_instructor_name;
+        //TODO: EMAIL?!
+        $instructor->save();
+        DB::table('instruct_avails')
+            ->where('instructor_id', $req->modal_instructor_id)
+            ->where('date_start', $req->modal_instruct_avail_start_date)
+            ->update(['mon_am' => isset($req->modal_mon_am)? 1 : 0,
+                      'tues_am' => isset($req->modal_tues_am)? 1 : 0,
+                      'wed_am' => isset($req->modal_wed_am)? 1 : 0,
+                      'thurs_am' => isset($req->modal_thurs_am)? 1 : 0,
+                      'fri_am' => isset($req->modal_fri_am)? 1 : 0,
+                      'mon_pm' => isset($req->modal_mon_pm)? 1 : 0,
+                      'tues_pm' => isset($req->modal_tues_pm)? 1 : 0,
+                      'wed_pm' => isset($req->modal_wed_pm)? 1 : 0,
+                      'thurs_pm' => isset($req->modal_thurs_pm)? 1 : 0,
+                      'fri_pm' => isset($req->modal_fri_pm)? 1 : 0]);
+        return redirect()->action('InstructorController@index');
     }
 
     public function index() {
