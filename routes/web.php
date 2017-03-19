@@ -59,7 +59,9 @@ Route::get('/assign', 'AssignController@index');
 
 /* ScheduleController */
 
-Route::get('/dragDrop', 'ScheduleController@dragDrop');
+Route::get('/dragDrop', 'ScheduleController@index');
+
+Route::post('/dragDrop', 'ScheduleController@displayRoomsByWeek');
 
 // Route::post('/dragDrop', 'ScheduleController@store');
 

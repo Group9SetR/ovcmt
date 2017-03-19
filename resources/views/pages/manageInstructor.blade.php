@@ -6,8 +6,6 @@
         <div class="col-sm-2 sidenav">
             @include('includes.sidebar')
         </div>
-
-
         <div class="col-sm-6">
             <h4><small>Manage Instructors </small></h4>
             <hr>
