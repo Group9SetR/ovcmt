@@ -52,15 +52,17 @@ class ScheduleController extends Controller
     public function getAMScheduleByWeek($year, $week) {
         $amRoomsByWeek = DB::table('rooms_by_days AS r')
             ->join('calendar_dates AS c', 'r.cdate','=','c.cdate')
-            ->select('r.room_id AS room_id', 'r.am_crn AS am_crn','c.cdayOfWeek AS cdayOfWeek')
+            ->select('r.room_id AS room_id', 'r.cdate AS date', 'r.am_crn AS am_crn','c.cdayOfWeek AS cdayOfWeek')
             ->where([
                 ["c.cyear", $year],
                 ["c.cweek",$week]
             ])
-            ->wherein('c.cdayOfWeek',[1,2,3,4,5])
+            ->whereNotNull('r.am_crn')
+            ->whereIn('c.cdayOfWeek',[2,3,4,5,6])
             ->get();
         return $amRoomsByWeek;
     }
+
     public function getPMScheduleByWeek($year, $week) {
         $pmRoomsByWeek = DB::table('rooms_by_days AS r')
             ->join('calendar_dates AS c', 'r.cdate','=','c.cdate')
@@ -69,7 +71,8 @@ class ScheduleController extends Controller
                 ['c.cyear', $year],
                 ['c.cweek',$week]
             ])
-            ->wherein('c.cdayOfWeek',[1,2,3,4,5])
+            ->orWhereNotNull('r.pm_crn')
+            ->whereIn('c.cdayOfWeek',[2,3,4,5,6])
             ->get();
         return $pmRoomsByWeek;
     }
