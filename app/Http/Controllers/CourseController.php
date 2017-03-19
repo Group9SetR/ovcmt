@@ -26,12 +26,14 @@ class CourseController extends Controller
 
     public function updateCourse(Request $req)
     {
-        $course = Course::find($req->course_id);
-        // $course->course_id = $req->course_id;
-        $course->sessions_days = $req->sessions_days;
-        $course->course_type = $req->course_type;
-        $course->term_no = $req->term_no;
-        $course->save();
+        if (Course::find($req->course_id)) {
+            $course = Course::find($req->course_id);
+            // $course->course_id = $req->course_id;
+            $course->sessions_days = $req->sessions_days;
+            $course->course_type = $req->course_type;
+            $course->term_no = $req->term_no;
+            $course->save();
+        }
 
         return redirect()->action('CourseController@index');
     }
