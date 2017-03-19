@@ -110,11 +110,10 @@
                             <h4 class="modal-title" id="editInstructorModalLabel">Edit</h4>
                         </div>
                         <div class="modal-body">
-                            {!! Form::open(['url' => 'manageInstructor']) !!}
+                            {!! Form::open(['url' => 'editInstructor']) !!}
                             <p>New Availability</p>
                             <div class="form-group">
                                 {!! Form::hidden('modal_instructor_id', '', array('id'=>'modal_instructor_id')) !!}
-
                                 {!! Form::label('modal_instructor_name', 'Instructor:') !!}
                                 {!! Form::text('modal_instructor_name', '', array('id'=>'modal_instructor_name'))!!}
                             </div>
@@ -145,7 +144,6 @@
                                     </tr>
                                 </table>
                             </div>
-                            {!! Form::close() !!}
                             <div>
                                 <h4>Courses this instructor can teach</h4>
                                 <div id="courseListing"></div>
@@ -154,10 +152,9 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             <span class="pull-right">
-                                <button type="button" class="btn btn-primary">
-                                    Edit
-                                </button>
+                                {!! Form::submit('Edit',['class'=> 'btn btn-primary form-control']) !!}
                             </span>
+                            {!! Form::close() !!}
                         </div>
                         <script>
                             $(document).on('click', '.open-EditInstructorDialog', function() {
@@ -204,7 +201,6 @@
                                             .prop('checked', (avail['thurs_pm'] == 1) ? true : false);
                                         $('input:checkbox[name="instructEditAvail[]"][value="9"]')
                                             .prop('checked', (avail['fri_pm'] == 1) ? true : false);
-
                                     }
                                 });
                             });
