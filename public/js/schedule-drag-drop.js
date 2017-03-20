@@ -40,7 +40,7 @@ function createCourseOfferingSessionPanel(course_id, crn, term_no, type, session
 }
 
 function appendToTimeSlot(panel, slotName, dayOfWeek) {
-    document.getElementsByName(slotName)[dayOfWeek].append(panel);
+    document.getElementsByClassName(slotName)[dayOfWeek].append(panel);
 }
 
 function appendToCourseListings(panel) {
@@ -60,12 +60,25 @@ function createDeleteCourseButton() {
     return deleteCourseOffering;
 }
 
+/*TODO If a copydrop is deleted, increment the sessions counter*/
 function onDeleteClick(event) {
+    var source = event.source || event.srcElement;
+    var panelSource = findAncestor(source,'drag_course_offering');
+    panelSource.remove(); //remove the course offering panel
+    var courseOfferingId = findAncestor(source, 'panel-heading').firstChild.textContent;
+    //find in course offering listing panel and increment
+    var courseOfferingsListed = document.getElementsByClassName('drag_course_offering_listing');
+    for(var i=0; i<courseOfferingsListed.length; i++) {
+        if(courseOfferingsListed.item(i).firstChild.innerHTML == courseOfferingId){
+            console.log(document.getElementById(courseOfferingsListed.item(i).id).childNodes[1].firstChild.firstChild);
+            console.log($('#'+courseOfferingsListed.item(i).id+' .drag_course_offering_listing_sessions_days'));
+        }
+    }
 }
 
-function findAncestor (el, cls) {
-    while ((el = el.parentElement) && !el.classList.contains(cls));
-    return el;
+function findAncestor (element, className) {
+    while ((!element.classList.contains(className) && (element = element.parentElement))) {}
+    return element;
 }
 
 //Base drag and drop functionality goes here
@@ -82,8 +95,6 @@ function drag(ev) {
 function drop(ev, el) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
-    /*TODO Implement a deletion button on all drag_course_offering*/
-    /*TODO If a copydrop is deleted, increment the sessions counter*/
     if(document.getElementById(data).classList.contains('drag_course_offering_listing')) {
         var nodeCopy = document.getElementById(data).cloneNode(true);
         nodeCopy.id = 'dropcop';
@@ -99,7 +110,6 @@ function drop(ev, el) {
             ev.target.appendChild(nodeCopy);
             $('#'+nodeCopy.id+' .drag_course_offering_listing_sessions').remove();
         } else if(sessionsDays==0){
-            /*TODO hide that listing as an option*/
             $('#'+data+' .drag_course_offering_listing_sessions_days').first()[0].innerHTML = sessionsDays;
             ev.target.appendChild(nodeCopy);
             $('#'+nodeCopy.id+' .drag_course_offering_listing_sessions').remove();

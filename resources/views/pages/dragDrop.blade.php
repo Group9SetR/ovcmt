@@ -43,25 +43,25 @@
                             <tr class="drag_schedule_row">
                                 <th class='drag_schedule_row_head'>M1-AM</th>
                                 @for($i=0; $i<5; $i++)
-                                    <td ondrop="drop(event, this)" ondragover="allowDrop(event)" name="M1-am[]"></td>
+                                    <td ondrop="drop(event, this)" ondragover="allowDrop(event)" class="M1-am[] drop-timeslot"></td>
                                 @endfor
                             </tr>
                             <tr class="drag_schedule_row">
                                 <th class='drag_schedule_row_head'>A1-AM</th>
                                 @for($i=0; $i<5; $i++)
-                                    <td ondrop="drop(event, this)" ondragover="allowDrop(event)" name="A1-am[]"></td>
+                                    <td ondrop="drop(event, this)" ondragover="allowDrop(event)" class="A1-am[] drop-timeslot"></td>
                                 @endfor
                             </tr>
                             <tr class="drag_schedule_row">
                                 <th class='drag_schedule_row_head'>P1-AM</th>
                                 @for($i=0; $i<5; $i++)
-                                    <td ondrop="drop(event, this)" ondragover="allowDrop(event)" name="P1-am[]"></td>
+                                    <td ondrop="drop(event, this)" ondragover="allowDrop(event)" class="P1-am[] drop-timeslot"></td>
                                 @endfor
                             </tr>
                             <tr class="drag_schedule_row">
                                 <th class='drag_schedule_row_head'>P2-AM</th>
                                 @for($i=0; $i<5; $i++)
-                                    <td ondrop="drop(event, this)" ondragover="allowDrop(event)" name="P2-am[]"></td>
+                                    <td ondrop="drop(event, this)" ondragover="allowDrop(event)" class="P2-am[] drop-timeslot"></td>
                                 @endfor
                             </tr>
                             <tr > <!--Spacing row-->
@@ -73,25 +73,25 @@
                             <tr class="drag_schedule_row">
                                 <th class='drag_schedule_row_head'>M1-PM</th>
                                 @for($i=0; $i<5; $i++)
-                                    <td ondrop="drop(event, this)" ondragover="allowDrop(event)" name="M1-pm[]"></td>
+                                    <td ondrop="drop(event, this)" ondragover="allowDrop(event)" class="M1-pm[] drop-timeslot"></td>
                                 @endfor
                             </tr>
                             <tr class="drag_schedule_row">
                                 <th class='drag_schedule_row_head'>A1-PM</th>
                                 @for($i=0; $i<5; $i++)
-                                    <td ondrop="drop(event, this)" ondragover="allowDrop(event)" name="A1-pm[]"></td>
+                                    <td ondrop="drop(event, this)" ondragover="allowDrop(event)" class="A1-pm[] drop-timeslot"></td>
                                 @endfor
                             </tr>
                             <tr class="drag_schedule_row">
                                 <th class='drag_schedule_row_head'>P1-PM</th>
                                 @for($i=0; $i<5; $i++)
-                                    <td ondrop="drop(event, this)" ondragover="allowDrop(event)" name="P1-pm[]"></td>
+                                    <td ondrop="drop(event, this)" ondragover="allowDrop(event)" class="P1-pm[] drop-timeslot"></td>
                                 @endfor
                             </tr>
                             <tr class="drag_schedule_row">
                                 <th class='drag_schedule_row_head'>P2-PM</th>
                                 @for($i=0; $i<5; $i++)
-                                    <td ondrop="drop(event, this)" ondragover="allowDrop(event)" name="P2-pm[]"></td>
+                                    <td ondrop="drop(event, this)" ondragover="allowDrop(event)" class="P2-pm[] drop-timeslot"></td>
                                 @endfor
                             </tr>
                             </tbody>
