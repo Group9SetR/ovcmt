@@ -27,6 +27,9 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 
     Route::get('/manageInstructor', 'InstructorController@index');
 
+
+    Route::post('/courseInstructor', 'InstructorController@assign');
+
     Route::post('/manageInstructor', 'InstructorController@store');
 
     Route::post('/editInstructor', 'InstructorController@edit');

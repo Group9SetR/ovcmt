@@ -16,4 +16,6 @@ class AjaxController extends Controller
         }
         return response()->json(array("courses" => $courses, "avail" => $avail), 200);
     }
+
+
 }
