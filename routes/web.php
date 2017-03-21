@@ -46,13 +46,17 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 
     Route::post('/manageCourse', 'CourseController@updateCourse');
 
-    Route::get('/assign', 'AssignController@index');
-
     /* ScheduleController */
 
     Route::get('/dragDrop', 'ScheduleController@index');
 
     Route::post('/dragDrop', 'ScheduleController@displayRoomsByWeek');
+
+    /* AssignController*/
+
+    Route::get('/assign', 'AssignController@index');
+
+    Route::post('/getInstructorsCourses', 'AssignController@index');
 
 // Route::post('/dragDrop', 'ScheduleController@store');
 

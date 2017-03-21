@@ -17,5 +17,10 @@ class AjaxController extends Controller
         return response()->json(array("courses" => $courses, "avail" => $avail), 200);
     }
 
-
+    public function getInstructorsTeachableCourses() {
+        if(isset($_POST['instructor_id'])) {
+            $coursesbyinstructor = CourseInstructor::where('instructor_id', $_POST['instructor_id'])->get();
+        }
+        return response()->json(array("coursesbyinstructor" => $coursesbyinstructor), 200);
+    }
 }

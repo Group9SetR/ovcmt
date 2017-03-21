@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CourseInstructor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Instructor;
@@ -26,6 +27,7 @@ class AssignController extends Controller
     }
 
     public function getCourseInstructors() {
+        // this adds courses offerings that are already assigned.
         $courseofferings = DB::table('courses AS c')
             ->join('course_offerings AS co', 'c.course_id', '=', 'co.course_id')
             ->join('instructors AS i', 'co.instructor_id', '=', 'i.instructor_id')
@@ -46,6 +48,7 @@ class AssignController extends Controller
     public function index() {
         $courses = $this->getCourses();
         $instructors = $this->getInstructors();
-        return view('pages.assign', compact('courses','instructors'));
+        $courseofferings = $this->getCourseInstructors();
+        return view('pages.assign', compact('courses','instructors', 'courseofferings'));
     }
 }
