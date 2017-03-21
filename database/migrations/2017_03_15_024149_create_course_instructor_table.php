@@ -14,8 +14,8 @@ class CreateCourseInstructorTable extends Migration
     public function up()
     {
         Schema::create('course_instructors', function (Blueprint $table) {
-            $table->integer('course_instructors_id');
-            $table->string('first_name');
+            $table->increments('id');
+            $table->integer('instructor_id');
             $table->string('course_id');
             $table->char('intake_no');
             $table->tinyInteger('instructor_type');

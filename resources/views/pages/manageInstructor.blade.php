@@ -66,21 +66,21 @@
             <button href="#assignInstructor" class="btn btn-default" data-toggle="collapse">Assign instructor</button>
             <div class="collapse" id="assignInstructor">
                 <hr>
-                <h2>Assign course </h2>
+                <h4><small>Assign an Instructor's Teachable Courses</small></h4>
 
 
                 {!! Form::open(['url' => 'courseInstructor']) !!}
                 <div class="form-group">
 
-                    <select id="first_name" name ="first_name">
+                    <select id="instructor_id" name="instructor_id">
                         @foreach($instructors as $instructor)
-                            <option name ="first_name">{{$instructor->first_name}}</option>
+                            <option value="{{$instructor->instructor_id}}">{{$instructor->first_name}}</option>
                         @endforeach
                     </select>&nbsp
 
-                    <select id="course_id" name ="course_id">
+                    <select id="course_id" name="course_id">
                         @foreach($courses as $course)
-                            <option name ="course_id">{{$course->course_id}}</option>
+                            <option name="course_id">{{$course->course_id}}</option>
                         @endforeach
                     </select>
 
@@ -101,19 +101,10 @@
                         {!! Form::submit('Assign course',['class'=> 'btn btn-default ', 'id'=>'addbtn']) !!}
                     </div>
                     <hr>
-
-
-                    <h4>display assigned course</h4>
-
-
-
-                    @foreach($courseInstructors as $courseInstructor)
-                        <p>{{$courseInstructor}}</p>
-                    @endforeach
                 </div>
 
                 <script>
-
+/*
                         $(document).ready(function() {
                             $('#addbtn').click(function(){
 
@@ -132,7 +123,7 @@
                                 }
                                 var myArray = [ course_id, intake_no, instructor_type];
 
-                                document.getElementById("demo").innerHTML = myArray;
+                                document.getElementById("demo").innerHTML = myArray;*/
 
                                 /*
                                 $.ajax({
@@ -271,9 +262,9 @@
                                 $.ajax({
                                     type: 'POST',
                                     url: '/showInstructorDetails',
-                                    data: {"instructor_id" : instructor_id},
+                                    data: {"instructor_id": instructor_id},
                                     dataType: 'json',
-                                    success: function(data){
+                                    success: function (data) {
                                         $('#courseListing').empty();
                                         for (let i = 0; i < data['courses'].length; i++) {
                                             var panel = "<div class='panel panel-default'><div class='panel-heading'>" + data['courses'][i]['course_id']
