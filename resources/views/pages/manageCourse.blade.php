@@ -16,29 +16,32 @@
                 {!! Form::open(['url' => 'manageCourseStore']) !!}
                 <div class="form-group">
                     {!! Form::label('course_id2', 'Course Id:') !!}
-                    {!! Form::text('course_id2', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('course_id2', null, ['class' => 'form-control',
+                                                        'required'=> 'true']) !!}
                 </div>
 
                 <div class="form-group">
                     {!! Form::label('sessions_days2', 'Session Days:') !!}
                     {!! Form::number('sessions_days2', '', array('id'=>'modal_sessionDays_name',
-                                                                                    'class'=>'form-control',
-                                                                                    'min'=>1,
-                                                                                    'max'=>99))!!}
+                                                                    'class'=>'form-control',
+                                                                    'min'=>1,
+                                                                    'max'=>99,
+                                                                    'required'=>'true'))!!}
                 </div>
 
                 <div class="form-group">
                     {!! Form::label('course_type2', 'Course Type:') !!}
                     {{ Form::select('course_type2', ['Academic'=>'Academic', 'Practical'=>'Practical'], null, array('id'=>'modal_courseType_name',
-                                                                                                                                        'class'=>'form-control')) }}
+                                                                                                                     'class'=>'form-control',
+                                                                                                                     'required'=>'true')) }}
                 </div>
 
                 <div class="form-group">
                     {!! Form::label('term_no2', 'Term No:') !!}
-                    {{ Form::radio('term_no2', 1, false, array('id'=>'modal_termNo_name1')) }}1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    {{ Form::radio('term_no2', 2, false, array('id'=>'modal_termNo_name2')) }}2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    {{ Form::radio('term_no2', 3, false, array('id'=>'modal_termNo_name3')) }}3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    {{ Form::radio('term_no2', 4, false, array('id'=>'modal_termNo_name4')) }}4
+                    {{ Form::radio('term_no2', 1, false, array('id'=>'modal_termNo_name1', 'required'=>'true')) }}1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    {{ Form::radio('term_no2', 2, false, array('id'=>'modal_termNo_name2', 'required'=>'true')) }}2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    {{ Form::radio('term_no2', 3, false, array('id'=>'modal_termNo_name3', 'required'=>'true')) }}3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    {{ Form::radio('term_no2', 4, false, array('id'=>'modal_termNo_name4', 'required'=>'true')) }}4
                 </div>
 
                 <div class="form-group">
