@@ -59,20 +59,28 @@
 
                 {!! Form::close() !!}
 
+            </div> <!-- Close the add instructor div-->
 
+
+            <hr>
+            <button href="#assignInstructor" class="btn btn-default" data-toggle="collapse">Assign instructor</button>
+            <div class="collapse" id="assignInstructor">
                 <hr>
-                <h4>Teachable Courses</h4>
-                <br>
-                <h5>Assign Course </h5>
+                <h2>Assign course </h2>
+
 
                 {!! Form::open(['url' => 'courseInstructor']) !!}
                 <div class="form-group">
-                    {!! Form::hidden('modal_instructor_id', '', array('id'=>'modal_instructor_id')) !!}
 
+                    <select id="first_name" name ="first_name">
+                        @foreach($instructors as $instructor)
+                            <option name ="first_name">{{$instructor->first_name}}</option>
+                        @endforeach
+                    </select>&nbsp
 
                     <select id="course_id" name ="course_id">
                         @foreach($courses as $course)
-                            <option value=course name = "$course->course_id">{{$course->course_id}}</option>
+                            <option name ="course_id">{{$course->course_id}}</option>
                         @endforeach
                     </select>
 
@@ -83,25 +91,28 @@
                     <input type="radio" id = "b" name ="intake_no" value ="B" />
                     &nbsp
 
-                    | &nbsp &nbsp Instructor
-                    <input type="radio" id = "inst" name ="instructor_type" value ="Instructor" checked="checked"/>
                     &nbsp &nbsp TA
-                    <input type="radio" id = "ta" name ="instructor_type" value ="TA" />
+                    <input type="radio" id = "ta" name ="instructor_type" value ="0" />
+                    |&nbsp &nbsp Instructor
+                    <input type="radio" id = "inst" name ="instructor_type" value ="1" checked="checked"/>
                     <br><br>
 
                     <div class="form-group">
-                        {!! Form::submit('Assign course',['class'=> 'btn btn-primary ', 'id'=>'addbtn']) !!}
+                        {!! Form::submit('Assign course',['class'=> 'btn btn-default ', 'id'=>'addbtn']) !!}
                     </div>
-
-                    <p id="demo"></p>
-
-                    <h5>display assigned course</h5>
+                    <hr>
 
 
+                    <h4>display assigned course</h4>
+
+
+
+                    @foreach($courseInstructors as $courseInstructor)
+                        <p>{{$courseInstructor}}</p>
+                    @endforeach
                 </div>
 
                 <script>
-
 
                         $(document).ready(function() {
                             $('#addbtn').click(function(){
@@ -139,14 +150,13 @@
                             });
                         });
 
-
-
-
                 </script>
 
                 {!! Form::close() !!}
 
-            </div> <!-- Close the add instructor div-->
+            </div>
+
+
 
             <hr/>
 

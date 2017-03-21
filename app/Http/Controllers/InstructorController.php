@@ -45,7 +45,8 @@ class InstructorController extends Controller
         //Assign course to instructor
         $latestInstructorId = $this->getLastInsertedInstructorId()->instructor_id;
         $courseinstructor = new CourseInstructor();
-        $courseinstructor->instructor_id = $latestInstructorId;
+        //$courseinstructor->instructor_id = $latestInstructorId;
+        $courseinstructor->first_name = $req->first_name;
         $courseinstructor->course_id = $req->course_id;
         $courseinstructor->intake_no = $req->intake_no;
         $courseinstructor->instructor_type = $req->instructor_type;
@@ -118,7 +119,8 @@ class InstructorController extends Controller
     public function index() {
         $instructors = $this->listInstructors();
         $courses = Course::all();
-        return view('pages.manageInstructor', compact('instructors', 'courses', 'courseInstructor'));
+        $courseInstructors =CourseInstructor::all();
+        return view('pages.manageInstructor', compact('instructors', 'courses', 'courseInstructors'));
     }
 
 

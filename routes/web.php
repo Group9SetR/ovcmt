@@ -30,6 +30,8 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 
     Route::post('/courseInstructor', 'InstructorController@assign');
 
+
+
     Route::post('/manageInstructor', 'InstructorController@store');
 
     Route::post('/editInstructor', 'InstructorController@edit');
