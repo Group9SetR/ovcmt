@@ -46,7 +46,6 @@ class InstructorController extends Controller
         $latestInstructorId = $this->getLastInsertedInstructorId()->instructor_id;
         $courseinstructor = new CourseInstructor();
         //$courseinstructor->instructor_id = $latestInstructorId;
-        $courseinstructor->first_name = $req->first_name;
         $courseinstructor->course_id = $req->course_id;
         $courseinstructor->intake_no = $req->intake_no;
         $courseinstructor->instructor_type = $req->instructor_type;
