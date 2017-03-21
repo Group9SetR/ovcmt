@@ -68,7 +68,6 @@
                 <hr>
                 <h2>Assign course </h2>
 
-
                 {!! Form::open(['url' => 'courseInstructor']) !!}
                 <div class="form-group">
 
@@ -98,22 +97,51 @@
                     <br><br>
 
                     <div class="form-group">
-                        {!! Form::submit('Assign course',['class'=> 'btn btn-default ', 'id'=>'addbtn']) !!}
+                        {!! Form::submit('Assign course',['class'=> 'btn btn-primary ', 'id'=>'addbtn']) !!}
                     </div>
                     <hr>
+                    {!! Form::close() !!}
 
 
+                    <!-- Search course -->
                     <h4>display assigned course</h4>
+                    <table class="table table-striped table-bordered table-hover table-condensed">
+                        <thead class="thead-default">
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">Search</span>
+                                <input type="text" name="search_text" id="search_text" placeholder="Search Course Id" class="form-control" />
+                            </div>
+                        </div>
+                        <br />
+                        <div id="result"></div>
+
+                        {!! Form::close() !!}
+                        <tr>
+                            <th>Course ID</th><th>Instructor Name</th><th>Term</th><th>Type</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($courseInstructors as $courseInstructor)
+
+                            <tr>
+                                <th>{{$courseInstructor->course_id}}</th>
+                                <td>{{$courseInstructor->first_name}}</td>
+                                <td>{{$courseInstructor->intake_no}}</td>
+                                <td>{{$courseInstructor->instructor_type}}</td>
+
+                            </tr>
+
+                        @endforeach
+                        </tbody>
+                    </table>
 
 
-
-                    @foreach($courseInstructors as $courseInstructor)
-                        <p>{{$courseInstructor}}</p>
-                    @endforeach
                 </div>
 
                 <script>
-
                         $(document).ready(function() {
                             $('#addbtn').click(function(){
 
@@ -152,9 +180,10 @@
 
                 </script>
 
-                {!! Form::close() !!}
-
             </div>
+
+
+
 
 
 
