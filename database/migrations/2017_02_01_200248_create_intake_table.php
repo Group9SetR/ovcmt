@@ -27,6 +27,6 @@ class CreateIntakeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('intake');
+        Schema::dropIfExists('intakes');
     }
 }
