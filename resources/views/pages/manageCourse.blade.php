@@ -58,6 +58,7 @@
                     <th class="text-center">Course Type</th>
                     <th class="text-center">Term No</th>
                     <th class="text-center">Edit Course</th>
+                    <th class="text-center">Delete Course</th>
                 </thead>
                 <tbody>
                 @foreach($courses as $course)
@@ -75,6 +76,18 @@
                                     data-termno="{{$course->term_no}}"
                                     data-target="#editCourseModal"
                             >Edit</button>
+                        </td>
+                        <td>
+                            {!! Form::open(['url' => 'manageCourseDelete', 'id' => 'deleteCourseForm']) !!}
+
+                            <input type="hidden" name="course_id3" value="{{$course->course_id}}">
+                            <input type="hidden" name="sessions_days3" value="{{$course->sessions_days}}">
+                            <input type="hidden" name="course_type3" value="{{$course->course_type}}">
+                            <input type="hidden" name="term_no3" value="{{$course->term_no}}">
+
+                            {!! Form::submit('Delete',['class'=> 'btn btn-danger',
+                                                     'id' => 'deleteCourseBtn']) !!}
+                            {!! Form::close() !!}
                         </td>
                     </tr>
                 @endforeach
@@ -118,7 +131,7 @@
                             <h4 class="modal-title" id="editCourseModalLabel">Edit Individual Course</h4>
                         </div>
 
-                        {!! Form::open(['url' => 'updateCourse', 'id' => 'editCourseForm']) !!}
+                        {!! Form::open(['url' => 'manageCourseUpdate', 'id' => 'editCourseForm']) !!}
                         <div class="modal-body">
                             <div class="form-group">
                                 <table class="table table-bordered table-condensed">
@@ -170,7 +183,7 @@
         var session_days = $(this).data('sessiondays');
         var course_type = $(this).data('coursetype');
         var term_no = $(this).data('termno');
-
+        // retaining original values when edit modal comes up
         $('.modal-body #modal_courseid_name').attr('value', course_id);
         $('.modal-body #modal_sessionDays_name').attr('value', session_days);
         $('.modal-body #modal_courseType_name').val(course_type);
