@@ -13,7 +13,7 @@
             <div class="collapse" id="addNewCourse">
                 <h2>Add a New Course</h2>
 
-                {!! Form::open(['url' => 'manageCourseStore']) !!}
+                {!! Form::open(['url' => 'manageCourseStore', 'id' => 'addCourseForm']) !!}
                 <div class="form-group">
                     {!! Form::label('course_id2', 'Course Id:') !!}
                     {!! Form::text('course_id2', null, ['class' => 'form-control',
@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="form-group">
-                    {!! Form::label('term_no2', 'Term No:') !!}
+                    {!! Form::label('term_no2', 'Term No:') !!}&nbsp;&nbsp;&nbsp;&nbsp;
                     {{ Form::radio('term_no2', 1, false, array('id'=>'modal_termNo_name1', 'required'=>'true')) }}1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     {{ Form::radio('term_no2', 2, false, array('id'=>'modal_termNo_name2', 'required'=>'true')) }}2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     {{ Form::radio('term_no2', 3, false, array('id'=>'modal_termNo_name3', 'required'=>'true')) }}3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -81,6 +81,34 @@
                 </tbody>
             </table>
 
+            <div class="modal fade" id="addCourseSaved" tabindex="-1" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">New course added: <b><span id="courseNameAdd"></span></b></h4>
+                        </div>
+                        <div class="modal-body">
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="changesSaved" tabindex="-1" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Changes saved for Course Id: <b><span id="courseName"></span></b></h4>
+                        </div>
+                        <div class="modal-body">
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="modal fade" id="editCourseModal" tabindex="-1" role="dialog" aria-labeleledby="editCourseModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -90,7 +118,7 @@
                             <h4 class="modal-title" id="editCourseModalLabel">Edit Individual Course</h4>
                         </div>
 
-                        {!! Form::open(['url' => 'updateCourse']) !!}
+                        {!! Form::open(['url' => 'updateCourse', 'id' => 'editCourseForm']) !!}
                         <div class="modal-body">
                             <div class="form-group">
                                 <table class="table table-bordered table-condensed">
@@ -109,7 +137,7 @@
                                     </tr>
                                     <tr>
                                         <td>{!! Form::label('course_type', 'Course Type') !!}</td>
-                                        <td>{{ Form::select('course_type', ['Academic'=>'Academic', 'Practical'=>'Practical'], null, array('id'=>'modal_courseType_name',
+                                        <td>{{ Form::select('course_type', ['Academic' => 'Academic', 'Practical'=> 'Practical'], array('id'=>'modal_courseType_name',
                                                                                                                                         'class'=>'form-control')) }}</td>
                                     </tr>
                                     <tr>
@@ -125,35 +153,73 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" id="closeEditCourseBtn" class="btn btn-warning" data-dismiss="modal">Close</button>
-                            {!! Form::submit('Save',['class'=> 'btn btn-primary form-control', 'id' => 'editCourseBtn']) !!}
+                            {!! Form::submit('Save',['class'=> 'btn btn-primary form-control open-EditCourseDialog',
+                                                     'id' => 'editCourseBtn']) !!}
                         </div>
                         {!! Form::close() !!}
-
-                        <script>
-                            $(document).on('click', '.open-EditCourseDialog', function() {
-                                var course_id = $(this).data('courseid');
-                                var session_days = $(this).data('sessiondays');
-                                var course_type = $(this).data('coursetype');
-                                var term_no = $(this).data('termno');
-                                $('.modal-body #modal_courseid_name').attr('value', course_id);
-                                $('.modal-body #modal_sessionDays_name').attr('value', session_days);
-                                $('.modal-body #modal_courseType_name').val(course_type);
-                                if (term_no == 1) {
-                                    $('.modal-body #modal_termNo_name1').attr('checked', 'checked');
-                                } else if (term_no == 2) {
-                                    $('.modal-body #modal_termNo_name2').attr('checked', 'checked');
-                                } else if (term_no == 3) {
-                                    $('.modal-body #modal_termNo_name3').attr('checked', 'checked');
-                                } else {
-                                    // value is none other than 4 folks
-                                    $('.modal-body #modal_termNo_name4').attr('checked', 'checked');
-                                }
-                            });
-                        </script>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    $(document).on('click', '.open-EditCourseDialog', function() {
+        var course_id = $(this).data('courseid');
+        var session_days = $(this).data('sessiondays');
+        var course_type = $(this).data('coursetype');
+        var term_no = $(this).data('termno');
+
+        $('.modal-body #modal_courseid_name').attr('value', course_id);
+        $('.modal-body #modal_sessionDays_name').attr('value', session_days);
+        $('.modal-body #modal_courseType_name').val(course_type);
+        if (term_no == 1) {
+            $('.modal-body #modal_termNo_name1').attr('checked', 'checked');
+        } else if (term_no == 2) {
+            $('.modal-body #modal_termNo_name2').attr('checked', 'checked');
+        } else if (term_no == 3) {
+            $('.modal-body #modal_termNo_name3').attr('checked', 'checked');
+        } else {
+            // value is none other than 4 folks
+            $('.modal-body #modal_termNo_name4').attr('checked', 'checked');
+        }
+    });
+
+    // show success modal after add course
+    $(document).ready(function() {
+        $('#addCourseForm').on('submit', function(event) {
+            var form = this;
+            event.preventDefault();
+            $(document).ready(function() {
+                var newCourse = $('#course_id2').val();
+                // show course id
+                $('#courseNameAdd').html(newCourse);
+                $('#addCourseSaved').modal('show');
+            });
+            setTimeout(function () {
+                form.submit();
+            }, 2000); // wait 2 seconds until form process - so user can read success message
+        });
+    });
+
+    // show success modal after edit course
+    $(document).ready(function() {
+        $('#editCourseForm').on('submit', function(event) {
+            var form = this;
+            event.preventDefault();
+            // close edit course modal
+            $('#editCourseModal').modal('hide');
+            $(document).ready(function() {
+                var course_id = $('#modal_courseid_name').val();
+                // show course id
+                $('#courseName').html(course_id);
+                $('#changesSaved').modal('show');
+            });
+            setTimeout(function () {
+                form.submit();
+            }, 2000); // wait 2 seconds until form process - so user can read success message
+        });
+    });
+</script>
 @endsection
