@@ -98,102 +98,11 @@
 
                     <div class="form-group">
                         {!! Form::submit('Assign course',['class'=> 'btn btn-primary ', 'id'=>'addbtn']) !!}
+                        {!! Form::close() !!}
                     </div>
                     <hr>
-<<<<<<< HEAD
                 </div>
-
-                <script>
-/*
-=======
-                    {!! Form::close() !!}
-
-
-                    <!-- Search course -->
-                    <h4>display assigned course</h4>
-                    <table class="table table-striped table-bordered table-hover table-condensed">
-                        <thead class="thead-default">
-
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon">Search</span>
-                                <input type="text" name="search_text" id="search_text" placeholder="Search Course Id" class="form-control" />
-                            </div>
-                        </div>
-                        <br />
-                        <div id="result"></div>
-
-                        {!! Form::close() !!}
-                        <tr>
-                            <th>Course ID</th><th>Instructor Name</th><th>Term</th><th>Type</th>
-
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($courseInstructors as $courseInstructor)
-
-                            <tr>
-                                <th>{{$courseInstructor->course_id}}</th>
-                                <td>{{$courseInstructor->first_name}}</td>
-                                <td>{{$courseInstructor->intake_no}}</td>
-                                <td>{{$courseInstructor->instructor_type}}</td>
-
-                            </tr>
-
-                        @endforeach
-                        </tbody>
-                    </table>
-
-
-                </div>
-
-                <script>
->>>>>>> 0f0d9fc5fcea5f53ab6c696eb2ddfa254f5e6e3c
-                        $(document).ready(function() {
-                            $('#addbtn').click(function(){
-
-                                var course_id = document.getElementById("course_id");
-                                course_id = course_id.options[course_id.selectedIndex].text;
-
-                                if (document.getElementById("a").checked){
-                                    intake_no = document.getElementById('a').value;
-                                }else {
-                                    intake_no = document.getElementById('b').value;
-                                }
-                                if (document.getElementById("inst").checked){
-                                    instructor_type = document.getElementById('inst').value;
-                                }else if (document.getElementById("ta").checked){
-                                    instructor_type = document.getElementById('ta').value;
-                                }
-                                var myArray = [ course_id, intake_no, instructor_type];
-
-                                document.getElementById("demo").innerHTML = myArray;*/
-
-                                /*
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '/showCourseInstructorDetail',
-                                    data: {"instructor_id" : instructor_id},
-                                    dataType: 'json',
-                                    data: {id: currentValue, _token: $('input[name="_token"]').val()},
-                                    success: function(data){
-                                        alert(data);
-                                    },
-                                    error: function(){},
-                                });
-                                */
-                            });
-                        });
-
-                </script>
-
             </div>
-
-
-
-
-
-
             <hr/>
 
             <h2>Display Instructors</h2>
@@ -230,10 +139,7 @@
                                     data-target="#editInstructorModal"
                             >Edit</button>
                         </td>
-
                     </tr>
-
-
                 @endforeach
                 </tbody>
             </table>
