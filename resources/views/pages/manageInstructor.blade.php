@@ -67,7 +67,6 @@
             <div class="collapse" id="assignInstructor">
                 <hr>
                 <h4><small>Assign an Instructor's Teachable Courses</small></h4>
-
                 {!! Form::open(['url' => 'courseInstructor']) !!}
                 <div class="form-group">
 
@@ -107,82 +106,47 @@
 
 
 <!-- Display instructor -->
-            <h2>Display Instructors</h2>
-            <h4>Search instructor </h4>
-            <table class="table table-striped table-bordered table-hover table-condensed">
-                <thead class="thead-default">
-                <div class="form-group">
+            <h2>Display Instructors</h2><br>
+                <div class="form-group col-md-7">
                     <div class="input-group">
                         <span class="input-group-addon">Search</span>
-                        <input type="text" name="search" id="search" placeholder="Search instructor name" class="form-control" />
+                        <input type="text" name="search" id ="search" placeholder="Search instructor name" class ="form-control">
                     </div>
                 </div>
-                <br />
-
-                <tr>
-                    <th>Instructor Name</th><th>Course Id</th><th>Term</th><th>Type</th>
-                </tr>
+                <br><br><br>
+                <hr>
+            <table class="table table-striped table-bordered table-hover table-condensed">
+                <thead class="thead-default">
+                    <tr>
+                        <th>ID</th><th>Name</th><th>Date</th>
+                        <th>Mon AM</th><th>Tues AM</th><th>Wed AM</th><th>Thur AM</th><th>Fri AM</th>
+                        <th>Mon PM</th><th>Tues PM</th><th>Wed PM</th><th>Thur PM</th><th>Fri PM</th>
+                        <th></th>
+                    </tr>
                 </thead>
+
                 <tbody>
 
                 </tbody>
-            </table>
 
+              </table>
             <script type = "text/javascript">
                 $('#search').on('keyup',function(){
-                    $value=$(this).val();
-                    $.ajax({
-                        type: 'get',
-                        url: '{{URL::to('search')}}',
-                        data: ('search:$value'),
-                        success:function (data) {
-                            if(data.no!=="") {
+                    $value = $(this).val();
+                    $.ajax ({
+                        type : 'GET',
+                        url  : '/searchInstructor',
+                        data: { 'search' : $value },
+                        success: function (data) {
                                 $('tbody').html(data);
-                            }else {
-                                alrert('not found');
-                            }
                         }
                     });
                 })
             </script>
 
-            <table class="table table-striped table-bordered table-hover table-condensed">
-                <thead class="thead-default">
-                <tr>
-                    <th>ID</th><th>Name</th><th>Date</th>
-                    <th>Mon AM</th><th>Tues AM</th><th>Wed AM</th><th>Thur AM</th><th>Fri AM</th>
-                    <th>Mon PM</th><th>Tues PM</th><th>Wed PM</th><th>Thur PM</th><th>Fri PM</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($instructors as $instructor)
-                    <tr>
-                        <th>{{$instructor->instructor_id}}</th>
-                        <td>{{$instructor->first_name}}</td>
-                        <td>{{$instructor->date_start}}</td>
-                        <td>{{$instructor->mon_am}}</td>
-                        <td>{{$instructor->tues_am}}</td>
-                        <td>{{$instructor->wed_am}}</td>
-                        <td>{{$instructor->thurs_am}}</td>
-                        <td>{{$instructor->fri_am}}</td>
-                        <td>{{$instructor->mon_pm}}</td>
-                        <td>{{$instructor->tues_pm}}</td>
-                        <td>{{$instructor->wed_pm}}</td>
-                        <td>{{$instructor->thurs_pm}}</td>
-                        <td>{{$instructor->fri_pm}}</td>
-                        <td>
-                            <button class="btn btn-action open-EditInstructorDialog"
-                                    data-toggle="modal"
-                                    data-id="{{$instructor->instructor_id}}"
-                                    data-name="{{$instructor->first_name}}"
-                                    data-target="#editInstructorModal"
-                            >Edit</button>
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
+
+
+
 <!-- end display -->
 
 

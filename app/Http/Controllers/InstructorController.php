@@ -116,33 +116,7 @@ class InstructorController extends Controller
         return redirect()->action('InstructorController@index');
     }
 
-    public function search(Request $req){
-        $output="";
-        $instructor_type ="";
-        if ($req -> ajax()){
-            $instructors = DB::table('course_instructor')->where('course_id', 'LIKE', '%'.$req->search.'%');
 
-            if($instructors){
-                foreach ($instructors as $key => $instructor){
-                    if($instructor ->instructor_type == 1 ){
-                        $instructor_type = "instructor";
-                    } else {
-                        $instructor_type = "TA";
-                    }
-                    $output = '<tr>'.
-                              '<td>'.$instructor->instructor_id.'</td>'.
-                              '<td>'.$instructor->course_id.'</td>'.
-                              '<td>'.$instructor->intake_no.'</td>'.
-                              '<td>'.$instructor_type.'</td>'.
-                              '</tr>';
-                }
-                return Response($output);
-            }else{
-                return Response()->json(['no'=>'Not Found']);
-            }
-        }
-
-    }
 
     public function index() {
         $instructors = $this->listInstructors();

@@ -23,12 +23,13 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 
     Route::get('/manageInstructor', 'InstructorController@manageInstructor');
     Route::get('/manageInstructor', 'InstructorController@index');
-    Route::get('/search', 'InstructorController@search');
+    Route::get('/searchInstructor', 'AjaxController@searchInstructor');
     Route::post('/updateCourse', 'CourseController@updateCourse');
     Route::post('/courseInstructor', 'InstructorController@assign');
     Route::post('/manageInstructor', 'InstructorController@store');
     Route::post('/editInstructor', 'InstructorController@edit');
     Route::post('/showInstructorDetails', 'AjaxController@instructorDetails');
+
 
     /* CourseController */
 
