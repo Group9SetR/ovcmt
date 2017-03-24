@@ -35,19 +35,21 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     Route::get('/manageCourse', 'CourseController@manageCourse');
     Route::get('/manageCourse', 'CourseController@index');
     Route::post('/manageCourseStore', 'CourseController@store');
-    Route::post('/manageCourse', 'CourseController@updateCourse');
+    Route::post('/manageCourseUpdate', 'CourseController@updateCourse');
+    Route::post('/manageCourseDelete', 'CourseController@deleteCourse');
 
     /* ScheduleController */
 
     Route::get('/dragDrop', 'ScheduleController@index');
     Route::post('/dragDrop', 'ScheduleController@displayRoomsByWeek');
 
+    Route::post('/addschedule', 'ScheduleController@store');
+
     /* AssignController*/
 
     Route::get('/assign', 'AssignController@index');
     Route::post('/getInstructorsForACourse', 'AJAXController@getInstructorsForACourse');
 
-// Route::post('/dragDrop', 'ScheduleController@store');
 
     Route::get('/addschedule', 'ScheduleController@index');
 });
