@@ -3,10 +3,10 @@
 @section('content')
 <div class="container-fluid">
     <div class="row content">
-        <div class="col-sm-2 sidenav">
+        <div class="col-sm-2 sidenav" >
             @include('includes.sidebar')
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-8">
             <h4><small>Manage Instructors </small></h4>
             <hr>
             <button href="#addNewInstructor" class="btn btn-default" data-toggle="collapse">Add Instructor</button>
@@ -105,7 +105,47 @@
             </div>
             <hr/>
 
+
+<!-- Display instructor -->
             <h2>Display Instructors</h2>
+            <h4>Search instructor </h4>
+            <table class="table table-striped table-bordered table-hover table-condensed">
+                <thead class="thead-default">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">Search</span>
+                        <input type="text" name="search" id="search" placeholder="Search instructor name" class="form-control" />
+                    </div>
+                </div>
+                <br />
+
+                <tr>
+                    <th>Instructor Name</th><th>Course Id</th><th>Term</th><th>Type</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+
+            <script type = "text/javascript">
+                $('#search').on('keyup',function(){
+                    $value=$(this).val();
+                    $.ajax({
+                        type: 'get',
+                        url: '{{URL::to('search')}}',
+                        data: ('search:$value'),
+                        success:function (data) {
+                            if(data.no!=="") {
+                                $('tbody').html(data);
+                            }else {
+                                alrert('not found');
+                            }
+                        }
+                    });
+                })
+            </script>
+
             <table class="table table-striped table-bordered table-hover table-condensed">
                 <thead class="thead-default">
                 <tr>
@@ -143,6 +183,8 @@
                 @endforeach
                 </tbody>
             </table>
+<!-- end display -->
+
 
             <div class="modal fade" id="editInstructorModal" tabindex="-1" role="dialog" aria-labeleledby="editInstructorModalLabel">
                 <div class="modal-dialog" role="document">

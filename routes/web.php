@@ -23,6 +23,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 
     Route::get('/manageInstructor', 'InstructorController@manageInstructor');
     Route::get('/manageInstructor', 'InstructorController@index');
+    Route::get('/search', 'InstructorController@search');
     Route::post('/updateCourse', 'CourseController@updateCourse');
     Route::post('/courseInstructor', 'InstructorController@assign');
     Route::post('/manageInstructor', 'InstructorController@store');

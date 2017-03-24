@@ -19,7 +19,7 @@
 
 <div class="container-fluid">
     <div class="row content">
-        <div class="col-sm-2 sidenav">
+        <div class="col-sm-2 sidenav" >
             @include('includes.sidebar')
         </div>
 
