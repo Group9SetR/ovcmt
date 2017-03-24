@@ -59,20 +59,27 @@
 
                 {!! Form::close() !!}
 
+            </div> <!-- Close the add instructor div-->
 
+
+            <hr>
+            <button href="#assignInstructor" class="btn btn-default" data-toggle="collapse">Assign instructor</button>
+            <div class="collapse" id="assignInstructor">
                 <hr>
-                <h4>Teachable Courses</h4>
-                <br>
-                <h5>Assign Course </h5>
+                <h4><small>Assign an Instructor's Teachable Courses</small></h4>
 
                 {!! Form::open(['url' => 'courseInstructor']) !!}
                 <div class="form-group">
-                    {!! Form::hidden('modal_instructor_id', '', array('id'=>'modal_instructor_id')) !!}
 
+                    <select id="instructor_id" name="instructor_id">
+                        @foreach($instructors as $instructor)
+                            <option value="{{$instructor->instructor_id}}">{{$instructor->first_name}}</option>
+                        @endforeach
+                    </select>&nbsp
 
-                    <select id="course_id" name ="course_id">
+                    <select id="course_id" name="course_id">
                         @foreach($courses as $course)
-                            <option value=course name = "$course->course_id">{{$course->course_id}}</option>
+                            <option name="course_id">{{$course->course_id}}</option>
                         @endforeach
                     </select>
 
@@ -83,71 +90,19 @@
                     <input type="radio" id = "b" name ="intake_no" value ="B" />
                     &nbsp
 
-                    | &nbsp &nbsp Instructor
-                    <input type="radio" id = "inst" name ="instructor_type" value ="Instructor" checked="checked"/>
                     &nbsp &nbsp TA
-                    <input type="radio" id = "ta" name ="instructor_type" value ="TA" />
+                    <input type="radio" id = "ta" name ="instructor_type" value ="0" />
+                    |&nbsp &nbsp Instructor
+                    <input type="radio" id = "inst" name ="instructor_type" value ="1" checked="checked"/>
                     <br><br>
 
                     <div class="form-group">
                         {!! Form::submit('Assign course',['class'=> 'btn btn-primary ', 'id'=>'addbtn']) !!}
+                        {!! Form::close() !!}
                     </div>
-
-                    <p id="demo"></p>
-
-                    <h5>display assigned course</h5>
-
-
+                    <hr>
                 </div>
-
-                <script>
-
-
-                        $(document).ready(function() {
-                            $('#addbtn').click(function(){
-
-                                var course_id = document.getElementById("course_id");
-                                course_id = course_id.options[course_id.selectedIndex].text;
-
-                                if (document.getElementById("a").checked){
-                                    intake_no = document.getElementById('a').value;
-                                }else {
-                                    intake_no = document.getElementById('b').value;
-                                }
-                                if (document.getElementById("inst").checked){
-                                    instructor_type = document.getElementById('inst').value;
-                                }else if (document.getElementById("ta").checked){
-                                    instructor_type = document.getElementById('ta').value;
-                                }
-                                var myArray = [ course_id, intake_no, instructor_type];
-
-                                document.getElementById("demo").innerHTML = myArray;
-
-                                /*
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '/showCourseInstructorDetail',
-                                    data: {"instructor_id" : instructor_id},
-                                    dataType: 'json',
-                                    data: {id: currentValue, _token: $('input[name="_token"]').val()},
-                                    success: function(data){
-                                        alert(data);
-                                    },
-                                    error: function(){},
-                                });
-                                */
-                            });
-                        });
-
-
-
-
-                </script>
-
-                {!! Form::close() !!}
-
-            </div> <!-- Close the add instructor div-->
-
+            </div>
             <hr/>
 
             <h2>Display Instructors</h2>
@@ -184,10 +139,7 @@
                                     data-target="#editInstructorModal"
                             >Edit</button>
                         </td>
-
                     </tr>
-
-
                 @endforeach
                 </tbody>
             </table>
@@ -261,9 +213,9 @@
                                 $.ajax({
                                     type: 'POST',
                                     url: '/showInstructorDetails',
-                                    data: {"instructor_id" : instructor_id},
+                                    data: {"instructor_id": instructor_id},
                                     dataType: 'json',
-                                    success: function(data){
+                                    success: function (data) {
                                         $('#courseListing').empty();
                                         for (let i = 0; i < data['courses'].length; i++) {
                                             var panel = "<div class='panel panel-default'><div class='panel-heading'>" + data['courses'][i]['course_id']

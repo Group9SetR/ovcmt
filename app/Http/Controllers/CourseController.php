@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Course;
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CourseController extends Controller
 {
-    public function store(Request $req)
-    {
+    public function store(Request $req) {
         $course = new Course;
         $course->course_id = $req->course_id2;
         $course->sessions_days = $req->sessions_days2;
@@ -24,8 +24,7 @@ class CourseController extends Controller
         return $courseList;
     }
 
-    public function updateCourse(Request $req)
-    {
+    public function updateCourse(Request $req) {
         if (Course::find($req->course_id)) {
             $course = Course::find($req->course_id);
             $course->sessions_days = $req->sessions_days;
@@ -33,12 +32,18 @@ class CourseController extends Controller
             $course->term_no = $req->term_no;
             $course->save();
         }
-
         return redirect()->action('CourseController@index');
     }
 
-    public function index()
-    {
+    public function deleteCourse(Request $req) {
+        if (Course::find($req->course_id3)) {
+            $course = Course::find($req->course_id3);
+            $course->delete();
+        }
+        return redirect()->action('CourseController@index');
+    }
+
+    public function index() {
         $courses = $this->listCourses();
         return view('pages.manageCourse', compact('courses'));
     }

@@ -17,44 +17,38 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     Route::get('/adminauth', 'PagesController@adminauth');
     Route::get('/masterscheduleview', 'PagesController@masterscheduleview');
     Route::get('/editschedule', 'PagesController@editschedule');
-
     Route::get('/draganddropschedule', 'PagesController@draganddropschedule');
-
 
     /* InstructorController */
 
     Route::get('/manageInstructor', 'InstructorController@manageInstructor');
-
     Route::get('/manageInstructor', 'InstructorController@index');
-
-
+    Route::post('/updateCourse', 'CourseController@updateCourse');
     Route::post('/courseInstructor', 'InstructorController@assign');
-
     Route::post('/manageInstructor', 'InstructorController@store');
-
     Route::post('/editInstructor', 'InstructorController@edit');
-
     Route::post('/showInstructorDetails', 'AjaxController@instructorDetails');
 
     /* CourseController */
 
     Route::get('/manageCourse', 'CourseController@manageCourse');
-
     Route::get('/manageCourse', 'CourseController@index');
-
     Route::post('/manageCourseStore', 'CourseController@store');
-
-    Route::post('/manageCourse', 'CourseController@updateCourse');
-
-    Route::get('/assign', 'AssignController@index');
+    Route::post('/manageCourseUpdate', 'CourseController@updateCourse');
+    Route::post('/manageCourseDelete', 'CourseController@deleteCourse');
 
     /* ScheduleController */
 
     Route::get('/dragDrop', 'ScheduleController@index');
-
     Route::post('/dragDrop', 'ScheduleController@displayRoomsByWeek');
 
     Route::post('/addschedule', 'ScheduleController@store');
+
+    /* AssignController*/
+
+    Route::get('/assign', 'AssignController@index');
+    Route::post('/getInstructorsForACourse', 'AJAXController@getInstructorsForACourse');
+
 
     Route::get('/addschedule', 'ScheduleController@index');
 });
@@ -66,9 +60,6 @@ Route::group(['middleware' => 'App\Http\Middleware\StaffMiddleware'], function()
     Route::get('/schedulestaff', 'PagesController@schedulestaff');
 });
 
-Route::post('/updateCourse', 'CourseController@updateCourse');
-
-Route::get('/assign', 'AssignController@index');
 /* Student Routes*/
 Route::group(['middleware' => 'App\Http\Middleware\StudentMiddleware'], function()
 {
