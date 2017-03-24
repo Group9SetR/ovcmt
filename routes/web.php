@@ -54,7 +54,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 
     Route::post('/dragDrop', 'ScheduleController@displayRoomsByWeek');
 
-// Route::post('/dragDrop', 'ScheduleController@store');
+    Route::post('/addschedule', 'ScheduleController@store');
 
     Route::get('/addschedule', 'ScheduleController@index');
 });
