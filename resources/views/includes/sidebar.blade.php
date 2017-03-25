@@ -1,11 +1,15 @@
 
     <br>
-    <ul class="nav nav-pills nav-stacked">
-        <li class="active"><a href="{{ url('/masterscheduleview') }}" onClick="">Master Schedule</a></li>
+    <ul class="nav nav-pills nav-stacked ">
+        <li class="active "><a href="{{ url('/masterscheduleview') }}" onClick="">Master Schedule</a></li>
     </ul><br>
 
     <ul class="nav nav-pills nav-stacked">
         <li class="active"><a  href="{{ url('/addschedule') }}" onClick="">Create Schedule</a></li>
+    </ul><br>
+
+    <ul class="nav nav-pills nav-stacked">
+        <li class="active"><a href="{{ url('/manageTerm') }}" onClick="">Manage Term</a></li>
     </ul><br>
 
     <ul class="nav nav-pills nav-stacked">
@@ -20,9 +24,6 @@
         <li class="active"><a href="{{ url('/editschedule') }}" onClick="">Edit Schedule</a></li>
     </ul><br>
 
-    <ul class="nav nav-pills nav-stacked">
-        <li class="active"><a href="{{ url('/draganddropschedule') }}" onClick="">Create New Schedule from Drag and Drop</a></li>
-    </ul><br>
 
 
 

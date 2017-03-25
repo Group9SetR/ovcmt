@@ -6,6 +6,7 @@
         <div class="col-sm-2 sidenav" >
             @include('includes.sidebar')
         </div>
+
         <div class="col-sm-8">
             <h4><small>Manage Instructors </small></h4>
             <hr>
@@ -29,12 +30,12 @@
                     {!! Form::date('date_start') !!}
                 </div>
                 <div class="form-group">
-                <table>
-                    <tr>
+                <table class = "table table-striped table-bordered table-hover table-condensed">
+                    <tr class = "info">
                         <th>Time</th><th>Mon</th><th>Tues</th><th>Wed</th><th>Thurs</th><th>Fri</th>
                     </tr>
                     <tr>
-                        <td>Morn</td>
+                        <td>Moring</td>
                         <td>{!! Form::checkbox('mon_am') !!}</td>
                         <td>{!! Form::checkbox('tues_am') !!}</td>
                         <td>{!! Form::checkbox('wed_am') !!}</td>
@@ -43,7 +44,7 @@
 
                     </tr>
                     <tr>
-                        <td>Aft</td>
+                        <td>Afternoon</td>
                         <td>{!! Form::checkbox('mon_pm') !!}</td>
                         <td>{!! Form::checkbox('tues_pm') !!}</td>
                         <td>{!! Form::checkbox('wed_pm') !!}</td>
@@ -58,9 +59,9 @@
                 </div>
 
                 {!! Form::close() !!}
-
             </div> <!-- Close the add instructor div-->
             <hr/>
+
 
 
 <!-- Display instructor -->
@@ -73,9 +74,9 @@
                 </div>
                 <br><br><br>
                 <hr>
-            <table class="table table-striped table-bordered table-hover table-condensed">
+            <table class="table table-striped table-bordered table-hover table-condensed text-center">
                 <thead class="thead-default">
-                    <tr>
+                    <tr class = "success">
                         <th class="text-center">ID</th>
                         <th class="text-center">Name</th>
                         <th class="text-center">Date</th>
@@ -90,7 +91,8 @@
                         <th class="text-center">Thur PM</th>
                         <th class="text-center">Fri PM</th>
                         <th class="text-center">Edit Instructor</th>
-                        <th class="text-center">Assign Instructor</th>
+                        <th class="text-center">Assign Course</th>
+                        <th class="text-center">Delete</th>
                     </tr>
                 </thead>
 
@@ -114,7 +116,6 @@
             </script>
 <!-- end display -->
 
-
             <div class="modal fade" id="editInstructorModal" tabindex="-1" role="dialog" aria-labeleledby="editInstructorModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -129,7 +130,7 @@
                             <div class="form-group">
                                 {!! Form::hidden('modal_instructor_id', '', array('id'=>'modal_instructor_id')) !!}
                                 {!! Form::label('modal_instructor_name', 'Instructor:') !!}
-                                {!! Form::text('modal_instructor_name', '', array('id'=>'modal_instructor_name'))!!}
+                                {!! Form::text('modal_instructor_name', '', array('id'=>'modal_instructor_name','readonly'=>'readonly'))!!}
                             </div>
                             <div class="form-group">
                                 {!! Form::label('modal_instruct_avail_start_date', 'Effective date:') !!}
@@ -190,8 +191,8 @@
                                     success: function (data) {
                                         $('#courseListing').empty();
                                         for (let i = 0; i < data['courses'].length; i++) {
-                                            var panel = "<div class='panel panel-default'><div class='panel-heading'>" + data['courses'][i]['course_id']
-                                                + "</div> <div class='panel-body'>" + "Intake: " + data['courses'][i]['intake_no'] + "</div></div>";
+                                            var panel = "<div class='panel panel-default'><div class='panel-heading'><div class='row'><div class='col-sm-4 text-left'>" + data['courses'][i]['course_id']
+                                                + "</div><div class='col-md-8 text-right'>"+"<button class='btn btn-danger' type='submit' value='Submit'>Delete</button>"+"</div></div></div> <div class='panel-body'>" + "Intake: " + data['courses'][i]['intake_no'] + "</div></div>";
                                             $('#courseListing').append(panel);
                                         }
                                         var avail = data['avail'][0];
@@ -236,7 +237,7 @@
                             {!! Form::open(['url' => 'courseInstructor']) !!}
                             <p>Assgien course</p>
                             <div class="form-group">
-                                {!! Form::hidden('modal_instructor_id', '', array('id'=>'modal_instructor_id')) !!}
+                                {!! Form::hidden('course_instructor_id', '', array('id'=>'course_instructor_id')) !!}
                             </div>
                             <div class="form-group">
                                 <select id="course_id" name="course_id">
@@ -268,6 +269,14 @@
                             </span>
                             {!! Form::close() !!}
                         </div>
+                        <script>
+                            $(document).on('click', '.open-AssignCourseDialog', function() {
+                                var instructor_id1 = $(this).parent().siblings(":first").text();
+                                console.log(instructor_id1);
+                                $('.modal-body #course_instructor_id').attr('value',instructor_id1);
+                                console.log($('.modal-body #course_instructor_id').attr('value'));
+                            });
+                        </script>
                     </div>
                 </div>
             </div>

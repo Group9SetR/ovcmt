@@ -51,20 +51,27 @@
             </div>
             <hr/>
             <h2>Display Courses</h2>
+            <br>
+            <!-- Search bar -->
             <div class="form-group col-md-7">
                 <div class="input-group">
                     <span class="input-group-addon">Search</span>
                     <input type="text" name="search" id ="search" placeholder="Search Course id" class ="form-control">
                 </div>
             </div>
+            <br><br><br>
+            <hr>
+            <!-- Display course Table -->
             <table id="myTalbe" class="table table-striped table-bordered table-hover table-condensed text-center">
                 <thead class="thead-default">
-                <th class="text-center">Course Id</th>
-                <th class="text-center">Sessions Days</th>
-                <th class="text-center">Course Type</th>
-                <th class="text-center">Term No</th>
-                <th class="text-center">Edit Course</th>
-                <th class="text-center">Delete Course</th>
+                    <tr class = "success">
+                        <th class="text-center">Course Id</th>
+                        <th class="text-center">Sessions Days</th>
+                        <th class="text-center">Course Type</th>
+                        <th class="text-center">Term No</th>
+                        <th class="text-center">Edit Course</th>
+                        <th class="text-center">Delete Course</th>
+                    </tr>
                 </thead>
 
                 <tbody class = "searchCourseBody">
@@ -172,7 +179,8 @@
 
 <script>
     $(document).on('click', '.open-EditCourseDialog', function() {
-        var course_id = $(this).data('courseid');
+        var course_id = $(this).parent().siblings(":first").text();
+        console.log(course_id);
         var session_days = $(this).data('sessiondays');
         var course_type = $(this).data('coursetype');
         var term_no = $(this).data('termno');

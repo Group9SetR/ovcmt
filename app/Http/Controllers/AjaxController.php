@@ -38,7 +38,7 @@ class AjaxController extends Controller
             if($instructors){
                 foreach ($instructors as $key => $instructor){
                     $output .='<tr>'.
-                        '<td>'.$instructor->instructor_id.'</td>'.
+                        '<td class="course_instructor_id">'.$instructor->instructor_id.'</td>'.
                         '<td>'.$instructor->first_name.'</td>'.
                         '<td>'.$instructor->date_start.'</td>'.
                         '<td>'.$instructor->mon_am.'</td>'.
@@ -59,11 +59,14 @@ class AjaxController extends Controller
                                     data-target="#editInstructorModal"
                                         >Edit</button>'.
                         '</td>'.
-                        '<td>'. '<button class=" btn btn-danger open-AssignCourseDialog"
+                        '<td>'. '<button class=" btn btn-success open-AssignCourseDialog"
                                         data-toggle="modal"
                                         data-id="{{$instructor->instructor_id}}"
                                         data-target="#assignInstructorModal"
                                             >Assign</button>'.
+                        '</td>'.
+                        '<td>'. '<button class=" btn btn-danger "
+                                            >Delete</button>'.
                         '</td>'.
 
                         '</tr>';

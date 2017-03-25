@@ -75,5 +75,9 @@ html, body {
 }
 
 #addNewCourse {
-    width: 400px;
+    width: 600px;
+}
+
+#addNewInstructor{
+    width :600px;
 }
