@@ -224,7 +224,6 @@
                                     }
                                 });
                                 var instructor_id = $(this).parent().siblings(":first").text();
-                                console.log(instructor_id);
                                 var instructor_name = $(this).parent().siblings(":nth-child(2)").text();
                                 $('.modal-body #modal_instructor_id').attr('value',instructor_id);
                                 $('.modal-body #modal_instructor_name').attr('value',instructor_name);
