@@ -41,8 +41,10 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 
     Route::get('/dragDrop', 'ScheduleController@index');
     Route::post('/dragDrop', 'ScheduleController@displayRoomsByWeek');
-
+    Route::post('/dragDropGetWeeklySchedule', 'AjaxController@getWeeklySchedule');
     Route::post('/addschedule', 'ScheduleController@store');
+    Route::post('/dragDropProp', 'ScheduleController@propagate');
+
 
     /* AssignController*/
 
@@ -53,6 +55,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 
     /* Propagation Controller */
     Route::post('/getWeeklySchedule', 'AjaxController@getWeeklySchedule');
+    Route::get('/propagateschedule', 'PagesController@propagateschedule');
 });
 
 /* Staff Routes*/
