@@ -48,7 +48,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 
     Route::get('/assign', 'AssignController@index');
     Route::post('/getInstructorsForACourse', 'AjaxController@getInstructorsForACourse');
-    Route::post('/getInstructorsForACourse', 'AjaxController@getInstructorsForACourse');
+    Route::post('/getCourseOfferingsByTerm', 'AjaxController@getCourseOfferingsByTerm');
 
     /* Propagation Controller */
     Route::post('/getWeeklySchedule', 'AjaxController@getWeeklySchedule');

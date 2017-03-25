@@ -6,6 +6,7 @@ use App\CourseInstructor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Instructor;
+use App\Term;
 
 class AssignController extends Controller
 {
@@ -21,7 +22,12 @@ class AssignController extends Controller
         return redirect()->action('AssignController@index');
     }
 
+    public function getTerms() {
+        return Term::all();
+    }
+
     public function index() {
-        return view('pages.assign');
+        $terms = $this->getTerms();
+        return view('pages.assign', compact('terms'));
     }
 }

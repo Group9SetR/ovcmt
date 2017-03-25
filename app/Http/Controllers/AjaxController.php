@@ -45,10 +45,10 @@ class AjaxController extends Controller
                 ->join('instructors AS i', 'co.instructor_id', '=', 'i.instructor_id')
                 ->select('c.course_id AS course_id', 'co.instructor_id as instructor_id', 'i.first_name as first_name',
                     'i.email as email')
-                ->where("co.term", $req->term_id);
+                ->where("co.term_id", $req->term_id);
             $assignedcourses = $query->get();
-            $unassignedcourses = Course::whereNotIn("c.course_id", $query);
-            return response()->json(array("assignedcourses" => $assignedcourses, "unassignedcourses" => $unassignedcourses), 200);
+            //$unassignedcourses = Course::whereNotIn("c.course_id", $query);
+            return response()->json(array("assignedcourses" => $assignedcourses), 200);
         }
     }
 }
