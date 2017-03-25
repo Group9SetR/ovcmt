@@ -40,14 +40,18 @@ class AjaxController extends Controller
 
     public function getCourseOfferingsByTerm(Request $req) {
         if($req->ajax() && isset($req->term_id)) {
-            $query = DB::table('courses AS c')
+            $term_id = $req->term_id;
+            $assignedcourses = DB::table('courses AS c')
                 ->join('course_offerings AS co', 'c.course_id', '=', 'co.course_id')
                 ->join('instructors AS i', 'co.instructor_id', '=', 'i.instructor_id')
+                ->where("co.term_id", $req->term_id)
                 ->select('c.course_id AS course_id', 'co.instructor_id as instructor_id', 'i.first_name as first_name',
-                    'i.email as email')
-                ->where("co.term_id", $req->term_id);
-            $assignedcourses = $query->get();
-            $unassignedcourses = Course::whereNotIn("c.course_id", $query);
+                'i.email as email')
+                ->get();
+            $query = DB::table('course_offerings')
+                ->where('term_id', $req->term_id)
+                ->select("course_id");
+            $unassignedcourses = Course::whereNotIn("course_id", $query)->get();
             return response()->json(array("assignedcourses" => $assignedcourses, "unassignedcourses" => $unassignedcourses), 200);
         }
     }
