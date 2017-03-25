@@ -60,48 +60,6 @@
                 {!! Form::close() !!}
 
             </div> <!-- Close the add instructor div-->
-
-
-            <hr>
-            <button href="#assignInstructor" class="btn btn-default" data-toggle="collapse">Assign instructor</button>
-            <div class="collapse" id="assignInstructor">
-                <hr>
-                <h4><small>Assign an Instructor's Teachable Courses</small></h4>
-                {!! Form::open(['url' => 'courseInstructor']) !!}
-                <div class="form-group">
-
-                    <select id="instructor_id" name="instructor_id">
-                        @foreach($instructors as $instructor)
-                            <option value="{{$instructor->instructor_id}}">{{$instructor->first_name}}</option>
-                        @endforeach
-                    </select>&nbsp
-
-                    <select id="course_id" name="course_id">
-                        @foreach($courses as $course)
-                            <option name="course_id">{{$course->course_id}}</option>
-                        @endforeach
-                    </select>
-
-                     &nbsp &nbsp Option A
-                    <input type="radio" id = "a" name ="intake_no" value ="A" checked="checked" />
-
-                    &nbsp &nbsp Option B
-                    <input type="radio" id = "b" name ="intake_no" value ="B" />
-                    &nbsp
-
-                    &nbsp &nbsp TA
-                    <input type="radio" id = "ta" name ="instructor_type" value ="0" />
-                    |&nbsp &nbsp Instructor
-                    <input type="radio" id = "inst" name ="instructor_type" value ="1" checked="checked"/>
-                    <br><br>
-
-                    <div class="form-group">
-                        {!! Form::submit('Assign course',['class'=> 'btn btn-primary ', 'id'=>'addbtn']) !!}
-                        {!! Form::close() !!}
-                    </div>
-                    <hr>
-                </div>
-            </div>
             <hr/>
 
 
@@ -154,10 +112,6 @@
                     });
                 })
             </script>
-
-
-
-
 <!-- end display -->
 
 
@@ -268,6 +222,57 @@
                     </div>
                 </div>
             </div>
+
+            <div class="modal fade" id="assignInstructorModal" tabindex="-1" role="dialog" aria-labeleledby="assignInstructorModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="assignInstructorModallabel">Assign</h4>
+                        </div>
+                        <div class="modal-body">
+                            {!! Form::open(['url' => 'courseInstructor']) !!}
+                            <p>Assgien course</p>
+                            <div class="form-group">
+                                {!! Form::hidden('modal_instructor_id', '', array('id'=>'modal_instructor_id')) !!}
+                            </div>
+                            <div class="form-group">
+                                <select id="course_id" name="course_id">
+                                    @foreach($courses as $course)
+                                        <option name="course_id">{{$course->course_id}}</option>
+                                    @endforeach
+                                </select>
+
+                                &nbsp &nbsp Option A
+                                <input type="radio" id = "a" name ="intake_no" value ="A" checked="checked" />
+
+                                &nbsp &nbsp Option B
+                                <input type="radio" id = "b" name ="intake_no" value ="B" />
+                                &nbsp
+
+                                &nbsp &nbsp TA
+                                <input type="radio" id = "ta" name ="instructor_type" value ="0" />
+                                |&nbsp &nbsp Instructor
+                                <input type="radio" id = "inst" name ="instructor_type" value ="1" checked="checked"/>
+                                <br><br>
+
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <span class="pull-right">
+                                    {!! Form::submit('Assign',['class'=> 'btn btn-primary ', 'id'=>'addbtn']) !!}
+                            </span>
+                            {!! Form::close() !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
         </div>
     </div>
 </div>

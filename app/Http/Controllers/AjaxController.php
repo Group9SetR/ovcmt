@@ -37,13 +37,6 @@ class AjaxController extends Controller
 
             if($instructors){
                 foreach ($instructors as $key => $instructor){
-                    /*
-                    if($instructor ->instructor_type == 1 ){
-                        $instructor_type = "instructor";
-                    } else {
-                        $instructor_type = "TA";
-                    }
-                    */
                     $output .='<tr>'.
                         '<td>'.$instructor->instructor_id.'</td>'.
                         '<td>'.$instructor->first_name.'</td>'.
@@ -66,6 +59,13 @@ class AjaxController extends Controller
                                     data-target="#editInstructorModal"
                                         >Edit</button>'.
                         '</td>'.
+                        '<td>'. '<button class=" btn btn-danger open-AssignCourseDialog"
+                                        data-toggle="modal"
+                                        data-id="{{$instructor->instructor_id}}"
+                                        data-target="#assignInstructorModal"
+                                            >Assign</button>'.
+                        '</td>'.
+
                         '</tr>';
                 }
                 return Response($output);
