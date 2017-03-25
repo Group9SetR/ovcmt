@@ -47,8 +47,8 @@ class AjaxController extends Controller
                     'i.email as email')
                 ->where("co.term_id", $req->term_id);
             $assignedcourses = $query->get();
-            //$unassignedcourses = Course::whereNotIn("c.course_id", $query);
-            return response()->json(array("assignedcourses" => $assignedcourses), 200);
+            $unassignedcourses = Course::whereNotIn("c.course_id", $query);
+            return response()->json(array("assignedcourses" => $assignedcourses, "unassignedcourses" => $unassignedcourses), 200);
         }
     }
 }

@@ -32,13 +32,19 @@
                             var term_id = 1;
                             //console.log(term_id);
                             $.ajax({
+                                //TODO: hardcoded term value
                                 type: 'POST',
                                 url: '/getCourseOfferingsByTerm',
                                 data: {"term_id": term_id},
                                 dataType: 'json',
                                 success: function (data) {
-                                    alert('success!');
-                                    $('#unasscourses').append('success!');
+                                    $('#assigned').empty();
+                                    for (let i = 0; i < data['assignedcourses'].length; i++) {
+                                        var panel = "<div class='panel panel-default'><div class='panel-heading'>" + data['assignedcourses'][i]['course_id']
+                                            + "</div> <div class='panel-body'>" + "Instructor ID: " + data['assignedcourses'][i]['instructor_id']
+                                            + "Instructor Name: " + data['assignedcourses'][i]['first_name'] + "</div></div>";
+                                        $('#assigned').append(panel);
+                                    }
                                 }
                             });
                         });
@@ -61,16 +67,9 @@
                     <div class="col-sm-6">
                         <h4><small>Edit Assigned Instructors by Course</small></h4>
                         <hr>
-        {{--                @foreach($courseinstructors as $ci)
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    {{$ci->course_id}}
-                                </div>
-                                <div class="panel-body">
-                                    <b>ID:</b> {{$instructor->instructor_id}} <b>Email:</b> {{$instructor->email}}
-                                </div>
-                            </div>
-                        @endforeach--}}
+                        <div class="container" id="assigned">
+
+                        </div>
                     </div>
                 </div>
             </div>
