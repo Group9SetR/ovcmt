@@ -118,18 +118,29 @@
             <table class="table table-striped table-bordered table-hover table-condensed">
                 <thead class="thead-default">
                     <tr>
-                        <th>ID</th><th>Name</th><th>Date</th>
-                        <th>Mon AM</th><th>Tues AM</th><th>Wed AM</th><th>Thur AM</th><th>Fri AM</th>
-                        <th>Mon PM</th><th>Tues PM</th><th>Wed PM</th><th>Thur PM</th><th>Fri PM</th>
-                        <th></th>
+                        <th class="text-center">ID</th>
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Date</th>
+                        <th class="text-center">Mon AM</th>
+                        <th class="text-center">Tues AM</th>
+                        <th class="text-center">Wed AM</th>
+                        <th class="text-center">Thur AM</th>
+                        <th class="text-center">Fri AM</th>
+                        <th class="text-center">Mon PM</th>
+                        <th class="text-center">Tues PM</th>
+                        <th class="text-center">Wed PM</th>
+                        <th class="text-center">Thur PM</th>
+                        <th class="text-center">Fri PM</th>
+                        <th class="text-center">Edit Instructor</th>
+                        <th class="text-center">Assign Instructor</th>
                     </tr>
                 </thead>
 
-                <tbody>
+            <tbody class = "searchbody">
 
-                </tbody>
+            </tbody>
 
-              </table>
+            </table>
             <script type = "text/javascript">
                 $('#search').on('keyup',function(){
                     $value = $(this).val();
@@ -138,7 +149,7 @@
                         url  : '/searchInstructor',
                         data: { 'search' : $value },
                         success: function (data) {
-                                $('tbody').html(data);
+                                $('.searchbody').html(data);
                         }
                     });
                 })

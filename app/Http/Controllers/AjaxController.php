@@ -30,7 +30,6 @@ class AjaxController extends Controller
         if ($req -> ajax()){
             $output="";
             $instructor_type = "";
-            //$instructors = Instructor::where('first_name', 'LIKE', '%'.$req->search.'%')->get();
             $instructors = DB::table('instructors AS i')
                 ->join('instruct_avails as ia', 'i.instructor_id', '=', 'ia.instructor_id')
                 ->select('i.instructor_id', 'i.first_name', 'ia.*')
@@ -60,7 +59,7 @@ class AjaxController extends Controller
                         '<td>'.$instructor->thurs_pm.'</td>'.
                         '<td>'.$instructor->fri_pm.'</td>'.
 
-                        '<td>'. '<button class="btn btn-action open-EditInstructorDialog"
+                        '<td>'. '<button class="btn btn-primary open-EditInstructorDialog"
                                     data-toggle="modal"
                                     data-id="{{$instructor->instructor_id}}"
                                     data-name="{{$instructor->first_name}}"
@@ -74,6 +73,45 @@ class AjaxController extends Controller
                 return Response()->json(['no'=>'Not Found']);
             }
         }
-
     }
+
+    public function searchCourse(Request $req){
+        if ($req -> ajax()){
+            $output="";
+            $courses = Course::where('course_Id', 'LIKE', '%'.$req->search.'%')->get();
+            if($courses){
+                foreach ($courses as $key => $course){
+                    $output .=  '<tr>'.
+                                '<td>'.$course->course_id.'</td>'.
+                                '<td>'.$course->sessions_days.'</td>'.
+                                '<td>'.$course->course_type.'</td>'.
+                                '<td>'.$course->term_no.'</td>'.
+
+                                '<td>'. '<button class="btn btn-primary open-EditCourseDialog"
+                                            data-toggle="modal"
+                                            data-courseid="{{$course->course_id}}"
+                                            data-sessiondays="{{$course->sessions_days}}"
+                                            data-coursetype="{{$course->course_type}}"
+                                            data-termno="{{$course->term_no}}"
+                                            data-target="#editCourseModal"
+                                                 >Edit</button>'.
+                                '</td>'.
+                                '<td>'.
+                            '<form action="manageCourseDelete" method = "POST" id ="deleteCOurseForm">'.
+                            '<input type="hidden" name="course_id3" value="{{$course->course_id}}">'.
+                            '<input type="hidden" name="sessions_days3" value="{{$course->sessions_days}}">'.
+                            '<input type="hidden" name="course_type3" value="{{$course->course_type}}">'.
+                            '<input type="hidden" name="term_no3" value="{{$course->term_no}}">'.
+                            '<input class="btn btn-danger" type = "submit" id = "deleteCourseBtn" value="delete">'.
+                            '</form>'.
+                            '</td>'.
+                            '</tr>';
+                }
+                return Response($output);
+            }else{
+                return Response()->json(["no"=>"Not Found"]);
+            }
+        }
+    }
+
 }

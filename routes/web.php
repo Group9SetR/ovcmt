@@ -38,6 +38,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     Route::post('/manageCourseStore', 'CourseController@store');
     Route::post('/manageCourseUpdate', 'CourseController@updateCourse');
     Route::post('/manageCourseDelete', 'CourseController@deleteCourse');
+    Route::get('/searchCourse','AjaxController@searchCourse');
 
     /* ScheduleController */
 

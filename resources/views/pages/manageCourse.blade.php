@@ -38,10 +38,10 @@
 
                 <div class="form-group">
                     {!! Form::label('term_no2', 'Term No:') !!}&nbsp;&nbsp;&nbsp;&nbsp;
-                    {{ Form::radio('term_no2', 1, false, array('id'=>'modal_termNo_name1', 'required'=>'true')) }}1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    {{ Form::radio('term_no2', 2, false, array('id'=>'modal_termNo_name2', 'required'=>'true')) }}2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    {{ Form::radio('term_no2', 3, false, array('id'=>'modal_termNo_name3', 'required'=>'true')) }}3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    {{ Form::radio('term_no2', 4, false, array('id'=>'modal_termNo_name4', 'required'=>'true')) }}4
+                    {{ Form::radio('term_no2', 1, false, array('id'=>'modal_termNo_name1', 'required'=>'true')) }}&nbsp 1&nbsp;&nbsp;
+                    {{ Form::radio('term_no2', 2, false, array('id'=>'modal_termNo_name2', 'required'=>'true')) }}&nbsp 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    {{ Form::radio('term_no2', 3, false, array('id'=>'modal_termNo_name3', 'required'=>'true')) }}&nbsp 3&nbsp;&nbsp;&nbsp;
+                    {{ Form::radio('term_no2', 4, false, array('id'=>'modal_termNo_name4', 'required'=>'true')) }}&nbsp 4
                 </div>
 
                 <div class="form-group">
@@ -51,48 +51,41 @@
             </div>
             <hr/>
             <h2>Display Courses</h2>
-            <table id="myTable" class="table table-striped table-bordered table-hover table-condensed text-center">
+            <div class="form-group col-md-7">
+                <div class="input-group">
+                    <span class="input-group-addon">Search</span>
+                    <input type="text" name="search" id ="search" placeholder="Search Course id" class ="form-control">
+                </div>
+            </div>
+            <table id="myTalbe" class="table table-striped table-bordered table-hover table-condensed text-center">
                 <thead class="thead-default">
-                    <th class="text-center">Course Id</th>
-                    <th class="text-center">Sessions Days</th>
-                    <th class="text-center">Course Type</th>
-                    <th class="text-center">Term No</th>
-                    <th class="text-center">Edit Course</th>
-                    <th class="text-center">Delete Course</th>
+                <th class="text-center">Course Id</th>
+                <th class="text-center">Sessions Days</th>
+                <th class="text-center">Course Type</th>
+                <th class="text-center">Term No</th>
+                <th class="text-center">Edit Course</th>
+                <th class="text-center">Delete Course</th>
                 </thead>
-                <tbody>
-                @foreach($courses as $course)
-                    <tr>
-                        <td>{{$course->course_id}}</td>
-                        <td>{{$course->sessions_days}}</td>
-                        <td>{{$course->course_type}}</td>
-                        <td>{{$course->term_no}}</td>
-                        <td>
-                            <button class="btn btn-primary open-EditCourseDialog"
-                                    data-toggle="modal"
-                                    data-courseid="{{$course->course_id}}"
-                                    data-sessiondays="{{$course->sessions_days}}"
-                                    data-coursetype="{{$course->course_type}}"
-                                    data-termno="{{$course->term_no}}"
-                                    data-target="#editCourseModal"
-                            >Edit</button>
-                        </td>
-                        <td>
-                            {!! Form::open(['url' => 'manageCourseDelete', 'id' => 'deleteCourseForm']) !!}
 
-                            <input type="hidden" name="course_id3" value="{{$course->course_id}}">
-                            <input type="hidden" name="sessions_days3" value="{{$course->sessions_days}}">
-                            <input type="hidden" name="course_type3" value="{{$course->course_type}}">
-                            <input type="hidden" name="term_no3" value="{{$course->term_no}}">
+                <tbody class = "searchCourseBody">
 
-                            {!! Form::submit('Delete',['class'=> 'btn btn-danger',
-                                                     'id' => 'deleteCourseBtn']) !!}
-                            {!! Form::close() !!}
-                        </td>
-                    </tr>
-                @endforeach
                 </tbody>
+
             </table>
+            <script type = "text/javascript">
+                $('#search').on('keyup',function(){
+                    $value = $(this).val();
+                    $.ajax ({
+                        type : 'GET',
+                        url  : '/searchCourse',
+                        data: { 'search' : $value },
+                        success: function (data) {
+                            $('.searchCourseBody').html(data);
+                        }
+                    });
+                })
+            </script>
+
 
             <div class="modal fade" id="addCourseSaved" tabindex="-1" role="dialog">
                 <div class="modal-dialog">
