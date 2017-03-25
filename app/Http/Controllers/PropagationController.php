@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class PropagationController extends Controller
 {
     public function extend(Request $req) {
-        if (isset($req->week)) {
+        if (isset($req->week_monday)) {
 
         }
     }

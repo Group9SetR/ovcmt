@@ -44,11 +44,12 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     /* AssignController*/
 
     Route::get('/assign', 'AssignController@index');
-    Route::post('/getInstructorsForACourse', 'AJAXController@getInstructorsForACourse');
-
-// Route::post('/dragDrop', 'ScheduleController@store');
-
+    Route::post('/getInstructorsForACourse', 'AjaxController@getInstructorsForACourse');
+    // Route::post('/dragDrop', 'ScheduleController@store');
     Route::get('/addschedule', 'ScheduleController@index');
+
+    /* Propagation Controller */
+    Route::post('/getWeeklySchedule', 'AjaxController@getWeeklySchedule');
 });
 
 /* Staff Routes*/
@@ -74,5 +75,3 @@ Route::get('/', 'PagesController@home');
 Route::get('/about', 'PagesController@about');
 
 Route::get('/home', 'HomeController@index');
-
-Route::get('/test','Tester@index');
