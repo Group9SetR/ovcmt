@@ -41,15 +41,14 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 
     Route::get('/dragDrop', 'ScheduleController@index');
     Route::post('/dragDrop', 'ScheduleController@displayRoomsByWeek');
-
     Route::post('/addschedule', 'ScheduleController@store');
+    Route::get('/addschedule', 'ScheduleController@index');
 
     /* AssignController*/
 
     Route::get('/assign', 'AssignController@index');
     Route::post('/getInstructorsForACourse', 'AjaxController@getInstructorsForACourse');
-    Route::post('/getInstructorsForACourse', 'AJAXController@getInstructorsForACourse');
-    Route::get('/addschedule', 'ScheduleController@index');
+    Route::post('/getInstructorsForACourse', 'AjaxController@getInstructorsForACourse');
 
     /* Propagation Controller */
     Route::post('/getWeeklySchedule', 'AjaxController@getWeeklySchedule');
