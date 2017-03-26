@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use DateTime;
 use DateTimeZone;
 use Carbon;
-use App\Course;
 use App\RoomsByDays;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -15,16 +14,41 @@ class ScheduleController extends Controller
 {
     public function store(Request $req)
     {
-        $roomsByDays = new RoomsByDays();
-        $input = $req->all();
-        dd($input);
-        $roomsByDays->room_id = $req->room_id;
-        $roomsByDays->cdate = $req->cdate;
-        $roomsByDays->am_crn = $req->am_crn;
-        $roomsByDays->pm_crn = $req->pm_crn;
-        $roomsByDays->save();
-        return redirect()->action('ScheduleController@dragDrop');
+        $saveDate = $req->schedule_date;
+        $rooms = DB::table('rooms')
+            ->select('room_id')
+            ->get();
+        $inputs = $req->all();
+        $roomSlots = $this->getRoomsAndTimeslots();
+        foreach($rooms as $room) {
+            $roomId = $room->room_id;
+            $roomUpdatesAm = $inputs[$roomSlots[$roomId]["am"]];
+            $roomUpdatesPm = $inputs[$roomSlots[$roomId]["pm"]];
+            $this->updateRoomByWeek($roomId, $saveDate, $roomUpdatesAm, $roomUpdatesPm);
+        }
+        return redirect()->action('ScheduleController@displayRoomsByWeek');
     }
+
+    public function getRoomsAndTimeslots()
+    {
+        return array('M1'=>array('am'=>'M1-am', 'pm'=>'M1-pm'),
+                     'A1'=>array('am'=>'A1-am', 'pm'=>'A1-pm'),
+                     'P1'=>array('am'=>'P1-am', 'pm'=>'P1-pm'),
+                     'P2'=>array('am'=>'P2-am', 'pm'=>'P2-pm'));
+    }
+
+    public function updateRoomByWeek($roomId, $date, $amUpdates, $pmUpdates)
+    {
+        for($i = 0; $i<5; $i++) {
+            $weekDay = date("Y-m-d", strtotime($date."+ $i days"));
+            $am_crn = $amUpdates[$i] === "empty" ? null:$amUpdates[$i];
+            $pm_crn = $pmUpdates[$i] === "empty" ? null:$pmUpdates[$i];
+            $updated = RoomsByDays::where('room_id', $roomId)
+                ->where('cdate', $weekDay)
+                ->update(['am_crn'=>$am_crn,'pm_crn'=>$pm_crn]);
+        }
+    }
+
 
     public function generateCourses()
     {
@@ -46,22 +70,6 @@ class ScheduleController extends Controller
             $courseOfferingsDiff[$offering->crn] = $offering->sessions_days - $count;
         }
         return $courseOfferingsDiff;
-    }
-
-    public function listCourses() {
-        $courseList = Course::all();
-        return $courseList;
-    }
-
-    public function displayRoomsByWeek(Request $req) {
-        $cdate = DateTime::createFromFormat('Y-m-d', $req->schedule_starting_date);
-        $year =$cdate->format('Y');
-        $week = $cdate->format('W');
-        $calendarDetails = $this->getCalendarDetails($cdate, $year, $week);
-        $courseOfferings = $this->generateCourses();
-        $roomsByWeek = $this->getScheduleByWeek($year, $week);
-        $courseOfferingsSessions = $this->calculateDiff($courseOfferings);
-        return view('pages.dragDrop', compact('calendarDetails','courseOfferings', 'courseOfferingsSessions', 'roomsByWeek'));
     }
 
     public function getScheduleByWeek($year, $week) {
@@ -97,17 +105,29 @@ class ScheduleController extends Controller
         $dto->setISODate($year, $week);
         $calendar = array('month'=>$date->format('m'),
             'year'=>$date->format('Y'),
-            'date'=>$date,
-            'mon'=>$dto->format('d'));
+            'firstOfWeek'=>$dto->format('d/m/Y'),
+            'goToDate'=>$dto->format('Y-m-d'), //MUST TAKE THIS FORMAT
+            'mon'=>$dto->format('M d'));
         $dto->modify('+1 days');
-        $calendar['tues']=$dto->format('d');
+        $calendar['tues']=$dto->format('M d');
         $dto->modify('+1 days');
-        $calendar['wed']=$dto->format('d');
+        $calendar['wed']=$dto->format('M d');
         $dto->modify('+1 days');
-        $calendar['thurs']=$dto->format('d');
+        $calendar['thurs']=$dto->format('M d');
         $dto->modify('+1 days');
-        $calendar['fri']=$dto->format('d');
+        $calendar['fri']=$dto->format('M d');
         return $calendar;
+    }
+
+    public function displayRoomsByWeek(Request $req) {
+        $cdate = DateTime::createFromFormat('Y-m-d', $req->schedule_date);
+        $year =$cdate->format('Y');
+        $week = $cdate->format('W');
+        $calendarDetails = $this->getCalendarDetails($cdate, $year, $week);
+        $courseOfferings = $this->generateCourses();
+        $roomsByWeek = $this->getScheduleByWeek($year, $week);
+        $courseOfferingsSessions = $this->calculateDiff($courseOfferings);
+        return view('pages.dragDrop', compact('calendarDetails','courseOfferings', 'courseOfferingsSessions', 'roomsByWeek'));
     }
 
     public function index() {

@@ -211,6 +211,7 @@ function extractSessionsDays(panelId)
 
 function setSessionsDays(panelId, sessions)
 {
+    $('#'+panelId+' .drag_course_listing_session_days').text("");
     $('#'+panelId+' .drag_course_listing_sessions_days').text(sessions);
 }
 
@@ -227,9 +228,8 @@ function clearSchedule()
     for(var i=deleteButtons.length-1; i>=0; i--) {
         deleteButtons[i].click();
     }
-    var allInputs = document.getElementsByClassName('timeslot-input');
-    allInputs.forEach(function(element){
-        element.setAttribute('value', 'empty');
+    $('.timeslot_input').each(function() {
+        $(this).val('empty');
     });
 }
 
@@ -280,8 +280,8 @@ function drop(ev, el) {
 
     }
 }
-
 $(document).ready(function() {
+    //TODO clear schedule on click BACK BUTTON
     $("div[id^='slid']").attr('id', function(i) {
         return "slide" + ++i;
     });
