@@ -121,4 +121,8 @@ class ScheduleController extends Controller
         $courseOfferingsSessions = $this->calculateDiff($courseOfferings);
         return view('pages.dragDrop', compact('calendarDetails','courseOfferings', 'courseOfferingsSessions', 'roomsByWeek'));
     }
+
+    public function propagate() {
+        return view('pages.propagateschedule');
+    }
 }
