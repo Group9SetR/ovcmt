@@ -16,7 +16,6 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 {
     Route::get('/adminauth', 'PagesController@adminauth');
     Route::get('/masterscheduleview', 'PagesController@masterscheduleview');
-    Route::get('/editschedule', 'PagesController@editschedule');
 
     /* TermController */
     Route::get('/manageTerm', 'TermController@index');

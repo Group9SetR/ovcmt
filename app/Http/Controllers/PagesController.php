@@ -41,9 +41,6 @@ class PagesController extends Controller
     public function schedulestaff(){
         return view('pages.schedulestaff');
     }
-    public function editSchedule() {
-        return view('pages.editschedule');
-    }
     public function addcourse() {
         return view('pages.addcourse');
     }
