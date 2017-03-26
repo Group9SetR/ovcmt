@@ -28,6 +28,7 @@ class AssignController extends Controller
 
     public function index() {
         $terms = $this->getTerms();
-        return view('pages.assign', compact('terms'));
+        $instructors = $this->getInstructors();
+        return view('pages.assign', compact('terms', 'instructors'));
     }
 }
