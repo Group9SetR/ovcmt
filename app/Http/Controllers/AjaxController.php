@@ -120,6 +120,5 @@ class AjaxController extends Controller
         } else {
             return response()->json(array("error" => "an error has occurred"));
         }
-
     }
 }

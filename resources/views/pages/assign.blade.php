@@ -31,7 +31,7 @@
                             </div>
                             <div class="modal-body">
                                 <!-- TODO need to pull instructors correctly -->
-                                @foreach ($instructors as $instructor)
+{{--                                @foreach ($instructors as $instructor)
                                     <div class='panel panel-default'>
                                         <div class='panel-body'>
                                             {!! Form::open(['url' => '', 'class' => 'form-inline', 'id' => $instructor]) !!}
@@ -41,7 +41,7 @@
                                             {!! Form::submit('Assign',['class'=> 'btn btn-primary form-inline']) !!}
                                         </div>
                                     </div>
-                                @endforeach
+                                @endforeach--}}
                                 <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                             </div>
                             <div class="modal-body">
                                 <!-- TODO need to pull instructors correctly -->
-                                @foreach ($instructors as $instructor)
+{{--                                @foreach ($instructors as $instructor)
                                     <div class='panel panel-default'>
                                         <div class='panel-body'>
                                             {!! Form::open(['url' => '', 'class' => 'form-inline', 'id' => $instructor]) !!}
@@ -69,7 +69,7 @@
                                             <button class="btn btn-warning">Unassign</button>
                                         </div>
                                     </div>
-                                @endforeach
+                                @endforeach--}}
                                 <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
                             </div>
                         </div>

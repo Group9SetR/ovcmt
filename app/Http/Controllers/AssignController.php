@@ -10,11 +10,6 @@ use App\Term;
 
 class AssignController extends Controller
 {
-    public function getInstructors() {
-        $instructors = Instructor::all();
-        return $instructors;
-    }
-
     public function store(Request $req) {
         DB::table('course_instructors')
             ->insert(['course_id' => $req->course_id, 'instructor_id' => $req->instructor_id]);
@@ -28,7 +23,6 @@ class AssignController extends Controller
 
     public function index() {
         $terms = $this->getTerms();
-        $instructors = $this->getInstructors();
-        return view('pages.assign', compact('terms', 'instructors'));
+        return view('pages.assign', compact('terms'));
     }
 }
