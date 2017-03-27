@@ -6,6 +6,7 @@
         <div class="col-sm-2 sidenav" >
             @include('includes.sidebar')
         </div>
+
         <div class="col-sm-8">
             <h4><small>Manage Instructors </small></h4>
             <hr>
@@ -29,12 +30,12 @@
                     {!! Form::date('date_start') !!}
                 </div>
                 <div class="form-group">
-                <table>
-                    <tr>
+                <table class = "table table-striped table-bordered table-hover table-condensed">
+                    <tr class = "info">
                         <th>Time</th><th>Mon</th><th>Tues</th><th>Wed</th><th>Thurs</th><th>Fri</th>
                     </tr>
                     <tr>
-                        <td>Morn</td>
+                        <td>Moring</td>
                         <td>{!! Form::checkbox('mon_am') !!}</td>
                         <td>{!! Form::checkbox('tues_am') !!}</td>
                         <td>{!! Form::checkbox('wed_am') !!}</td>
@@ -43,7 +44,7 @@
 
                     </tr>
                     <tr>
-                        <td>Aft</td>
+                        <td>Afternoon</td>
                         <td>{!! Form::checkbox('mon_pm') !!}</td>
                         <td>{!! Form::checkbox('tues_pm') !!}</td>
                         <td>{!! Form::checkbox('wed_pm') !!}</td>
@@ -58,51 +59,9 @@
                 </div>
 
                 {!! Form::close() !!}
-
             </div> <!-- Close the add instructor div-->
-
-
-            <hr>
-            <button href="#assignInstructor" class="btn btn-default" data-toggle="collapse">Assign instructor</button>
-            <div class="collapse" id="assignInstructor">
-                <hr>
-                <h4><small>Assign an Instructor's Teachable Courses</small></h4>
-                {!! Form::open(['url' => 'courseInstructor']) !!}
-                <div class="form-group">
-
-                    <select id="instructor_id" name="instructor_id">
-                        @foreach($instructors as $instructor)
-                            <option value="{{$instructor->instructor_id}}">{{$instructor->first_name}}</option>
-                        @endforeach
-                    </select>&nbsp
-
-                    <select id="course_id" name="course_id">
-                        @foreach($courses as $course)
-                            <option name="course_id">{{$course->course_id}}</option>
-                        @endforeach
-                    </select>
-
-                     &nbsp &nbsp Option A
-                    <input type="radio" id = "a" name ="intake_no" value ="A" checked="checked" />
-
-                    &nbsp &nbsp Option B
-                    <input type="radio" id = "b" name ="intake_no" value ="B" />
-                    &nbsp
-
-                    &nbsp &nbsp TA
-                    <input type="radio" id = "ta" name ="instructor_type" value ="0" />
-                    |&nbsp &nbsp Instructor
-                    <input type="radio" id = "inst" name ="instructor_type" value ="1" checked="checked"/>
-                    <br><br>
-
-                    <div class="form-group">
-                        {!! Form::submit('Assign course',['class'=> 'btn btn-primary ', 'id'=>'addbtn']) !!}
-                        {!! Form::close() !!}
-                    </div>
-                    <hr>
-                </div>
-            </div>
             <hr/>
+
 
 
 <!-- Display instructor -->
@@ -115,21 +74,33 @@
                 </div>
                 <br><br><br>
                 <hr>
-            <table class="table table-striped table-bordered table-hover table-condensed">
+            <table class="table table-striped table-bordered table-hover table-condensed text-center">
                 <thead class="thead-default">
-                    <tr>
-                        <th>ID</th><th>Name</th><th>Date</th>
-                        <th>Mon AM</th><th>Tues AM</th><th>Wed AM</th><th>Thur AM</th><th>Fri AM</th>
-                        <th>Mon PM</th><th>Tues PM</th><th>Wed PM</th><th>Thur PM</th><th>Fri PM</th>
-                        <th></th>
+                    <tr class = "success">
+                        <th class="text-center">ID</th>
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Date</th>
+                        <th class="text-center">Mon AM</th>
+                        <th class="text-center">Tues AM</th>
+                        <th class="text-center">Wed AM</th>
+                        <th class="text-center">Thur AM</th>
+                        <th class="text-center">Fri AM</th>
+                        <th class="text-center">Mon PM</th>
+                        <th class="text-center">Tues PM</th>
+                        <th class="text-center">Wed PM</th>
+                        <th class="text-center">Thur PM</th>
+                        <th class="text-center">Fri PM</th>
+                        <th class="text-center">Edit Instructor</th>
+                        <th class="text-center">Assign Course</th>
+                        <th class="text-center">Delete</th>
                     </tr>
                 </thead>
 
-                <tbody>
+            <tbody class = "searchbody">
 
-                </tbody>
+            </tbody>
 
-              </table>
+            </table>
             <script type = "text/javascript">
                 $('#search').on('keyup',function(){
                     $value = $(this).val();
@@ -138,17 +109,12 @@
                         url  : '/searchInstructor',
                         data: { 'search' : $value },
                         success: function (data) {
-                                $('tbody').html(data);
+                                $('.searchbody').html(data);
                         }
                     });
                 })
             </script>
-
-
-
-
 <!-- end display -->
-
 
             <div class="modal fade" id="editInstructorModal" tabindex="-1" role="dialog" aria-labeleledby="editInstructorModalLabel">
                 <div class="modal-dialog" role="document">
@@ -164,7 +130,7 @@
                             <div class="form-group">
                                 {!! Form::hidden('modal_instructor_id', '', array('id'=>'modal_instructor_id')) !!}
                                 {!! Form::label('modal_instructor_name', 'Instructor:') !!}
-                                {!! Form::text('modal_instructor_name', '', array('id'=>'modal_instructor_name'))!!}
+                                {!! Form::text('modal_instructor_name', '', array('id'=>'modal_instructor_name','readonly'=>'readonly'))!!}
                             </div>
                             <div class="form-group">
                                 {!! Form::label('modal_instruct_avail_start_date', 'Effective date:') !!}
@@ -212,8 +178,9 @@
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                     }
                                 });
-                                var instructor_id = $(this).data('id');
-                                var instructor_name = $(this).data('name');
+                                var instructor_id = $(this).parent().siblings(":first").text();
+                                console.log(instructor_id);
+                                var instructor_name = $(this).parent().siblings(":nth-child(2)").text();
                                 $('.modal-body #modal_instructor_id').attr('value',instructor_id);
                                 $('.modal-body #modal_instructor_name').attr('value',instructor_name);
                                 $.ajax({
@@ -224,8 +191,8 @@
                                     success: function (data) {
                                         $('#courseListing').empty();
                                         for (let i = 0; i < data['courses'].length; i++) {
-                                            var panel = "<div class='panel panel-default'><div class='panel-heading'>" + data['courses'][i]['course_id']
-                                                + "</div> <div class='panel-body'>" + "Intake: " + data['courses'][i]['intake_no'] + "</div></div>";
+                                            var panel = "<div class='panel panel-default'><div class='panel-heading'><div class='row'><div class='col-sm-4 text-left'>" + data['courses'][i]['course_id']
+                                                + "</div><div class='col-md-8 text-right'>"+"<button class='btn btn-danger' type='submit' value='Submit'>Delete</button>"+"</div></div></div> <div class='panel-body'>" + "Intake: " + data['courses'][i]['intake_no'] + "</div></div>";
                                             $('#courseListing').append(panel);
                                         }
                                         var avail = data['avail'][0];
@@ -257,6 +224,65 @@
                     </div>
                 </div>
             </div>
+
+            <div class="modal fade" id="assignInstructorModal" tabindex="-1" role="dialog" aria-labeleledby="assignInstructorModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="assignInstructorModallabel">Assign</h4>
+                        </div>
+                        <div class="modal-body">
+                            {!! Form::open(['url' => 'courseInstructor']) !!}
+                            <p>Assgien course</p>
+                            <div class="form-group">
+                                {!! Form::hidden('course_instructor_id', '', array('id'=>'course_instructor_id')) !!}
+                            </div>
+                            <div class="form-group">
+                                <select id="course_id" name="course_id">
+                                    @foreach($courses as $course)
+                                        <option name="course_id">{{$course->course_id}}</option>
+                                    @endforeach
+                                </select>
+
+                                &nbsp &nbsp Option A
+                                <input type="radio" id = "a" name ="intake_no" value ="A" checked="checked" />
+
+                                &nbsp &nbsp Option B
+                                <input type="radio" id = "b" name ="intake_no" value ="B" />
+                                &nbsp
+
+                                &nbsp &nbsp TA
+                                <input type="radio" id = "ta" name ="instructor_type" value ="0" />
+                                |&nbsp &nbsp Instructor
+                                <input type="radio" id = "inst" name ="instructor_type" value ="1" checked="checked"/>
+                                <br><br>
+
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <span class="pull-right">
+                                    {!! Form::submit('Assign',['class'=> 'btn btn-primary ', 'id'=>'addbtn']) !!}
+                            </span>
+                            {!! Form::close() !!}
+                        </div>
+                        <script>
+                            $(document).on('click', '.open-AssignCourseDialog', function() {
+                                var instructor_id1 = $(this).parent().siblings(":first").text();
+                                console.log(instructor_id1);
+                                $('.modal-body #course_instructor_id').attr('value',instructor_id1);
+                                console.log($('.modal-body #course_instructor_id').attr('value'));
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+
+
         </div>
     </div>
 </div>

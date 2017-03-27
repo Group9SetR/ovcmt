@@ -17,7 +17,10 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     Route::get('/adminauth', 'PagesController@adminauth');
     Route::get('/masterscheduleview', 'PagesController@masterscheduleview');
     Route::get('/editschedule', 'PagesController@editschedule');
-    Route::get('/draganddropschedule', 'PagesController@draganddropschedule');
+
+    /* TermController */
+    Route::get('/manageTerm', 'TermController@index');
+    Route::post('/manageTermStore', 'TermController@store');
 
     /* InstructorController */
 
@@ -38,6 +41,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     Route::post('/manageCourseStore', 'CourseController@store');
     Route::post('/manageCourseUpdate', 'CourseController@updateCourse');
     Route::post('/manageCourseDelete', 'CourseController@deleteCourse');
+    Route::get('/searchCourse','AjaxController@searchCourse');
 
     /* ScheduleController */
 

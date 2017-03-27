@@ -45,7 +45,7 @@ class InstructorController extends Controller
     {
         //Assign course to instructor
         $courseinstructor = new CourseInstructor();
-        $courseinstructor->instructor_id = $req->instructor_id;
+        $courseinstructor->instructor_id = $req->course_instructor_id;
         $courseinstructor->course_id = $req->course_id;
         $courseinstructor->intake_no = $req->intake_no;
         $courseinstructor->instructor_type = $req->instructor_type;
