@@ -10,9 +10,24 @@
                 </ul><br>
             </div>
             <div class="col-sm-8">
-                <h4><small>Welcome</small></h4>
-                <hr>
-                <h2>News updates</h2>
+
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group col-md-4">
+                            <h2>Display schedule</h2>
+                            {{Form::open(['url'=>'dragDrop'])}}
+
+                            {{Form::label('schedule_starting_date', 'Week of:')}}
+                            {{Form::date('schedule_starting_date', Carbon\Carbon::today(new DateTimeZone('America/Vancouver')))}}
+
+                            {{Form::close()}}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
             </div>
         </div>
     </div>
