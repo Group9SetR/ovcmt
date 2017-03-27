@@ -24,9 +24,26 @@ class AjaxController extends Controller
 
     public function getInstructorsForACourse(Request $req) {
         if($req->ajax() && isset($req->course_id)) {
-            $instructorsbycourse = CourseInstructor::where('course_id', $req->course_id)->get();
+            $instructorsbycourse = DB::table('CourseInstructor AS ci')
+                ->join('Instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
+                ->where('i.course_id', $req->course_id)
+                ->where('ci.instructor_type', 1)
+                ->select("i.instructor_id AS instructor_id",
+                    "i.first_name AS first_name",
+                    "i.email AS email",
+                    "ci.course_id AS course_id",
+                    "ci.intake_no AS intake_no")->get();
+            $tasbycourse = DB::table('CourseInstructor AS ci')
+                ->join('Instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
+                ->where('i.course_id', $req->course_id)
+                ->where('ci.instructor_type', 0)
+                ->select("i.instructor_id AS instructor_id",
+                    "i.first_name AS first_name",
+                    "i.email AS email",
+                    "ci.course_id AS course_id",
+                    "ci.intake_no AS intake_no")->get();
         }
-        return response()->json(array("coursesbyinstructor" => $instructorsbycourse), 200);
+        return response()->json(array("instructorsbycourse" => $instructorsbycourse, "tasbycourse" => $tasbycourse), 200);
     }
 
     public function searchInstructor(Request $req)
@@ -103,8 +120,6 @@ class AjaxController extends Controller
             $weekstart = Carbon::createFromFormat('Y-m-d', $monday->cdate);
             $weekend = Carbon::createFromFormat('Y-m-d', $monday->cdate);
             $weekend->addDays(4);
-            $monday = $weekstart->toDateString();
-            $friday = $weekend->toDateString();
             $roomsbyday = DB::table('rooms_by_days')
                 ->whereBetween('cdate', array($weekstart->toDateString(), $weekend->toDateString()))
                 ->orderBy('cdate','room_id')
@@ -131,6 +146,7 @@ class AjaxController extends Controller
         } else {
             return response()->json(array("error" => "an error has occurred"));
         }
+
     }
 
     public function searchCourse(Request $req){
