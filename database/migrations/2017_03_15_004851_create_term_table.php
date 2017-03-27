@@ -20,6 +20,7 @@ class CreateTermTable extends Migration
             $table->tinyInteger('term_no');
             $table->tinyInteger('duration_weeks');
             $table->tinyInteger('course_weeks');
+            $table->tinyInteger('break_weeks');
             $table->tinyInteger('exam_weeks');
             $table->tinyInteger('holidays');
         });

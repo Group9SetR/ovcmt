@@ -20,7 +20,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     /* TermController */
     Route::get('/manageTerm', 'TermController@index');
     Route::post('/manageTermStore', 'TermController@store');
-
+    Route::get('/searchTerm', 'AjaxController@searchTerm');
     /* InstructorController */
 
     Route::get('/manageInstructor', 'InstructorController@manageInstructor');
@@ -52,10 +52,13 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     /* AssignController*/
 
     Route::get('/assign', 'AssignController@index');
-    Route::post('/getInstructorsForACourse', 'AJAXController@getInstructorsForACourse');
-
-
+    Route::post('/getInstructorsForACourse', 'AjaxController@getInstructorsForACourse');
     Route::get('/addschedule', 'ScheduleController@index');
+
+    /* IntakeController */
+
+    Route::get('/manageIntake', 'IntakeController@index');
+    Route::post('/manageIntake', 'IntakeController@store');
 });
 
 /* Staff Routes*/
