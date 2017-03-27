@@ -6,54 +6,46 @@
                 @include('includes.sidebar')
             </div>
             <div class="col-sm-10">
-                <h4><small>Add schedule</small></h4>
+                <h4><small>Propagate Schedule</small></h4>
                 <hr>
                 <div class="row">
                     <div class="col-md-10">
-                        <div class="form-group col-md-4">
-                            <h2>Propagate Schedule</h2>
-                            {{Form::open(['url' => 'dragDropProp',
+                        <div class="form-group col-md-10 offset-2" id="propagateform">
+                            {{Form::open(['url' => '',
                                           'id' => 'dateSelectForm'])}}
                                 {{Form::label('schedule_starting_date', 'Week of:')}}
                                 {{Form::date('schedule_starting_date', Carbon\Carbon::today(new DateTimeZone('America/Vancouver'),
                                                                        ['id' => 'schedule_starting_date']))}}
-
-                                {{Form::label('monday_start', 'Monday of chosen week:')}}
-                                {{Form::text('monday_start', null, ['id' => 'monday_start',
-                                                                    'readonly'=> 'readonly']) }}<br>
-                                {{Form::submit()}}
-
+                                {{ Form::submit('Choose Term',['class'=> 'btn btn-primary form-inline']) }}
+                            {{Form::close()}}
+                        </div>
                                 <script>
                                     // update page on submit
                                     $(document).ready(function() {
-                                        $('#dateSelectForm').on('submit', function(event) {
-                                            event.preventDefault();
-
+                                        $('#dateSelectForm').on('submit', function(e) {
+                                            e.preventDefault();
+                                            var selectedDate = $('#schedule_starting_date').val();
+                                            $('#propagateform').empty();
+                                            var header = "<h4><small>Week of: " + selectedDate + "</small></h4><hr>";
+                                            $('#propagateform').append(header);
+                                            $.ajaxSetup({
+                                                headers: {
+                                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                }
+                                            });
                                             $.ajax({
                                                 type: 'POST',
-                                                url: '/dragDropGetWeeklySchedule',
-                                                data: {"selectedDate": selectedDate},
+                                                url: '/getWeeklySchedule',
+                                                data: {"selected_date": selectedDate},
                                                 dataType: 'json',
                                                 success: function (data) {
-                                                    // TODO need to retrieve the monday from the selected date
-                                                    var selectedDate = $('#schedule_starting_date').val();
-
-                                                    $('#monday_start').val(selectedDate);
-                                                    $('#monday_start_hidden').val(selectedDate);
-                                                    $('#mondayTable').css('visibility', 'visible');
-                                                    $('#numberWeeksPropForm').css('visibility', 'visible');
-
-                                                    for (let i = 0; i < data['rooms_by_days'].length; i++) {
-
-                                                    }
+                                                    console.log(data['roomsbyday']);
+                                                    alert("worked");
                                                 }
                                             });
                                         });
                                     });
                                 </script>
-                            {{Form::close()}}
-                        </div>
-
                         <div id='mondayTable' style='visibility: hidden'>
                             <table class='table table-bordered' id='drag_schedule_table'>
                                 <tr>

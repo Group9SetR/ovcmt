@@ -36,6 +36,7 @@
                                 data: {"term_id": term_id},
                                 dataType: 'json',
                                 success: function (data) {
+                                    console.log(data)
                                     //TODO: make this pretty
                                     $('#assigned').empty();
                                     for (let i = 0; i < data['assignedcourses'].length; i++) {
