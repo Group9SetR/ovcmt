@@ -46,8 +46,9 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 
     Route::get('/dragDrop', 'ScheduleController@index');
     Route::post('/dragDrop', 'ScheduleController@displayRoomsByWeek');
-
     Route::post('/addschedule', 'ScheduleController@store');
+    Route::get('/addschedule', 'ScheduleController@index');
+    Route::post('/dragDropGetWeeklySchedule', 'AjaxController@getWeeklySchedule');
 
     /* AssignController*/
 
@@ -56,9 +57,14 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     Route::get('/addschedule', 'ScheduleController@index');
 
     /* IntakeController */
-
     Route::get('/manageIntake', 'IntakeController@index');
     Route::post('/manageIntake', 'IntakeController@store');
+
+    /* Propagation Controller */
+
+    Route::post('/getCourseOfferingsByTerm', 'AjaxController@getCourseOfferingsByTerm');
+    Route::post('/getWeeklySchedule', 'AjaxController@getWeeklySchedule');
+    Route::get('/propagateschedule', 'PagesController@propagateschedule');
 });
 
 /* Staff Routes*/
@@ -84,5 +90,3 @@ Route::get('/', 'PagesController@home');
 Route::get('/about', 'PagesController@about');
 
 Route::get('/home', 'HomeController@index');
-
-Route::get('/test','Tester@index');

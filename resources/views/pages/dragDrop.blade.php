@@ -14,13 +14,13 @@
                             <h2>Display schedule</h2>
                             {{Form::open(['url'=>'dragDrop'])}}
 
-                            {{Form::label('schedule_starting_date', 'Week of:')}}
-                            {{Form::date('schedule_starting_date', Carbon\Carbon::today(new DateTimeZone('America/Vancouver')))}}
-
+                            {{Form::label('schedule_date', 'Go to :')}}
+                            <input type="date" name="schedule_date" value="{{$calendarDetails['goToDate']}}">
                             {{Form::submit()}}
                             {{Form::close()}}
                         </div>
                         <div class="col-md-8">
+                            <h2>Week of: {{$calendarDetails['firstOfWeek']}}</h2>
                         </div>
                     </div>
                     <div class="col-sm-2">
@@ -30,6 +30,7 @@
                 <div class="row">
                     <div class="col-md-10">
                         {!! Form::open(['url' => 'addschedule']) !!}
+                        <input type="hidden" name="schedule_date" value="{{$calendarDetails['goToDate']}}"/>
                         <table class='table table-bordered' id='drag_schedule_table'>
                             <thead>
                             <tr>
@@ -110,7 +111,7 @@
                             {!! Form::submit('Save', ['class'=>'btn btn-primary']) !!}
                             {!! Form::close() !!}
                         </div>
-                        <button class='btn btn-primary' onclick="clearSchedule()">Clear</button>
+                        <button class='btn btn-primary' id='clearScheduleBtn' onclick="clearSchedule()">Clear</button>
                         @foreach ($roomsByWeek as $timeslot)
                             <script>
                                 var dayOfWeek ='<?php echo $timeslot->cdayOfWeek;?>' - 2; //decrement to account for array and MySQL
