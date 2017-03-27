@@ -15,6 +15,6 @@ class TermController extends Controller
     }
     public function index() {
         $terms = Term::all();
-        return view('pages.addterm', compact('terms'));
+        return view('pages.manageTerm', compact('terms'));
     }
 }
