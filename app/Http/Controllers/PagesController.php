@@ -50,4 +50,7 @@ class PagesController extends Controller
     public function draganddropschedule() {
         return view('pages.draganddropschedule');
     }
+    public function propagateschedule() {
+        return view('pages.propagateschedule');
+    }
 }
