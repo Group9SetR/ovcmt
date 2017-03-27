@@ -13,6 +13,7 @@ class AssignController extends Controller
     public function store(Request $req) {
         DB::table('course_instructors')
             ->insert(['course_id' => $req->course_id, 'instructor_id' => $req->instructor_id]);
+        //TODO: add intake_no?? but how?
 
         return redirect()->action('AssignController@index');
     }
