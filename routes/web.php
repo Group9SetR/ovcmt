@@ -86,3 +86,5 @@ Route::get('/', 'PagesController@home');
 Route::get('/about', 'PagesController@about');
 
 Route::get('/home', 'HomeController@index');
+
+Route::get('/debug', 'PropagationController@getHolidayArray');

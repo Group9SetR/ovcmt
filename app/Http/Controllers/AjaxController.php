@@ -108,9 +108,6 @@ class AjaxController extends Controller
         }
     }
 
-
-
-
     public function getWeeklySchedule(Request $req) {
         if($req->ajax() && isset($req->selected_date)) {
             $monday = DB::table('calendar_dates')
@@ -211,16 +208,16 @@ class AjaxController extends Controller
             }
         }
     }
-    public function getDateArray($weekstart) {
-        $datearray['monday'] = $weekstart->toDateString();
-        $weekstart->addDays(1);
-        $datearray['tuesday'] = $weekstart->toDateString();
-        $weekstart->addDays(1);
-        $datearray['wednesday'] = $weekstart->toDateString();
-        $weekstart->addDays(1);
-        $datearray['thursday'] = $weekstart->toDateString();
-        $weekstart->addDays(1);
-        $datearray['friday'] = $weekstart->toDateString();
+    public function getDateArray($monday) {
+        $datearray['monday'] = $monday->toDateString();
+        $monday->addDays(1);
+        $datearray['tuesday'] = $monday->toDateString();
+        $monday->addDays(1);
+        $datearray['wednesday'] = $monday->toDateString();
+        $monday->addDays(1);
+        $datearray['thursday'] = $monday->toDateString();
+        $monday->addDays(1);
+        $datearray['friday'] = $monday->toDateString();
         return $datearray;
     }
 
