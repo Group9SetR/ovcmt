@@ -22,8 +22,16 @@ class AssignController extends Controller
         return Term::all();
     }
 
+    public function listInstructors() {
+        return DB::table('instructors as i')
+            ->join('instruct_avails as ia', 'i.instructor_id', '=', 'ia.instructor_id')
+            ->select('i.instructor_id', 'i.first_name', 'ia.*')
+            ->get();
+    }
+
     public function index() {
+        $instructors = $this->listInstructors();
         $terms = $this->getTerms();
-        return view('pages.assign', compact('terms'));
+        return view('pages.assign', compact('terms', 'instructors'));
     }
 }

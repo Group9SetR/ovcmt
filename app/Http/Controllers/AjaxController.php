@@ -24,26 +24,28 @@ class AjaxController extends Controller
 
     public function getInstructorsForACourse(Request $req) {
         if($req->ajax() && isset($req->course_id)) {
-            $instructorsbycourse = DB::table('CourseInstructor AS ci')
-                ->join('Instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
-                ->where('i.course_id', $req->course_id)
+            $instructorsbycourse = DB::table('course_instructors AS ci')
+                ->join('instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
+                ->where('ci.course_id', $req->course_id)
                 ->where('ci.instructor_type', 1)
                 ->select("i.instructor_id AS instructor_id",
                     "i.first_name AS first_name",
                     "i.email AS email",
                     "ci.course_id AS course_id",
                     "ci.intake_no AS intake_no")->get();
-            $tasbycourse = DB::table('CourseInstructor AS ci')
-                ->join('Instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
-                ->where('i.course_id', $req->course_id)
+            $tasbycourse = DB::table('course_instructors AS ci')
+                ->join('instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
+                ->where('ci.course_id', $req->course_id)
                 ->where('ci.instructor_type', 0)
                 ->select("i.instructor_id AS instructor_id",
                     "i.first_name AS first_name",
                     "i.email AS email",
                     "ci.course_id AS course_id",
                     "ci.intake_no AS intake_no")->get();
+            return response()->json(array("instructorsbycourse" => $instructorsbycourse, "tasbycourse" => $tasbycourse), 200);
+        } else {
+            return Response()->json(['no' => 'Not Found']);
         }
-        return response()->json(array("instructorsbycourse" => $instructorsbycourse, "tasbycourse" => $tasbycourse), 200);
     }
 
     public function searchInstructor(Request $req)
