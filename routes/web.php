@@ -63,6 +63,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     /* Propagation Controller */
     Route::post('/getCourseOfferingsByTerm', 'AjaxController@getCourseOfferingsByTerm');
     Route::post('/getWeeklySchedule', 'AjaxController@getWeeklySchedule');
+    Route::post('/extend', 'PropagationController@extend');
     Route::get('/propagateschedule', 'PagesController@propagateschedule');
 
     /* Student Controller */

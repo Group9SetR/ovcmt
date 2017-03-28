@@ -25,26 +25,28 @@ class AjaxController extends Controller
 
     public function getInstructorsForACourse(Request $req) {
         if($req->ajax() && isset($req->course_id)) {
-            $instructorsbycourse = DB::table('CourseInstructor AS ci')
-                ->join('Instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
-                ->where('i.course_id', $req->course_id)
+            $instructorsbycourse = DB::table('course_instructors AS ci')
+                ->join('instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
+                ->where('ci.course_id', $req->course_id)
                 ->where('ci.instructor_type', 1)
                 ->select("i.instructor_id AS instructor_id",
                     "i.first_name AS first_name",
                     "i.email AS email",
                     "ci.course_id AS course_id",
                     "ci.intake_no AS intake_no")->get();
-            $tasbycourse = DB::table('CourseInstructor AS ci')
-                ->join('Instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
-                ->where('i.course_id', $req->course_id)
+            $tasbycourse = DB::table('course_instructors AS ci')
+                ->join('instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
+                ->where('ci.course_id', $req->course_id)
                 ->where('ci.instructor_type', 0)
                 ->select("i.instructor_id AS instructor_id",
                     "i.first_name AS first_name",
                     "i.email AS email",
                     "ci.course_id AS course_id",
                     "ci.intake_no AS intake_no")->get();
+            return response()->json(array("instructorsbycourse" => $instructorsbycourse, "tasbycourse" => $tasbycourse), 200);
+        } else {
+            return Response()->json(['no' => 'Not Found']);
         }
-        return response()->json(array("instructorsbycourse" => $instructorsbycourse, "tasbycourse" => $tasbycourse), 200);
     }
 
     public function searchInstructor(Request $req)
@@ -121,11 +123,32 @@ class AjaxController extends Controller
             $weekstart = Carbon::createFromFormat('Y-m-d', $monday->cdate);
             $weekend = Carbon::createFromFormat('Y-m-d', $monday->cdate);
             $weekend->addDays(4);
-            $roomsbyday = DB::table('rooms_by_days')
-                ->whereBetween('cdate', array($weekstart->toDateString(), $weekend->toDateString()))
-                ->orderBy('cdate','room_id')
+            $roomsbyday = DB::table('rooms_by_days AS rbd')
+                ->leftjoin('course_offerings AS co1', 'co1.crn', '=', 'rbd.am_crn')
+                ->leftjoin('course_offerings AS co2', 'co2.crn', '=', 'rbd.pm_crn')
+                ->leftjoin('instructors AS i1', 'i1.instructor_id', '=', 'co1.instructor_id')
+                ->leftjoin('instructors AS i1ta', 'i1ta.instructor_id', '=', 'co1.ta_id')
+                ->leftjoin('instructors AS i2', 'i2.instructor_id', '=', 'co2.instructor_id')
+                ->leftjoin('instructors AS i2ta', 'i2ta.instructor_id', '=', 'co2.ta_id')
+                ->whereBetween('rbd.cdate', array($weekstart->toDateString(), $weekend->toDateString()))
+                ->select('rbd.cdate AS cdate',
+                    'rbd.room_id AS room_id',
+                    'co1.crn AS am_crn',
+                    'co1.course_id AS am_course_id',
+                    'i1.instructor_id AS am_instructor_id',
+                    'i1.first_name AS am_instructor_name',
+                    'i1ta.instructor_id AS am_ta_id',
+                    'i1ta.first_name AS am_ta_name',
+                    'co2.crn AS pm_crn',
+                    'co2.course_id AS pm_course_id',
+                    'i2.instructor_id AS pm_instructor_id',
+                    'i2.first_name AS pm_instructor_name',
+                    'i2ta.instructor_id AS pm_ta_id',
+                    'i2ta.first_name AS pm_ta_name')
+                ->orderBy('rbd.cdate','rbd.room_id')
                 ->get();
-            return response()->json(array("roomsbyday" => $roomsbyday), 200);
+            $datearray = $this->getDateArray($weekstart);
+            return response()->json(array("roomsbyday" => $roomsbyday, "datearray" => $datearray), 200);
         }
     }
 
@@ -188,6 +211,18 @@ class AjaxController extends Controller
                 return Response()->json(["no"=>"Not Found"]);
             }
         }
+    }
+    public function getDateArray($weekstart) {
+        $datearray['monday'] = $weekstart->toDateString();
+        $weekstart->addDays(1);
+        $datearray['tuesday'] = $weekstart->toDateString();
+        $weekstart->addDays(1);
+        $datearray['wednesday'] = $weekstart->toDateString();
+        $weekstart->addDays(1);
+        $datearray['thursday'] = $weekstart->toDateString();
+        $weekstart->addDays(1);
+        $datearray['friday'] = $weekstart->toDateString();
+        return $datearray;
     }
 
     public function searchTerm(Request $req){
