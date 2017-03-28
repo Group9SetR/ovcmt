@@ -10,15 +10,11 @@ use Illuminate\Support\Facades\DB;
 class PropagationController extends Controller
 {
     public function extend(Request $req) {
-        //TODO: handle the request
-        /*if (isset($req->week_monday) && isset($req->weeks)) {*/
+        if (isset($req->week_monday) && isset($req->weeks)) {
 
-            //$weeks = trim($req->weeks);
-        $weeks = 27;
-            //$weekstart = Carbon::createFromFormat('Y-m-d', $req->week_monday);
-            //$weekend = Carbon::createFromFormat('Y-m-d', $req->week_monday);
-        $weekstart = Carbon::createFromFormat('Y-m-d', "2015-01-01");
-        $weekend = Carbon::createFromFormat('Y-m-d', "2015-01-01");
+            $weeks = trim($req->weeks);
+            $weekstart = Carbon::createFromFormat('Y-m-d', $req->week_monday);
+            $weekend = Carbon::createFromFormat('Y-m-d', $req->week_monday);
             $weekend->addDays(4);
             $weeklyschedule = RoomsByDay::whereBetween('cdate', array($weekstart->toDateString(), $weekend->toDateString()))
                 ->get();
@@ -50,7 +46,7 @@ class PropagationController extends Controller
             $status = "worked";
             return view('debug', compact('status'));
         }
-    //}
+    }
 
     public function hasSessionsLeft($crn) {
         $count = RoomsByDay::where('am_crn', $crn)->count() +
