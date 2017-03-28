@@ -61,14 +61,4 @@ class PropagationController extends Controller
             ->pluck('c.sessions_days')->first();
         return $coursecount - $count;
     }
-
-    public function test() {
-        $count = RoomsByDay::where('am_crn', 1)->count() +
-            RoomsByDay::where('pm_crn', 1)->count();
-        $coursecount = DB::table('courses AS c')
-            ->join('course_offerings AS co', 'c.course_id', '=', 'co.course_id')
-            ->where('co.crn', 1)
-            ->pluck('c.sessions_days')->first();
-        return $coursecount - $count;
-    }
 }

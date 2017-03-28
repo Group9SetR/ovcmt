@@ -63,10 +63,8 @@ class ScheduleController extends Controller
     public function calculateDiff($courseofferings) {
         $courseOfferingsDiff = array();
         foreach ($courseofferings as $offering) {
-            $count = DB::table('rooms_by_days')
-                ->where('am_crn', $offering->crn)
-                ->orwhere('pm_crn', $offering->crn)
-                ->count();
+            $count = RoomsByDay::where('am_crn', $offering->crn)->count() +
+                RoomsByDay::where('pm_crn', $offering->crn)->count();
             $courseOfferingsDiff[$offering->crn] = $offering->sessions_days - $count;
         }
         return $courseOfferingsDiff;
