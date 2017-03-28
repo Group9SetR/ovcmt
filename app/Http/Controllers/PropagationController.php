@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\DB;
 class PropagationController extends Controller
 {
     public function extend(Request $req) {
+        // TODO: account for holidays :( :( :(
         if (isset($req->week_monday) && isset($req->weeks)) {
-
             $weeks = trim($req->weeks);
             $weekstart = Carbon::createFromFormat('Y-m-d', $req->week_monday);
             $weekend = Carbon::createFromFormat('Y-m-d', $req->week_monday);
