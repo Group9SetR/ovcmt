@@ -193,46 +193,29 @@ class AjaxController extends Controller
     public function searchTerm(Request $req){
         if ($req -> ajax()){
             $output="";
-            $instructor_type = "";
-            $instructors = DB::table('instructors AS i')
-                ->join('instruct_avails as ia', 'i.instructor_id', '=', 'ia.instructor_id')
-                ->select('i.instructor_id', 'i.first_name', 'ia.*')
-                ->where('first_name', 'LIKE', '%'.$req->search.'%')->get();
             $terms = DB::table('terms AS t')
                 ->select('t.*')
                 ->where('term_start_date', 'LIKE', '%'.$req->search.'%')
-                ->orWhere('term_no', $req->search)
+                ->orWhere('term_no', 'LIKE', '%'.$req->search.'%')
+                ->orWhere('intake_id', 'LIKE', '%'.$req->search.'%')
                 ->orWhere('term_id', 'LIKE', '%'.$req->search.'%')
                 ->get();
             if($terms){
                 foreach ($terms as $key => $term){
                     $output .='<tr>'.
-                        '<td class="term_id">'.$instructor->instructor_id.'</td>'.
-                        '<td>'.$instructor->first_name.'</td>'.
-                        '<td>'.$instructor->date_start.'</td>'.
-                        '<td>'.$instructor->mon_am.'</td>'.
-                        '<td>'.$instructor->tues_am.'</td>'.
-                        '<td>'.$instructor->wed_am.'</td>'.
-                        '<td>'.$instructor->thurs_am.'</td>'.
-                        '<td>'.$instructor->fri_am.'</td>'.
-                        '<td>'.$instructor->mon_pm.'</td>'.
-                        '<td>'.$instructor->tues_pm.'</td>'.
-                        '<td>'.$instructor->wed_pm.'</td>'.
-                        '<td>'.$instructor->thurs_pm.'</td>'.
-                        '<td>'.$instructor->fri_pm.'</td>'.
-
-                        '<td>'. '<button class="btn btn-primary open-EditInstructorDialog"
+                        '<td class="term_id">'.$term->term_id.'</td>'.
+                        '<td>'.$term->term_start_date.'</td>'.
+                        '<td>'.$term->intake_id.'</td>'.
+                        '<td>'.$term->term_no.'</td>'.
+                        '<td>'.$term->duration_weeks.'</td>'.
+                        '<td>'.$term->course_weeks.'</td>'.
+                        '<td>'.$term->exam_weeks.'</td>'.
+                        '<td>'.$term->holidays.'</td>'.
+                        '<td>'. '<button class="btn btn-primary open-EditTermDialog"
                                     data-toggle="modal"
-                                    data-id="{{$instructor->instructor_id}}"
-                                    data-name="{{$instructor->first_name}}"
-                                    data-target="#editInstructorModal"
+                                    data-id="{{$term->term_id}}"
+                                    data-target="#editTermModal"
                                         >Edit</button>'.
-                        '</td>'.
-                        '<td>'. '<button class=" btn btn-success open-AssignCourseDialog"
-                                        data-toggle="modal"
-                                        data-id="{{$instructor->instructor_id}}"
-                                        data-target="#assignInstructorModal"
-                                            >Assign</button>'.
                         '</td>'.
                         '<td>'. '<button class=" btn btn-danger "
                                             >Delete</button>'.

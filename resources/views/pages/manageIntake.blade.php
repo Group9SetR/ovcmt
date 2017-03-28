@@ -22,10 +22,6 @@
                                 {!! Form::date('start_date', null, ['class'=>'form-control']) !!}
                             </div>
                             <div class="form-group">
-                                {!! Form::label('intake_no', 'Intake No:', ['class'=>'control-label']) !!}
-                                {!! Form::select('intake_no', array('A'=>'A', 'B'=>'B'), 'A', ['class' => 'form-control']) !!}
-                            </div>
-                            <div class="form-group">
                                 {!! Form::submit('Add Intake',['class'=> 'btn btn-primary form-control']) !!}
                             </div>
                             {!! Form::close() !!}
@@ -37,7 +33,8 @@
                             <th>Intake</th>
                             <th>Program Start</th>
                             <th>Intake No</th>
-                            <th>Manage Terms</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                             </thead>
                             <tbody>
                             @foreach($intakes as $intake)
@@ -45,7 +42,8 @@
                                     <th>{{$intake->intake_id}}</th>
                                     <td>{{$intake->start_date}}</td>
                                     <td>{{$intake->intake_no}}</td>
-                                    <td><button class="btn btn-success">Add Terms</button></td>
+                                    <td><button class="btn btn-success">Edit</button></td>
+                                    <td><button class="btn btn-danger">Delete</button></td>
                                 </tr>
                             @endforeach
                             </tbody>

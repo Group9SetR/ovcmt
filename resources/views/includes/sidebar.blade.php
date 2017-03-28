@@ -28,6 +28,10 @@
         <li class="active"><a href="{{ url('/manageIntake') }}" onClick="">Manage Intake</a></li>
     </ul><br>
 
+    <ul class="nav nav-pills nav-stacked">
+        <li class="active"><a href="{{ url('/manageStudents') }}" onClick="">Manage Students</a></li>
+    </ul><br>
+
 
 
 

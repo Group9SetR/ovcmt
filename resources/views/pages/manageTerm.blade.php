@@ -6,54 +6,47 @@
                 @include('includes.sidebar')
             </div>
 
-            <div class="col-sm-8">
+            <div class="col-sm-10">
                 <div class="row">
                     <div class="col-md-6">
+
                         <!-- TODO Change id's and names and classes to reflect Terms not course/instructors-->
                         <h4><small>Manage Term </small></h4>
                         <hr>
-                        <button href="#addNewCourse" class="btn btn-default" data-toggle="collapse">Add Term</button>
-                        <div class="collapse" id="addNewCourse">
+                        <button href="#addNewTerm" class="btn btn-default" data-toggle="collapse">Add Term</button>
+                        <div class="collapse" id="addNewTerm">
                             <h2>Add a New Term</h2>
-
-                            {!! Form::open(['url' => 'manageTermStore', 'id' => 'addCourseForm']) !!}
-
-                            <div class="form-group">
-                                {!! Form::label('term_start_date', 'Term start:') !!}
-                                {!! Form::date('term_start_date') !!}
-                            </div>
+                            {!! Form::open(['url' => 'manageTerm']) !!}
                             <!--TODO display intakes from available intakes-->
                             <div class="form-group">
                                 {!! Form::label('intake_id', 'Intake ID:') !!}
-                                {!! Form::text('intake', null, ['class' => 'form-control']) !!}
+                                <select name="intake_id" class="form-control">
+                                    @foreach($intakes as $intake)
+                                        <option value="{{$intake->intake_id}}">{{$intake->intake_no}}:{{$intake->start_date}}</option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('term_no2', 'Term No:') !!}&nbsp;&nbsp;&nbsp;&nbsp;
+                                {!! Form::label('term_no2', 'Term No:',['class'=>'control-label']) !!}&nbsp;&nbsp;&nbsp;&nbsp;
                                 {{ Form::radio('term_no2', 1, false, array('id'=>'modal_termNo_name1', 'required'=>'true')) }}&nbsp 1&nbsp;&nbsp;
                                 {{ Form::radio('term_no2', 2, false, array('id'=>'modal_termNo_name2', 'required'=>'true')) }}&nbsp 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 {{ Form::radio('term_no2', 3, false, array('id'=>'modal_termNo_name3', 'required'=>'true')) }}&nbsp 3&nbsp;&nbsp;&nbsp;
                                 {{ Form::radio('term_no2', 4, false, array('id'=>'modal_termNo_name4', 'required'=>'true')) }}&nbsp 4
                             </div>
-
                             <div class="form-group">
-                                {!! Form::label('duration_weeks', 'Duration Weeks:') !!}
-                                {!! Form::text('duration_weeks') !!}
+                                {!! Form::label('course_weeks', 'Course Weeks:', ['class'=>'control-label']) !!}
+                                {!! Form::text('course_weeks' , null, ['class'=>'form-control']) !!}
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('course_weeks', 'Course Weeks:') !!}
-                                {!! Form::text('course_weeks') !!}
+                                {!! Form::label('break_weeks', 'Break Weeks:', ['class'=>'control-label']) !!}
+                                {!! Form::text('break_weeks' , null, ['class'=>'form-control']) !!}
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('exam_weeks', 'Exam Weeks:') !!}
-                                {!! Form::text('exam_weeks') !!}
-                            </div>
-
-                            <div class="form-group">
-                                {!! Form::label('holiday', 'Holiday:') !!}
-                                {!! Form::text('holiday') !!}
+                                {!! Form::label('exam_weeks', 'Exam Weeks:', ['class'=>'control-label']) !!}
+                                {!! Form::text('exam_weeks' , null, ['class'=>'form-control']) !!}
                             </div>
 
                             <div class="form-group">
@@ -77,15 +70,15 @@
                         <table class="table table-striped table-bordered table-hover table-condensed text-center">
                             <thead class="thead-default">
                             <tr class = "success">
-                                <th class="text-center">Term Id</th>
-                                <th class="text-center">Term Start Date</th>
-                                <th class="text-center">Intake Id</th>
-                                <th class="text-center">Term no</th>
-                                <th class="text-center">Duration week</th>
-                                <th class="text-center">Course week</th>
-                                <th class="text-center">Exam week</th>
-                                <th class="text-center">Holiday</th>
-                                <th class="text-center">Edit </th>
+                                <th class="text-center">Id</th>
+                                <th class="text-center">Start Date</th>
+                                <th class="text-center">Intake</th>
+                                <th class="text-center">Term #</th>
+                                <th class="text-center">Ttl (wks)</th>
+                                <th class="text-center">Crs (wks)</th>
+                                <th class="text-center">Exam (wks)</th>
+                                <th class="text-center">Holidays</th>
+                                <th class="text-center">Edit</th>
                                 <th class="text-center">Delete</th>
                             </tr>
                             </thead>
@@ -109,9 +102,40 @@
                         </script>
 
                         </table>
-                    </div>
-                </div>
+                        <!-- TODO edit term functionality -->
+                        <div class="modal fade" id="editTermModal" tabindex="-1" role="dialog" aria-labeleledby="editTermModal">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="editTermModalLabel">Edit</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        {!! Form::open(['url' => 'editTerm']) !!}
+                                        <p>New Availability</p>
+                                        <div class="form-group">
+                                            {!! Form::hidden('modal_term_id', '', array('id'=>'modal_term_id')) !!}
+                                            {!! Form::label('modal_intake_id', 'Intake:') !!}
+                                            {!! Form::text('modal_intake_id', '', array('id'=>'modal_intake_id','readonly'=>'readonly'))!!}
+                                        </div>
+                                        <div class="form-group">
+                                            {!! Form::label('modal_term_start_date', 'Term start date:') !!}
+                                            {!! Form::date('modal_term_start_date')!!}
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <span class="pull-right">
+                                            {!! Form::submit('Edit',['class'=> 'btn btn-primary form-control']) !!}
+                                        </span>
+                                        {!! Form::close() !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
+                    </div>
             </div>
         </div>
     </div>

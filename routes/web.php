@@ -19,7 +19,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 
     /* TermController */
     Route::get('/manageTerm', 'TermController@index');
-    Route::post('/manageTermStore', 'TermController@store');
+    Route::post('/manageTerm', 'TermController@store');
     Route::get('/searchTerm', 'AjaxController@searchTerm');
     /* InstructorController */
 
@@ -61,10 +61,12 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     Route::post('/manageIntake', 'IntakeController@store');
 
     /* Propagation Controller */
-
     Route::post('/getCourseOfferingsByTerm', 'AjaxController@getCourseOfferingsByTerm');
     Route::post('/getWeeklySchedule', 'AjaxController@getWeeklySchedule');
     Route::get('/propagateschedule', 'PagesController@propagateschedule');
+
+    /* Student Controller */
+    Route::get('/manageStudents/', 'StudentController@index');
 });
 
 /* Staff Routes*/
