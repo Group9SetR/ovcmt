@@ -50,7 +50,6 @@
                         </table>
                     </div>
                 </div>
-                <hr/>
             </div>
         </div>
     </div>

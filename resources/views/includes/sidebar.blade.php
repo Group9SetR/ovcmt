@@ -5,7 +5,7 @@
     </ul><br>
 
     <ul class="nav nav-pills nav-stacked">
-        <li class="active"><a  href="{{ url('/addschedule') }}" onClick="">Create Schedule</a></li>
+        <li class="active"><a  href="{{ url('/selecttermschedule') }}" onClick="">Edit Schedule</a></li>
     </ul><br>
 
     <ul class="nav nav-pills nav-stacked">

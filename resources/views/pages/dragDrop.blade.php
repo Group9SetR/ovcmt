@@ -13,7 +13,7 @@
                         <div class="form-group col-md-4">
                             <h2>Display schedule</h2>
                             {{Form::open(['url'=>'dragDrop'])}}
-
+                            <input type="hidden" name="selected_term_id" value="{{$term->term_id}}"/>
                             {{Form::label('schedule_date', 'Go to :')}}
                             <input type="date" name="schedule_date" value="{{$calendarDetails['goToDate']}}">
                             {{Form::submit()}}
@@ -21,15 +21,18 @@
                         </div>
                         <div class="col-md-8">
                             <h2>Week of: {{$calendarDetails['firstOfWeek']}}</h2>
+                            <h3>Term no:{{$term->term_no}} starting:{{$term->term_start_date}}</h3>
                         </div>
                     </div>
                     <div class="col-sm-2">
                         <h2>Course List</h2>
+
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-10">
                         {!! Form::open(['url' => 'addschedule']) !!}
+                        <input type="hidden" name="selected_term_id" value="{{$term->term_id}}"/>
                         <input type="hidden" name="schedule_date" value="{{$calendarDetails['goToDate']}}"/>
                         <table class='table table-bordered' id='drag_schedule_table'>
                             <thead>

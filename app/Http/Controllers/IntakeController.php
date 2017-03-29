@@ -77,13 +77,13 @@ class IntakeController extends Controller
         //INTAKE A
         if($startdate->format('m') === 9) {
             $term_starts['term1'] = $program_start;
-            $term_starts['term2'] = $this->makeTermStartDate($start_year++, "1");
+            $term_starts['term2'] = $this->makeTermStartDate(++$start_year, "1");
             $term_starts['term3'] = $this->makeTermStartDate($start_year, "9");
-            $term_starts['term4'] = $this->makeTermStartDate($start_year++, "1");
+            $term_starts['term4'] = $this->makeTermStartDate(++$start_year, "1");
         } else {
             $term_starts['term1'] = $program_start;
             $term_starts['term2'] = $this->makeTermStartDate($start_year, "9");;
-            $term_starts['term3'] = $this->makeTermStartDate($start_year++, "1");;
+            $term_starts['term3'] = $this->makeTermStartDate(++$start_year, "1");;
             $term_starts['term4'] = $this->makeTermStartDate($start_year, "9");;
         }
         return $term_starts;
@@ -103,7 +103,8 @@ class IntakeController extends Controller
             ->where('intake_no', $intake->intake_no)
             ->whereYear('start_date', $start_year)
             ->count();
-        return $count === 0;
+
+        return $count === 0 && ($start_month == 1 || $start_month == 9);
     }
 
     public function index() {

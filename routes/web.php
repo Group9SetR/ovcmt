@@ -49,7 +49,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     Route::post('/addschedule', 'ScheduleController@store');
     Route::get('/addschedule', 'ScheduleController@index');
     Route::post('/dragDropGetWeeklySchedule', 'AjaxController@getWeeklySchedule');
-
+    Route::get('/selecttermschedule', 'ScheduleController@selectTerm');
     /* AssignController*/
 
     Route::get('/assign', 'AssignController@index');

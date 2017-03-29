@@ -88,6 +88,7 @@
                             </tbody>
                         </table>
                         <script type = "text/javascript">
+
                             $('#search').on('keyup',function(){
                                 $value = $(this).val();
                                 $.ajax ({
