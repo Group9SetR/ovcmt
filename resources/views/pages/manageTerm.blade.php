@@ -80,6 +80,7 @@
                                 <th class="text-center">Ttl (wks)</th>
                                 <th class="text-center">Crs (wks)</th>
                                 <th class="text-center">Exam (wks)</th>
+                                <th class="text-center">Break (wks)</th>
                                 <th class="text-center">Holidays</th>
                                 <th class="text-center">Edit</th>
                                 <th class="text-center">Delete</th>
@@ -91,7 +92,11 @@
                             </tbody>
                         </table>
                         <script type = "text/javascript">
-
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                }
+                            });
                             $('#search').on('keyup',function(){
                                 $value = $(this).val();
                                 $.ajax ({
@@ -102,9 +107,32 @@
                                         $('.searchbody').html(data);
                                     }
                                 });
-                            })
+                            });
                         </script>
-
+                        <script>
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                }
+                            });
+                            $(document).on('click', '.open-EditTermDialog', function() {
+                                //reset modal on open everytime
+                                //TODO extract values from table is hella ghetto -- please change in future
+                                $('.modal-body input').attr('value', "");
+                                var term_id = $(this).parent().siblings(":nth-child(4)").text();
+                                var intake_id = $(this).parent().siblings(":nth-child(3)").text();
+                                var course_weeks = $(this).parent().siblings(":nth-child(6)").text();
+                                var break_weeks = $(this).parent().siblings(":nth-child(8)").text();
+                                var exam_weeks = $(this).parent().siblings(":nth-child(7)").text();
+                                var term_start_date = $(this).parent().siblings(":nth-child(2)").text();
+                                $('.modal-body #modal_term_start_date').attr('value', term_start_date);
+                                $('.modal-body #modal_term_id').attr('value', term_id).text();
+                                $('.modal-body #modal_intake_id').attr('value', intake_id).text();
+                                $('.modal-body #modal_course_weeks').attr('value', course_weeks).text();
+                                $('.modal-body #modal_break_weeks').attr('value', break_weeks).text();
+                                $('.modal-body #modal_exam_weeks').attr('value', exam_weeks).text();
+                            });
+                        </script>
                         </table>
                         <!-- TODO edit term functionality -->
                         <div class="modal fade" id="editTermModal" tabindex="-1" role="dialog" aria-labeleledby="editTermModal">
@@ -116,28 +144,35 @@
                                         <h4 class="modal-title" id="editTermModalLabel">Edit</h4>
                                     </div>
                                     <div class="modal-body">
-                                        {!! Form::open(['url' => 'editTerm']) !!}
-                                        <p>New Availability</p>
-                                        <div class="form-group">
-                                            <div class="form-group form-inline">
-                                                {!! Form::hidden('modal_term_id', '', array('id'=>'modal_term_id')) !!}
-                                                {!! Form::label('modal_intake_id', 'Intake:', ['class'=>'col-sm-4 control-label']) !!}
+                                        {!! Form::open(['url' => 'manageTerm']) !!}
+                                        <p>Edit Term</p>
+                                            <div class="form-group">
+                                                {!! Form::label('modal_term_id', 'Term ID:', ['class'=>'control-label']) !!}
+                                                {!! Form::text('modal_term_id', '', array('id'=>'modal_term_id',
+                                                        'class'=>'form-control', 'readonly'=>'readonly')) !!}
+                                            </div>
+                                            <div class="form-group">
+                                                {!! Form::label('modal_intake_id', 'Intake:', ['class'=>'control-label']) !!}
                                                 {!! Form::text('modal_intake_id', '', array('id'=>'modal_intake_id',
-                                                        'class'=>'col-sm-4 form-control','readonly'=>'readonly'))!!}
+                                                        'class'=>'form-control','readonly'=>'readonly'))!!}
                                             </div>
-                                            <div class="form-group form-inline">
-                                                {!! Form::label('modal_course_weeks', 'Course Weeks:', ['class'=>'col-sm-4 control-label']) !!}
-                                                {!! Form::text('modal_course_weeks', '', ['class'=>'col-sm-4 form-control'])!!}
+                                            <div class="form-group">
+                                                {!! Form::label('modal_term_start_date', 'Term start:', ['class'=>'control-label']) !!}
+                                                {!! Form::date('modal_term_start_date', '', array('id'=>'modal_term_start_date',
+                                                        'class'=>'form-control')) !!}
                                             </div>
-                                            <div class="form-group form-inline">
-                                                {!! Form::label('modal_break_weeks', 'Break Weeks:', ['class'=>'col-sm-4 control-label']) !!}
-                                                {!! Form::text('modal_break_weeks', '', ['class'=>'col-sm-4 form-control'])!!}
+                                            <div class="form-group">
+                                                {!! Form::label('modal_course_weeks', 'Course Weeks:', ['class'=>'control-label']) !!}
+                                                {!! Form::number('modal_course_weeks', '', ['class'=>'form-control'])!!}
                                             </div>
-                                            <div class="form-group form-inline">
-                                                {!! Form::label('modal_exam_weeks', 'Exam Weeks:', ['class'=>'col-sm-4 control-label']) !!}
-                                                {!! Form::text('modal_exam_weeks', '', ['class'=>'col-sm-4 form-control'])!!}
+                                            <div class="form-group">
+                                                {!! Form::label('modal_break_weeks', 'Break Weeks:', ['class'=>'control-label']) !!}
+                                                {!! Form::number('modal_break_weeks', '', ['class'=>'form-control'])!!}
                                             </div>
-                                        </div>
+                                            <div class="form-group">
+                                                {!! Form::label('modal_exam_weeks', 'Exam Weeks:', ['class'=>'control-label']) !!}
+                                                {!! Form::number('modal_exam_weeks', '', ['class'=>'form-control'])!!}
+                                            </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
