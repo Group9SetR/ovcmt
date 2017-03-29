@@ -68,6 +68,7 @@
                                     <div class="col-md-6">
                                         <div id="availableTAs">
                                             <h3>TA</h3>
+                                            <!-- TODO fix assign ta -->
                                             {!! Form::open(['url' => 'assignCourse', 'class' => 'form-inline', 'id' => 'select_ta']) !!}
                                                 <p id="noTasMsg"></p>
                                                 <select class="form-control" name='ta_id' id='selected_ta_id'>
@@ -116,6 +117,7 @@
                                             + " Instructor Name: " + data['assignedcourses'][i]['first_name']
                                             // + "<br><button class='btn btn-danger'>Unassign " + data['assignedcourses'][i]['first_name'] + "</button>"
                                             + "<br><br>"
+                                            // TODO fix unassign course
                                             + "<form action='unassignCourse'>"
                                             + "<input type='hidden' name='course_id' value='" + data['assignedcourses'][i]['course_id'] + "'>"
                                             + "<input type='hidden' name='instructor_id' value='" + data['assignedcourses'][i]['instructor_id'] + "'>"
@@ -143,13 +145,11 @@
                                         courseid.onclick=function() {
                                             var courseToPass = $(this).attr('id');
                                             var term = $('#selected_term_id').val();
-                                            console.log(term);
+
                                             $('#course_id_instructor').val(courseToPass);
                                             $('#course_id_ta').val(courseToPass);
                                             $('#term_id_instructor').val(term);
                                             $('#term_id_ta').val(term);
-
-
 
                                             $('#assignCoursesToInstructor').modal('show');
                                             $('#modalCourseNameUnassigned').html('Available Instructors and TAs for ' + courseToPass);
