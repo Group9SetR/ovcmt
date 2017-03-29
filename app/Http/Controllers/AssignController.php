@@ -6,6 +6,7 @@ use App\CourseInstructor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Instructor;
+use App\CourseOffering;
 use App\Term;
 
 class AssignController extends Controller
@@ -20,8 +21,10 @@ class AssignController extends Controller
 
     //TODO assign course to instructor or ta - already linked up front end in assign blade
     public function assignCourse(Request $req) {
-        $intake_no = Term::where('term_id', $req->term_id)
-        ->pluck('intake_no');
+        $intake_no = DB::table('terms AS t')
+            ->join('intakes AS i', 't.intake_id', '=', 'i.intake_id')
+            ->where('t.term_id', $req->term_id)
+            ->pluck('i.intake_no');
         if(isset($req->ta_id)) {
             $courseoffering = CourseOffering::firstOrNew(['term_id' => $req->term_id, 'course_id' => $req->course_id, 'intake_no' => $intake_no]);
             $courseoffering->ta_id = $req->ta_id;

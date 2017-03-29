@@ -15,7 +15,7 @@
                             {!! Form::open(['url' => '', 'class' => 'form-inline', 'id' => 'select_term']) !!}
                                 <select name="selected_term_id" id="selected_term_id">
                                     @foreach ($terms as $term)
-                                        <option value={{$term->term_id}}>Term Number:{{$term->term_no}},
+                                        <option value={{$term->term_id}}>Term Id: {{$term->term_id}}, Term Number:{{$term->term_no}},
                                             Intake Number:{{$term->intake_id}}, Start Date:{{$term->term_start_date}} </option>
                                     @endforeach
                                 </select>
@@ -53,10 +53,12 @@
                                             <h3>Instructor</h3>
                                             {!! Form::open(['url' => 'assignCourse', 'class' => 'form-inline', 'id' => 'select_instructor']) !!}
                                                 <p id="noInstructorsMsg"></p>
-                                                <select class="form-control" name='selected_instructor_id' id='selected_instructor_id'>
+                                                <select class="form-control" name='instructor_id' id='selected_instructor_id'>
                                                     <!-- inserting options here through ajax request -->
                                                 </select>
                                                 <br><br>
+                                                {{Form::hidden('term_id', '', array('id'=>'term_id_instructor'))}}
+                                                {{Form::hidden('course_id', '', array('id'=>'course_id_instructor'))}}
                                                 <div id="assignInstructBtn">
                                                     {!! Form::submit('Assign instructor',['class'=> 'btn btn-primary form-inline']) !!}
                                                 </div>
@@ -68,10 +70,12 @@
                                             <h3>TA</h3>
                                             {!! Form::open(['url' => 'assignCourse', 'class' => 'form-inline', 'id' => 'select_ta']) !!}
                                                 <p id="noTasMsg"></p>
-                                                <select class="form-control" name='selected_ta_id' id='selected_ta_id'>
+                                                <select class="form-control" name='ta_id' id='selected_ta_id'>
                                                     <!-- inserting options here through ajax request -->
                                                 </select>
                                                 <br><br>
+                                                {{Form::hidden('term_id', '', array('id'=>'term_id_ta'))}}
+                                                {{Form::hidden('course_id', '', array('id'=>'course_id_ta'))}}
                                                 <div id="assignTaBtn">
                                                     {!! Form::submit('Assign TA',['class'=> 'btn btn-primary form-inline']) !!}
                                                 </div>
@@ -104,13 +108,21 @@
                                 dataType: 'json',
                                 success: function (data) {
                                     //TODO: make this pretty
+
                                     $('#assigned').empty();
                                     for (let i = 0; i < data['assignedcourses'].length; i++) {
                                         var panel = "<div class='panel panel-default' id='" + data['assignedcourses'][i]['course_id'] + "-assigned'><div class='panel-heading'>" + data['assignedcourses'][i]['course_id']
                                             + "</div> <div class='panel-body'>" + "Instructor ID: " + data['assignedcourses'][i]['instructor_id']
                                             + " Instructor Name: " + data['assignedcourses'][i]['first_name']
                                             // + "<br><button class='btn btn-danger'>Unassign " + data['assignedcourses'][i]['first_name'] + "</button>"
-                                            + "<br><br><form action='unassignCourse'><input type='submit' class='btn btn-danger' value='Unassign " + data['assignedcourses'][i]['first_name'] + "'></form>"
+                                            + "<br><br>"
+                                            + "<form action='unassignCourse'>"
+                                            + "<input type='hidden' name='course_id' value='" + data['assignedcourses'][i]['course_id'] + "'>"
+                                            + "<input type='hidden' name='instructor_id' value='" + data['assignedcourses'][i]['instructor_id'] + "'>"
+                                            + "<input type='hidden' name='term_id' value='" + data['assignedcourses'][i]['term_id'] + "'>"
+                                            + "<input type='hidden' name='intake_no' value='" + data['assignedcourses'][i]['intake_no'] + "'>"
+                                            + "<input type='submit' class='btn btn-danger' value='Unassign " + data['assignedcourses'][i]['first_name'] + "'>"
+                                            + "</form>"
                                             + "</div></div>";
                                         $('#assigned').append(panel);
                                     }
@@ -118,17 +130,27 @@
                                     for (let i = 0; i < data['unassignedcourses'].length; i++) {
                                         var panel = "<div class='panel panel-default' id='" + data['unassignedcourses'][i]['course_id'] + "'><div class='panel-heading'>" + data['unassignedcourses'][i]['course_id']
                                             + "</div> <div class='panel-body'>"
-                                            + "</div></div>";
+                                            + "<div id='' value='" + data['unassignedcourses'][i]['course_id'] + "'></div>"
+                                            + "<div id='' value='" + data['unassignedcourses'][i]['term_id'] + "'></div>"
                                         $('#unassigned').append(panel);
                                     }
                                     // show modal for unassigned courses
                                     for (let i = 0; i < data['unassignedcourses'].length; i++) {
                                         var course = data['unassignedcourses'][i]['course_id'];
                                         var courseStr = course.toString();
-                                        var courseid = document.getElementById(courseStr);
 
+                                        var courseid = document.getElementById(courseStr);
                                         courseid.onclick=function() {
                                             var courseToPass = $(this).attr('id');
+                                            var term = $('#selected_term_id').val();
+                                            console.log(term);
+                                            $('#course_id_instructor').val(courseToPass);
+                                            $('#course_id_ta').val(courseToPass);
+                                            $('#term_id_instructor').val(term);
+                                            $('#term_id_ta').val(term);
+
+
+
                                             $('#assignCoursesToInstructor').modal('show');
                                             $('#modalCourseNameUnassigned').html('Available Instructors and TAs for ' + courseToPass);
                                             $.ajaxSetup({
