@@ -13,13 +13,14 @@
 
                         <div class="form-inline">
                             {!! Form::open(['url' => '', 'class' => 'form-inline', 'id' => 'select_term']) !!}
-                            <select name="selected_term_id" id="selected_term_id">
-                                @foreach ($terms as $term)
-                                    <option value={{$term->term_id}}>Term Number:{{$term->term_no}},
-                                        Intake Number:{{$term->intake_id}} Start Date:{{$term->term_start_date}} </option>
-                                @endforeach
-                            </select>
-                            {!! Form::submit('Choose Term',['class'=> 'btn btn-primary form-inline']) !!}
+                                <select name="selected_term_id" id="selected_term_id">
+                                    @foreach ($terms as $term)
+                                        <option value={{$term->term_id}}>Term Number:{{$term->term_no}},
+                                            Intake Number:{{$term->intake_id}}, Start Date:{{$term->term_start_date}} </option>
+                                    @endforeach
+                                </select>
+                                {!! Form::submit('Choose Term',['class'=> 'btn btn-primary form-inline']) !!}
+                            {!! Form::close() !!}
                         </div>
                     </div>
                 </div>
@@ -29,8 +30,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <!-- TODO retrieve course name -->
-                                <h4 class="modal-title">Available Instructors for <b><div id="modalCourseNameUnassigned"></div></b></h4>
+                                <h4 id="modalCourseNameUnassigned" class="modal-title"></h4>
                             </div>
                             <div class="modal-body">
                                 <!-- TODO need to pull instructors correctly -->
@@ -51,56 +51,36 @@
                                     <div class="col-md-6">
                                         <div id="availableInstructors">
                                             <h3>Instructor</h3>
-                                            {!! Form::open(['url' => '', 'class' => 'form-inline', 'id' => 'select_instructor']) !!}
+                                            {!! Form::open(['url' => 'assignCourse', 'class' => 'form-inline', 'id' => 'select_instructor']) !!}
+                                                <p id="noInstructorsMsg"></p>
                                                 <select class="form-control" name='selected_instructor_id' id='selected_instructor_id'>
                                                     <!-- inserting options here through ajax request -->
                                                 </select>
-                                                <br>
-                                            {!! Form::submit('Assign instructor',['class'=> 'btn btn-primary form-inline']) !!}
+                                                <br><br>
+                                                <div id="assignInstructBtn">
+                                                    {!! Form::submit('Assign instructor',['class'=> 'btn btn-primary form-inline']) !!}
+                                                </div>
+                                            {!! Form::close() !!}
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div id="availableTAs">
                                             <h3>TA</h3>
-                                            {!! Form::open(['url' => '', 'class' => 'form-inline', 'id' => 'select_ta']) !!}
-                                                <select class="form-control" name='selected_instructor_id' id='selected_ta_id'>
+                                            {!! Form::open(['url' => 'assignCourse', 'class' => 'form-inline', 'id' => 'select_ta']) !!}
+                                                <p id="noTasMsg"></p>
+                                                <select class="form-control" name='selected_ta_id' id='selected_ta_id'>
                                                     <!-- inserting options here through ajax request -->
                                                 </select>
-                                                <br>
-                                            {!! Form::submit('Assign TA',['class'=> 'btn btn-primary form-inline']) !!}
+                                                <br><br>
+                                                <div id="assignTaBtn">
+                                                    {!! Form::submit('Assign TA',['class'=> 'btn btn-primary form-inline']) !!}
+                                                </div>
+                                            {!! Form::close() !!}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal fade" id="editInstructors" tabindex="-1" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <!-- TODO retrieve course name -->
-                                <h4 class="modal-title">Assigned Instructors for <b><div id="modalCourseNameAssigned"></div></b></h4>
-                            </div>
-                            <div class="modal-body">
-                                <!-- TODO need to pull instructors correctly -->
-{{--                                @foreach ($instructors as $instructor)
-                                    <div class='panel panel-default'>
-                                        <div class='panel-body'>
-                                            {!! Form::open(['url' => '', 'class' => 'form-inline', 'id' => $instructor]) !!}
-                                            Instructor Id: {{$instructor->instructor_id}} <br>
-                                            First Name: {{$instructor->first_name}} <br>
-                                            Email: {{$instructor->email}} <br>
-                                            {!! Form::submit('Assign',['class'=> 'btn btn-primary form-inline']) !!}
-                                            <button class="btn btn-warning">Unassign</button>
-                                        </div>
-                                    </div>
-                                @endforeach--}}
                                 <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
                             </div>
                         </div>
@@ -128,13 +108,17 @@
                                     for (let i = 0; i < data['assignedcourses'].length; i++) {
                                         var panel = "<div class='panel panel-default' id='" + data['assignedcourses'][i]['course_id'] + "-assigned'><div class='panel-heading'>" + data['assignedcourses'][i]['course_id']
                                             + "</div> <div class='panel-body'>" + "Instructor ID: " + data['assignedcourses'][i]['instructor_id']
-                                            + " Instructor Name: " + data['assignedcourses'][i]['first_name'] + "</div></div>";
+                                            + " Instructor Name: " + data['assignedcourses'][i]['first_name']
+                                            // + "<br><button class='btn btn-danger'>Unassign " + data['assignedcourses'][i]['first_name'] + "</button>"
+                                            + "<br><form action='unassignCourse'><input type='submit' class='btn btn-danger' value='Unassign " + data['assignedcourses'][i]['first_name'] + "'></form>"
+                                            + "</div></div>";
                                         $('#assigned').append(panel);
                                     }
                                     $('#unassigned').empty();
                                     for (let i = 0; i < data['unassignedcourses'].length; i++) {
                                         var panel = "<div class='panel panel-default' id='" + data['unassignedcourses'][i]['course_id'] + "'><div class='panel-heading'>" + data['unassignedcourses'][i]['course_id']
-                                            + "</div> <div class='panel-body'>" + "</div></div>";
+                                            + "</div> <div class='panel-body'>"
+                                            + "</div></div>";
                                         $('#unassigned').append(panel);
                                     }
                                     // show modal for unassigned courses
@@ -142,12 +126,11 @@
                                         var course = data['unassignedcourses'][i]['course_id'];
                                         var courseStr = course.toString();
                                         var courseid = document.getElementById(courseStr);
-                                        var course_id = $('#' + courseStr + '-unassigned').val();
-                                        // console.log(courseStr);
+
                                         courseid.onclick=function() {
                                             var courseToPass = $(this).attr('id');
-                                            console.log(courseToPass);
                                             $('#assignCoursesToInstructor').modal('show');
+                                            $('#modalCourseNameUnassigned').html('Available Instructors and TAs for ' + courseToPass);
                                             $.ajaxSetup({
                                                 headers: {
                                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -159,9 +142,14 @@
                                                 data: {"course_id": courseToPass},
                                                 dataType: 'json',
                                                 success: function (data) {
-                                                    $('#selected_instructor_id').empty();
+                                                    $('#selected_instructor_id').css('visibility', 'visible').empty();
+                                                    $('#selected_ta_id').css('visibility', 'visible').empty();
+                                                    $('#assignInstructBtn').css('visibility', 'visible');
+                                                    $('#assignTaBtn').css('visibility', 'visible');
+                                                    $('#noInstructorsMsg').empty();
+                                                    $('#noTasMsg').empty();
+
                                                     for (let i = 0; i < data['instructorsbycourse'].length; i++) {
-                                                        // make each option for select from available instructors
                                                         var instructorDropdown = "<option value='" + data['instructorsbycourse'][i]['instructor_id'] + "'>" + data['instructorsbycourse'][i]['first_name'] + "</option>";
                                                         $('#selected_instructor_id').append(instructorDropdown);
                                                     }
@@ -169,14 +157,17 @@
                                                         var taDropdown = "<option value='" + data['tasbycourse'][i]['instructor_id'] + "'>" + data['tasbycourse'][i]['first_name'] + "</option>";
                                                         $('#selected_ta_id').append(taDropdown);
                                                     }
-
-                                                    <!-- TODO need some way to clear select input if no data to show -->
-                                                    // check if no data - if yes, then hide the select form
                                                     if ($('#selected_instructor_id').is(':empty')){
-                                                        // alert('empty data');
-                                                        // $('#selected_instructor_id').empty();
-                                                        var msg = "<p>No available instructors for this course.</p>";
-                                                        $('#selected_instructor_id').append(msg);
+                                                        var msg = "No available instructors for this course.";
+                                                        $('#selected_instructor_id').css('visibility', 'hidden');
+                                                        $('#assignInstructBtn').css('visibility', 'hidden');
+                                                        $('#noInstructorsMsg').append(msg);
+                                                    }
+                                                    if ($('#selected_ta_id').is(':empty')){
+                                                        var msg = "No available TAs for this course.";
+                                                        $('#selected_ta_id').css('visibility', 'hidden');
+                                                        $('#assignTaBtn').css('visibility', 'hidden');
+                                                        $('#noTasMsg').append(msg);
                                                     }
                                                 }
                                             });
