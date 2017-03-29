@@ -59,6 +59,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 
     /* Propagation Controller */
     Route::post('/getWeeklySchedule', 'AjaxController@getWeeklySchedule');
+    Route::post('/extend', 'PropagationController@extend');
     Route::get('/propagateschedule', 'PagesController@propagateschedule');
 });
 
@@ -86,4 +87,4 @@ Route::get('/about', 'PagesController@about');
 
 Route::get('/home', 'HomeController@index');
 
-Route::get('/debug', 'PropagationController@extend');
+Route::get('/debug', 'PropagationController@getHolidayArray');

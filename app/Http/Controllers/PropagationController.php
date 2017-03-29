@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CalendarDate;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\RoomsByDay;
@@ -10,15 +11,12 @@ use Illuminate\Support\Facades\DB;
 class PropagationController extends Controller
 {
     public function extend(Request $req) {
-        //TODO: handle the request
-        /*if (isset($req->week_monday) && isset($req->weeks)) {*/
-
-            //$weeks = trim($req->weeks);
-        $weeks = 27;
-            //$weekstart = Carbon::createFromFormat('Y-m-d', $req->week_monday);
-            //$weekend = Carbon::createFromFormat('Y-m-d', $req->week_monday);
-        $weekstart = Carbon::createFromFormat('Y-m-d', "2015-01-01");
-        $weekend = Carbon::createFromFormat('Y-m-d', "2015-01-01");
+        // TODO: account for holidays :( :( :(
+        if (isset($req->week_monday) && isset($req->weeks)) {
+            $weeks = trim($req->weeks);
+            $holidays = $this->getHolidayArray($req->week_monday, $weeks);
+            $weekstart = Carbon::createFromFormat('Y-m-d', $req->week_monday);
+            $weekend = Carbon::createFromFormat('Y-m-d', $req->week_monday);
             $weekend->addDays(4);
             $weeklyschedule = RoomsByDay::whereBetween('cdate', array($weekstart->toDateString(), $weekend->toDateString()))
                 ->get();
@@ -41,16 +39,18 @@ class PropagationController extends Controller
                             return view('debug', compact('status'));
                         }
                     }
-                    RoomsByDay::where('room_id', $roomday->room_id)
-                        ->where('cdate', $date->toDateString())
-                        ->update(['am_crn' => $roomday->am_crn, 'pm_crn' => $roomday->pm_crn]);
+                    if(!in_array($date->toDateString(), $holidays)) {
+                        RoomsByDay::where('room_id', $roomday->room_id)
+                            ->where('cdate', $date->toDateString())
+                            ->update(['am_crn' => $roomday->am_crn, 'pm_crn' => $roomday->pm_crn]);
+                    }
                 }
                 DB::commit(); //commit transaction for the week
             }
             $status = "worked";
             return view('debug', compact('status'));
         }
-    //}
+    }
 
     public function hasSessionsLeft($crn) {
         $count = RoomsByDay::where('am_crn', $crn)->count() +
@@ -60,5 +60,16 @@ class PropagationController extends Controller
             ->where('co.crn', $crn)
             ->pluck('c.sessions_days')->first();
         return $coursecount - $count;
+    }
+
+    public function getHolidayArray($week_monday, $weeks) {
+        $weekstart = Carbon::createFromFormat('Y-m-d', $week_monday);
+        $weekend = Carbon::createFromFormat('Y-m-d', $week_monday);
+        $weekend->addDays(7 * ($weeks + 1)); // + 1 week to account for current week
+        $holidays = CalendarDate::whereBetween('cdate', array($weekstart->toDateString(), $weekend->toDateString()))
+            ->where('isHoliday', 1)
+            ->pluck('cdate')
+            ->toArray();
+        return $holidays;
     }
 }
