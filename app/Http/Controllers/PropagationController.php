@@ -29,14 +29,14 @@ class PropagationController extends Controller
                         if($this->hasSessionsLeft($roomday->am_crn) <= 0){
                             $status = array('count' => $i, 'date' => $date->toDateString(), 'crn' => $roomday->am_crn);
                             DB::rollback();
-                            return view('debug', compact('status'));
+                            return view('pages.onPropFinish', compact('status'));
                         }
                     }
                     if(!empty($roomday->pm_crn)) { //pm course exists, check to see if you have sessions left
                         if($this->hasSessionsLeft($roomday->pm_crn) <= 0){
                             $status = array('count' => $i, 'date' => $date->toDateString(), 'crn' => $roomday->pm_crn);
                             DB::rollback();
-                            return view('debug', compact('status'));
+                            return view('pages.onPropFinish', compact('status'));
                         }
                     }
                     if(!in_array($date->toDateString(), $holidays)) {
@@ -47,8 +47,8 @@ class PropagationController extends Controller
                 }
                 DB::commit(); //commit transaction for the week
             }
-            $status = "worked";
-            return view('debug', compact('status'));
+            $status = array("message" => "worked", "weeks" => $weeks);
+            return view('pages.onPropFinish', compact('status'));
         }
     }
 

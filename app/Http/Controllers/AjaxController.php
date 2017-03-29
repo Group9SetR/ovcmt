@@ -129,7 +129,7 @@ class AjaxController extends Controller
                     'i1ta.first_name AS am_ta_name',
                     'co2.crn AS pm_crn',
                     'co2.course_id AS pm_course_id',
-                    'co2.intake_no AS am_intake_no',
+                    'co2.intake_no AS pm_intake_no',
                     'i2.instructor_id AS pm_instructor_id',
                     'i2.first_name AS pm_instructor_name',
                     'i2ta.instructor_id AS pm_ta_id',
