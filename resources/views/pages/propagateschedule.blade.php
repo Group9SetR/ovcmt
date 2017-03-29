@@ -14,8 +14,13 @@
                             {{Form::open(['url' => '',
                                           'id' => 'dateSelectForm'])}}
                                 {{Form::label('schedule_starting_date', 'Week of:')}}
-                                {{Form::date('schedule_starting_date', Carbon\Carbon::today(new DateTimeZone('America/Vancouver'),
-                                                                       ['id' => 'schedule_starting_date']))}}
+                                @if(isset($errorDate))
+                                    {{Form::date('schedule_starting_date', $errorDate,
+                                                                           ['id' => 'schedule_starting_date']) }}
+                                @else
+                                    {{Form::date('schedule_starting_date', Carbon\Carbon::today(new DateTimeZone('America/Vancouver'),
+                                                                           ['id' => 'schedule_starting_date'])) }}
+                                @endif
                                 {{ Form::submit('Choose Starting Date',['class'=> 'btn btn-primary form-inline']) }}
                             {{Form::close()}}
                         </div>
