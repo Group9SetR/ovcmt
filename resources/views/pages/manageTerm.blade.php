@@ -36,17 +36,20 @@
                             </div>
                             <div class="form-group">
                                 {!! Form::label('course_weeks', 'Course Weeks:', ['class'=>'control-label']) !!}
-                                {!! Form::text('course_weeks' , null, ['class'=>'form-control']) !!}
+                                {!! Form::number('course_weeks' , null,
+                                    ['class'=>'form-control', 'required'=>'required', 'min'=>'0', 'max'=>'50']) !!}
                             </div>
 
                             <div class="form-group">
                                 {!! Form::label('break_weeks', 'Break Weeks:', ['class'=>'control-label']) !!}
-                                {!! Form::text('break_weeks' , null, ['class'=>'form-control']) !!}
+                                {!! Form::number('break_weeks' , null,
+                                    ['class'=>'form-control' , 'required'=>'required', 'min'=>'0', 'max'=>'10']) !!}
                             </div>
 
                             <div class="form-group">
                                 {!! Form::label('exam_weeks', 'Exam Weeks:', ['class'=>'control-label']) !!}
-                                {!! Form::text('exam_weeks' , null, ['class'=>'form-control']) !!}
+                                {!! Form::number('exam_weeks' , null,
+                                    ['class'=>'form-control', 'required'=>'required', 'min'=>'0', 'max'=>'10']) !!}
                             </div>
 
                             <div class="form-group">

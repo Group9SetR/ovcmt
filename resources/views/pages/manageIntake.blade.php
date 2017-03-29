@@ -18,8 +18,8 @@
                             {!! Form::open(['url' => 'manageIntake', 'id' => 'addIntakeForm']) !!}
 
                             <div class="form-group">
-                                {!! Form::label('start_date', 'Program start:', ['class'=>'control-label']) !!}
-                                {!! Form::date('start_date', null, ['class'=>'form-control']) !!}
+                                {!! Form::label('start_date', 'Program start (September or January only):', ['class'=>'control-label']) !!}
+                                {!! Form::date('start_date', null, ['class'=>'form-control', 'required'=>'required']) !!}
                             </div>
                             <div class="form-group">
                                 {!! Form::submit('Add Intake',['class'=> 'btn btn-primary form-control']) !!}
