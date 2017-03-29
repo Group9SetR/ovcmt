@@ -43,11 +43,8 @@ class InstructorController extends Controller
 
     public function assign(Request $req) {
         //Assign course to instructor
-        $courseinstructor = new CourseInstructor();
-        $courseinstructor->instructor_id = $req->course_instructor_id;
-        $courseinstructor->course_id = $req->course_id;
-        $courseinstructor->intake_no = $req->intake_no;
-        $courseinstructor->instructor_type = $req->instructor_type;
+        $courseinstructor = CourseInstructor::firstOrNew(['instructor_id' => $req->course_instructor_id,
+            'course_id' => $req->course_id, 'intake_no' => $req->intake_no, 'instructor_type' => $req->instructor_type]);
         $courseinstructor->save();
 
         return redirect()->action('InstructorController@index');
