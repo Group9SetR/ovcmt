@@ -18,6 +18,16 @@ class AssignController extends Controller
         return redirect()->action('AssignController@index');
     }
 
+    //TODO assign course to instructor or ta - already linked up front end in assign blade
+    public function assignCourse(Request $req) {
+        return redirect()->action('AssignController@index');
+    }
+
+    //TODO unassign instructor or ta from course - already linked up front end in assign blade
+    public function unassignCourse(Request $req) {
+        return redirect()->action('AssignController@index');
+    }
+
     public function getTerms() {
         return Term::all();
     }

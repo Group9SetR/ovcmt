@@ -110,7 +110,7 @@
                                             + "</div> <div class='panel-body'>" + "Instructor ID: " + data['assignedcourses'][i]['instructor_id']
                                             + " Instructor Name: " + data['assignedcourses'][i]['first_name']
                                             // + "<br><button class='btn btn-danger'>Unassign " + data['assignedcourses'][i]['first_name'] + "</button>"
-                                            + "<br><form action='unassignCourse'><input type='submit' class='btn btn-danger' value='Unassign " + data['assignedcourses'][i]['first_name'] + "'></form>"
+                                            + "<br><br><form action='unassignCourse'><input type='submit' class='btn btn-danger' value='Unassign " + data['assignedcourses'][i]['first_name'] + "'></form>"
                                             + "</div></div>";
                                         $('#assigned').append(panel);
                                     }

@@ -21,8 +21,8 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     Route::get('/manageTerm', 'TermController@index');
     Route::post('/manageTerm', 'TermController@store');
     Route::get('/searchTerm', 'AjaxController@searchTerm');
-    /* InstructorController */
 
+    /* InstructorController */
     Route::get('/manageInstructor', 'InstructorController@manageInstructor');
     Route::get('/manageInstructor', 'InstructorController@index');
     Route::get('/searchInstructor', 'AjaxController@searchInstructor');
@@ -33,9 +33,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     Route::post('/showInstructorDetails', 'AjaxController@instructorDetails');
     Route::post('/deleteCourseInstructor', 'InstructorController@delete');
 
-
     /* CourseController */
-
     Route::get('/manageCourse', 'CourseController@manageCourse');
     Route::get('/manageCourse', 'CourseController@index');
     Route::post('/manageCourseStore', 'CourseController@store');
@@ -44,16 +42,17 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     Route::get('/searchCourse','AjaxController@searchCourse');
 
     /* ScheduleController */
-
     Route::get('/dragDrop', 'ScheduleController@index');
     Route::post('/dragDrop', 'ScheduleController@displayRoomsByWeek');
     Route::post('/addschedule', 'ScheduleController@store');
     Route::get('/addschedule', 'ScheduleController@index');
     Route::post('/dragDropGetWeeklySchedule', 'AjaxController@getWeeklySchedule');
     Route::get('/selecttermschedule', 'ScheduleController@selectTerm');
-    /* AssignController*/
 
+    /* AssignController*/
     Route::get('/assign', 'AssignController@index');
+    Route::post('/assignCourse', 'AssignController@assignCourse');
+    Route::get('/unassignCourse', 'AssignController@unassignCourse');
     Route::post('/getInstructorsForACourse', 'AjaxController@getInstructorsForACourse');
     Route::get('/addschedule', 'ScheduleController@index');
 
