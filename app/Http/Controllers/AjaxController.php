@@ -24,6 +24,7 @@ class AjaxController extends Controller
     }
 
     public function getInstructorsForACourse(Request $req) {
+        // added select column, course_instructor is already set at this point, which means intake is set as well
         if($req->ajax() && isset($req->course_id)) {
             $instructorsbycourse = DB::table('course_instructors AS ci')
                 ->join('instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
@@ -51,6 +52,7 @@ class AjaxController extends Controller
 
     public function searchInstructor(Request $req)
     {
+        //pre-course_instructor assignment, no intake needed here
         if ($req->ajax()) {
             $output = "";
             $instructors = DB::table('instructors AS i')
@@ -85,7 +87,6 @@ class AjaxController extends Controller
                         // TODO: delete button
                         '</td>'.
                         '<td>'.
-                        '<form action="/deleteInstructor"'.
                         '<button class="btn btn-danger">Delete</button>'.
                         '</td>'.
                         '</tr>';
@@ -98,6 +99,7 @@ class AjaxController extends Controller
     }
 
     public function getWeeklySchedule(Request $req) {
+        // added select column, as course_instructors is not needed since at this point course_offerings is already assigned
         if($req->ajax() && isset($req->selected_date)) {
             $monday = DB::table('calendar_dates')
                 ->where('cdate','<=',$req->selected_date)
@@ -120,12 +122,14 @@ class AjaxController extends Controller
                     'rbd.room_id AS room_id',
                     'co1.crn AS am_crn',
                     'co1.course_id AS am_course_id',
+                    'co1.intake_no AS am_intake_no',
                     'i1.instructor_id AS am_instructor_id',
                     'i1.first_name AS am_instructor_name',
                     'i1ta.instructor_id AS am_ta_id',
                     'i1ta.first_name AS am_ta_name',
                     'co2.crn AS pm_crn',
                     'co2.course_id AS pm_course_id',
+                    'co2.intake_no AS am_intake_no',
                     'i2.instructor_id AS pm_instructor_id',
                     'i2.first_name AS pm_instructor_name',
                     'i2ta.instructor_id AS pm_ta_id',
@@ -139,6 +143,7 @@ class AjaxController extends Controller
 
     public function getCourseOfferingsByTerm(Request $req)
     {
+        //at this point course_offerings is already set, just a intake_no update is required
         if ($req->ajax() && isset($req->term_id)) {
             $assignedcourses = DB::table('courses AS c')
                 ->join('course_offerings AS co', 'c.course_id', '=', 'co.course_id')
