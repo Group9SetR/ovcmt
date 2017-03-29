@@ -83,7 +83,6 @@ class AjaxController extends Controller
                         // TODO: delete button
                         '</td>'.
                         '<td>'.
-                        '<form action="/deleteInstructor"'
                         '<button class="btn btn-danger">Delete</button>'.
                         '</td>'.
                         '</tr>';
