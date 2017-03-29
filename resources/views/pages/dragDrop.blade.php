@@ -14,8 +14,8 @@
                             <h2>Display schedule</h2>
                             {{Form::open(['url'=>'dragDrop'])}}
                             <input type="hidden" name="selected_term_id" value="{{$term->term_id}}"/>
-                            {{Form::label('schedule_date', 'Go to :')}}
-                            <input type="date" name="schedule_date" value="{{$calendarDetails['goToDate']}}">
+                            {{Form::label('schedule_select_date', 'Go to :')}}
+                            <input type="date" name="schedule_select_date" value="{{$calendarDetails['goToDate']}}">
                             {{Form::submit()}}
                             {{Form::close()}}
                         </div>

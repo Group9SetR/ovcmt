@@ -26,6 +26,7 @@ class ScheduleController extends Controller
             $this->updateRoomByWeek($roomId, $saveDate, $roomUpdatesAm, $roomUpdatesPm);
         }
         //Send back to where schedule was saved
+        
         $cdate = DateTime::createFromFormat('Y-m-d', $req->schedule_date);
         $year =$cdate->format('Y');
         $week = $cdate->format('W');
@@ -156,7 +157,12 @@ class ScheduleController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function displayRoomsByWeek(Request $req) {
-        $cdate = $this->extractStartDate($req->selected_term_id);
+        if(!isset($req->schedule_select_date)) {
+            $cdate = $this->extractStartDate($req->selected_term_id);
+        } else {
+            $cdate = DateTime::createFromFormat('Y-m-d', $req->schedule_select_date);
+        }
+
         $year =$cdate->format('Y');
         $week = $cdate->format('W');
         $calendarDetails = $this->getCalendarDetails($cdate, $year, $week);
