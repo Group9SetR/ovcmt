@@ -14,7 +14,7 @@ class IntakeController extends Controller
         $intake = new Intake;
         $intake->start_date = $req->start_date;
         $intake_month = DateTime::createFromFormat('Y-m-d', $req->start_date)->format('n');
-        if($intake_month === 9) {
+        if($intake_month == 9) {
             $intake->intake_no = 'A';
         } else {
             $intake->intake_no = 'B';

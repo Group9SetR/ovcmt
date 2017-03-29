@@ -18,11 +18,11 @@ class CreateTermTable extends Migration
             $table->date('term_start_date');
             $table->integer('intake_id');
             $table->tinyInteger('term_no');
-            $table->tinyInteger('duration_weeks');
-            $table->tinyInteger('course_weeks');
-            $table->tinyInteger('break_weeks');
-            $table->tinyInteger('exam_weeks');
-            $table->tinyInteger('holidays');
+            $table->tinyInteger('duration_weeks')->default(0);
+            $table->tinyInteger('course_weeks')->default(0);
+            $table->tinyInteger('break_weeks')->default(0);
+            $table->tinyInteger('exam_weeks')->default(0);
+            $table->tinyInteger('holidays')->default(0);
         });
     }
 

@@ -99,18 +99,18 @@ class ScheduleController extends Controller
 
     public function getScheduleByWeekQuery($year, $week, $time)
     {
-        return DB::table('course_offerings AS co')
-            ->join('course_offerings AS co', 'c.crn', '=', 'co.crn')
+        return DB::table('courses AS c')
+            ->join('course_offerings AS co', 'c.course_id', '=', 'co.course_id')
             ->join('rooms_by_days AS r', 'co.crn', '=', "r."."$time"."_crn")
-            ->join('calendar_dates AS c', 'r.cdate','=','c.cdate')
+            ->join('calendar_dates AS ca', 'r.cdate','=','ca.cdate')
             ->select('r.room_id AS room_id', 'r.cdate AS date', "r."."$time"."_crn AS crn",'co.course_id AS course_id',
-                'c.cdayOfWeek AS cdayOfWeek', DB::raw("'$time' AS time"))
+                'ca.cdayOfWeek AS cdayOfWeek', DB::raw("'$time' AS time"))
             ->where([
-                ["c.cyear", $year],
-                ["c.cweek",$week]
+                ["ca.cyear", $year],
+                ["ca.cweek",$week]
             ])
             ->whereNotNull("r."."$time"."_crn")
-            ->whereIn('c.cdayOfWeek',[2,3,4,5,6]);
+            ->whereIn('ca.cdayOfWeek',[2,3,4,5,6]);
     }
 
     public function getCalendarDetails($date, $year, $week)
