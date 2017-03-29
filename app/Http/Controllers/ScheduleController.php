@@ -157,19 +157,11 @@ class ScheduleController extends Controller
     }
 
     /**
-     * Display schedule based on term selection.
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Cannot see schedule without first selecting a term.
+     * @return redirect to term select.
      */
     public function index() {
-        //TODO pass a date via term selection on /addschedule instead of using hardcoded date on line 89
-        $courseOfferings = $this->generateCourses();
-        $cdate = Carbon\Carbon::today(new DateTimeZone('America/Vancouver'));
-        $year = $cdate->format('Y');
-        $week = $cdate->format('W');
-        $calendarDetails = $this->getCalendarDetails($cdate, $year ,$week);
-        $roomsByWeek = $this->getScheduleByWeek($year, $week);
-        $courseOfferingsSessions = $this->calculateDiff($courseOfferings);
-        return view('pages.dragDrop', compact('calendarDetails','courseOfferings', 'courseOfferingsSessions', 'roomsByWeek'));
+        return redirect()->action('ScheduleController@selectTerm');
     }
 
     public function selectTerm()
