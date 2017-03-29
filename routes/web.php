@@ -16,12 +16,11 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 {
     Route::get('/adminauth', 'PagesController@adminauth');
     Route::get('/masterscheduleview', 'PagesController@masterscheduleview');
-    Route::get('/editschedule', 'PagesController@editschedule');
 
     /* TermController */
     Route::get('/manageTerm', 'TermController@index');
-    Route::post('/manageTermStore', 'TermController@store');
-
+    Route::post('/manageTerm', 'TermController@store');
+    Route::get('/searchTerm', 'AjaxController@searchTerm');
     /* InstructorController */
 
     Route::get('/manageInstructor', 'InstructorController@manageInstructor');
@@ -51,17 +50,25 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     Route::post('/addschedule', 'ScheduleController@store');
     Route::get('/addschedule', 'ScheduleController@index');
     Route::post('/dragDropGetWeeklySchedule', 'AjaxController@getWeeklySchedule');
-
+    Route::get('/selecttermschedule', 'ScheduleController@selectTerm');
     /* AssignController*/
 
     Route::get('/assign', 'AssignController@index');
     Route::post('/getInstructorsForACourse', 'AjaxController@getInstructorsForACourse');
-    Route::post('/getCourseOfferingsByTerm', 'AjaxController@getCourseOfferingsByTerm');
+    Route::get('/addschedule', 'ScheduleController@index');
+
+    /* IntakeController */
+    Route::get('/manageIntake', 'IntakeController@index');
+    Route::post('/manageIntake', 'IntakeController@store');
 
     /* Propagation Controller */
+    Route::post('/getCourseOfferingsByTerm', 'AjaxController@getCourseOfferingsByTerm');
     Route::post('/getWeeklySchedule', 'AjaxController@getWeeklySchedule');
     Route::post('/extend', 'PropagationController@extend');
     Route::get('/propagateschedule', 'PagesController@propagateschedule');
+
+    /* Student Controller */
+    Route::get('/manageStudents/', 'StudentController@index');
 });
 
 /* Staff Routes*/

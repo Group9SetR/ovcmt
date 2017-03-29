@@ -26,3 +26,8 @@
 .drag_course_offering_list {
     min-height: 300px;
 }
+
+.sidebar > li > a:hover {
+    background-color: #337ab7;
+    color: white;
+}

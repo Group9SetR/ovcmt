@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Course;
 use App\CourseInstructor;
 use App\InstructAvail;
+use App\Instructor;
+use App\Term;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -22,6 +24,7 @@ class AjaxController extends Controller
     }
 
     public function getInstructorsForACourse(Request $req) {
+        // added select column, course_instructor is already set at this point, which means intake is set as well
         if($req->ajax() && isset($req->course_id)) {
             $instructorsbycourse = DB::table('course_instructors AS ci')
                 ->join('instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
@@ -49,6 +52,7 @@ class AjaxController extends Controller
 
     public function searchInstructor(Request $req)
     {
+        //pre-course_instructor assignment, no intake needed here
         if ($req->ajax()) {
             $output = "";
             $instructors = DB::table('instructors AS i')
@@ -95,6 +99,7 @@ class AjaxController extends Controller
     }
 
     public function getWeeklySchedule(Request $req) {
+        // added select column, as course_instructors is not needed since at this point course_offerings is already assigned
         if($req->ajax() && isset($req->selected_date)) {
             $monday = DB::table('calendar_dates')
                 ->where('cdate','<=',$req->selected_date)
@@ -117,12 +122,14 @@ class AjaxController extends Controller
                     'rbd.room_id AS room_id',
                     'co1.crn AS am_crn',
                     'co1.course_id AS am_course_id',
+                    'co1.intake_no AS am_intake_no',
                     'i1.instructor_id AS am_instructor_id',
                     'i1.first_name AS am_instructor_name',
                     'i1ta.instructor_id AS am_ta_id',
                     'i1ta.first_name AS am_ta_name',
                     'co2.crn AS pm_crn',
                     'co2.course_id AS pm_course_id',
+                    'co2.intake_no AS am_intake_no',
                     'i2.instructor_id AS pm_instructor_id',
                     'i2.first_name AS pm_instructor_name',
                     'i2ta.instructor_id AS pm_ta_id',
@@ -136,13 +143,14 @@ class AjaxController extends Controller
 
     public function getCourseOfferingsByTerm(Request $req)
     {
+        //at this point course_offerings is already set, just a intake_no update is required
         if ($req->ajax() && isset($req->term_id)) {
             $assignedcourses = DB::table('courses AS c')
                 ->join('course_offerings AS co', 'c.course_id', '=', 'co.course_id')
                 ->join('instructors AS i', 'co.instructor_id', '=', 'i.instructor_id')
                 ->where("co.term_id", $req->term_id)
                 ->select('c.course_id AS course_id', 'co.instructor_id as instructor_id', 'i.first_name as first_name',
-                    'i.email as email')
+                    'i.email as email', 'co.intake_no AS intake_no')
                 ->get();
             $query = DB::table('course_offerings')
                 ->where('term_id', $req->term_id)
@@ -202,6 +210,46 @@ class AjaxController extends Controller
         $monday->addDays(1);
         $datearray['friday'] = $monday->toDateString();
         return $datearray;
+    }
+
+    public function searchTerm(Request $req){
+        if ($req -> ajax()){
+            $output="";
+            $terms = DB::table('terms AS t')
+                ->select('t.*')
+                ->where('term_start_date', 'LIKE', '%'.$req->search.'%')
+                ->orWhere('term_no', 'LIKE', '%'.$req->search.'%')
+                ->orWhere('intake_id', 'LIKE', '%'.$req->search.'%')
+                ->orWhere('term_id', 'LIKE', '%'.$req->search.'%')
+                ->get();
+            if($terms){
+                foreach ($terms as $key => $term){
+                    $output .='<tr>'.
+                        '<td class="term_id">'.$term->term_id.'</td>'.
+                        '<td>'.$term->term_start_date.'</td>'.
+                        '<td>'.$term->intake_id.'</td>'.
+                        '<td>'.$term->term_no.'</td>'.
+                        '<td>'.$term->duration_weeks.'</td>'.
+                        '<td>'.$term->course_weeks.'</td>'.
+                        '<td>'.$term->exam_weeks.'</td>'.
+                        '<td>'.$term->holidays.'</td>'.
+                        '<td>'. '<button class="btn btn-primary open-EditTermDialog"
+                                    data-toggle="modal"
+                                    data-id="{{$term->term_id}}"
+                                    data-target="#editTermModal"
+                                        >Edit</button>'.
+                        '</td>'.
+                        '<td>'. '<button class=" btn btn-danger "
+                                            >Delete</button>'.
+                        '</td>'.
+
+                        '</tr>';
+                }
+                return Response($output);
+            }else{
+                return Response()->json(['no'=>'Not Found']);
+            }
+        }
     }
 
 }

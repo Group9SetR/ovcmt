@@ -119,7 +119,7 @@
                         </tr>
                         </tbody>
                     </table>
-
+                </div>
             </div>
 
 
@@ -171,7 +171,6 @@
             </script>
         </div>
     </div>
-</div>
 
 
-@endsection
+@endsection s

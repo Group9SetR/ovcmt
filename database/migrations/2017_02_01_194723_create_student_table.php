@@ -13,10 +13,11 @@ class CreateStudentTable extends Migration
      */
     public function up()
     {
+        //TODO Do we even need this table?
         Schema::create('students', function (Blueprint $table) {
             $table->string('email');
             $table->string('student_no')->index();
-            $table->string('intake_id')->index();
+            $table->integer('intake_id')->index();
             $table->string('first_name')->index();
             $table->string('last_name')->index();
             $table->primary('email');

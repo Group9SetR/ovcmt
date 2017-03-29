@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DateTime;
 use DateTimeZone;
 use Carbon;
+use App\Term;
 use App\RoomsByDay;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -26,7 +27,18 @@ class ScheduleController extends Controller
             $roomUpdatesPm = $inputs[$roomSlots[$roomId]["pm"]];
             $this->updateRoomByWeek($roomId, $saveDate, $roomUpdatesAm, $roomUpdatesPm);
         }
-        return redirect()->action('ScheduleController@displayRoomsByWeek');
+        //Send back to where schedule was saved
+        $cdate = DateTime::createFromFormat('Y-m-d', $req->schedule_date);
+        $year =$cdate->format('Y');
+        $week = $cdate->format('W');
+        $calendarDetails = $this->getCalendarDetails($cdate, $year, $week);
+        $courseOfferings = $this->generateCourses($req->selected_term_id);
+        $roomsByWeek = $this->getScheduleByWeek($year, $week);
+        $courseOfferingsSessions = $this->calculateDiff($courseOfferings);
+        $term = DB::table('terms')
+            ->where('term_id', $req->selected_term_id)
+            ->first();
+        return view('pages.dragDrop', compact('calendarDetails','courseOfferings', 'term', 'courseOfferingsSessions', 'roomsByWeek'));
     }
 
     public function getRoomsAndTimeslots()
@@ -37,6 +49,13 @@ class ScheduleController extends Controller
                      'P2'=>array('am'=>'P2-am', 'pm'=>'P2-pm'));
     }
 
+    /**
+     * Given a week's schedule for a particular room, update schedule.
+     * @param $roomId
+     * @param $date
+     * @param $amUpdates
+     * @param $pmUpdates
+     */
     public function updateRoomByWeek($roomId, $date, $amUpdates, $pmUpdates)
     {
         for($i = 0; $i<5; $i++) {
@@ -49,13 +68,14 @@ class ScheduleController extends Controller
         }
     }
 
-
-    public function generateCourses()
+    public function generateCourses($term_id)
     {
         $courseofferings = DB::table('courses AS c')
             ->join('course_offerings AS co', 'c.course_id', '=', 'co.course_id')
+            //->join('terms AS t', 'co.term_id', '=', 't.term_id')
             ->select('co.crn AS crn','c.course_id AS course_id', 'c.sessions_days AS sessions_days', 'c.course_type AS course_type',
                         'c.term_no AS term_no', 'co.instructor_id AS instructor_id', 'co.ta_id AS ta_id')
+            ->where('co.term_id', $term_id)
             ->get();
         return $courseofferings;
     }
@@ -71,30 +91,26 @@ class ScheduleController extends Controller
     }
 
     public function getScheduleByWeek($year, $week) {
-        $amRoomsByWeek = DB::table('course_offerings AS co')
-            ->join('rooms_by_days AS r', 'co.crn', '=', 'r.am_crn')
-            ->join('calendar_dates AS c', 'r.cdate','=','c.cdate')
-            ->select('r.room_id AS room_id', 'r.cdate AS date', 'r.am_crn AS crn','co.course_id AS course_id',
-                'c.cdayOfWeek AS cdayOfWeek', DB::raw("'am' AS time"))
-            ->where([
-                ["c.cyear", $year],
-                ["c.cweek",$week]
-            ])
-            ->whereNotNull('r.am_crn')
-            ->whereIn('c.cdayOfWeek',[2,3,4,5,6]);
-        $pmRoomsByWeek = DB::table('course_offerings AS co')
-            ->join('rooms_by_days AS r', 'co.crn', '=', 'r.pm_crn')
-            ->join('calendar_dates AS c', 'r.cdate','=','c.cdate')
-            ->select('r.room_id AS room_id', 'r.cdate AS date', 'r.pm_crn AS crn','co.course_id AS course_id',
-                'c.cdayOfWeek AS cdayOfWeek', DB::raw("'pm' AS time"))
-            ->where([
-                ["c.cyear", $year],
-                ["c.cweek",$week]
-            ])
-            ->whereNotNull('r.pm_crn')
-            ->whereIn('c.cdayOfWeek',[2,3,4,5,6]);
+        $amRoomsByWeek = $this->getScheduleByWeekQuery($year, $week, 'am');
+        $pmRoomsByWeek = $this->getScheduleByWeekQuery($year, $week, 'pm');
         $allRoomsByWeek = $pmRoomsByWeek->union($amRoomsByWeek)->get();
         return $allRoomsByWeek;
+    }
+
+    public function getScheduleByWeekQuery($year, $week, $time)
+    {
+        return DB::table('courses AS c')
+            ->join('course_offerings AS co', 'c.course_id', '=', 'co.course_id')
+            ->join('rooms_by_days AS r', 'co.crn', '=', "r."."$time"."_crn")
+            ->join('calendar_dates AS ca', 'r.cdate','=','ca.cdate')
+            ->select('r.room_id AS room_id', 'r.cdate AS date', "r."."$time"."_crn AS crn",'co.course_id AS course_id',
+                'ca.cdayOfWeek AS cdayOfWeek', DB::raw("'$time' AS time"))
+            ->where([
+                ["ca.cyear", $year],
+                ["ca.cweek",$week]
+            ])
+            ->whereNotNull("r."."$time"."_crn")
+            ->whereIn('ca.cdayOfWeek',[2,3,4,5,6]);
     }
 
     public function getCalendarDetails($date, $year, $week)
@@ -117,27 +133,51 @@ class ScheduleController extends Controller
         return $calendar;
     }
 
+    public function extractStartDate($term_id)
+    {
+        $term = DB::table('terms')
+            ->select('*')
+            ->where('term_id', $term_id)
+            ->get();
+        $cdate = DateTime::createFromFormat('Y-m-d', $term[0]->term_start_date);
+        return $cdate;
+    }
+
+    /**
+     * Display schedule using the date selection tool.
+     * @param Request $req
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function displayRoomsByWeek(Request $req) {
-        $cdate = DateTime::createFromFormat('Y-m-d', $req->schedule_date);
+        $cdate = $this->extractStartDate($req->selected_term_id);
         $year =$cdate->format('Y');
         $week = $cdate->format('W');
         $calendarDetails = $this->getCalendarDetails($cdate, $year, $week);
-        $courseOfferings = $this->generateCourses();
+        $courseOfferings = $this->generateCourses($req->selected_term_id);
         $roomsByWeek = $this->getScheduleByWeek($year, $week);
         $courseOfferingsSessions = $this->calculateDiff($courseOfferings);
-        return view('pages.dragDrop', compact('calendarDetails','courseOfferings', 'courseOfferingsSessions', 'roomsByWeek'));
+        $term = DB::table('terms')
+            ->where('term_id', $req->selected_term_id)
+            ->first();
+        return view('pages.dragDrop', compact('calendarDetails','courseOfferings', 'courseOfferingsSessions', 'term', 'roomsByWeek'));
     }
 
+    /**
+     * Cannot see schedule without first selecting a term.
+     * @return redirect to term select.
+     */
     public function index() {
-        //TODO pass a date via term selection on /addschedule instead of using hardcoded date on line 89
-        $courseOfferings = $this->generateCourses();
-        $cdate = Carbon\Carbon::today(new DateTimeZone('America/Vancouver'));
-        $year = $cdate->format('Y');
-        $week = $cdate->format('W');
-        $calendarDetails = $this->getCalendarDetails($cdate, $year ,$week);
-        $roomsByWeek = $this->getScheduleByWeek($year, $week);
-        $courseOfferingsSessions = $this->calculateDiff($courseOfferings);
-        return view('pages.dragDrop', compact('calendarDetails','courseOfferings', 'courseOfferingsSessions', 'roomsByWeek'));
+        return redirect()->action('ScheduleController@selectTerm');
+    }
+
+    /**
+     * Provide terms for selection at term select page.
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function selectTerm()
+    {
+        $terms = Term::all();
+        return view('pages.selecttermschedule', compact('terms'));
     }
 
     public function propagate() {
