@@ -8,16 +8,19 @@
 
             <div class="col-sm-10">
                 <div class="row" id="term_selector">
-                    <p>Select a Term</p>
-                    <div class="form-inline">
-                        {!! Form::open(['url' => '', 'class' => 'form-inline', 'id' => 'select_term']) !!}
-                        <select name="selected_term_id" id="selected_term_id">
-                            @foreach ($terms as $term)
-                                <option value={{$term->term_id}}>Term Number:{{$term->term_no}},
-                                    Intake Number:{{$term->intake_id}} Start Date:{{$term->term_start_date}} </option>
-                            @endforeach
-                        </select>
-                        {!! Form::submit('Choose Term',['class'=> 'btn btn-primary form-inline']) !!}
+                    <div class="container">
+                        <p>Select a Term</p>
+
+                        <div class="form-inline">
+                            {!! Form::open(['url' => '', 'class' => 'form-inline', 'id' => 'select_term']) !!}
+                            <select name="selected_term_id" id="selected_term_id">
+                                @foreach ($terms as $term)
+                                    <option value={{$term->term_id}}>Term Number:{{$term->term_no}},
+                                        Intake Number:{{$term->intake_id}} Start Date:{{$term->term_start_date}} </option>
+                                @endforeach
+                            </select>
+                            {!! Form::submit('Choose Term',['class'=> 'btn btn-primary form-inline']) !!}
+                        </div>
                     </div>
                 </div>
 
@@ -44,15 +47,33 @@
 
                                 @endforeach--}}
                                 <!-- made dropdown instead of another modal -->
-                                <div id="availableInstructors">
-                                    {!! Form::open(['url' => '', 'class' => 'form-inline', 'id' => 'select_instructor']) !!}
-                                        <select name='selected_instructor_id' id='selected_instructor_id'>
-                                            <!-- inserting options here through ajax request -->
-                                        </select>
-                                        <br><br>
-                                    {!! Form::submit('Assign',['class'=> 'btn btn-primary form-inline']) !!}
-                                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div id="availableInstructors">
+                                            <h3>Instructor</h3>
+                                            {!! Form::open(['url' => '', 'class' => 'form-inline', 'id' => 'select_instructor']) !!}
+                                                <select class="form-control" name='selected_instructor_id' id='selected_instructor_id'>
+                                                    <!-- inserting options here through ajax request -->
+                                                </select>
+                                                <br>
+                                            {!! Form::submit('Assign instructor',['class'=> 'btn btn-primary form-inline']) !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div id="availableTAs">
+                                            <h3>TA</h3>
+                                            {!! Form::open(['url' => '', 'class' => 'form-inline', 'id' => 'select_ta']) !!}
+                                                <select class="form-control" name='selected_instructor_id' id='selected_ta_id'>
+                                                    <!-- inserting options here through ajax request -->
+                                                </select>
+                                                <br>
+                                            {!! Form::submit('Assign TA',['class'=> 'btn btn-primary form-inline']) !!}
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
@@ -105,7 +126,7 @@
                                     //TODO: make this pretty
                                     $('#assigned').empty();
                                     for (let i = 0; i < data['assignedcourses'].length; i++) {
-                                        var panel = "<div class='panel panel-default' id='" + data['unassignedcourses'][i]['course_id'] + "-assigned'><div class='panel-heading'>" + data['assignedcourses'][i]['course_id']
+                                        var panel = "<div class='panel panel-default' id='" + data['assignedcourses'][i]['course_id'] + "-assigned'><div class='panel-heading'>" + data['assignedcourses'][i]['course_id']
                                             + "</div> <div class='panel-body'>" + "Instructor ID: " + data['assignedcourses'][i]['instructor_id']
                                             + " Instructor Name: " + data['assignedcourses'][i]['first_name'] + "</div></div>";
                                         $('#assigned').append(panel);
@@ -139,19 +160,14 @@
                                                 dataType: 'json',
                                                 success: function (data) {
                                                     $('#selected_instructor_id').empty();
-
                                                     for (let i = 0; i < data['instructorsbycourse'].length; i++) {
-                                                        console.log(data['instructorsbycourse']);
-                                                        console.log('daniel here');
-                                                        /*
-                                                        alert(data['instructorsbycourse'][i]['first_name']);
-                                                        if (data['instructorsbycourse'].trim() == '') {
-                                                            alert('here!');
-                                                        }
-                                                        */
                                                         // make each option for select from available instructors
                                                         var instructorDropdown = "<option value='" + data['instructorsbycourse'][i]['instructor_id'] + "'>" + data['instructorsbycourse'][i]['first_name'] + "</option>";
                                                         $('#selected_instructor_id').append(instructorDropdown);
+                                                    }
+                                                    for (let i = 0; i < data['tasbycourse'].length; i++) {
+                                                        var taDropdown = "<option value='" + data['tasbycourse'][i]['instructor_id'] + "'>" + data['tasbycourse'][i]['first_name'] + "</option>";
+                                                        $('#selected_ta_id').append(taDropdown);
                                                     }
 
                                                     <!-- TODO need some way to clear select input if no data to show -->

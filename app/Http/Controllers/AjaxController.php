@@ -53,14 +53,10 @@ class AjaxController extends Controller
     {
         if ($req->ajax()) {
             $output = "";
-            $instructor_type = "";
             $instructors = DB::table('instructors AS i')
                 ->join('instruct_avails as ia', 'i.instructor_id', '=', 'ia.instructor_id')
                 ->select('i.instructor_id', 'i.first_name', 'ia.*')
                 ->where('first_name', 'LIKE', '%' . $req->search . '%')->get();
-
-
-
             if($instructors){
                 foreach ($instructors as $key => $instructor){
                     $output .='<tr>'.
@@ -77,29 +73,21 @@ class AjaxController extends Controller
                         '<td>'.$instructor->wed_pm.'</td>'.
                         '<td>'.$instructor->thurs_pm.'</td>'.
                         '<td>'.$instructor->fri_pm.'</td>'.
-
                         '<td>'. '<button class="btn btn-primary open-EditInstructorDialog"
-
                                     data-toggle="modal"
                                     data-id="{{$instructor->instructor_id}}"
                                     data-name="{{$instructor->first_name}}"
-                                    data-target="#editInstructorModal"
-
-                                        >Edit</button>' .
-
-                        '</td>'.
-                        '<td>'. '<button class=" btn btn-success open-AssignCourseDialog"
-                                        data-toggle="modal"
-                                        data-id="{{$instructor->instructor_id}}"
-                                        data-target="#assignInstructorModal"
-                                            >Assign</button>'.
+                                    data-target="#editInstructorModal">Edit</button>' . '</td>'.
+                                    '<td>'. '<button class=" btn btn-success open-AssignCourseDialog"
+                                    data-toggle="modal"
+                                    data-id="{{$instructor->instructor_id}}"
+                                    data-target="#assignInstructorModal">Assign</button>'.
                         // TODO: delete button
                         '</td>'.
-                        '<td>'. '<button class=" btn btn-danger "
-                                            >Delete</button>'.
+                        '<td>'.
+                        '<form action="/deleteInstructor"'.
+                        '<button class="btn btn-danger">Delete</button>'.
                         '</td>'.
-
-
                         '</tr>';
                 }
                 return Response($output);
@@ -108,9 +96,6 @@ class AjaxController extends Controller
             }
         }
     }
-
-
-
 
     public function getWeeklySchedule(Request $req) {
         if($req->ajax() && isset($req->selected_date)) {
@@ -170,7 +155,6 @@ class AjaxController extends Controller
         } else {
             return response()->json(array("error" => "an error has occurred"));
         }
-
     }
 
     public function searchCourse(Request $req){
@@ -184,8 +168,6 @@ class AjaxController extends Controller
                                 '<td>'.$course->sessions_days.'</td>'.
                                 '<td>'.$course->course_type.'</td>'.
                                 '<td>'.$course->term_no.'</td>'.
-
-
                                 '<td>'. '<button class="btn btn-primary open-EditCourseDialog"
                                             data-toggle="modal"
                                             data-courseid="{{$course->course_id}}"
@@ -212,16 +194,16 @@ class AjaxController extends Controller
             }
         }
     }
-    public function getDateArray($weekstart) {
-        $datearray['monday'] = $weekstart->toDateString();
-        $weekstart->addDays(1);
-        $datearray['tuesday'] = $weekstart->toDateString();
-        $weekstart->addDays(1);
-        $datearray['wednesday'] = $weekstart->toDateString();
-        $weekstart->addDays(1);
-        $datearray['thursday'] = $weekstart->toDateString();
-        $weekstart->addDays(1);
-        $datearray['friday'] = $weekstart->toDateString();
+    public function getDateArray($monday) {
+        $datearray['monday'] = $monday->toDateString();
+        $monday->addDays(1);
+        $datearray['tuesday'] = $monday->toDateString();
+        $monday->addDays(1);
+        $datearray['wednesday'] = $monday->toDateString();
+        $monday->addDays(1);
+        $datearray['thursday'] = $monday->toDateString();
+        $monday->addDays(1);
+        $datearray['friday'] = $monday->toDateString();
         return $datearray;
     }
 
