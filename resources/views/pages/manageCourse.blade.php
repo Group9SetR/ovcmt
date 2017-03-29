@@ -35,6 +35,11 @@
                                                                                                                      'class'=>'form-control',
                                                                                                                      'required'=>'true')) }}
                 </div>
+                <div class="form-group">
+                    {!! Form::label('color2', 'Course Color:') !!}
+                    <input class="jscolor" name="color2" id="color2">
+                   {{-- {{  Form::input('color2', null, ['id' => 'colorinput']) }}--}}
+                </div>
 
                 <div class="form-group">
                     {!! Form::label('term_no2', 'Term No:') !!}&nbsp;&nbsp;&nbsp;&nbsp;

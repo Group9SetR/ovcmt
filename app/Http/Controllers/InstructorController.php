@@ -127,7 +127,7 @@ class InstructorController extends Controller
     public function index() {
         $instructors = $this->listInstructors();
         $courses = Course::all();
-        $courseInstructors =CourseInstructor::all();
+        $courseInstructors = CourseInstructor::all();
         return view('pages.manageInstructor', compact('instructors', 'courses', 'courseInstructors'));
     }
 
