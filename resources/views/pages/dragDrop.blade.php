@@ -123,8 +123,9 @@
                                 var crn='<?php echo $timeslot->crn;?>';
                                 var course_id ='<?php echo $timeslot->course_id;?>';
                                 var timeSlotName = room_id+'-'+'<?php echo $timeslot->time;?>'+'[]';
+                                var instructor = '<?php echo $timeslot->name;?>';
                                 //TODO set to not hardcoded practical
-                                appendToTimeSlot(CourseOfferingPanel(course_id, crn, 1, 'practical'),
+                                appendToTimeSlot(CourseOfferingPanel(course_id, crn, instructor),
                                     timeSlotName, dayOfWeek);
                             </script>
                         @endforeach
@@ -135,9 +136,8 @@
                                 var course_id = '<?php echo $course->course_id;?>';
                                 var crn = '<?php echo $course->crn;?>';
                                 var sessions = '<?php echo $courseOfferingsSessions[$course->crn];?>';
-                                var term = '<?php echo $course->term_no;?>';
-                                var type = '<?php echo $course->course_type;?>';
-                                appendToCourseListings(CourseListingPanel(course_id, crn, term, type, sessions));
+                                var instructor = '<?php echo $course->name;?>';
+                                appendToCourseListings(CourseListingPanel(course_id, crn, instructor, sessions));
                             </script>
                         @endforeach
                     </div>

@@ -5,16 +5,15 @@
  * Template for a Generic course panel. Can be used to create a listing or an offering.
  * @param course_id
  * @param crn
- * @param term_no
- * @param type
+ * @param instructor
  * @constructor
  */
-function CoursePanel (course_id, crn, term_no, type)
+function CoursePanel (course_id, crn, instructor)
 {
     this.crn = crn;
     this.coursePanel = createCoursePanel();
     this.coursePanelHeading = createCoursePanelHeading(course_id, crn);
-    this.coursePanelBody = createCoursePanelBody(term_no, type);
+    this.coursePanelBody = createCoursePanelBody(instructor);
     this.init = function () {
         this.coursePanel.append(this.coursePanelHeading);
         this.coursePanel.append(this.coursePanelBody);
@@ -29,13 +28,12 @@ function CoursePanel (course_id, crn, term_no, type)
  * Drag and Dropped not Drag and Copied.
  * @param course_id
  * @param crn
- * @param term_no
- * @param type
+ * @param instructor
  * @constructor
  */
-function CourseOfferingPanel (course_id, crn, term_no, type)
+function CourseOfferingPanel (course_id, crn, instructor)
 {
-    var courseOfferingItem = new CoursePanel(course_id, crn, term_no, type);
+    var courseOfferingItem = new CoursePanel(course_id, crn, instructor);
     courseOfferingItem.coursePanel.classList.add('drag_course_offering_item');
     courseOfferingItem.coursePanelHeading.append(createDeleteCourseButton());
     courseOfferingItem.init();
@@ -59,14 +57,13 @@ function CourseOfferingPanelFromListing (listing)
  * Drag and Copied as opposed to Drag and Dropped.
  * @param course_id
  * @param crn
- * @param term_no
- * @param type
+ * @param instructor
  * @param sessions
  * @constructor
  */
-function CourseListingPanel (course_id, crn, term_no, type, sessions)
+function CourseListingPanel (course_id, crn, instructor, sessions)
 {
-    var courseListing = new CoursePanel(course_id, crn, term_no, type);
+    var courseListing = new CoursePanel(course_id, crn, instructor);
     courseListing.coursePanel.classList.add('drag_course_listing');
     courseListing.coursePanelBody.append(createSessionsPane(sessions));
     var hiddenCRN = document.createElement('INPUT');
@@ -98,13 +95,13 @@ function createCoursePanelHeading(course_id, crn)
     return coursePanelHeading;
 }
 
-function createCoursePanelBody(term_no, type)
+function createCoursePanelBody(instructor)
 {
     var coursePanelBody = document.createElement('DIV');
     coursePanelBody.className=['panel-body drag_course_offering_panel'];
-    coursePanelBody.append(document.createElement('P').appendChild(document.createTextNode('Term:'+ term_no)));
+    coursePanelBody.append(document.createElement('P').appendChild(document.createTextNode('Instructor:'+ instructor)));
     coursePanelBody.append(document.createElement('BR'));
-    coursePanelBody.append(document.createElement('P').appendChild(document.createTextNode('Type:'+ type)));
+    coursePanelBody.append(document.createElement('P').appendChild(document.createTextNode('TA:')));
     coursePanelBody.append(document.createElement('BR'));
     return coursePanelBody;
 }
