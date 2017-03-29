@@ -33,8 +33,10 @@
             console.log($(this).attr('class'));
             if($(this).attr('class') == "active") {
                 $('#expand').removeClass("active");
+                $('#manageclick').css('color','#337ab7');
             } else {
                 $(this).addClass("active");
+                $('#manageclick').css('color','#ffffff');
             }
         });
     });
@@ -45,7 +47,7 @@
 </ul><br>
 
 <ul class="nav nav-pills nav-stacked sidebar">
-    <li id="expand"><a href="#schedule" data-toggle="collapse" id="manageclick">Manage Schedule</a></li>
+    <li id="expand" class="active"><a href="#schedule" data-toggle="collapse" id="manageclick">Manage Schedule</a></li>
     <div id="schedule" class="collapse">
         <ul class="nav nav-pills nav-stacked sidebar">
             <li><a href="{{ url('/assign') }}">Assign Courses</a></li>

@@ -28,6 +28,11 @@
 }
 
 .sidebar > li > a:hover {
+    background-color: #f1f1f1;
+    color: #337ab7;
+}
+
+.sidebar > li > a {
     background-color: #337ab7;
     color: white;
 }
