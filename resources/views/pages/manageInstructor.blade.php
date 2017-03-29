@@ -196,11 +196,13 @@
                                                 "<form action='/deleteCourseInstructor' method='post'>" +
                                                 "<input type='hidden' name='instructor_id' value='" + data['courses'][i]['instructor_id'] + "'>" +
                                                 "<input type='hidden' name='course_id' value='" + data['courses'][i]['course_id'] + "'>" +
+                                                "<input type='hidden' name='_token' value='" + //TODO: CSRFTOKENHERE + "'>" +
                                                 "<button class='btn btn-danger' type='submit' value='Submit'>Delete</button>" + "</form>" +
                                                 "</div></div></div> <div class='panel-body'>" +
                                                 "Intake: " + data['courses'][i]['intake_no'] +
                                                 "</div></div>";
                                             $('#courseListing').append(panel);
+                                            //TODO: delete doesn't work
                                         }
                                         var avail = data['avail'][0];
                                         $('input[name="modal_instruct_avail_start_date"]').val(avail['date_start']);
