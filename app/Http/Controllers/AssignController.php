@@ -20,11 +20,27 @@ class AssignController extends Controller
 
     //TODO assign course to instructor or ta - already linked up front end in assign blade
     public function assignCourse(Request $req) {
+        $intake_no = Term::where('term_id', $req->term_id)
+        ->pluck('intake_no');
+        if(isset($req->ta_id)) {
+            $courseoffering = CourseOffering::firstOrNew(['term_id' => $req->term_id, 'course_id' => $req->course_id, 'intake_no' => $intake_no]);
+            $courseoffering->ta_id = $req->ta_id;
+            $courseoffering->save();
+        } else if (isset($req->instructor_id)) {
+            $courseoffering = CourseOffering::firstOrNew(['term_id' => $req->term_id, 'course_id' => $req->course_id, 'intake_no' => $intake_no]);
+            $courseoffering->instructor_id = $req->instructor_id;
+            $courseoffering->save();
+        }
         return redirect()->action('AssignController@index');
     }
 
     //TODO unassign instructor or ta from course - already linked up front end in assign blade
     public function unassignCourse(Request $req) {
+        $courseoffering = CourseOffering::where('course_id', $req->course_id)
+            ->where('instructor_id', $req->instructor_id)
+            ->where('term_id', $req->term_id)
+            ->where('intake_no', $req->intake_no);
+        $courseoffering->delete();
         return redirect()->action('AssignController@index');
     }
 
