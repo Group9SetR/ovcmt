@@ -68,6 +68,9 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 
     /* Student Controller */
     Route::get('/manageStudents/', 'StudentController@index');
+
+    /* OnPropFinish Controller */
+    Route::get('/propfinish/{date}', 'OnPropFinishController@index');
 });
 
 /* Staff Routes*/

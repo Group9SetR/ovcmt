@@ -7,9 +7,17 @@
             </div>
             <div class="col-md-10">
                 @if(isset($status['message']))
-                    <h4><small>Propagation succeeded for {{$status['weeks']}} weeks!</small></h4>
+                    <script>
+                        alert("Propagation succeeded for {{ $status['weeks'] }} weeks!")
+                        window.location.replace('/propfinish');
+                    </script>
+
                 @else
-                    <h4><small>Propagation failed on {{$status['date']}}!</small></h4>
+                    <script>
+                        alert("Propagation failed on {{ $status['date'] }} ")
+                        window.location.replace("/propfinish/" + "<?php echo $status['date'] ?>" );
+                    </script>
+
                 @endif
             </div>
         </div>
