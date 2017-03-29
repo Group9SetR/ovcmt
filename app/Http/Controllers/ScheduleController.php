@@ -26,7 +26,7 @@ class ScheduleController extends Controller
             $this->updateRoomByWeek($roomId, $saveDate, $roomUpdatesAm, $roomUpdatesPm);
         }
         //Send back to where schedule was saved
-        
+
         $cdate = DateTime::createFromFormat('Y-m-d', $req->schedule_date);
         $year =$cdate->format('Y');
         $week = $cdate->format('W');
@@ -138,6 +138,12 @@ class ScheduleController extends Controller
         $calendar['thurs']=$dto->format('M d');
         $dto->modify('+1 days');
         $calendar['fri']=$dto->format('M d');
+        //TODO find all holidays this week
+        $calendar['holidays'] = DB::table('calendar_dates AS c')
+            ->select('c.cdate', 'c.holidayDesc')
+            ->where('cweek', $week)
+            ->where('c.isWeekday', 1)
+            ->get();
         return $calendar;
     }
 

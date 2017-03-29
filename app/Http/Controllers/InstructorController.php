@@ -10,7 +10,7 @@ use App\CourseInstructor;
 use DB;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Http\Request;
-
+//TODO create a null instructor to "teach" courses where there are no instructors
 class InstructorController extends Controller
 {
     public function store(Request $req)

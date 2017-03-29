@@ -240,6 +240,9 @@ function drag(ev) {
     ev.dataTransfer.setData("text", ev.target.id);
 }
 
+//TODO cannot drop on holidays
+//TODO cannot drop on mismatched course-rooms
+//TODO cannot drop in same time slots
 function drop(ev, el) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
@@ -273,8 +276,6 @@ function drop(ev, el) {
             findChild(source, 'timeslot_input').setAttribute('value', 'empty');
             el.appendChild(document.getElementById(data));
         }
-
-
     }
 }
 $(document).ready(function() {

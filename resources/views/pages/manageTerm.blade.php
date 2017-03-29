@@ -8,7 +8,7 @@
 
             <div class="col-sm-10">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
 
                         <!-- TODO Change id's and names and classes to reflect Terms not course/instructors-->
                         <h4><small>Manage Term </small></h4>
@@ -36,7 +36,7 @@
                             </div>
                             <div class="form-group">
                                 {!! Form::label('course_weeks', 'Course Weeks:', ['class'=>'control-label']) !!}
-                                {!! Form::text('course_weeks' , null, ['class'=>'form-control']) !!}
+                                {!! Form::text('course_weeks' , null, ['class'=>'form-control', 'required'=>'required']) !!}
                             </div>
 
                             <div class="form-group">
@@ -55,7 +55,7 @@
                             {!! Form::close() !!}
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <h2>Display Term</h2>
                         <br>
                         <!-- Search bar -->
@@ -116,13 +116,24 @@
                                         {!! Form::open(['url' => 'editTerm']) !!}
                                         <p>New Availability</p>
                                         <div class="form-group">
-                                            {!! Form::hidden('modal_term_id', '', array('id'=>'modal_term_id')) !!}
-                                            {!! Form::label('modal_intake_id', 'Intake:') !!}
-                                            {!! Form::text('modal_intake_id', '', array('id'=>'modal_intake_id','readonly'=>'readonly'))!!}
-                                        </div>
-                                        <div class="form-group">
-                                            {!! Form::label('modal_term_start_date', 'Term start date:') !!}
-                                            {!! Form::date('modal_term_start_date')!!}
+                                            <div class="form-group form-inline">
+                                                {!! Form::hidden('modal_term_id', '', array('id'=>'modal_term_id')) !!}
+                                                {!! Form::label('modal_intake_id', 'Intake:', ['class'=>'col-sm-4 control-label']) !!}
+                                                {!! Form::text('modal_intake_id', '', array('id'=>'modal_intake_id',
+                                                        'class'=>'col-sm-4 form-control','readonly'=>'readonly'))!!}
+                                            </div>
+                                            <div class="form-group form-inline">
+                                                {!! Form::label('modal_course_weeks', 'Course Weeks:', ['class'=>'col-sm-4 control-label']) !!}
+                                                {!! Form::text('modal_course_weeks', '', ['class'=>'col-sm-4 form-control'])!!}
+                                            </div>
+                                            <div class="form-group form-inline">
+                                                {!! Form::label('modal_break_weeks', 'Break Weeks:', ['class'=>'col-sm-4 control-label']) !!}
+                                                {!! Form::text('modal_break_weeks', '', ['class'=>'col-sm-4 form-control'])!!}
+                                            </div>
+                                            <div class="form-group form-inline">
+                                                {!! Form::label('modal_exam_weeks', 'Exam Weeks:', ['class'=>'col-sm-4 control-label']) !!}
+                                                {!! Form::text('modal_exam_weeks', '', ['class'=>'col-sm-4 form-control'])!!}
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
