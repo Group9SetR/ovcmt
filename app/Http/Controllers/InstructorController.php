@@ -41,8 +41,7 @@ class InstructorController extends Controller
         return redirect()->action('InstructorController@index');
     }
 
-    public function assign(Request $req)
-    {
+    public function assign(Request $req) {
         //Assign course to instructor
         $courseinstructor = new CourseInstructor();
         $courseinstructor->instructor_id = $req->course_instructor_id;
@@ -54,6 +53,16 @@ class InstructorController extends Controller
         return redirect()->action('InstructorController@index');
         // TODO: finish insert, handle multiple courses
         // TODO: HANDLE REPEAT ADDS
+    }
+
+    public function delete(Request $req) {
+        if (isset($req->instructor_id) && isset($req->course_id)) {
+            $courseinstructor = CourseInstructor::where('instructor_id', $req->instructor_id)
+                ->where('course_id', $req->course_id)
+                ->first();
+            $courseinstructor->delete();
+            return redirect()->action('InstructorController@index');
+        }
     }
 
 
