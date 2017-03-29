@@ -192,8 +192,17 @@
                                         $('#courseListing').empty();
                                         for (let i = 0; i < data['courses'].length; i++) {
                                             var panel = "<div class='panel panel-default'><div class='panel-heading'><div class='row'><div class='col-sm-4 text-left'>" + data['courses'][i]['course_id']
-                                                + "</div><div class='col-md-8 text-right'>"+"<button class='btn btn-danger' type='submit' value='Submit'>Delete</button>"+"</div></div></div> <div class='panel-body'>" + "Intake: " + data['courses'][i]['intake_no'] + "</div></div>";
+                                                + "</div><div class='col-md-8 text-right'>" +
+                                                "<form action='/deleteCourseInstructor' method='post'>" +
+                                                "<input type='hidden' name='instructor_id' value='" + data['courses'][i]['instructor_id'] + "'>" +
+                                                "<input type='hidden' name='course_id' value='" + data['courses'][i]['course_id'] + "'>" +
+                                                "<input type='hidden' name='_token' value='" + //TODO: CSRFTOKENHERE + "'>" +
+                                                "<button class='btn btn-danger' type='submit' value='Submit'>Delete</button>" + "</form>" +
+                                                "</div></div></div> <div class='panel-body'>" +
+                                                "Intake: " + data['courses'][i]['intake_no'] +
+                                                "</div></div>";
                                             $('#courseListing').append(panel);
+                                            //TODO: delete doesn't work
                                         }
                                         var avail = data['avail'][0];
                                         $('input[name="modal_instruct_avail_start_date"]').val(avail['date_start']);
@@ -231,35 +240,37 @@
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="assignInstructorModallabel">Assign</h4>
+                            <h4 class="modal-title" id="assignInstructorModallabel">Choose Courses This Instructor Teach</h4>
                         </div>
                         <div class="modal-body">
                             {!! Form::open(['url' => 'courseInstructor']) !!}
-                            <p>Assgien course</p>
                             <div class="form-group">
                                 {!! Form::hidden('course_instructor_id', '', array('id'=>'course_instructor_id')) !!}
                             </div>
                             <div class="form-group">
-                                <select id="course_id" name="course_id">
+                                <select id="course_id" name="course_id" class="form-control">
                                     @foreach($courses as $course)
                                         <option name="course_id">{{$course->course_id}}</option>
                                     @endforeach
                                 </select>
-
-                                &nbsp &nbsp Option A
-                                <input type="radio" id = "a" name ="intake_no" value ="A" checked="checked" />
-
-                                &nbsp &nbsp Option B
-                                <input type="radio" id = "b" name ="intake_no" value ="B" />
-                                &nbsp
-
-                                &nbsp &nbsp TA
-                                <input type="radio" id = "ta" name ="instructor_type" value ="0" />
-                                |&nbsp &nbsp Instructor
-                                <input type="radio" id = "inst" name ="instructor_type" value ="1" checked="checked"/>
-                                <br><br>
-
-                                <hr>
+                            </div>
+                            <div class="form-group">
+                                <b>Choose 1: </b>
+                                <label class="radio-inline">
+                                    <input type="radio" id = "a" name ="intake_no" value ="A" checked="checked" />Intake A
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" id = "b" name ="intake_no" value ="B" />Intake B
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <b>Choose 1: </b>
+                                <label class="radio-inline">
+                                    <input type="radio" id = "ta" name ="instructor_type" value ="0" />TA
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" id = "inst" name ="instructor_type" value ="1" checked="checked"/>Instructor
+                                </label>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -280,9 +291,6 @@
                     </div>
                 </div>
             </div>
-
-
-
         </div>
     </div>
 </div>

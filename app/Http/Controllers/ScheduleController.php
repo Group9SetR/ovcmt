@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use DateTime;
 use DateTimeZone;
 use Carbon;
-use App\RoomsByDays;
+use App\RoomsByDay;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -43,7 +43,7 @@ class ScheduleController extends Controller
             $weekDay = date("Y-m-d", strtotime($date."+ $i days"));
             $am_crn = $amUpdates[$i] === "empty" ? null:$amUpdates[$i];
             $pm_crn = $pmUpdates[$i] === "empty" ? null:$pmUpdates[$i];
-            $updated = RoomsByDays::where('room_id', $roomId)
+            $updated = RoomsByDay::where('room_id', $roomId)
                 ->where('cdate', $weekDay)
                 ->update(['am_crn'=>$am_crn,'pm_crn'=>$pm_crn]);
         }
@@ -63,10 +63,8 @@ class ScheduleController extends Controller
     public function calculateDiff($courseofferings) {
         $courseOfferingsDiff = array();
         foreach ($courseofferings as $offering) {
-            $count = DB::table('rooms_by_days')
-                ->where('am_crn', $offering->crn)
-                ->orwhere('pm_crn', $offering->crn)
-                ->count();
+            $count = RoomsByDay::where('am_crn', $offering->crn)->count() +
+                RoomsByDay::where('pm_crn', $offering->crn)->count();
             $courseOfferingsDiff[$offering->crn] = $offering->sessions_days - $count;
         }
         return $courseOfferingsDiff;

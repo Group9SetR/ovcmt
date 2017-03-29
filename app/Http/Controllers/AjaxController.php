@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Course;
 use App\CourseInstructor;
 use App\InstructAvail;
-use App\Instructor;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -24,40 +23,38 @@ class AjaxController extends Controller
 
     public function getInstructorsForACourse(Request $req) {
         if($req->ajax() && isset($req->course_id)) {
-            $instructorsbycourse = DB::table('CourseInstructor AS ci')
-                ->join('Instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
-                ->where('i.course_id', $req->course_id)
+            $instructorsbycourse = DB::table('course_instructors AS ci')
+                ->join('instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
+                ->where('ci.course_id', $req->course_id)
                 ->where('ci.instructor_type', 1)
                 ->select("i.instructor_id AS instructor_id",
                     "i.first_name AS first_name",
                     "i.email AS email",
                     "ci.course_id AS course_id",
                     "ci.intake_no AS intake_no")->get();
-            $tasbycourse = DB::table('CourseInstructor AS ci')
-                ->join('Instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
-                ->where('i.course_id', $req->course_id)
+            $tasbycourse = DB::table('course_instructors AS ci')
+                ->join('instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
+                ->where('ci.course_id', $req->course_id)
                 ->where('ci.instructor_type', 0)
                 ->select("i.instructor_id AS instructor_id",
                     "i.first_name AS first_name",
                     "i.email AS email",
                     "ci.course_id AS course_id",
                     "ci.intake_no AS intake_no")->get();
+            return response()->json(array("instructorsbycourse" => $instructorsbycourse, "tasbycourse" => $tasbycourse), 200);
+        } else {
+            return Response()->json(['no' => 'Not Found']);
         }
-        return response()->json(array("instructorsbycourse" => $instructorsbycourse, "tasbycourse" => $tasbycourse), 200);
     }
 
     public function searchInstructor(Request $req)
     {
         if ($req->ajax()) {
             $output = "";
-            $instructor_type = "";
             $instructors = DB::table('instructors AS i')
                 ->join('instruct_avails as ia', 'i.instructor_id', '=', 'ia.instructor_id')
                 ->select('i.instructor_id', 'i.first_name', 'ia.*')
                 ->where('first_name', 'LIKE', '%' . $req->search . '%')->get();
-
-
-
             if($instructors){
                 foreach ($instructors as $key => $instructor){
                     $output .='<tr>'.
@@ -74,29 +71,20 @@ class AjaxController extends Controller
                         '<td>'.$instructor->wed_pm.'</td>'.
                         '<td>'.$instructor->thurs_pm.'</td>'.
                         '<td>'.$instructor->fri_pm.'</td>'.
-
                         '<td>'. '<button class="btn btn-primary open-EditInstructorDialog"
-
                                     data-toggle="modal"
                                     data-id="{{$instructor->instructor_id}}"
                                     data-name="{{$instructor->first_name}}"
-                                    data-target="#editInstructorModal"
-
-                                        >Edit</button>' .
-
-                        '</td>'.
-                        '<td>'. '<button class=" btn btn-success open-AssignCourseDialog"
-                                        data-toggle="modal"
-                                        data-id="{{$instructor->instructor_id}}"
-                                        data-target="#assignInstructorModal"
-                                            >Assign</button>'.
+                                    data-target="#editInstructorModal">Edit</button>' . '</td>'.
+                                    '<td>'. '<button class=" btn btn-success open-AssignCourseDialog"
+                                    data-toggle="modal"
+                                    data-id="{{$instructor->instructor_id}}"
+                                    data-target="#assignInstructorModal">Assign</button>'.
                         // TODO: delete button
                         '</td>'.
-                        '<td>'. '<button class=" btn btn-danger "
-                                            >Delete</button>'.
+                        '<td>'.
+                        '<button class="btn btn-danger">Delete</button>'.
                         '</td>'.
-
-
                         '</tr>';
                 }
                 return Response($output);
@@ -105,9 +93,6 @@ class AjaxController extends Controller
             }
         }
     }
-
-
-
 
     public function getWeeklySchedule(Request $req) {
         if($req->ajax() && isset($req->selected_date)) {
@@ -120,11 +105,32 @@ class AjaxController extends Controller
             $weekstart = Carbon::createFromFormat('Y-m-d', $monday->cdate);
             $weekend = Carbon::createFromFormat('Y-m-d', $monday->cdate);
             $weekend->addDays(4);
-            $roomsbyday = DB::table('rooms_by_days')
-                ->whereBetween('cdate', array($weekstart->toDateString(), $weekend->toDateString()))
-                ->orderBy('cdate','room_id')
+            $roomsbyday = DB::table('rooms_by_days AS rbd')
+                ->leftjoin('course_offerings AS co1', 'co1.crn', '=', 'rbd.am_crn')
+                ->leftjoin('course_offerings AS co2', 'co2.crn', '=', 'rbd.pm_crn')
+                ->leftjoin('instructors AS i1', 'i1.instructor_id', '=', 'co1.instructor_id')
+                ->leftjoin('instructors AS i1ta', 'i1ta.instructor_id', '=', 'co1.ta_id')
+                ->leftjoin('instructors AS i2', 'i2.instructor_id', '=', 'co2.instructor_id')
+                ->leftjoin('instructors AS i2ta', 'i2ta.instructor_id', '=', 'co2.ta_id')
+                ->whereBetween('rbd.cdate', array($weekstart->toDateString(), $weekend->toDateString()))
+                ->select('rbd.cdate AS cdate',
+                    'rbd.room_id AS room_id',
+                    'co1.crn AS am_crn',
+                    'co1.course_id AS am_course_id',
+                    'i1.instructor_id AS am_instructor_id',
+                    'i1.first_name AS am_instructor_name',
+                    'i1ta.instructor_id AS am_ta_id',
+                    'i1ta.first_name AS am_ta_name',
+                    'co2.crn AS pm_crn',
+                    'co2.course_id AS pm_course_id',
+                    'i2.instructor_id AS pm_instructor_id',
+                    'i2.first_name AS pm_instructor_name',
+                    'i2ta.instructor_id AS pm_ta_id',
+                    'i2ta.first_name AS pm_ta_name')
+                ->orderBy('rbd.cdate','rbd.room_id')
                 ->get();
-            return response()->json(array("roomsbyday" => $roomsbyday), 200);
+            $datearray = $this->getDateArray($weekstart);
+            return response()->json(array("roomsbyday" => $roomsbyday, "datearray" => $datearray), 200);
         }
     }
 
@@ -146,7 +152,6 @@ class AjaxController extends Controller
         } else {
             return response()->json(array("error" => "an error has occurred"));
         }
-
     }
 
     public function searchCourse(Request $req){
@@ -160,8 +165,6 @@ class AjaxController extends Controller
                                 '<td>'.$course->sessions_days.'</td>'.
                                 '<td>'.$course->course_type.'</td>'.
                                 '<td>'.$course->term_no.'</td>'.
-
-
                                 '<td>'. '<button class="btn btn-primary open-EditCourseDialog"
                                             data-toggle="modal"
                                             data-courseid="{{$course->course_id}}"
@@ -187,6 +190,18 @@ class AjaxController extends Controller
                 return Response()->json(["no"=>"Not Found"]);
             }
         }
+    }
+    public function getDateArray($monday) {
+        $datearray['monday'] = $monday->toDateString();
+        $monday->addDays(1);
+        $datearray['tuesday'] = $monday->toDateString();
+        $monday->addDays(1);
+        $datearray['wednesday'] = $monday->toDateString();
+        $monday->addDays(1);
+        $datearray['thursday'] = $monday->toDateString();
+        $monday->addDays(1);
+        $datearray['friday'] = $monday->toDateString();
+        return $datearray;
     }
 
 }

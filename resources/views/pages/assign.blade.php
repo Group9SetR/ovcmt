@@ -8,16 +8,19 @@
 
             <div class="col-sm-10">
                 <div class="row" id="term_selector">
-                    <p>Select a Term</p>
-                    <div class="form-inline">
-                        {!! Form::open(['url' => '', 'class' => 'form-inline', 'id' => 'select_term']) !!}
-                        <select name="selected_term_id" id="selected_term_id">
-                            @foreach ($terms as $term)
-                                <option value={{$term->term_id}}>Term Number:{{$term->term_no}},
-                                    Intake Number:{{$term->intake_id}} Start Date:{{$term->term_start_date}} </option>
-                            @endforeach
-                        </select>
-                        {!! Form::submit('Choose Term',['class'=> 'btn btn-primary form-inline']) !!}
+                    <div class="container">
+                        <p>Select a Term</p>
+
+                        <div class="form-inline">
+                            {!! Form::open(['url' => '', 'class' => 'form-inline', 'id' => 'select_term']) !!}
+                            <select name="selected_term_id" id="selected_term_id">
+                                @foreach ($terms as $term)
+                                    <option value={{$term->term_id}}>Term Number:{{$term->term_no}},
+                                        Intake Number:{{$term->intake_id}} Start Date:{{$term->term_start_date}} </option>
+                                @endforeach
+                            </select>
+                            {!! Form::submit('Choose Term',['class'=> 'btn btn-primary form-inline']) !!}
+                        </div>
                     </div>
                 </div>
 
@@ -41,7 +44,35 @@
                                             {!! Form::submit('Assign',['class'=> 'btn btn-primary form-inline']) !!}
                                         </div>
                                     </div>
+
                                 @endforeach--}}
+                                <!-- made dropdown instead of another modal -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div id="availableInstructors">
+                                            <h3>Instructor</h3>
+                                            {!! Form::open(['url' => '', 'class' => 'form-inline', 'id' => 'select_instructor']) !!}
+                                                <select class="form-control" name='selected_instructor_id' id='selected_instructor_id'>
+                                                    <!-- inserting options here through ajax request -->
+                                                </select>
+                                                <br>
+                                            {!! Form::submit('Assign instructor',['class'=> 'btn btn-primary form-inline']) !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div id="availableTAs">
+                                            <h3>TA</h3>
+                                            {!! Form::open(['url' => '', 'class' => 'form-inline', 'id' => 'select_ta']) !!}
+                                                <select class="form-control" name='selected_instructor_id' id='selected_ta_id'>
+                                                    <!-- inserting options here through ajax request -->
+                                                </select>
+                                                <br>
+                                            {!! Form::submit('Assign TA',['class'=> 'btn btn-primary form-inline']) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
                                 <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
                             </div>
                         </div>
@@ -95,14 +126,14 @@
                                     //TODO: make this pretty
                                     $('#assigned').empty();
                                     for (let i = 0; i < data['assignedcourses'].length; i++) {
-                                        var panel = "<div class='panel panel-default' id='" + data['unassignedcourses'][i]['course_id'] + "-assigned'><div class='panel-heading'>" + data['assignedcourses'][i]['course_id']
+                                        var panel = "<div class='panel panel-default' id='" + data['assignedcourses'][i]['course_id'] + "-assigned'><div class='panel-heading'>" + data['assignedcourses'][i]['course_id']
                                             + "</div> <div class='panel-body'>" + "Instructor ID: " + data['assignedcourses'][i]['instructor_id']
                                             + " Instructor Name: " + data['assignedcourses'][i]['first_name'] + "</div></div>";
                                         $('#assigned').append(panel);
                                     }
                                     $('#unassigned').empty();
                                     for (let i = 0; i < data['unassignedcourses'].length; i++) {
-                                        var panel = "<div class='panel panel-default' id='" + data['unassignedcourses'][i]['course_id'] + "-unassigned'><div class='panel-heading'>" + data['unassignedcourses'][i]['course_id']
+                                        var panel = "<div class='panel panel-default' id='" + data['unassignedcourses'][i]['course_id'] + "'><div class='panel-heading'>" + data['unassignedcourses'][i]['course_id']
                                             + "</div> <div class='panel-body'>" + "</div></div>";
                                         $('#unassigned').append(panel);
                                     }
@@ -110,18 +141,45 @@
                                     for (let i = 0; i < data['unassignedcourses'].length; i++) {
                                         var course = data['unassignedcourses'][i]['course_id'];
                                         var courseStr = course.toString();
-                                        var courseid = document.getElementById(courseStr + '-unassigned');
+                                        var courseid = document.getElementById(courseStr);
+                                        var course_id = $('#' + courseStr + '-unassigned').val();
+                                        // console.log(courseStr);
                                         courseid.onclick=function() {
+                                            var courseToPass = $(this).attr('id');
+                                            console.log(courseToPass);
                                             $('#assignCoursesToInstructor').modal('show');
-                                        };
-                                    }
-                                    // show modal for assigned courses
-                                    for (let i = 0; i < data['unassignedcourses'].length; i++) {
-                                        var course = data['unassignedcourses'][i]['course_id'];
-                                        var courseStr = course.toString();
-                                        var courseid = document.getElementById(courseStr + '-assigned');
-                                        courseid.onclick=function() {
-                                            $('#editInstructors').modal('show');
+                                            $.ajaxSetup({
+                                                headers: {
+                                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                }
+                                            });
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: '/getInstructorsForACourse',
+                                                data: {"course_id": courseToPass},
+                                                dataType: 'json',
+                                                success: function (data) {
+                                                    $('#selected_instructor_id').empty();
+                                                    for (let i = 0; i < data['instructorsbycourse'].length; i++) {
+                                                        // make each option for select from available instructors
+                                                        var instructorDropdown = "<option value='" + data['instructorsbycourse'][i]['instructor_id'] + "'>" + data['instructorsbycourse'][i]['first_name'] + "</option>";
+                                                        $('#selected_instructor_id').append(instructorDropdown);
+                                                    }
+                                                    for (let i = 0; i < data['tasbycourse'].length; i++) {
+                                                        var taDropdown = "<option value='" + data['tasbycourse'][i]['instructor_id'] + "'>" + data['tasbycourse'][i]['first_name'] + "</option>";
+                                                        $('#selected_ta_id').append(taDropdown);
+                                                    }
+
+                                                    <!-- TODO need some way to clear select input if no data to show -->
+                                                    // check if no data - if yes, then hide the select form
+                                                    if ($('#selected_instructor_id').is(':empty')){
+                                                        // alert('empty data');
+                                                        // $('#selected_instructor_id').empty();
+                                                        var msg = "<p>No available instructors for this course.</p>";
+                                                        $('#selected_instructor_id').append(msg);
+                                                    }
+                                                }
+                                            });
                                         };
                                     }
                                 }

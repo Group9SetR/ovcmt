@@ -32,6 +32,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     Route::post('/manageInstructor', 'InstructorController@store');
     Route::post('/editInstructor', 'InstructorController@edit');
     Route::post('/showInstructorDetails', 'AjaxController@instructorDetails');
+    Route::post('/deleteCourseInstructor', 'InstructorController@delete');
 
 
     /* CourseController */
@@ -59,6 +60,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 
     /* Propagation Controller */
     Route::post('/getWeeklySchedule', 'AjaxController@getWeeklySchedule');
+    Route::post('/extend', 'PropagationController@extend');
     Route::get('/propagateschedule', 'PagesController@propagateschedule');
 });
 
@@ -85,3 +87,5 @@ Route::get('/', 'PagesController@home');
 Route::get('/about', 'PagesController@about');
 
 Route::get('/home', 'HomeController@index');
+
+Route::get('/debug', 'PropagationController@getHolidayArray');
