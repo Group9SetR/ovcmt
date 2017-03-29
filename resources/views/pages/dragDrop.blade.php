@@ -33,6 +33,7 @@
                     <div class="col-md-10">
                         {!! Form::open(['url' => 'addschedule']) !!}
                         <input type="hidden" name="selected_term_id" value="{{$term->term_id}}"/>
+                        <!-- This is so we know where to send the application when we finish saving-->
                         <input type="hidden" name="schedule_date" value="{{$calendarDetails['goToDate']}}"/>
                         <table class='table table-bordered' id='drag_schedule_table'>
                             <thead>

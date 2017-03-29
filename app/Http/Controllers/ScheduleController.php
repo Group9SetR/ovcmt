@@ -91,30 +91,26 @@ class ScheduleController extends Controller
     }
 
     public function getScheduleByWeek($year, $week) {
-        $amRoomsByWeek = DB::table('course_offerings AS co')
-            ->join('rooms_by_days AS r', 'co.crn', '=', 'r.am_crn')
-            ->join('calendar_dates AS c', 'r.cdate','=','c.cdate')
-            ->select('r.room_id AS room_id', 'r.cdate AS date', 'r.am_crn AS crn','co.course_id AS course_id',
-                'c.cdayOfWeek AS cdayOfWeek', DB::raw("'am' AS time"))
-            ->where([
-                ["c.cyear", $year],
-                ["c.cweek",$week]
-            ])
-            ->whereNotNull('r.am_crn')
-            ->whereIn('c.cdayOfWeek',[2,3,4,5,6]);
-        $pmRoomsByWeek = DB::table('course_offerings AS co')
-            ->join('rooms_by_days AS r', 'co.crn', '=', 'r.pm_crn')
-            ->join('calendar_dates AS c', 'r.cdate','=','c.cdate')
-            ->select('r.room_id AS room_id', 'r.cdate AS date', 'r.pm_crn AS crn','co.course_id AS course_id',
-                'c.cdayOfWeek AS cdayOfWeek', DB::raw("'pm' AS time"))
-            ->where([
-                ["c.cyear", $year],
-                ["c.cweek",$week]
-            ])
-            ->whereNotNull('r.pm_crn')
-            ->whereIn('c.cdayOfWeek',[2,3,4,5,6]);
+        $amRoomsByWeek = $this->getScheduleByWeekQuery($year, $week, 'am');
+        $pmRoomsByWeek = $this->getScheduleByWeekQuery($year, $week, 'pm');
         $allRoomsByWeek = $pmRoomsByWeek->union($amRoomsByWeek)->get();
         return $allRoomsByWeek;
+    }
+
+    public function getScheduleByWeekQuery($year, $week, $time)
+    {
+        return DB::table('course_offerings AS co')
+            ->join('course_offerings AS co', 'c.crn', '=', 'co.crn')
+            ->join('rooms_by_days AS r', 'co.crn', '=', "r."."$time"."_crn")
+            ->join('calendar_dates AS c', 'r.cdate','=','c.cdate')
+            ->select('r.room_id AS room_id', 'r.cdate AS date', "r."."$time"."_crn AS crn",'co.course_id AS course_id',
+                'c.cdayOfWeek AS cdayOfWeek', DB::raw("'$time' AS time"))
+            ->where([
+                ["c.cyear", $year],
+                ["c.cweek",$week]
+            ])
+            ->whereNotNull("r."."$time"."_crn")
+            ->whereIn('c.cdayOfWeek',[2,3,4,5,6]);
     }
 
     public function getCalendarDetails($date, $year, $week)
@@ -135,6 +131,16 @@ class ScheduleController extends Controller
         $dto->modify('+1 days');
         $calendar['fri']=$dto->format('M d');
         return $calendar;
+    }
+
+    public function extractStartDate($term_id)
+    {
+        $term = DB::table('terms')
+            ->select('*')
+            ->where('term_id', $term_id)
+            ->get();
+        $cdate = DateTime::createFromFormat('Y-m-d', $term[0]->term_start_date);
+        return $cdate;
     }
 
     /**
@@ -164,20 +170,14 @@ class ScheduleController extends Controller
         return redirect()->action('ScheduleController@selectTerm');
     }
 
+    /**
+     * Provide terms for selection at term select page.
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function selectTerm()
     {
         $terms = Term::all();
         return view('pages.selecttermschedule', compact('terms'));
-    }
-
-    public function extractStartDate($term_id)
-    {
-        $term = DB::table('terms')
-            ->select('*')
-            ->where('term_id', $term_id)
-            ->get();
-        $cdate = DateTime::createFromFormat('Y-m-d', $term[0]->term_start_date);
-        return $cdate;
     }
 
     public function propagate() {
