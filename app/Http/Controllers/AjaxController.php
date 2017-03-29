@@ -150,7 +150,7 @@ class AjaxController extends Controller
                 ->join('instructors AS i', 'co.instructor_id', '=', 'i.instructor_id')
                 ->where("co.term_id", $req->term_id)
                 ->select('c.course_id AS course_id', 'co.instructor_id as instructor_id', 'i.first_name as first_name',
-                    'i.email as email')
+                    'i.email as email', 'co.intake_no AS intake_no')
                 ->get();
             $query = DB::table('course_offerings')
                 ->where('term_id', $req->term_id)
