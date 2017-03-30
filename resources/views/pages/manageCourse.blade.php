@@ -190,15 +190,13 @@
     $(document).on('click', '.open-EditCourseDialog', function() {
         document.getElementById('editCourseForm').reset();
         var course_id = $(this).parent().siblings(":first").text();
-        console.log(course_id);
-        var session_days = $(this).data('sessiondays');
-        var course_type = $(this).data('coursetype');
-        var term_no = $(this).data('termno');
+        var session_days =  $(this).parent().siblings(":nth-child(2)").text();
+        var course_type = $(this).parent().siblings(":nth-child(3)").text();
+        var term_no = $(this).parent().siblings(":nth-child(4)").text();
 
-        //TODO: refactor this to repopulate colours and stuff.
+        //TODO: repopulate color
         // retaining original values when edit modal comes up
         $('.modal-body #modal_courseid_name').attr('value', course_id);
-        document.getElementById('modal_courseid_name').setAttribute('value', course_id);
         $('.modal-body #modal_sessionDays_name').attr('value', session_days);
         $('.modal-body #modal_courseType_name').val(course_type);
         if (term_no == 1) {
@@ -214,7 +212,7 @@
     });
 
     // show success modal after add course
-/*    $(document).ready(function() {
+    $(document).ready(function() {
         $('#addCourseForm').on('submit', function(event) {
             var form = this;
             event.preventDefault();
@@ -228,10 +226,10 @@
                 form.submit();
             }, 2000); // wait 2 seconds until form process - so user can read success message
         });
-    });*/
+    });
 
     // show success modal after edit course
-   /* $(document).ready(function() {
+    $(document).ready(function() {
         $('#editCourseForm').on('submit', function(event) {
             var form = this;
             event.preventDefault();
@@ -247,6 +245,6 @@
                 form.submit();
             }, 2000); // wait 2 seconds until form process - so user can read success message
         });
-    });*/
+    });
 </script>
 @endsection
