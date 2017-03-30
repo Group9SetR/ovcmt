@@ -109,9 +109,9 @@
                                 dataType: 'json',
                                 success: function (data) {
                                     //TODO: make this pretty
-
                                     $('#assigned').empty();
                                     for (let i = 0; i < data['assignedcourses'].length; i++) {
+                                        var term = $('#selected_term_id').val();
                                         var panel = "<div class='panel panel-default' id='" + data['assignedcourses'][i]['course_id'] + "-assigned'><div class='panel-heading'>" + data['assignedcourses'][i]['course_id']
                                             + "</div> <div class='panel-body'>" + "Instructor ID: " + data['assignedcourses'][i]['instructor_id']
                                             + " Instructor Name: " + data['assignedcourses'][i]['first_name']
@@ -121,7 +121,7 @@
                                             + "<form action='unassignCourse'>"
                                             + "<input type='hidden' name='course_id' value='" + data['assignedcourses'][i]['course_id'] + "'>"
                                             + "<input type='hidden' name='instructor_id' value='" + data['assignedcourses'][i]['instructor_id'] + "'>"
-                                            + "<input type='hidden' name='term_id' value='" + data['assignedcourses'][i]['term_id'] + "'>"
+                                            + "<input type='hidden' name='term_id' value='" + term + "'>"
                                             + "<input type='hidden' name='intake_no' value='" + data['assignedcourses'][i]['intake_no'] + "'>"
                                             + "<input type='submit' class='btn btn-danger' value='Unassign " + data['assignedcourses'][i]['first_name'] + "'>"
                                             + "</form>"
