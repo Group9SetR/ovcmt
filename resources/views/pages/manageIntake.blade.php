@@ -95,7 +95,6 @@
                             $(document).on('click', '.open-EditIntakeDialog', function() {
                                 //reset modal on open everytime
                                 //TODO extract values from table is hella ghetto -- please change in future
-
                                 $('.modal-body #modal_start_date').attr('value', '');
                                 $('.modal-body #modal_intake_id').attr('value', '');
                                 $('.modal-body #modal_intake_no').attr('value', '');

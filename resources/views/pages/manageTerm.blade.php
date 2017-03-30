@@ -154,6 +154,7 @@
                                             </div>
                                     </div>
                                     <div class="modal-footer">
+                                        <button class="btn btn-danger">Delete</button>
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                         <span class="pull-right">
                                             {!! Form::submit('Edit',['class'=> 'btn btn-primary form-control']) !!}
@@ -165,9 +166,6 @@
                         </div>
                         <script>
                             $(document).on('click', '.open-EditTermDialog', function() {
-                                //reset modal on open everytime
-                                //TODO extract values from table is hella ghetto -- please change in future
-
                                 $('.modal-body #modal_term_start_date').attr('value', '');
                                 $('.modal-body #modal_term_id').attr('value', '');
                                 $('.modal-body #modal_intake_id').attr('value', '');

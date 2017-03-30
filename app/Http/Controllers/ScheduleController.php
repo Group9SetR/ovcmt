@@ -195,7 +195,11 @@ class ScheduleController extends Controller
      */
     public function selectTerm()
     {
-        $terms = Term::all();
+        $terms = DB::table('terms AS t')
+            ->join('intakes AS i', 't.intake_id', '=', 'i.intake_id')
+            ->select('t.*', 'i.intake_no', 'i.start_date AS program_start')
+            ->orderBy('i.start_date', 'DESC')
+            ->get();
         return view('pages.selecttermschedule', compact('terms'));
     }
 
