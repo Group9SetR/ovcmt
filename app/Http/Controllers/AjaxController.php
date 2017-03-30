@@ -222,7 +222,7 @@ class AjaxController extends Controller
                 ->orWhere('intake_id', 'LIKE', '%'.$req->search.'%')
                 ->orWhere('term_id', 'LIKE', '%'.$req->search.'%')
                 ->get();
-            if($terms){
+            if ( $terms ){
                 foreach ($terms as $key => $term){
                     $output .='<tr>'.
                         '<td class="term_id">'.$term->term_id.'</td>'.

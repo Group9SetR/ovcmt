@@ -12,5 +12,5 @@ class Course extends Model
 
     public $incrementing = false;
 
-    protected $fillable = ['course_id', 'sessions_days', 'course_type', 'term_no'];
+    protected $fillable = ['course_id', 'sessions_days', 'course_type', 'term_no', 'color'];
 }
