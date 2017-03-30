@@ -81,7 +81,6 @@
                             <div class ="col-md-6">
                                 <input type="radio" name="usertype" value="student" checked> Student<br>
                                 <input type="radio" name="usertype" value="staff"> Staff<br>
-                                <input type="radio" name="usertype" value="admin"> Admin<br>
                             </div>
                         </div>
 

@@ -7,6 +7,8 @@
                 @include('includes.sidebar')
             </div>
 
+
+
             <div class="col-sm-6">
                 <h4><small>Select Term</small></h4>
                 <hr>
