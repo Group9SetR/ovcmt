@@ -11,23 +11,19 @@
                 <hr>
                 <div class="row" id="term_selector">
                     <div class="container">
-
-
-                        <div class="row">
-                            {!! Form::open(['url' => '', 'class' => 'form-inline', 'id' => 'select_term']) !!}
-                            <div class="col-sm-4" id="assign_select_from">
-                                <select name="selected_term_id" id="selected_term_id">
-                                    @foreach ($terms as $term)
-                                        <option value={{$term->term_id}}>Term Id: {{$term->term_id}}, Term Number:{{$term->term_no}},
-                                            Intake Number:{{$term->intake_id}}, Start Date:{{$term->term_start_date}} </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-sm-3">
-                                {!! Form::submit('Choose Term',['class'=> 'btn btn-primary form-inline']) !!}
-                            </div>
-                            {!! Form::close() !!}
+                        {!! Form::open(['url' => '', 'class' => 'form-inline', 'id' => 'select_term']) !!}
+                        <div class="col-sm-5" id="assign_select_from">
+                            <select name="selected_term_id" id="selected_term_id">
+                                @foreach ($terms as $term)
+                                    <option value={{$term->term_id}}>Term Id: {{$term->term_id}}, Term Number:{{$term->term_no}},
+                                        Intake Number:{{$term->intake_id}}, Start Date:{{$term->term_start_date}} </option>
+                                @endforeach
+                            </select>
                         </div>
+                        <div class="col-sm-2">
+                            {!! Form::submit('Choose Term',['class'=> 'btn btn-primary form-inline']) !!}
+                        </div>
+                        {!! Form::close() !!}
                     </div>
                 </div>
 
@@ -206,6 +202,7 @@
                         });
                     });
                 </script>
+
                 <div class="row">
                     <div class="col-sm-6">
                         <h4><small>Assign Courses to Instructors for the Term</small></h4>
