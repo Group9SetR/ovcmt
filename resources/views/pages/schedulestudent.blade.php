@@ -9,16 +9,30 @@
                 <li class="active"><a href="{{ url('/schedulestudent') }}" onClick="">Schedule View</a></li>
             </ul>
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
             <h4><small>Display schedule</small></h4>
             <hr>
-            <button id="exportpdf" class="btn btn-lg btn-danger clearfix" onclick="javascript:callme();" >
-                <span class="fa fa-file-pdf-o"></span> Save as PDF</button>
 
-            <h3>Select Month</h3>
-            <hr>
+            <div class="form-group">
+                {!! Form::label('month_id', 'Month:') !!}
+                <select name="schedual_by_month" >
+                        <option value="jan">January</option>
+                        <option value="feb">February</option>
+                        <option value="mar">March</option>
+                        <option value="apr">April</option>
+                        <option value="jan">May</option>
+                        <option value="jun">Jun</option>
+                        <option value="july">July</option>
+                        <option value="agu">Aguest</option>
+                        <option value="sep">September</option>
+                        <option value="oct">October</option>
+                        <option value="nov">November</option>
+                        <option value="dec">December</option>
 
-                <div class="col-md-10" >
+                </select>
+            </div>
+            <h3>Display Schedule</h3>
+
                     <table class='table table-bordered' id ="yourTableIdName" >
                         <colgroup>
                             <col width="10%">
@@ -119,9 +133,24 @@
                         </tr>
                         </tbody>
                     </table>
-                </div>
-            </div>
 
+            <div class="col-sm-12 text-right">
+                {{Form::open(['url' => '',
+                                          'id' => 'dateSelectForm'])}}
+                {{Form::label('schedule_starting_date', 'Week of:')}}
+                {{Form::date('schedule_starting_date', Carbon\Carbon::today(new DateTimeZone('America/Vancouver'),
+                                                       ['id' => 'schedule_starting_date']))}}
+                {{ Form::submit('Choose Starting Date',['class'=> 'btn btn-primary form-inline']) }}
+                {{Form::close()}}
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+</div>
 
 
             <script type="text/javascript">
@@ -169,8 +198,6 @@
                 }
 
             </script>
-        </div>
-    </div>
 
 
-@endsection s
+@endsection

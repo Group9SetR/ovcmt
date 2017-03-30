@@ -73,6 +73,10 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     Route::get('/propfinish/{date}', 'OnPropFinishController@index');
 });
 
+    /* Admin User Controller */
+    Route::get('/addUser', 'AddUserController@index');
+    Route::post('/addUsers', 'AddUserController@store');
+
 /* Staff Routes*/
 Route::group(['middleware' => 'App\Http\Middleware\StaffMiddleware'], function()
 {
@@ -87,11 +91,15 @@ Route::group(['middleware' => 'App\Http\Middleware\StudentMiddleware'], function
     Route::get('/schedulestudent', 'PagesController@schedulestudent');
 });
 
+
+
+
 /* Public Pages */
 
 Auth::routes();
 
 Route::get('/', 'PagesController@home');
+
 
 Route::get('/about', 'PagesController@about');
 
