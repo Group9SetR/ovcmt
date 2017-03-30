@@ -77,16 +77,17 @@
                         <br>
                         <table class="table table-striped table-bordered table-hover table-condensed text-center">
                             <thead class="thead-default">
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Start Date</th>
-                                    <th>Intake</th>
-                                    <th>Total wks</th>
-                                    <th>Course wks</th>
-                                    <th>Exam wks</th>
-                                    <th>Break wks</th>
-                                    <th>Holidays</th>
-                                    <th>Edit</th>
+                                <tr class = "success">
+                                    <th class = "text-center">ID</th>
+                                    <th class = "text-center">Start Date</th>
+                                    <th class = "text-center">Intake</th>
+                                    <th class = "text-center">Total wks</th>
+                                    <th class = "text-center">Course wks</th>
+                                    <th class = "text-center">Exam wks</th>
+                                    <th class = "text-center">Break wks</th>
+                                    <th class = "text-center">Holidays</th>
+                                    <th class = "text-center">Edit</th>
+                                    <th class = "text-center">Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -109,6 +110,9 @@
                                                     data-course_weeks ="{{$term->course_weeks}}"
                                                     data-break_weeks="{{$term->break_weeks}}"
                                                     data-exam_weeks="{{$term->exam_weeks}}">Edit</button></td>
+                                        <td><button class="btn btn-danger open-DeleteTermDialog"
+                                                 data-toggle="modal"
+                                                 data-target="#deleteTermModal">Delete</button></td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -161,6 +165,32 @@
                                         </span>
                                     </div>
                                     {{ Form::close() }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="deleteTermModal" tabindex="-1" role="dialog" aria-labeleledby="deleteTermModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="deleteInstructorModalLabel">Delete Individual Term</h4>
+                                    </div>
+
+                                    {!! Form::open(['url' => '/manageTermDelete', 'id' => 'deleteTermForm']) !!}
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <table class="table table-bordered table-condensed">
+                                                {!! Form::submit('Confirm',['class'=> 'btn btn-info',
+                                                                 'id' => 'deleteInstructorBtn']) !!}
+                                            </table>
+                                            {!! Form::close() !!}
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" id="closeDeleteTermBtn" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

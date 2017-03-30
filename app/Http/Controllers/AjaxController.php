@@ -80,14 +80,16 @@ class AjaxController extends Controller
                                     data-id="{{$instructor->instructor_id}}"
                                     data-name="{{$instructor->first_name}}"
                                     data-target="#editInstructorModal">Edit</button>' . '</td>'.
-                                    '<td>'. '<button class=" btn btn-success open-AssignCourseDialog"
+                        '<td>'. '<button class=" btn btn-success open-AssignCourseDialog"
                                     data-toggle="modal"
                                     data-id="{{$instructor->instructor_id}}"
                                     data-target="#assignInstructorModal">Assign</button>'.
                         // TODO: delete button
                         '</td>'.
                         '<td>'.
-                        '<button class="btn btn-danger">Delete</button>'.
+                        '<button class=" btn btn-danger open-DeleteInstructorDialog"
+                                    data-toggle="modal"
+                                    data-target="#deleteInstructorModal">Delete</button>'.
                         '</td>'.
                         '</tr>';
                 }
@@ -176,21 +178,20 @@ class AjaxController extends Controller
                                 '<td>'.$course->color.'</td>'.
                                 '<td>'. '<button class="btn btn-primary open-EditCourseDialog"
                                             data-toggle="modal"
-                                            data-courseid="{{$course->course_id}}"
-                                            data-sessiondays="{{$course->sessions_days}}"
-                                            data-coursetype="{{$course->course_type}}"
-                                            data-termno="{{$course->term_no}}"
                                             data-target="#editCourseModal"
                                                  >Edit</button>'.
                                 '</td>'.
                                 '<td>'.
-                            '<form action="manageCourseDelete" method = "POST" id ="deleteCOurseForm">'.
+                            '<form action="manageCourseDelete" method = "POST" id ="deleteCourseForm">'.
                             '<input type="hidden" name="course_id3" value="{{$course->course_id}}">'.
                             '<input type="hidden" name="sessions_days3" value="{{$course->sessions_days}}">'.
                             '<input type="hidden" name="course_type3" value="{{$course->course_type}}">'.
-                            '<input type="hidden" name="term_no3" value="{{$course->term_no}}">'.
-                            '<input class="btn btn-danger" type = "submit" id = "deleteCourseBtn" value="delete">'.
-                            '</form>'.
+                            '<input type="hidden" name="term_no3" value="{{$course->term_no}}">'.'</form>'.
+                            '<button class="btn btn-danger open-DeleteCourseDialog"
+                                            data-toggle="modal"
+                                            data-target="#deleteCourseModal"
+                                                 >Delete</button>'.
+
                             '</td>'.
                             '</tr>';
                 }
@@ -211,51 +212,6 @@ class AjaxController extends Controller
         $monday->addDays(1);
         $datearray['friday'] = $monday->toDateString();
         return $datearray;
-    }
-
-    public function searchTerm(Request $req){
-        if ($req -> ajax()){
-            $output="";
-            $terms = DB::table('terms AS t')
-                ->select('t.*')
-                ->where('term_start_date', 'LIKE', '%'.$req->search.'%')
-                ->orWhere('term_no', 'LIKE', '%'.$req->search.'%')
-                ->orWhere('intake_id', 'LIKE', '%'.$req->search.'%')
-                ->orWhere('term_id', 'LIKE', '%'.$req->search.'%')
-                ->get();
-            if ( $terms ){
-                foreach ($terms as $key => $term){
-                    $output .='<tr>'.
-                        '<td class="term_id">'.$term->term_id.'</td>'.
-                        '<td>'.$term->term_start_date.'</td>'.
-                        '<td>'.$term->intake_id.'</td>'.
-                        '<td>'.$term->term_no.'</td>'.
-                        '<td>'.$term->duration_weeks.'</td>'.
-                        '<td>'.$term->course_weeks.'</td>'.
-                        '<td>'.$term->exam_weeks.'</td>'.
-                        '<td>'.$term->break_weeks.'</td>'.
-                        '<td>'.$term->holidays.'</td>'.
-                        '<td>'. '<button class="btn btn-primary open-EditTermDialog"
-                                    data-toggle="modal"
-                                    data-id="{{$term->term_id}}"
-                                    data-target="#editTermModal"
-                                    data-intake="{{$term->intake_id}}"
-                                    data-course_weeks ="{{$term->course_weeks}}"
-                                    data-break_weeks="{{$term->break_weeks}}"
-                                    data-exam_weeks="{{$term->exam_weeks}}"
-                                        >Edit</button>'.
-                        '</td>'.
-                        '<td>'. '<button class=" btn btn-danger "
-                                            >Delete</button>'.
-                        '</td>'.
-
-                        '</tr>';
-                }
-                return Response($output);
-            }else{
-                return Response()->json(['no'=>'Not Found']);
-            }
-        }
     }
 
 }

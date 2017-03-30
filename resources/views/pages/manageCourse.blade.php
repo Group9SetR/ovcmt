@@ -97,8 +97,6 @@
                     });
                 })
             </script>
-
-
             <div class="modal fade" id="addCourseSaved" tabindex="-1" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -183,6 +181,42 @@
                     </div>
                 </div>
             </div>
+
+
+            <div class="modal fade" id="deleteCourseModal" tabindex="-1" role="dialog" aria-labeleledby="deleteCourseModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="deleteCourseModalLabel">Delete Individual Course</h4>
+                        </div>
+
+                        {!! Form::open(['url' => '/manageCourseDelete', 'id' => 'deleteCourseForm']) !!}
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <table class="table table-bordered table-condensed">
+                                    {!! Form::submit('Confirm',['class'=> 'btn btn-info',
+                                                     'id' => 'deleteCourseBtn']) !!}
+                                </table>
+                                {!! Form::close() !!}
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="closeDeleteCourseBtn" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
         </div>
     </div>
 </div>
@@ -211,6 +245,15 @@
             $('.modal-body #modal_termNo_name4').attr('checked', 'checked');
         }
     });
+
+    $(document).on('click', '.open-DeleteCourseDialog', function() {
+        document.getElementById('deleteCourseForm').reset();
+        var course_id = $(this).parent().siblings(":first").text();
+        console.log(course_id);
+
+        $('.modal-body #modal_courseid_name').attr('value', course_id);
+    });
+
 
     // show success modal after add course
     $(document).ready(function() {
