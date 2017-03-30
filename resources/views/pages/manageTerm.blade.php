@@ -167,7 +167,13 @@
                             $(document).on('click', '.open-EditTermDialog', function() {
                                 //reset modal on open everytime
                                 //TODO extract values from table is hella ghetto -- please change in future
-                                $('.modal-body input').attr('value', "");
+
+                                $('.modal-body #modal_term_start_date').attr('value', '');
+                                $('.modal-body #modal_term_id').attr('value', '');
+                                $('.modal-body #modal_intake_id').attr('value', '');
+                                $('.modal-body #modal_course_weeks').attr('value', '');
+                                $('.modal-body #modal_break_weeks').attr('value', '');
+                                $('.modal-body #modal_exam_weeks').attr('value', '');
                                 $('.modal-body #modal_term_start_date').attr('value', $(this).data('term_start_date'));
                                 $('.modal-body #modal_term_id').attr('value', $(this).data('id')).text();
                                 $('.modal-body #modal_intake_id').attr('value', $(this).data('intake_id')).text();

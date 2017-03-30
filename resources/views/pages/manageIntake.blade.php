@@ -46,13 +46,10 @@
                                     <td>{{$intake->intake_no}}</td>
                                     <td><button class="btn btn-primary open-EditIntakeDialog"
                                             data-toggle="modal"
-                                            data-id="{{$term->term_id}}"
-                                            data-target="#editTermModal"
-                                            data-term_start_date = "{{$term->term_start_date}}"
-                                            data-intake_id="{{$term->intake_id}}"
-                                            data-course_weeks ="{{$term->course_weeks}}"
-                                            data-break_weeks="{{$term->break_weeks}}"
-                                            data-exam_weeks="{{$term->exam_weeks}}">Edit</button></td>
+                                            data-id="{{$intake->intake_id}}"
+                                            data-target="#editIntakeModal"
+                                            data-start_date = "{{$intake->start_date}}"
+                                            data-intake_no="{{$intake->intake_no}}">Edit</button></td>
                                     <td><button class="btn btn-danger">Delete</button></td>
                                 </tr>
                             @endforeach
@@ -67,34 +64,21 @@
                                         <h4 class="modal-title" id="editIntakeModalLabel">Edit</h4>
                                     </div>
                                     <div class="modal-body">
-                                        {{ Form::open(['url' => 'manageIntake']) }}
-                                        <p>Edit Term</p>
+                                        {{ Form::open(['url' => 'updateIntake']) }}
+                                        <p>Edit Intake</p>
                                         <div class="form-group">
-                                            {!! Form::label('modal_term_id', 'Term ID:', ['class'=>'control-label']) !!}
-                                            {!! Form::text('modal_term_id', '', array('id'=>'modal_term_id',
+                                            {!! Form::label('modal_intake_id', 'Intake ID:', ['class'=>'control-label']) !!}
+                                            {!! Form::number('modal_intake_id', '', array('id'=>'modal_intake_id',
                                                     'class'=>'form-control', 'readonly'=>'readonly')) !!}
                                         </div>
                                         <div class="form-group">
-                                            {!! Form::label('modal_intake_id', 'Intake:', ['class'=>'control-label']) !!}
-                                            {!! Form::text('modal_intake_id', '', array('id'=>'modal_intake_id',
-                                                    'class'=>'form-control','readonly'=>'readonly'))!!}
-                                        </div>
-                                        <div class="form-group">
-                                            {!! Form::label('modal_term_start_date', 'Term start:', ['class'=>'control-label']) !!}
-                                            {!! Form::date('modal_term_start_date', '', array('id'=>'modal_term_start_date',
+                                            {!! Form::label('modal_start_date', 'Program start:', ['class'=>'control-label']) !!}
+                                            {!! Form::date('modal_start_date', '', array('id'=>'modal_start_date',
                                                     'class'=>'form-control')) !!}
                                         </div>
                                         <div class="form-group">
-                                            {!! Form::label('modal_course_weeks', 'Course Weeks:', ['class'=>'control-label']) !!}
-                                            {!! Form::number('modal_course_weeks', '', ['class'=>'form-control'])!!}
-                                        </div>
-                                        <div class="form-group">
-                                            {!! Form::label('modal_break_weeks', 'Break Weeks:', ['class'=>'control-label']) !!}
-                                            {!! Form::number('modal_break_weeks', '', ['class'=>'form-control'])!!}
-                                        </div>
-                                        <div class="form-group">
-                                            {!! Form::label('modal_exam_weeks', 'Exam Weeks:', ['class'=>'control-label']) !!}
-                                            {!! Form::number('modal_exam_weeks', '', ['class'=>'form-control'])!!}
+                                            {!! Form::label('modal_intake_no', 'Intake No:', ['class'=>'control-label']) !!}
+                                            {!! Form::text('modal_intake_no', '', ['class'=>'form-control', 'readonly'=>'readonly'])!!}
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -108,16 +92,16 @@
                             </div>
                         </div>
                         <script>
-                            $(document).on('click', '.open-EditTermDialog', function() {
+                            $(document).on('click', '.open-EditIntakeDialog', function() {
                                 //reset modal on open everytime
                                 //TODO extract values from table is hella ghetto -- please change in future
-                                $('.modal-body input').attr('value', "");
-                                $('.modal-body #modal_term_start_date').attr('value', $(this).data('term_start_date'));
-                                $('.modal-body #modal_term_id').attr('value', $(this).data('id')).text();
-                                $('.modal-body #modal_intake_id').attr('value', $(this).data('intake_id')).text();
-                                $('.modal-body #modal_course_weeks').attr('value', $(this).data('course_weeks')).text();
-                                $('.modal-body #modal_break_weeks').attr('value', $(this).data('break_weeks')).text();
-                                $('.modal-body #modal_exam_weeks').attr('value', $(this).data('exam_weeks')).text();
+
+                                $('.modal-body #modal_start_date').attr('value', '');
+                                $('.modal-body #modal_intake_id').attr('value', '');
+                                $('.modal-body #modal_intake_no').attr('value', '');
+                                $('.modal-body #modal_start_date').attr('value', $(this).data('start_date'));
+                                $('.modal-body #modal_intake_id').attr('value', $(this).data('id')).text();
+                                $('.modal-body #modal_intake_no').attr('value', $(this).data('intake_no')).text();
                             });
                         </script>
                     </div>

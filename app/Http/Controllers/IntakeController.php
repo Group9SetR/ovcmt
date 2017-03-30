@@ -28,6 +28,18 @@ class IntakeController extends Controller
         return redirect()->action('IntakeController@index');
     }
 
+    public function updateIntake(Request $req)
+    {
+        if((DateTime::createFromFormat('Y-m-d', $req->modal_start_date)->format('n') == 9
+            && $req->modal_intake_no == 'A') ||
+            (DateTime::createFromFormat('Y-m-d', $req->modal_start_date)->format('n') == 1
+                && $req->modal_intake_no == 'B')) {
+            Intake::where('intake_id', $req->modal_intake_id)
+                ->update(['start_date'=>$req->modal_start_date]);
+        }
+        return redirect()->action('IntakeController@index');
+    }
+
     /**
      * Creates terms with default values.
      * @param Intake $intake
