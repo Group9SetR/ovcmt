@@ -132,10 +132,14 @@
                                     }
                                     $('#unassigned').empty();
                                     for (let i = 0; i < data['unassignedcourses'].length; i++) {
-                                        var panel = "<div class='panel panel-default' id='" + data['unassignedcourses'][i]['course_id'] + "'><div class='panel-heading'>" + data['unassignedcourses'][i]['course_id']
-                                            + "</div> <div class='panel-body'>"
-                                            + "<div id='' value='" + data['unassignedcourses'][i]['course_id'] + "'></div>"
-                                            + "<div id='' value='" + data['unassignedcourses'][i]['term_id'] + "'></div>"
+                                        var panel = "<div class='panel panel-default' id='" + data['unassignedcourses'][i]['course_id']
+                                            + "'><div class='panel-heading'>"
+                                            + "<div style='display:inline-block;width:10px;height:10px;background-color:"
+                                            + data['unassignedcourses'][i]['color'] + ";'></div>&nbsp;" + data['unassignedcourses'][i]['course_id']
+                                            + "</div><div class='panel-body'>Session Days: " + + data['unassignedcourses'][i]['sessions_days']
+                                            + " Type: " + data['unassignedcourses'][i]['course_type']
+                                            + " Term No: " + data['unassignedcourses'][i]['term_no']
+                                            + "</div>";
                                         $('#unassigned').append(panel);
                                     }
                                     // show modal for unassigned courses
