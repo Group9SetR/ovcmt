@@ -28,14 +28,25 @@ class IntakeController extends Controller
         return redirect()->action('IntakeController@index');
     }
 
+    public function updateIntake(Request $req)
+    {
+        if((DateTime::createFromFormat('Y-m-d', $req->modal_start_date)->format('n') == 9
+            && $req->modal_intake_no == 'A') ||
+            (DateTime::createFromFormat('Y-m-d', $req->modal_start_date)->format('n') == 1
+                && $req->modal_intake_no == 'B')) {
+            Intake::where('intake_id', $req->modal_intake_id)
+                ->update(['start_date'=>$req->modal_start_date]);
+        }
+        return redirect()->action('IntakeController@index');
+    }
+
+    /**
+     * Creates terms with default values.
+     * @param Intake $intake
+     */
     public function createTerms(Intake $intake)
     {
         $term_starts = $this->makeTermStarts($intake->start_date);
-        $term1 = new Term;
-        $term1->term_no = 1;
-        $term1->course_weeks = 13;
-        $term1->break_weeks = 1;
-        $term1->exam_weeks = 1;
         for($i = 1; $i<5; $i++) {
             $term = new Term;
             $term->term_start_date = $term_starts["term$i"];
@@ -45,7 +56,6 @@ class IntakeController extends Controller
                 $term->course_weeks = 13;
                 $term->break_weeks = 1;
                 $term->exam_weeks = 1;
-
             } elseif($i === 2) {
                 $term->course_weeks = 22;
                 $term->exam_weeks = 2;
@@ -64,7 +74,7 @@ class IntakeController extends Controller
                 }
             }
             $term->holidays = 0;
-            $term->duration_weeks = $term1->course_weeks + $term1->exam_weeks + $term1->break_weeks;
+            $term->duration_weeks = $term->course_weeks + $term->exam_weeks + $term->break_weeks;
             $term->save();
         }
     }

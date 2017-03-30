@@ -19,8 +19,13 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 
     /* TermController */
     Route::get('/manageTerm', 'TermController@index');
+    Route::post('/saveTerm', 'TermController@createTerm');
     Route::post('/manageTerm', 'TermController@store');
-    Route::get('/searchTerm', 'AjaxController@searchTerm');
+    Route::post('/searchTerm', 'TermController@searchTerm');
+    Route::get('/searchTerm', 'TermController@index');
+    Route::post('/deleteTerm', 'TermController@delete');
+
+    //Route::get('/searchTerm', 'AjaxController@searchTerm');
 
     /* InstructorController */
     Route::get('/manageInstructor', 'InstructorController@manageInstructor');
@@ -59,7 +64,8 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     /* IntakeController */
     Route::get('/manageIntake', 'IntakeController@index');
     Route::post('/manageIntake', 'IntakeController@store');
-
+    Route::get('/updateIntake', 'IntakeController@index');
+    Route::post('/updateIntake', 'IntakeController@updateIntake');
     /* Propagation Controller */
     Route::post('/getCourseOfferingsByTerm', 'AjaxController@getCourseOfferingsByTerm');
     Route::post('/getWeeklySchedule', 'AjaxController@getWeeklySchedule');
@@ -68,7 +74,14 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 
     /* Student Controller */
     Route::get('/manageStudents/', 'StudentController@index');
+
+    /* OnPropFinish Controller */
+    Route::get('/propfinish/{date}', 'OnPropFinishController@index');
 });
+
+    /* Admin User Controller */
+    Route::get('/addUser', 'AddUserController@index');
+    Route::post('/addUsers', 'AddUserController@store');
 
 /* Staff Routes*/
 Route::group(['middleware' => 'App\Http\Middleware\StaffMiddleware'], function()
@@ -84,11 +97,15 @@ Route::group(['middleware' => 'App\Http\Middleware\StudentMiddleware'], function
     Route::get('/schedulestudent', 'PagesController@schedulestudent');
 });
 
+
+
+
 /* Public Pages */
 
 Auth::routes();
 
 Route::get('/', 'PagesController@home');
+
 
 Route::get('/about', 'PagesController@about');
 

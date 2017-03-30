@@ -1,31 +1,4 @@
 
-{{-- Hansol's Commit
-    <br>
-    <ul class="nav nav-pills nav-stacked ">
-        <li class="active "><a href="{{ url('/masterscheduleview') }}" onClick="">Master Schedule</a></li>
-    </ul><br>
-
-    <ul class="nav nav-pills nav-stacked">
-        <li class="active"><a  href="{{ url('/addschedule') }}" onClick="">Create Schedule</a></li>
-    </ul><br>
-
-    <ul><br></ul>
-
-    <ul class="nav nav-pills nav-stacked">
-        <li class="active"><a href="{{ url('/manageTerm') }}" onClick="">Manage Term</a></li>
-    </ul><br>
-
-    <ul class="nav nav-pills nav-stacked">
-        <li class="active"><a href="{{ url('/manageInstructor') }}" onClick="">Manage Instructor</a></li>
-    </ul><br>
-
-    <ul class="nav nav-pills nav-stacked">
-        <li class="active"><a href="{{ url('/manageCourse') }}" onClick="">Manage Course</a></li>
-    </ul><br>
-
-    <ul class="nav nav-pills nav-stacked">
-        <li class="active"><a href="{{ url('/editschedule') }}" onClick="">Edit Schedule</a></li>
-    </ul><br>--}}
 
 <script>
     $(document).ready(function(){
@@ -52,7 +25,7 @@
         <ul class="nav nav-pills nav-stacked sidebar">
             <li><a href="{{ url('/assign') }}">Assign Courses</a></li>
             <li><a href="{{ url('/dragDrop') }}">Generate Weekly Schedule</a></li>
-            <li><a href="{{ url('/propagateschedule') }}">Propagate Weekly Schedule</a></li>
+            <li><a href="{{ url('/propagateschedule') }}"> Propagate Weekly Schedule</a></li>
         </ul>
     </div>
 </ul><br>
@@ -75,6 +48,10 @@
 
 <ul class="nav nav-pills nav-stacked sidebar">
     <li><a href="{{ url('/manageStudents') }}" onClick="">Manage Students</a></li>
+</ul><br>
+
+<ul class="nav nav-pills nav-stacked sidebar">
+    <li><a href="{{ url('/addUser') }}" onClick="">Add User</a></li>
 </ul><br>
 
 
