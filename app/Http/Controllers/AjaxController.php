@@ -173,6 +173,7 @@ class AjaxController extends Controller
                                 '<td>'.$course->sessions_days.'</td>'.
                                 '<td>'.$course->course_type.'</td>'.
                                 '<td>'.$course->term_no.'</td>'.
+                                '<td>'.$course->color.'</td>'.
                                 '<td>'. '<button class="btn btn-primary open-EditCourseDialog"
                                             data-toggle="modal"
                                             data-courseid="{{$course->course_id}}"

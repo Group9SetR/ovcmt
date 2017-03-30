@@ -73,6 +73,7 @@
                         <th class="text-center">Sessions Days</th>
                         <th class="text-center">Course Type</th>
                         <th class="text-center">Term No</th>
+                        <th class="text-center">Color</th>
                         <th class="text-center">Edit Course</th>
                         <th class="text-center">Delete Course</th>
                     </tr>
