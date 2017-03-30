@@ -19,8 +19,12 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 
     /* TermController */
     Route::get('/manageTerm', 'TermController@index');
+    Route::post('/saveTerm', 'TermController@createTerm');
     Route::post('/manageTerm', 'TermController@store');
-    Route::get('/searchTerm', 'AjaxController@searchTerm');
+    Route::post('/searchTerm', 'TermController@searchTerm');
+    Route::get('/searchTerm', 'TermController@index');
+
+    //Route::get('/searchTerm', 'AjaxController@searchTerm');
 
     /* InstructorController */
     Route::get('/manageInstructor', 'InstructorController@manageInstructor');

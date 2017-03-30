@@ -5,7 +5,6 @@
             <div class="col-sm-2 sidenav" >
                 @include('includes.sidebar')
             </div>
-
             <div class="col-sm-10">
                 <div class="row">
                     <div class="col-md-4">
@@ -13,10 +12,12 @@
                         <!-- TODO Change id's and names and classes to reflect Terms not course/instructors-->
                         <h4><small>Manage Term </small></h4>
                         <hr>
+
                         <button href="#addNewTerm" class="btn btn-default" data-toggle="collapse">Add Term</button>
                         <div class="collapse" id="addNewTerm">
+
                             <h2>Add a New Term</h2>
-                            {!! Form::open(['url' => 'manageTerm']) !!}
+                            {!! Form::open(['url' => 'saveTerm']) !!}
                             <!--TODO display intakes from available intakes-->
                             <div class="form-group">
                                 {!! Form::label('intake_id', 'Intake ID:') !!}
@@ -60,79 +61,57 @@
                     </div>
                     <div class="col-md-8">
                         <h2>Display Term</h2>
-                        <br>
-                        <!-- Search bar -->
-                        <div class="form-group col-md-7">
-                            <div class="input-group">
-                                <span class="input-group-addon">Search</span>
-                                <input type="text" name="search" id ="search" placeholder="Search Term" class ="form-control">
-                            </div>
+                        {{ Form::open(['url'=>'searchTerm']) }}
+                        <div class="form-inline">
+                            {{ Form::label('choose_intake', 'Select terms by intake:', ['class'=>'control-label']) }}
+                            <select name="choose_intake" class="form-control">
+                            @foreach($intakes as $intake)
+                                <option value="{{$intake->intake_id}}" class="form-control">
+                                    {{$intake->intake_no}} {{DateTime::createFromFormat('Y-m-d', $intake->start_date)->format('Y')}}
+                                </option>
+                            @endforeach
+                            </select>
+                            {{ Form::submit('Submit', ['class'=>'btn btn-primary']) }}
                         </div>
-                        <br><br><br>
-                        <hr>
+                        {{ Form::close() }}
+                        <br>
                         <table class="table table-striped table-bordered table-hover table-condensed text-center">
                             <thead class="thead-default">
-                            <tr class = "success">
-                                <th class="text-center">Id</th>
-                                <th class="text-center">Start Date</th>
-                                <th class="text-center">Intake</th>
-                                <th class="text-center">Term #</th>
-                                <th class="text-center">Ttl (wks)</th>
-                                <th class="text-center">Crs (wks)</th>
-                                <th class="text-center">Exam (wks)</th>
-                                <th class="text-center">Break (wks)</th>
-                                <th class="text-center">Holidays</th>
-                                <th class="text-center">Edit</th>
-                                <th class="text-center">Delete</th>
-                            </tr>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Start Date</th>
+                                    <th>Intake</th>
+                                    <th>Total wks</th>
+                                    <th>Course wks</th>
+                                    <th>Exam wks</th>
+                                    <th>Break wks</th>
+                                    <th>Holidays</th>
+                                    <th>Edit</th>
+                                </tr>
                             </thead>
-
-                            <tbody class = "searchbody">
-
+                            <tbody>
+                                @foreach($terms as $term)
+                                    <tr>
+                                        <td>{{$term->term_id}}</td>
+                                        <td>{{$term->term_start_date}}</td>
+                                        <td>{{$term->intake_id}}</td>
+                                        <td>{{$term->duration_weeks}}</td>
+                                        <td>{{$term->course_weeks}}</td>
+                                        <td>{{$term->exam_weeks}}</td>
+                                        <td>{{$term->break_weeks}}</td>
+                                        <td>{{$term->holidays}}</td>
+                                        <td><button class="btn btn-primary open-EditTermDialog"
+                                                    data-toggle="modal"
+                                                    data-id="{{$term->term_id}}"
+                                                    data-target="#editTermModal"
+                                                    data-term_start_date = "{{$term->term_start_date}}"
+                                                    data-intake_id="{{$term->intake_id}}"
+                                                    data-course_weeks ="{{$term->course_weeks}}"
+                                                    data-break_weeks="{{$term->break_weeks}}"
+                                                    data-exam_weeks="{{$term->exam_weeks}}">Edit</button></td>
+                                    </tr>
+                                @endforeach
                             </tbody>
-                        </table>
-                        <script type = "text/javascript">
-                            $.ajaxSetup({
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                }
-                            });
-                            $('#search').on('keyup',function(){
-                                $value = $(this).val();
-                                $.ajax ({
-                                    type : 'GET',
-                                    url  : '/searchTerm',
-                                    data: { 'search' : $value },
-                                    success: function (data) {
-                                        $('.searchbody').html(data);
-                                    }
-                                });
-                            });
-                        </script>
-                        <script>
-                            $.ajaxSetup({
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                }
-                            });
-                            $(document).on('click', '.open-EditTermDialog', function() {
-                                //reset modal on open everytime
-                                //TODO extract values from table is hella ghetto -- please change in future
-                                $('.modal-body input').attr('value', "");
-                                var term_id = $(this).parent().siblings(":nth-child(4)").text();
-                                var intake_id = $(this).parent().siblings(":nth-child(3)").text();
-                                var course_weeks = $(this).parent().siblings(":nth-child(6)").text();
-                                var break_weeks = $(this).parent().siblings(":nth-child(8)").text();
-                                var exam_weeks = $(this).parent().siblings(":nth-child(7)").text();
-                                var term_start_date = $(this).parent().siblings(":nth-child(2)").text();
-                                $('.modal-body #modal_term_start_date').attr('value', term_start_date);
-                                $('.modal-body #modal_term_id').attr('value', term_id).text();
-                                $('.modal-body #modal_intake_id').attr('value', intake_id).text();
-                                $('.modal-body #modal_course_weeks').attr('value', course_weeks).text();
-                                $('.modal-body #modal_break_weeks').attr('value', break_weeks).text();
-                                $('.modal-body #modal_exam_weeks').attr('value', exam_weeks).text();
-                            });
-                        </script>
                         </table>
                         <!-- TODO edit term functionality -->
                         <div class="modal fade" id="editTermModal" tabindex="-1" role="dialog" aria-labeleledby="editTermModal">
@@ -144,8 +123,8 @@
                                         <h4 class="modal-title" id="editTermModalLabel">Edit</h4>
                                     </div>
                                     <div class="modal-body">
-                                        {!! Form::open(['url' => 'manageTerm']) !!}
-                                        <p>Edit Term</p>
+                                        {{ Form::open(['url' => 'manageTerm']) }}
+                                            <p>Edit Term</p>
                                             <div class="form-group">
                                                 {!! Form::label('modal_term_id', 'Term ID:', ['class'=>'control-label']) !!}
                                                 {!! Form::text('modal_term_id', '', array('id'=>'modal_term_id',
@@ -179,11 +158,24 @@
                                         <span class="pull-right">
                                             {!! Form::submit('Edit',['class'=> 'btn btn-primary form-control']) !!}
                                         </span>
-                                        {!! Form::close() !!}
                                     </div>
+                                    {{ Form::close() }}
                                 </div>
                             </div>
                         </div>
+                        <script>
+                            $(document).on('click', '.open-EditTermDialog', function() {
+                                //reset modal on open everytime
+                                //TODO extract values from table is hella ghetto -- please change in future
+                                $('.modal-body input').attr('value', "");
+                                $('.modal-body #modal_term_start_date').attr('value', $(this).data('term_start_date'));
+                                $('.modal-body #modal_term_id').attr('value', $(this).data('id')).text();
+                                $('.modal-body #modal_intake_id').attr('value', $(this).data('intake_id')).text();
+                                $('.modal-body #modal_course_weeks').attr('value', $(this).data('course_weeks')).text();
+                                $('.modal-body #modal_break_weeks').attr('value', $(this).data('break_weeks')).text();
+                                $('.modal-body #modal_exam_weeks').attr('value', $(this).data('exam_weeks')).text();
+                            });
+                        </script>
 
                     </div>
             </div>
