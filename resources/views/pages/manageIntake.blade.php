@@ -8,7 +8,7 @@
 
             <div class="col-sm-10">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <h4><small>Manage Intake </small></h4>
                         <hr>
                         <button href="#addNewIntake" class="btn btn-default" data-toggle="collapse">Add Intake</button>
@@ -27,7 +27,7 @@
                             {!! Form::close() !!}
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <table class="table table-striped table-bordered table-hover table-condensed">
                             <thead>
                             <th>Intake</th>

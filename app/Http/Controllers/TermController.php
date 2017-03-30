@@ -10,7 +10,14 @@ class TermController extends Controller
 {
     public function store(Request $req) {
         // TODO: add logic for determining other columns
-
+        $terms = Term::where('term_id', $req->modal_term_id)
+            ->update(['term_start_date'=>$req->modal_term_start_date,
+                      'course_weeks'=>$req->modal_course_weeks,
+                      'break_weeks'=>$req->modal_break_weeks,
+                      'exam_weeks'=>$req->modal_exam_weeks,
+                      'duration_weeks'=>$req->modal_exam_weeks+$req->modal_break_weeks+$req->modal_course_weeks])
+            ->get();
+        dd($terms);
         return redirect()->action('TermController@index');
     }
 

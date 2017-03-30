@@ -232,11 +232,16 @@ class AjaxController extends Controller
                         '<td>'.$term->duration_weeks.'</td>'.
                         '<td>'.$term->course_weeks.'</td>'.
                         '<td>'.$term->exam_weeks.'</td>'.
+                        '<td>'.$term->break_weeks.'</td>'.
                         '<td>'.$term->holidays.'</td>'.
                         '<td>'. '<button class="btn btn-primary open-EditTermDialog"
                                     data-toggle="modal"
                                     data-id="{{$term->term_id}}"
                                     data-target="#editTermModal"
+                                    data-intake="{{$term->intake_id}}"
+                                    data-course_weeks ="{{$term->course_weeks}}"
+                                    data-break_weeks="{{$term->break_weeks}}"
+                                    data-exam_weeks="{{$term->exam_weeks}}"
                                         >Edit</button>'.
                         '</td>'.
                         '<td>'. '<button class=" btn btn-danger "
