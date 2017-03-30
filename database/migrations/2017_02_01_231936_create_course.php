@@ -19,7 +19,7 @@ class CreateCourse extends Migration
             $table->string('course_type');
             $table->tinyInteger('term_no');
             $table->primary('course_id');
-            $table->string('color');
+            $table->string('color')->nullable()->default(null);
         });
     }
 
