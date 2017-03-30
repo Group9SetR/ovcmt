@@ -37,8 +37,7 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label('color2', 'Course Color:') !!}
-                    <input class="jscolor" name="color2" id="color2">
-                   {{-- {{  Form::input('color2', null, ['id' => 'colorinput']) }}--}}
+                    {{  Form::input('color', 'color2', null, ['id' => 'color']) }}
                 </div>
 
                 <div class="form-group">
@@ -136,7 +135,7 @@
                             <h4 class="modal-title" id="editCourseModalLabel">Edit Individual Course</h4>
                         </div>
 
-                        {!! Form::open(['url' => 'manageCourseUpdate', 'id' => 'editCourseForm']) !!}
+                        {!! Form::open(['url' => '/manageCourseUpdate', 'id' => 'editCourseForm']) !!}
                         <div class="modal-body">
                             <div class="form-group">
                                 <table class="table table-bordered table-condensed">
@@ -144,7 +143,8 @@
                                         <td>{!! Form::label('course_id', 'Course Id') !!}</td>
                                         <td>{!! Form::text('course_id', '', array('id'=>'modal_courseid_name',
                                                                                 'class'=>'form-control',
-                                                                                'readonly'=>'readonly'))!!}</td>
+                                                                                'readonly' => 'true'
+                                                                                ))!!}</td>
                                     </tr>
                                     <tr>
                                         <td>{!! Form::label('sessions_days', 'Session Days') !!}</td>
@@ -166,12 +166,16 @@
                                             {{ Form::radio('term_no', 4, false, array('id'=>'modal_termNo_name4')) }}4
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td>{!! Form::label('color', 'Course Color:') !!}</td>
+                                        <td>{{  Form::input('color', 'color', null, ['id' => 'color']) }}</td>
+                                    </tr>
                                 </table>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" id="closeEditCourseBtn" class="btn btn-warning" data-dismiss="modal">Close</button>
-                            {!! Form::submit('Save',['class'=> 'btn btn-primary form-control open-EditCourseDialog',
+                            {!! Form::submit('Save',['class'=> 'btn btn-primary form-control',
                                                      'id' => 'editCourseBtn']) !!}
                         </div>
                         {!! Form::close() !!}
@@ -184,13 +188,17 @@
 
 <script>
     $(document).on('click', '.open-EditCourseDialog', function() {
+        document.getElementById('editCourseForm').reset();
         var course_id = $(this).parent().siblings(":first").text();
         console.log(course_id);
         var session_days = $(this).data('sessiondays');
         var course_type = $(this).data('coursetype');
         var term_no = $(this).data('termno');
+
+        //TODO: refactor this to repopulate colours and stuff.
         // retaining original values when edit modal comes up
         $('.modal-body #modal_courseid_name').attr('value', course_id);
+        document.getElementById('modal_courseid_name').setAttribute('value', course_id);
         $('.modal-body #modal_sessionDays_name').attr('value', session_days);
         $('.modal-body #modal_courseType_name').val(course_type);
         if (term_no == 1) {
@@ -206,7 +214,7 @@
     });
 
     // show success modal after add course
-    $(document).ready(function() {
+/*    $(document).ready(function() {
         $('#addCourseForm').on('submit', function(event) {
             var form = this;
             event.preventDefault();
@@ -220,10 +228,10 @@
                 form.submit();
             }, 2000); // wait 2 seconds until form process - so user can read success message
         });
-    });
+    });*/
 
     // show success modal after edit course
-    $(document).ready(function() {
+   /* $(document).ready(function() {
         $('#editCourseForm').on('submit', function(event) {
             var form = this;
             event.preventDefault();
@@ -239,6 +247,6 @@
                 form.submit();
             }, 2000); // wait 2 seconds until form process - so user can read success message
         });
-    });
+    });*/
 </script>
 @endsection
