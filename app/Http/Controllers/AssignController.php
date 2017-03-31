@@ -23,15 +23,16 @@ class AssignController extends Controller
     public function assignCourse(Request $req) {
         $intake_no = DB::table('terms AS t')
             ->join('intakes AS i', 't.intake_id', '=', 'i.intake_id')
+            ->select('i.intake_no AS intake_no')
             ->where('t.term_id', $req->term_id)
-            ->pluck('i.intake_no');
+            ->get();
         if(isset($req->ta_id)) {
-            $courseoffering = CourseOffering::firstOrNew(['term_id' => $req->term_id, 'course_id' => $req->course_id, 'intake_no' => $intake_no]);
+            $courseoffering = CourseOffering::firstOrNew(['term_id' => $req->term_id, 'course_id' => $req->course_id, 'intake_no' => $intake_no[0]->intake_no]);
             $courseoffering->ta_id = $req->ta_id;
             $courseoffering->instructor_id = $req->ta_id;
             $courseoffering->save();
         } else if (isset($req->instructor_id)) {
-            $courseoffering = CourseOffering::firstOrNew(['term_id' => $req->term_id, 'course_id' => $req->course_id, 'intake_no' => $intake_no]);
+            $courseoffering = CourseOffering::firstOrNew(['term_id' => $req->term_id, 'course_id' => $req->course_id, 'intake_no' => $intake_no[0]->intake_no]);
             $courseoffering->instructor_id = $req->instructor_id;
             $courseoffering->save();
         }

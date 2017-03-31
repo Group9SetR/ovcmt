@@ -146,6 +146,10 @@ class AjaxController extends Controller
     public function getCourseOfferingsByTerm(Request $req)
     {
         //at this point course_offerings is already set, just a intake_no update is required
+        $term_no = DB::table('terms AS t')
+            ->select('t.term_no')
+            ->where('t.term_id', $req->term_id)
+            ->get();
         if ($req->ajax() && isset($req->term_id)) {
             $assignedcourses = DB::table('courses AS c')
                 ->join('course_offerings AS co', 'c.course_id', '=', 'co.course_id')
@@ -154,10 +158,14 @@ class AjaxController extends Controller
                 ->select('c.course_id AS course_id', 'co.instructor_id as instructor_id', 'i.first_name as first_name',
                     'i.email as email', 'co.intake_no AS intake_no', 'co.ta_id AS ta_id')
                 ->get();
-            $query = DB::table('course_offerings')
-                ->where('term_id', $req->term_id)
+            $query = DB::table('course_offerings AS co')
+                ->join('terms AS t', 'co.term_id', '=', 't.term_id')
+                ->where('t.term_id', $req->term_id)
                 ->select("course_id");
-            $unassignedcourses = Course::whereNotIn("course_id", $query)->get();
+            $unassignedcourses = DB::table('courses AS c')
+                ->where('c.term_no', $term_no[0]->term_no)
+                ->whereNotIn('c.course_id', $query)
+                ->get();
             return response()->json(array("assignedcourses" => $assignedcourses, "unassignedcourses" => $unassignedcourses), 200);
         } else {
             return response()->json(array("error" => "an error has occurred"));
