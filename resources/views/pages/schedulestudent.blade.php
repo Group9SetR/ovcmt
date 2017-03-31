@@ -12,41 +12,62 @@
         <div class="col-sm-10">
             <h4><small>Display schedule</small></h4>
             <hr>
-
-            <div class="form-group">
-                {{ Form::open(['url'=>'viewSchedule']) }}
-                {!! Form::label('schedule_by_month', 'Month:') !!}
-                <select name="schedule_by_month">
-                        <option value="jan">January</option>
-                        <option value="feb">February</option>
-                        <option value="mar">March</option>
-                        <option value="apr">April</option>
-                        <option value="jan">May</option>
-                        <option value="jun">Jun</option>
-                        <option value="july">July</option>
-                        <option value="agu">Aguest</option>
-                        <option value="sep">September</option>
-                        <option value="oct">October</option>
-                        <option value="nov">November</option>
-                        <option value="dec">December</option>
-                </select>
+            <div>
+                {{Form::open(['url' => '',
+                                          'id' => 'dateSelectForm'])}}
+                {{Form::label('schedule_starting_date', 'Week of:')}}
+                {{Form::date('schedule_starting_date', Carbon\Carbon::today(new DateTimeZone('America/Vancouver'),
+                                                       ['id' => 'schedule_starting_date']))}}
+                {{ Form::submit('Choose Starting Date',['class'=> 'btn btn-primary form-inline']) }}
+                {{Form::close()}}
             </div>
             <h3>Display Schedule</h3>
-                <table class="table table-condensed">
-                    <thead>
-                        <th>Mon</th>
-                        <th>Tues</th>
-                        <th>Wed</th>
-                        <th>Thurs</th>
-                        <th>Fri</th>
-                        <th>Sat</th>
-                        <th>Sun</th>
+                <table class="table table-striped table-bordered table-hover text-center" id="schedule_view_table">
+                    <thead class="thead-default">
+                        <tr class="success">
+                            <th>Mon</th>
+                            <th>Tues</th>
+                            <th>Wed</th>
+                            <th>Thurs</th>
+                            <th>Fri</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <?php $i=0;?>
-                        @while($calendar[$i])
+                    @for($i=0; $i<sizeof($weeks);$i++)
+                        <tr class="schedule_wk_{{$i}}">
+                        <!-- first row -->
+                        @if($i==0)
+                            @for($j=0; $j<5-sizeof($weeks[$i]); $j++)
+                                <td></td>
+                            @endfor
+                            @for($j=0; $j<sizeof($weeks[$i]); $j++)
+                                    <td><span>{{$weeks[$i][$j]}}</span>
+                                        <div class="am"></div>
+                                        <div class="pm"></div>
+                                    </td>
+                            @endfor
+                        <!-- last row -->
+                        @elseif($i == sizeof($weeks)-1)
+                            @for($j=0; $j<sizeof($weeks[$i]); $j++)
+                                <td><span>{{$weeks[$i][$j]}}</span>
+                                    <div class="am"></div>
+                                    <div class="pm"></div>
+                                </td>
+                            @endfor
+                            @for($j=0; $j<5-sizeof($weeks[$i]);$j++)
+                                <td></td>
+                            @endfor
+                        @else
+                            @for($j=0; $j<5; $j++)
+                                <td><span>{{$weeks[$i][$j]}}</span>
+                                    <div class="am"></div>
+                                    <div class="pm"></div>
+                                </td>
+                            @endfor
+                        @endif
+                        </tr>
+                    @endfor
 
-                        @endwhile
                     </tbody>
                 </table>
 
@@ -154,15 +175,7 @@
                     </tbody>
                 </table>
 
-            <div class="col-sm-12 text-right">
-                {{Form::open(['url' => '',
-                                          'id' => 'dateSelectForm'])}}
-                {{Form::label('schedule_starting_date', 'Week of:')}}
-                {{Form::date('schedule_starting_date', Carbon\Carbon::today(new DateTimeZone('America/Vancouver'),
-                                                       ['id' => 'schedule_starting_date']))}}
-                {{ Form::submit('Choose Starting Date',['class'=> 'btn btn-primary form-inline']) }}
-                {{Form::close()}}
-            </div>
+
         </div>
 
 
