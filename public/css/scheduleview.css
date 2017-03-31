@@ -1,0 +1,13 @@
+#schedule_view_table {
+    table-layout:fixed;
+}
+
+#schedule_view_table td{
+    height:150px;
+}
+
+#schedule_view_table td span {
+    vertical-align: top;
+    text-align:left;
+    float: left;
+}
