@@ -14,8 +14,9 @@
             <hr>
 
             <div class="form-group">
-                {!! Form::label('month_id', 'Month:') !!}
-                <select name="schedual_by_month" >
+                {{ Form::open(['url'=>'viewSchedule']) }}
+                {!! Form::label('schedule_by_month', 'Month:') !!}
+                <select name="schedule_by_month">
                         <option value="jan">January</option>
                         <option value="feb">February</option>
                         <option value="mar">March</option>
@@ -28,111 +29,130 @@
                         <option value="oct">October</option>
                         <option value="nov">November</option>
                         <option value="dec">December</option>
-
                 </select>
             </div>
             <h3>Display Schedule</h3>
+                <table class="table table-condensed">
+                    <thead>
+                        <th>Mon</th>
+                        <th>Tues</th>
+                        <th>Wed</th>
+                        <th>Thurs</th>
+                        <th>Fri</th>
+                        <th>Sat</th>
+                        <th>Sun</th>
+                    </thead>
+                    <tbody>
+                        <?php $i=0;?>
+                        @while($calendar[$i])
 
-                    <table class='table table-bordered' id ="yourTableIdName" >
-                        <colgroup>
-                            <col width="10%">
-                            <col width="10%">
-                            <col width="10%">
-                            <col width="10%">
-                            <col width="10%">
-                            <col width="10%">
-                            <col width="10%">
-                            <col width="10%">
-                        </colgroup>
-                        <thead>
-                        <tr class = "success">
-                            <th>Week</th>
-                            <th>Time</th>
-                            <th>Monday </th>
-                            <th>Tuesday </th>
-                            <th>Wednesday </th>
-                            <th>Thursday </th>
-                            <th>Friday </th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                        @endwhile
+                    </tbody>
+                </table>
 
-                        <tr >
-                            <th rowspan="1"> Week1 </th>
-                            <td>AM</td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                        </tr>
-                        <tr>
-                            <th rowspan="1"> Week1 </th>
-                            <td>PM</td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                        </tr>
-                        <tr>
-                            <th rowspan="1"> Week2 </th>
-                            <td>PM</td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
 
-                        </tr>
-                        <tr>
-                            <th rowspan="1"> Week2 </th>
-                            <td>PM</td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
 
-                        </tr>
-                        <tr>
-                            <th rowspan="1"> Week3 </th>
-                            <td>PM</td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                        </tr>
-                        <tr>
-                            <th rowspan="1"> Week3 </th>
-                            <td>PM</td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                        </tr>
-                        <tr>
-                            <th rowspan="1"> Week4 </th>
-                            <td>PM</td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                        </tr>
-                        <tr>
-                            <th rowspan="1"> Week4 </th>
-                            <td>PM</td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                        </tr>
-                        </tbody>
-                    </table>
+
+                <table class='table table-bordered' id ="schedule_table" >
+                    <colgroup>
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="10%">
+                    </colgroup>
+                    <thead>
+                    <tr class = "success">
+                        <th>Week</th>
+                        <th>Time</th>
+                        <th>Monday </th>
+                        <th>Tuesday </th>
+                        <th>Wednesday </th>
+                        <th>Thursday </th>
+                        <th>Friday </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr >
+                        <th rowspan="1"> Week1 </th>
+                        <td>AM</td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                    </tr>
+                    <tr>
+                        <th rowspan="1"> Week1 </th>
+                        <td>PM</td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                    </tr>
+                    <tr>
+                        <th rowspan="1"> Week2 </th>
+                        <td>PM</td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+
+                    </tr>
+                    <tr>
+                        <th rowspan="1"> Week2 </th>
+                        <td>PM</td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+
+                    </tr>
+                    <tr>
+                        <th rowspan="1"> Week3 </th>
+                        <td>PM</td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                    </tr>
+                    <tr>
+                        <th rowspan="1"> Week3 </th>
+                        <td>PM</td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                    </tr>
+                    <tr>
+                        <th rowspan="1"> Week4 </th>
+                        <td>PM</td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                    </tr>
+                    <tr>
+                        <th rowspan="1"> Week4 </th>
+                        <td>PM</td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                        <td>C++ Albert </td>
+                    </tr>
+                    </tbody>
+                </table>
 
             <div class="col-sm-12 text-right">
                 {{Form::open(['url' => '',
