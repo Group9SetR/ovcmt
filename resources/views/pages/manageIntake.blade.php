@@ -30,18 +30,19 @@
 
                     </div>
                     <div class="col-md-8">
-                        <table class="table table-striped table-bordered table-hover table-condensed">
-                            <thead>
-                            <th>ID</th>
-                            <th>Program Start</th>
-                            <th>Intake</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                        <table class="table table-striped table-bordered table-hover table-condensed text-center">
+                            <tr class = "success">
+                                <th class="text-center">ID</th>
+                                <th class="text-center">Program Start</th>
+                                <th class="text-center">Intake</th>
+                                <th class="text-center">Edit</th>
+                                <th class="text-center">Delete</th>
+                            </tr>
                             </thead>
                             <tbody>
                             @foreach($intakes as $intake)
                                 <tr>
-                                    <th>{{$intake->intake_id}}</th>
+                                    <td>{{$intake->intake_id}}</td>
                                     <td>{{$intake->start_date}}</td>
                                     <td>{{$intake->intake_no}}</td>
                                     <td><button class="btn btn-primary open-EditIntakeDialog"
@@ -50,7 +51,10 @@
                                             data-target="#editIntakeModal"
                                             data-start_date = "{{$intake->start_date}}"
                                             data-intake_no="{{$intake->intake_no}}">Edit</button></td>
-                                    <td><button class="btn btn-danger">Delete</button></td>
+                                    <td><button class="btn btn-danger open-DeleteCourseDialog"
+                                                 data-toggle="modal"
+                                                 data-target="#deleteCourseModal">Delete</button>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -88,6 +92,31 @@
                                         </span>
                                     </div>
                                     {{ Form::close() }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="deleteIntakeModal" tabindex="-1" role="dialog" aria-labeleledby="deleteIntakeModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="deleteIntakeModalLabel">Delete Individual Intake</h4>
+                                    </div>
+
+                                    {!! Form::open(['url' => '/manageIntakeDelete', 'id' => 'deleteIntakeForm']) !!}
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <table class="table table-bordered table-condensed">
+                                                {!! Form::submit('Confirm',['class'=> 'btn btn-info',
+                                                                 'id' => 'deleteIntakeBtn']) !!}
+                                            </table>
+                                            {!! Form::close() !!}
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" id="closeDeleteIntakeBtn" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

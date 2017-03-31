@@ -9,8 +9,8 @@
             <div class="col-sm-10">
                 <h4><small>Select a Term</small></h4>
                 <hr>
-                <div class="row" id="term_selector">
-                    <div class="container">
+                <div class="container">
+                    <div class="row" id="term_selector">
                         {!! Form::open(['url' => '', 'class' => 'form-inline', 'id' => 'select_term']) !!}
                         <div class="col-sm-5" id="assign_select_from">
                             <select name="selected_term_id" id="selected_term_id">
@@ -110,26 +110,42 @@
                                 data: {"term_id": term_id},
                                 dataType: 'json',
                                 success: function (data) {
-                                    //TODO: make this pretty
                                     $('#assigned').empty();
                                     for (let i = 0; i < data['assignedcourses'].length; i++) {
                                         var term = $('#selected_term_id').val();
-                                        var panel = "<div class='panel panel-default' id='" + data['assignedcourses'][i]['course_id'] + "-assigned'><div class='panel-heading'>" + data['assignedcourses'][i]['course_id']
-                                            + "</div> <div class='panel-body'>" + "Instructor ID: " + data['assignedcourses'][i]['instructor_id']
-                                            + " Instructor Name: " + data['assignedcourses'][i]['first_name']
-                                            // + "<br><button class='btn btn-danger'>Unassign " + data['assignedcourses'][i]['first_name'] + "</button>"
-                                            + "<br><br>"
-                                            // TODO fix unassign course
+                                        var panel = "<div class='panel panel-default' id='" + data['assignedcourses'][i]['course_id'] + "-assigned'>" +
+                                            "<div class='panel-heading'>"
+                                            + data['assignedcourses'][i]['course_id']
+                                            + " - <span id='heading" + i + "'></span>"
+                                            + "<span class='pull-right'>"
                                             + "<form action='unassignCourse'>"
                                             + "<input type='hidden' name='course_id' value='" + data['assignedcourses'][i]['course_id'] + "'>"
                                             + "<input type='hidden' name='instructor_id' value='" + data['assignedcourses'][i]['instructor_id'] + "'>"
                                             + "<input type='hidden' name='term_id' value='" + term + "'>"
                                             + "<input type='hidden' name='intake_no' value='" + data['assignedcourses'][i]['intake_no'] + "'>"
-                                            + "<input type='submit' class='btn btn-danger' value='Unassign " + data['assignedcourses'][i]['first_name'] + "'>"
+                                            + "<input type='submit' class='btn-danger' value='Unassign " + data['assignedcourses'][i]['first_name'] + "'>"
                                             + "</form>"
+                                            + "</span></div>"
+                                            + "<div class='panel-body'>"
+                                            + "<span id='showInstructor" + i +"'>Instructor ID: " + "<span id='instructorOrNot" + i + "'>" + data['assignedcourses'][i]['instructor_id'] + "</span><span>"
+                                            + "<br>Instructor Name: " + data['assignedcourses'][i]['first_name']
+                                            + "<br><span id='showTA" + i + "'>TA ID: " + "<span id='taOrNot" + i + "'>" + data['assignedcourses'][i]['ta_id'] + "</span></span>"
+                                            + "<br><br>"
                                             + "</div></div>";
                                         $('#assigned').append(panel);
+                                        var taOrNot = $('#taOrNot' + i).html();
+                                        var instructorNullOrNot = $('#instructorOrNot' + i).html();
+                                        if (taOrNot == 'null') {
+                                            $('#showTA' + i).css('visibility', 'hidden');
+                                            $('#heading' + i).html('Instructor').css('color', 'blue');
+                                        } else {
+                                            $('#heading' + i).html('TA').css('color', 'Lime');
+                                        }
+                                        if (instructorNullOrNot == 'null') {
+                                            $('#showInstructor' + i).css('visibility', 'hidden');
+                                        }
                                     }
+
                                     $('#unassigned').empty();
                                     for (let i = 0; i < data['unassignedcourses'].length; i++) {
                                         var panel = "<div class='panel panel-default' id='" + data['unassignedcourses'][i]['course_id']
@@ -146,17 +162,14 @@
                                     for (let i = 0; i < data['unassignedcourses'].length; i++) {
                                         var course = data['unassignedcourses'][i]['course_id'];
                                         var courseStr = course.toString();
-
                                         var courseid = document.getElementById(courseStr);
                                         courseid.onclick=function() {
                                             var courseToPass = $(this).attr('id');
                                             var term = $('#selected_term_id').val();
-
                                             $('#course_id_instructor').val(courseToPass);
                                             $('#course_id_ta').val(courseToPass);
                                             $('#term_id_instructor').val(term);
                                             $('#term_id_ta').val(term);
-
                                             $('#assignCoursesToInstructor').modal('show');
                                             $('#modalCourseNameUnassigned').html('Available Instructors and TAs for ' + courseToPass);
                                             $.ajaxSetup({
