@@ -67,7 +67,7 @@
                             <select name="choose_intake" class="form-control">
                             @foreach($intakes as $intake)
                                 <option value="{{$intake->intake_id}}" class="form-control">
-                                    {{$intake->intake_no}} {{DateTime::createFromFormat('Y-m-d', $intake->start_date)->format('Y')}}
+                                    {{DateTime::createFromFormat('Y-m-d', $intake->start_date)->format('Y')}}{{$intake->intake_no}}
                                 </option>
                             @endforeach
                             </select>
@@ -78,8 +78,8 @@
                         <table class="table table-striped table-bordered table-hover table-condensed text-center">
                             <thead class="thead-default">
                                 <tr>
-                                    <th>ID</th>
                                     <th>Start Date</th>
+                                    <th>Term</th>
                                     <th>Intake</th>
                                     <th>Total wks</th>
                                     <th>Course wks</th>
@@ -92,9 +92,9 @@
                             <tbody>
                                 @foreach($terms as $term)
                                     <tr>
-                                        <td>{{$term->term_id}}</td>
                                         <td>{{$term->term_start_date}}</td>
-                                        <td>{{$term->intake_id}}</td>
+                                        <td>{{$term->term_no}}</td>
+                                        <td>{{$term->intake_no}}</td>
                                         <td>{{$term->duration_weeks}}</td>
                                         <td>{{$term->course_weeks}}</td>
                                         <td>{{$term->exam_weeks}}</td>

@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-md-10">
                         <div class="form-group col-md-4">
-                            <h2>Display schedule</h2>
+                            <h2>Schedule Week of: {{$calendarDetails['firstOfWeek']}}</h2>
                             {{Form::open(['url'=>'dragDrop'])}}
                             <input type="hidden" name="selected_term_id" value="{{$term->term_id}}"/>
                             {{Form::label('schedule_select_date', 'Go to :')}}
@@ -20,13 +20,11 @@
                             {{Form::close()}}
                         </div>
                         <div class="col-md-8">
-                            <h2>Week of: {{$calendarDetails['firstOfWeek']}}</h2>
-                            <h3>Term no:{{$term->term_no}} starting:{{$term->term_start_date}}</h3>
                         </div>
                     </div>
                     <div class="col-sm-2">
                         <h2>Course List</h2>
-
+                        <h3>{{DateTime::createFromFormat('Y-m-d', $term->start_date)->format('Y')}}{{$term->intake_no}} Term:{{$term->term_no}}</h3>
                     </div>
                 </div>
                 <div class="row">
