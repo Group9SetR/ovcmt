@@ -67,121 +67,24 @@
                         @endif
                         </tr>
                     @endfor
-
                     </tbody>
                 </table>
+                @foreach($courses['am_courses'] as $amcourse)
+                    <script>
+                        var panel = new Panel('<?php echo $amcourse->course_id;?>', '<?php echo $amcourse->room_id;?>');
+                        panel.init();
+                        var date = new Date('<?php echo $amcourse->cdate;?>').getDate()+1;
+                        var dates = document.getElementsByTagName('span');
+                        for(var i=0; i<dates.length; i++) {
+                            if(dates.item(i).innerHTML == date) {
+                                dates.item(i).parentNode.childNodes[2].append(panel.get());
+                                console.log(dates.item(i).parentNode.childNodes[2]);
+                            }
+                        }
 
-
-
-
-                <table class='table table-bordered' id ="schedule_table" >
-                    <colgroup>
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
-                    </colgroup>
-                    <thead>
-                    <tr class = "success">
-                        <th>Week</th>
-                        <th>Time</th>
-                        <th>Monday </th>
-                        <th>Tuesday </th>
-                        <th>Wednesday </th>
-                        <th>Thursday </th>
-                        <th>Friday </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    <tr >
-                        <th rowspan="1"> Week1 </th>
-                        <td>AM</td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                    </tr>
-                    <tr>
-                        <th rowspan="1"> Week1 </th>
-                        <td>PM</td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                    </tr>
-                    <tr>
-                        <th rowspan="1"> Week2 </th>
-                        <td>PM</td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-
-                    </tr>
-                    <tr>
-                        <th rowspan="1"> Week2 </th>
-                        <td>PM</td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-
-                    </tr>
-                    <tr>
-                        <th rowspan="1"> Week3 </th>
-                        <td>PM</td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                    </tr>
-                    <tr>
-                        <th rowspan="1"> Week3 </th>
-                        <td>PM</td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                    </tr>
-                    <tr>
-                        <th rowspan="1"> Week4 </th>
-                        <td>PM</td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                    </tr>
-                    <tr>
-                        <th rowspan="1"> Week4 </th>
-                        <td>PM</td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                        <td>C++ Albert </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-
+                    </script>
+                @endforeach
         </div>
-
-
-
-
-
     </div>
 </div>
 

@@ -24,6 +24,7 @@
     <script type="text/javascript" src="/js/jquery-2.1.3.js"></script>
     <script type="text/javascript" src="/js/jspdf.js"></script>
     <script type="text/javascript" src="/js/cell.js"></script>
+    <script type="text/javascript" src="/js/schedule-view.js"></script>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.debug.js"></script>
