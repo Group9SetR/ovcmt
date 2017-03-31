@@ -86,9 +86,11 @@
                 <h2>Display Admin User</h2>
                 <table class="table table-striped table-bordered table-hover table-condensed text-center ">
                     <thead>
-                    <th class="text-center">Name</th>
-                    <th class="text-center">Email</th>
-                    <th class="text-center">Delete</th>
+                    <tr class = "success">
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Delete</th>
+                    </tr>
                     </thead>
                     <tbody>
 
