@@ -116,13 +116,14 @@
                                             + "<div class='panel-body' id='panel" + i + "'>"
                                             + "</div></div>";
                                         $('#assigned').append(panel);
-                                        if (data['assignedcourses'][i]['instructor_id'] != null) {
+                                        if (data['assignedcourses'][i]['instructor_id'] != null && data['assignedcourses'][i]['instructor_id'] != 0) {
+                                            console.log(data['assignedcourses'][i]['instructor_id']);
                                             $('#heading' + i + "i").css('color', 'blue');
                                             $('#heading' + i + "i").append(document.createTextNode("[Instructor] "));
                                             $('#panel' + i).append(document.createTextNode("Instructor: " + data['assignedcourses'][i]['first_name']));
                                             $('#panel' + i).append(document.createElement('br'));
                                         }
-                                        if(data['assignedcourses'][i]['ta_id'] != null) {
+                                        if(data['assignedcourses'][i]['ta_id'] != null && data['assignedcourses'][i]['ta_id'] != 0) {
                                             $('#heading' + i + "t").css('color', 'green');
                                             $('#heading' + i + "t").append(document.createTextNode("[TA]"));
                                             $('#panel' + i).append(document.createTextNode("TA: " + data['assignedcourses'][i]['ta_first_name']));
