@@ -112,7 +112,9 @@ class AjaxController extends Controller
             $weekend->addDays(4);
             $roomsbyday = DB::table('rooms_by_days AS rbd')
                 ->leftjoin('course_offerings AS co1', 'co1.crn', '=', 'rbd.am_crn')
+                ->leftjoin('courses AS c1', 'c1.course_id', '=', 'co1.course_id')
                 ->leftjoin('course_offerings AS co2', 'co2.crn', '=', 'rbd.pm_crn')
+                ->leftjoin('courses AS c2', 'c2.course_id', '=', 'co2.course_id')
                 ->leftjoin('instructors AS i1', 'i1.instructor_id', '=', 'co1.instructor_id')
                 ->leftjoin('instructors AS i1ta', 'i1ta.instructor_id', '=', 'co1.ta_id')
                 ->leftjoin('instructors AS i2', 'i2.instructor_id', '=', 'co2.instructor_id')
@@ -123,6 +125,7 @@ class AjaxController extends Controller
                     'co1.crn AS am_crn',
                     'co1.course_id AS am_course_id',
                     'co1.intake_no AS am_intake_no',
+                    'c1.color AS am_color',
                     'i1.instructor_id AS am_instructor_id',
                     'i1.first_name AS am_instructor_name',
                     'i1ta.instructor_id AS am_ta_id',
@@ -130,6 +133,7 @@ class AjaxController extends Controller
                     'co2.crn AS pm_crn',
                     'co2.course_id AS pm_course_id',
                     'co2.intake_no AS pm_intake_no',
+                    'c2.color AS pm_color',
                     'i2.instructor_id AS pm_instructor_id',
                     'i2.first_name AS pm_instructor_name',
                     'i2ta.instructor_id AS pm_ta_id',
