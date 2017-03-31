@@ -150,10 +150,18 @@ class AjaxController extends Controller
         if ($req->ajax() && isset($req->term_id)) {
             $assignedcourses = DB::table('courses AS c')
                 ->join('course_offerings AS co', 'c.course_id', '=', 'co.course_id')
-                ->join('instructors AS i', 'co.instructor_id', '=', 'i.instructor_id')
+                ->leftjoin('instructors AS i1', 'co.instructor_id', '=', 'i1.instructor_id')
+                ->leftjoin('instructors AS i2', 'co.ta_id', '=', 'i2.instructor_id')
                 ->where("co.term_id", $req->term_id)
-                ->select('c.course_id AS course_id', 'co.instructor_id as instructor_id', 'i.first_name as first_name',
-                    'i.email as email', 'co.intake_no AS intake_no', 'co.ta_id AS ta_id')
+                ->select('c.course_id AS course_id',
+                    'co.instructor_id as instructor_id',
+                    'i1.first_name as first_name',
+                    'i1.email as email',
+                    'co.intake_no AS intake_no',
+                    'co.ta_id AS ta_id',
+                    'i2.first_name as ta_first_name',
+                    'i2.email as ta_email',
+                    'c.color AS color')
                 ->get();
             $query = CourseOffering::where('term_id', $req->term_id)
                 ->pluck("course_id")

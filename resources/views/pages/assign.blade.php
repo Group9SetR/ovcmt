@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('content')
+    @if((session('error')))
+        <script>alert("Course not assigned, please specify at least one of Instructor or TA for {{session('error')}}")</script>
+    @endif
     <div class="container-fluid">
         <div class="row content">
             <div class="col-sm-2 sidenav">
@@ -35,19 +38,6 @@
                                 <h4 id="modalCourseNameUnassigned" class="modal-title"></h4>
                             </div>
                             <div class="modal-body">
-                                <!-- TODO need to pull instructors correctly -->
-{{--                                @foreach ($instructors as $instructor)
-                                    <div class='panel panel-default'>
-                                        <div class='panel-body'>
-                                            {!! Form::open(['url' => '', 'class' => 'form-inline', 'id' => $instructor]) !!}
-                                            Instructor Id: {{$instructor->instructor_id}} <br>
-                                            First Name: {{$instructor->first_name}} <br>
-                                            Email: {{$instructor->email}} <br>
-                                            {!! Form::submit('Assign',['class'=> 'btn btn-primary form-inline']) !!}
-                                        </div>
-                                    </div>
-
-                                @endforeach--}}
                                 <!-- made dropdown instead of another modal -->
                                 <div class="row">
                                     <div class="col-md-6">
@@ -61,26 +51,19 @@
                                                 <br><br>
                                                 {{Form::hidden('term_id', '', array('id'=>'term_id_instructor'))}}
                                                 {{Form::hidden('course_id', '', array('id'=>'course_id_instructor'))}}
-                                                <div id="assignInstructBtn">
-                                                    {!! Form::submit('Assign instructor',['class'=> 'btn btn-primary form-inline']) !!}
-                                                </div>
-                                            {!! Form::close() !!}
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div id="availableTAs">
                                             <h3>TA</h3>
                                             <!-- TODO fix assign ta -->
-                                            {!! Form::open(['url' => 'assignCourse', 'class' => 'form-inline', 'id' => 'select_ta']) !!}
                                                 <p id="noTasMsg"></p>
                                                 <select class="form-control" name='ta_id' id='selected_ta_id'>
                                                     <!-- inserting options here through ajax request -->
                                                 </select>
                                                 <br><br>
-                                                {{Form::hidden('term_id', '', array('id'=>'term_id_ta'))}}
-                                                {{Form::hidden('course_id', '', array('id'=>'course_id_ta'))}}
                                                 <div id="assignTaBtn">
-                                                    {!! Form::submit('Assign TA',['class'=> 'btn btn-primary form-inline']) !!}
+                                                    {!! Form::submit('Assign Instructor/TA',['class'=> 'btn btn-primary form-inline']) !!}
                                                 </div>
                                             {!! Form::close() !!}
                                         </div>
@@ -110,40 +93,39 @@
                                 data: {"term_id": term_id},
                                 dataType: 'json',
                                 success: function (data) {
-                                    console.log(data['query']);
+                                    console.log(data['assignedcourses']);
                                     $('#assigned').empty();
                                     for (let i = 0; i < data['assignedcourses'].length; i++) {
                                         var term = $('#selected_term_id').val();
                                         var panel = "<div class='panel panel-default' id='" + data['assignedcourses'][i]['course_id'] + "-assigned'>" +
                                             "<div class='panel-heading'>"
+                                            + "<div style='display:inline-block;width:10px;height:10px;background-color:"
+                                            + data['assignedcourses'][i]['color'] + ";'></div>&nbsp;"
                                             + data['assignedcourses'][i]['course_id']
-                                            + " - <span id='heading" + i + "'></span>"
+                                            + " - <span id='heading" + i + "i'></span>"
+                                            + "<span id='heading" + i + "t'></span>"
                                             + "<span class='pull-right'>"
                                             + "<form action='unassignCourse'>"
                                             + "<input type='hidden' name='course_id' value='" + data['assignedcourses'][i]['course_id'] + "'>"
                                             + "<input type='hidden' name='instructor_id' value='" + data['assignedcourses'][i]['instructor_id'] + "'>"
                                             + "<input type='hidden' name='term_id' value='" + term + "'>"
                                             + "<input type='hidden' name='intake_no' value='" + data['assignedcourses'][i]['intake_no'] + "'>"
-                                            + "<input type='submit' class='btn-danger' value='Unassign " + data['assignedcourses'][i]['first_name'] + "'>"
+                                            + "<input type='submit' class='btn-danger' value='Unassign'>"
                                             + "</form>"
                                             + "</span></div>"
-                                            + "<div class='panel-body'>"
-                                            + "<span id='showInstructor" + i +"'>Instructor ID: " + "<span id='instructorOrNot" + i + "'>" + data['assignedcourses'][i]['instructor_id'] + "</span><span>"
-                                            + "<br>Instructor Name: " + data['assignedcourses'][i]['first_name']
-                                            + "<br><span id='showTA" + i + "'>TA ID: " + "<span id='taOrNot" + i + "'>" + data['assignedcourses'][i]['ta_id'] + "</span></span>"
-                                            + "<br><br>"
+                                            + "<div class='panel-body' id='panel" + i + "'>"
                                             + "</div></div>";
                                         $('#assigned').append(panel);
-                                        var taOrNot = $('#taOrNot' + i).html();
-                                        var instructorNullOrNot = $('#instructorOrNot' + i).html();
-                                        if (taOrNot == 'null') {
-                                            $('#showTA' + i).css('visibility', 'hidden');
-                                            $('#heading' + i).html('Instructor').css('color', 'blue');
-                                        } else {
-                                            $('#heading' + i).html('TA').css('color', 'Lime');
+                                        if (data['assignedcourses'][i]['instructor_id'] != null) {
+                                            $('#heading' + i + "i").css('color', 'blue');
+                                            $('#heading' + i + "i").append(document.createTextNode("[Instructor] "));
+                                            $('#panel' + i).append(document.createTextNode("Instructor: " + data['assignedcourses'][i]['first_name']));
+                                            $('#panel' + i).append(document.createElement('br'));
                                         }
-                                        if (instructorNullOrNot == 'null') {
-                                            $('#showInstructor' + i).css('visibility', 'hidden');
+                                        if(data['assignedcourses'][i]['ta_id'] != null) {
+                                            $('#heading' + i + "t").css('color', 'green');
+                                            $('#heading' + i + "t").append(document.createTextNode("[TA]"));
+                                            $('#panel' + i).append(document.createTextNode("TA: " + data['assignedcourses'][i]['ta_first_name']));
                                         }
                                     }
 
@@ -189,6 +171,11 @@
                                                     $('#noInstructorsMsg').empty();
                                                     $('#noTasMsg').empty();
 
+                                                    var emptyOption = "<option value='none'>None</option>";
+                                                    $('#selected_instructor_id').append(emptyOption);
+                                                    $('#selected_ta_id').append(emptyOption);
+
+
                                                     for (let i = 0; i < data['instructorsbycourse'].length; i++) {
                                                         var instructorDropdown = "<option value='" + data['instructorsbycourse'][i]['instructor_id'] + "'>" + data['instructorsbycourse'][i]['first_name'] + "</option>";
                                                         $('#selected_instructor_id').append(instructorDropdown);
@@ -196,25 +183,6 @@
                                                     for (let i = 0; i < data['tasbycourse'].length; i++) {
                                                         var taDropdown = "<option value='" + data['tasbycourse'][i]['instructor_id'] + "'>" + data['tasbycourse'][i]['first_name'] + "</option>";
                                                         $('#selected_ta_id').append(taDropdown);
-                                                    }
-
-                                                    if ($('#selected_instructor_id').is(':empty')){
-                                                        var msg = "No available instructors for this course.";
-                                                        $('#selected_instructor_id').css('visibility', 'hidden');
-                                                        $('#assignInstructBtn').css('visibility', 'hidden');
-                                                        $('#noInstructorsMsg').append(msg);
-                                                    } else {
-                                                        $('#selected_instructor_id').css('visibility', 'visible');
-                                                        $('#assignInstructBtn').css('visibility', 'visible');
-                                                    }
-                                                    if ($('#selected_ta_id').is(':empty')){
-                                                        var msg = "No available TAs for this course.";
-                                                        $('#selected_ta_id').css('visibility', 'hidden');
-                                                        $('#assignTaBtn').css('visibility', 'hidden');
-                                                        $('#noTasMsg').append(msg);
-                                                    } else {
-                                                        $('#selected_ta_id').css('visibility', 'visible');
-                                                        $('#assignTaBtn').css('visibility', 'visible');
                                                     }
                                                 }
                                             });
