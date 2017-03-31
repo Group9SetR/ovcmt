@@ -85,5 +85,8 @@ html, body {
 .panel-heading.color-panel {
     color: white;
 }
+.panel-heading.color-panel:hover {
+    color: black;
+}
 
 
