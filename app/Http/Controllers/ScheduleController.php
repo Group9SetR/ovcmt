@@ -26,7 +26,6 @@ class ScheduleController extends Controller
             $this->updateRoomByWeek($roomId, $saveDate, $roomUpdatesAm, $roomUpdatesPm);
         }
         //Send back to where schedule was saved
-
         $cdate = DateTime::createFromFormat('Y-m-d', $req->schedule_date);
         $year =$cdate->format('Y');
         $week = $cdate->format('W');
@@ -34,7 +33,8 @@ class ScheduleController extends Controller
         $courseOfferings = $this->generateCourses($req->selected_term_id);
         $roomsByWeek = $this->getScheduleByWeek($year, $week);
         $courseOfferingsSessions = $this->calculateDiff($courseOfferings);
-        $term = DB::table('terms')
+        $term = DB::table('terms as t')
+            ->join('intakes as i', 't.intake_id', '=', 'i.intake_id')
             ->where('term_id', $req->selected_term_id)
             ->first();
         return view('pages.dragDrop', compact('calendarDetails','courseOfferings', 'term', 'courseOfferingsSessions', 'roomsByWeek'));
@@ -152,8 +152,8 @@ class ScheduleController extends Controller
         $term = DB::table('terms')
             ->select('*')
             ->where('term_id', $term_id)
-            ->get();
-        $cdate = DateTime::createFromFormat('Y-m-d', $term[0]->term_start_date);
+            ->first();
+        $cdate = DateTime::createFromFormat('Y-m-d', $term->term_start_date);
         return $cdate;
     }
 
@@ -168,14 +168,14 @@ class ScheduleController extends Controller
         } else {
             $cdate = DateTime::createFromFormat('Y-m-d', $req->schedule_select_date);
         }
-
         $year =$cdate->format('Y');
         $week = $cdate->format('W');
         $calendarDetails = $this->getCalendarDetails($cdate, $year, $week);
         $courseOfferings = $this->generateCourses($req->selected_term_id);
         $roomsByWeek = $this->getScheduleByWeek($year, $week);
         $courseOfferingsSessions = $this->calculateDiff($courseOfferings);
-        $term = DB::table('terms')
+        $term = DB::table('terms as t')
+            ->join('intakes as i', 't.intake_id', '=', 'i.intake_id')
             ->where('term_id', $req->selected_term_id)
             ->first();
         return view('pages.dragDrop', compact('calendarDetails','courseOfferings', 'courseOfferingsSessions', 'term', 'roomsByWeek'));
@@ -199,6 +199,7 @@ class ScheduleController extends Controller
             ->join('intakes AS i', 't.intake_id', '=', 'i.intake_id')
             ->select('t.*', 'i.intake_no', 'i.start_date AS program_start')
             ->orderBy('i.start_date', 'DESC')
+            ->orderBy('t.term_no', 'ASC')
             ->get();
         return view('pages.selecttermschedule', compact('terms'));
     }
