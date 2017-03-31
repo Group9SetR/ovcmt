@@ -150,6 +150,10 @@ class AjaxController extends Controller
             ->select('t.term_no')
             ->where('t.term_id', $req->term_id)
             ->get();
+        $intake_no = DB::table('terms')
+            ->select('intake_no')
+            ->where('term_id', $req->term_id)
+            ->first();
         if ($req->ajax() && isset($req->term_id)) {
             $assignedcourses = DB::table('courses AS c')
                 ->join('course_offerings AS co', 'c.course_id', '=', 'co.course_id')
@@ -163,6 +167,8 @@ class AjaxController extends Controller
                 ->where('t.term_id', $req->term_id)
                 ->select("course_id");
             $unassignedcourses = DB::table('courses AS c')
+                ->leftjoin('course_instructors AS ci', 'c.course_id', '=', 'ci.course_id')
+                ->where('ci.intake_no', $intake_no->intake_no)
                 ->where('c.term_no', $term_no[0]->term_no)
                 ->whereNotIn('c.course_id', $query)
                 ->get();

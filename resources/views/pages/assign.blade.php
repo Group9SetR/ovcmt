@@ -183,10 +183,8 @@
                                                 data: {"course_id": courseToPass},
                                                 dataType: 'json',
                                                 success: function (data) {
-                                                    $('#selected_instructor_id').css('visibility', 'visible').empty();
-                                                    $('#selected_ta_id').css('visibility', 'visible').empty();
-                                                    $('#assignInstructBtn').css('visibility', 'visible');
-                                                    $('#assignTaBtn').css('visibility', 'visible');
+                                                    $('#selected_instructor_id').empty();
+                                                    $('#selected_ta_id').empty();
                                                     $('#noInstructorsMsg').empty();
                                                     $('#noTasMsg').empty();
 
@@ -198,17 +196,24 @@
                                                         var taDropdown = "<option value='" + data['tasbycourse'][i]['instructor_id'] + "'>" + data['tasbycourse'][i]['first_name'] + "</option>";
                                                         $('#selected_ta_id').append(taDropdown);
                                                     }
+
                                                     if ($('#selected_instructor_id').is(':empty')){
                                                         var msg = "No available instructors for this course.";
                                                         $('#selected_instructor_id').css('visibility', 'hidden');
                                                         $('#assignInstructBtn').css('visibility', 'hidden');
                                                         $('#noInstructorsMsg').append(msg);
+                                                    } else {
+                                                        $('#selected_instructor_id').css('visibility', 'visible');
+                                                        $('#assignInstructBtn').css('visibility', 'visible');
                                                     }
                                                     if ($('#selected_ta_id').is(':empty')){
                                                         var msg = "No available TAs for this course.";
                                                         $('#selected_ta_id').css('visibility', 'hidden');
                                                         $('#assignTaBtn').css('visibility', 'hidden');
                                                         $('#noTasMsg').append(msg);
+                                                    } else {
+                                                        $('#selected_ta_id').css('visibility', 'visible');
+                                                        $('#assignTaBtn').css('visibility', 'visible');
                                                     }
                                                 }
                                             });
