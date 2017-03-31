@@ -82,4 +82,8 @@ html, body {
     width :600px;
 }
 
+.panel-heading.color-panel {
+    color: white;
+}
+
 
