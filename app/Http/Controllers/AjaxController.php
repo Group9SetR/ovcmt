@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\CourseInstructor;
+use App\CourseOffering;
 use App\InstructAvail;
 use App\Instructor;
 use App\Term;
@@ -146,14 +147,6 @@ class AjaxController extends Controller
     public function getCourseOfferingsByTerm(Request $req)
     {
         //at this point course_offerings is already set, just a intake_no update is required
-        $term_no = DB::table('terms AS t')
-            ->select('t.term_no')
-            ->where('t.term_id', $req->term_id)
-            ->get();
-        $intake_no = DB::table('terms')
-            ->select('intake_no')
-            ->where('term_id', $req->term_id)
-            ->first();
         if ($req->ajax() && isset($req->term_id)) {
             $assignedcourses = DB::table('courses AS c')
                 ->join('course_offerings AS co', 'c.course_id', '=', 'co.course_id')
@@ -162,15 +155,13 @@ class AjaxController extends Controller
                 ->select('c.course_id AS course_id', 'co.instructor_id as instructor_id', 'i.first_name as first_name',
                     'i.email as email', 'co.intake_no AS intake_no', 'co.ta_id AS ta_id')
                 ->get();
-            $query = DB::table('course_offerings AS co')
-                ->join('terms AS t', 'co.term_id', '=', 't.term_id')
-                ->where('t.term_id', $req->term_id)
-                ->select("course_id");
-            $unassignedcourses = DB::table('courses AS c')
-                ->leftjoin('course_instructors AS ci', 'c.course_id', '=', 'ci.course_id')
-                ->where('ci.intake_no', $intake_no->intake_no)
-                ->where('c.term_no', $term_no[0]->term_no)
-                ->whereNotIn('c.course_id', $query)
+            $query = CourseOffering::where('term_id', $req->term_id)
+                ->pluck("course_id")
+                ->toArray();
+            $term = Term::where('term_id', $req->term_id)->first();
+            $unassignedcourses = DB::table('courses')
+                ->whereNotIn('course_id', $query)
+                ->where('term_no', $term->term_no)
                 ->get();
             return response()->json(array("assignedcourses" => $assignedcourses, "unassignedcourses" => $unassignedcourses), 200);
         } else {

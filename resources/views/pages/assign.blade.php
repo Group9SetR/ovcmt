@@ -110,6 +110,7 @@
                                 data: {"term_id": term_id},
                                 dataType: 'json',
                                 success: function (data) {
+                                    console.log(data['query']);
                                     $('#assigned').empty();
                                     for (let i = 0; i < data['assignedcourses'].length; i++) {
                                         var term = $('#selected_term_id').val();
