@@ -28,6 +28,7 @@ class AssignController extends Controller
         if(isset($req->ta_id)) {
             $courseoffering = CourseOffering::firstOrNew(['term_id' => $req->term_id, 'course_id' => $req->course_id, 'intake_no' => $intake_no]);
             $courseoffering->ta_id = $req->ta_id;
+            $courseoffering->instructor_id = $req->ta_id;
             $courseoffering->save();
         } else if (isset($req->instructor_id)) {
             $courseoffering = CourseOffering::firstOrNew(['term_id' => $req->term_id, 'course_id' => $req->course_id, 'intake_no' => $intake_no]);
