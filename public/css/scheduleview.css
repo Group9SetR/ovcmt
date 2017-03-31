@@ -1,13 +1,38 @@
 #schedule_view_table {
     table-layout:fixed;
 }
-
-#schedule_view_table td{
-    height:150px;
+#schedule_view_table td {
+    height:250px;
+}
+#schedule_view_table td div{
+    height:125px;
 }
 
 #schedule_view_table td span {
     vertical-align: top;
     text-align:left;
-    float: left;
+    float:left;
+}
+
+#schedule_view_table td div div.panel {
+    height:120px;
+    padding-top:3px;
+    padding-bottom:3px;
+}
+
+#schedule_view_table td div div.panel div.panel-heading {
+    height:30px;
+    padding-top:5px;
+    padding-bottom:5px;
+}
+
+#schedule_view_table td div div.panel div.panel-body {
+    height:80px;
+}
+
+.colorblock {
+    /*TODO make this show a square, not a massive line*/
+    height:10px;
+    width:10px;
+    float:left;
 }

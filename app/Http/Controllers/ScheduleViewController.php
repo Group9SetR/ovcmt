@@ -32,14 +32,14 @@ class ScheduleViewController extends Controller
         $amCourses = DB::table('rooms_by_days AS r')
             ->leftjoin('course_offerings AS co', 'r.am_crn', '=', 'co.crn')
             ->join('courses AS c', 'co.course_id', '=', 'c.course_id')
-            ->select('r.room_id', 'c.course_id', 'r.cdate')
+            ->select('r.room_id', 'c.course_id', 'r.cdate', 'c.color')
             ->whereMonth('r.cdate', $date->format('n'))
             ->whereYear('r.cdate', $date->format('Y'))
             ->get();
         $pmCourses = DB::table('rooms_by_days AS r')
             ->leftjoin('course_offerings AS co', 'r.pm_crn', '=', 'co.crn')
             ->join('courses AS c', 'co.course_id', '=', 'c.course_id')
-            ->select('r.room_id', 'c.course_id', 'r.cdate')
+            ->select('r.room_id', 'c.course_id', 'r.cdate','c.color')
             ->whereMonth('r.cdate', $date->format('n'))
             ->whereYear('r.cdate', $date->format('Y'))
             ->get();

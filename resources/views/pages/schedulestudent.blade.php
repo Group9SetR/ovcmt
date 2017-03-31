@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.viewscheduleapp')
 
 @section('content')
 <div class="container-fluid">
@@ -59,7 +59,8 @@
                             @endfor
                         @else
                             @for($j=0; $j<5; $j++)
-                                <td><span>{{$weeks[$i][$j]}}</span>
+                                <td>
+                                    <span>{{$weeks[$i][$j]}}</span>
                                     <div class="am"></div>
                                     <div class="pm"></div>
                                 </td>
@@ -71,17 +72,33 @@
                 </table>
                 @foreach($courses['am_courses'] as $amcourse)
                     <script>
-                        var panel = new Panel('<?php echo $amcourse->course_id;?>', '<?php echo $amcourse->room_id;?>');
-                        panel.init();
+                        var course_id = '<?php echo $amcourse->course_id;?>';
+                        var room_id =  '<?php echo $amcourse->room_id;?>';
+                        var color = '<?php echo $amcourse->color;?>'
                         var date = new Date('<?php echo $amcourse->cdate;?>').getDate()+1;
                         var dates = document.getElementsByTagName('span');
                         for(var i=0; i<dates.length; i++) {
                             if(dates.item(i).innerHTML == date) {
-                                dates.item(i).parentNode.childNodes[2].append(panel.get());
-                                console.log(dates.item(i).parentNode.childNodes[2]);
+                                dates.item(i).nextElementSibling.append(new Panel(course_id, room_id, color));
+                                break;
                             }
                         }
+                    </script>
+                @endforeach
 
+                @foreach($courses['pm_courses'] as $pmcourse)
+                    <script>
+                        var course_id = '<?php echo $pmcourse->course_id;?>';
+                        var room_id =  '<?php echo $pmcourse->room_id;?>';
+                        var color = '<?php echo $pmcourse->color;?>'
+                        var date = new Date('<?php echo $pmcourse->cdate;?>').getDate()+1;
+                        var dates = document.getElementsByTagName('span');
+                        for(var i=0; i<dates.length; i++) {
+                            if(dates.item(i).innerHTML == date) {
+                                dates.item(i).nextElementSibling.nextElementSibling.append(new Panel(course_id, room_id, color));
+                                break;
+                            }
+                        }
                     </script>
                 @endforeach
         </div>
