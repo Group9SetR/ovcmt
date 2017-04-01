@@ -13,7 +13,7 @@
                     <select name="selected_term_id" id="selected_term_id" class="form-control">
                         @foreach ($terms as $term)
                             <option value="{{$term->term_id}}">
-                                {{$term->intake_no}}{{DateTime::createFromFormat('Y-m-d', $term->program_start)->format('Y')}}
+                                {{DateTime::createFromFormat('Y-m-d', $term->program_start)->format('Y')}}{{$term->intake_no}}
                                 Term {{$term->term_no}} Start:{{$term->term_start_date}} </option>
                         @endforeach
                     </select>

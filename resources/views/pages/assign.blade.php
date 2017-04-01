@@ -12,23 +12,17 @@
             <div class="col-sm-10">
                 <h4><small>Select a Term</small></h4>
                 <hr>
-                <div class="container">
-                    <div class="row" id="term_selector">
-                        {!! Form::open(['url' => '', 'class' => 'form-inline', 'id' => 'select_term']) !!}
-                        <div class="col-sm-5" id="assign_select_from">
-                            <select name="selected_term_id" id="selected_term_id">
-                                @foreach ($terms as $term)
-                                    <option value={{$term->term_id}}>Term Id: {{$term->term_id}}, Term Number:{{$term->term_no}},
-                                        Intake Number:{{$term->intake_id}}, Start Date:{{$term->term_start_date}} </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-sm-2">
-                            {!! Form::submit('Choose Term',['class'=> 'btn btn-primary form-inline']) !!}
-                        </div>
-                        {!! Form::close() !!}
-                    </div>
+                {!! Form::open(['url' => '', 'class' => 'form-inline', 'id' => 'select_term']) !!}
+                <div class="form-inline">
+                    <select name="selected_term_id" id="selected_term_id" class="form-control">
+                        @foreach ($terms as $term)
+                            <option value={{$term->term_id}}>Term Id: {{$term->term_id}}, Term Number:{{$term->term_no}},
+                                Intake Number:{{$term->intake_id}}, Start Date:{{$term->term_start_date}} </option>
+                        @endforeach
+                    </select>
+                    {!! Form::submit('Choose Term',['class'=> 'btn btn-primary form-inline']) !!}
                 </div>
+                {!! Form::close() !!}
 
                 <div class="modal fade" id="assignCoursesToInstructor" tabindex="-1" role="dialog">
                     <div class="modal-dialog">
@@ -116,13 +110,14 @@
                                             + "<div class='panel-body' id='panel" + i + "'>"
                                             + "</div></div>";
                                         $('#assigned').append(panel);
-                                        if (data['assignedcourses'][i]['instructor_id'] != null) {
+                                        if (data['assignedcourses'][i]['instructor_id'] != null && data['assignedcourses'][i]['instructor_id'] != 0) {
+                                            console.log(data['assignedcourses'][i]['instructor_id']);
                                             $('#heading' + i + "i").css('color', 'blue');
                                             $('#heading' + i + "i").append(document.createTextNode("[Instructor] "));
                                             $('#panel' + i).append(document.createTextNode("Instructor: " + data['assignedcourses'][i]['first_name']));
                                             $('#panel' + i).append(document.createElement('br'));
                                         }
-                                        if(data['assignedcourses'][i]['ta_id'] != null) {
+                                        if(data['assignedcourses'][i]['ta_id'] != null && data['assignedcourses'][i]['ta_id'] != 0) {
                                             $('#heading' + i + "t").css('color', 'green');
                                             $('#heading' + i + "t").append(document.createTextNode("[TA]"));
                                             $('#panel' + i).append(document.createTextNode("TA: " + data['assignedcourses'][i]['ta_first_name']));
