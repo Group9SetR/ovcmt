@@ -51,9 +51,9 @@
                                             data-target="#editIntakeModal"
                                             data-start_date = "{{$intake->start_date}}"
                                             data-intake_no="{{$intake->intake_no}}">Edit</button></td>
-                                    <td><button class="btn btn-danger open-DeleteCourseDialog"
+                                    <td><button class="btn btn-danger open-DeleteIntakeDialog"
                                                  data-toggle="modal"
-                                                 data-target="#deleteCourseModal">Delete</button>
+                                                 data-target="#deleteIntakeModal">Delete</button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -108,6 +108,7 @@
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <table class="table table-bordered table-condensed">
+                                                {!! Form::hidden('modal_intakeid_delete', '', ['id'=>'modal_intakeid_delete']) !!}
                                                 {!! Form::submit('Confirm',['class'=> 'btn btn-info',
                                                                  'id' => 'deleteIntakeBtn']) !!}
                                             </table>
@@ -130,6 +131,14 @@
                                 $('.modal-body #modal_start_date').attr('value', $(this).data('start_date'));
                                 $('.modal-body #modal_intake_id').attr('value', $(this).data('id')).text();
                                 $('.modal-body #modal_intake_no').attr('value', $(this).data('intake_no')).text();
+                            });
+
+                            $(document).on('click', '.open-DeleteIntakeDialog', function() {
+                                document.getElementById('deleteIntakeForm').reset();
+                                var intake_id = $(this).parent().siblings(":first").text();
+                                console.log(intake_id);
+
+                                $('.modal-body #modal_intakeid_delete').attr('value', intake_id);
                             });
                         </script>
                     </div>

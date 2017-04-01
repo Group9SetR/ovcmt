@@ -87,6 +87,7 @@
                 <table class="table table-striped table-bordered table-hover table-condensed text-center ">
                     <thead>
                     <tr class = "success">
+                        <th class="text-center">ID</th>
                         <th class="text-center">Name</th>
                         <th class="text-center">Email</th>
                         <th class="text-center">Delete</th>
@@ -96,17 +97,60 @@
 
                     @foreach($admins as $admin)
                         <tr>
+                            <td class="text-center">{{$admin->id}}</td>
                             <td class="text-center">{{$admin->name}}</td>
                             <td class="text-center">{{$admin->email}}</td>
-                            <td class="text-center"><button class="btn btn-danger">Delete</button></td>
+                            <td class="text-center">
+                                <button class=" btn btn-danger open-DeleteAdminUserDialog"
+                                        data-toggle="modal"
+                                        data-target="#deleteAdminUserModal">Delete</button>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
                 </div>
+
+                <div class="modal fade" id="deleteAdminUserModal" tabindex="-1" role="dialog" aria-labeleledby="deleteAdminUserModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="deleteAdminUserModalLabel">Delete Admin User</h4>
+                            </div>
+
+                            {!! Form::open(['url' => '/adminUserDelete', 'id' => 'adminUserDeleteForm']) !!}
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <table class="table table-bordered table-condensed">
+                                        {!! Form::hidden('modal_adminUserId_delete', '', ['id'=>'modal_adminUserId_delete']) !!}
+                                        {!! Form::submit('Confirm',['class'=> 'btn btn-info',
+                                                         'id' => 'deleteAdminBtn']) !!}
+                                    </table>
+                                    {!! Form::close() !!}
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="closeDeleteCourseBtn" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>
     </div>
+
+    <script>
+        $(document).on('click', '.open-DeleteAdminUserDialog', function() {
+            document.getElementById('adminUserDeleteForm').reset();
+            var user_id = $(this).parent().siblings(":first").text();
+            console.log(user_id);
+
+            $('.modal-body #modal_adminUserId_delete').attr('value', user_id);
+        });
+    </script>
 
 @endsection

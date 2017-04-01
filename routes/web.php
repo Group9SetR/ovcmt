@@ -36,7 +36,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     Route::post('/manageInstructor', 'InstructorController@store');
     Route::post('/editInstructor', 'InstructorController@edit');
     Route::post('/showInstructorDetails', 'AjaxController@instructorDetails');
-    Route::post('/deleteCourseInstructor', 'InstructorController@delete');
+    Route::post('/manageInstructorDelete', 'InstructorController@deleteInstructor');
 
     /* CourseController */
     Route::get('/manageCourse', 'CourseController@manageCourse');
@@ -83,6 +83,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     /* Admin User Controller */
     Route::get('/addUser', 'AddUserController@index');
     Route::post('/addUsers', 'AddUserController@store');
+    Route::post('/adminUserDelete', 'AddUserController@deleteAdminUser');
 
 /* Staff Routes*/
 Route::group(['middleware' => 'App\Http\Middleware\StaffMiddleware'], function()

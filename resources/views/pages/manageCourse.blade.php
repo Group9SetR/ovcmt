@@ -196,6 +196,7 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <table class="table table-bordered table-condensed">
+                                    {!! Form::hidden('modal_courseid_delete', '', ['id'=>'modal_courseid_delete']) !!}
                                     {!! Form::submit('Confirm',['class'=> 'btn btn-info',
                                                      'id' => 'deleteCourseBtn']) !!}
                                 </table>
@@ -251,7 +252,7 @@
         var course_id = $(this).parent().siblings(":first").text();
         console.log(course_id);
 
-        $('.modal-body #modal_courseid_name').attr('value', course_id);
+        $('.modal-body #modal_courseid_delete').attr('value', course_id);
     });
 
 

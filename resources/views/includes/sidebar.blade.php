@@ -15,9 +15,7 @@
     });
 </script>
 <br>
-<ul class="nav nav-pills nav-stacked sidebar">
-    <li><a href="{{ url('/masterscheduleview') }}" onClick="">Master Schedule</a></li>
-</ul><br>
+
 
 <ul class="nav nav-pills nav-stacked sidebar">
     <li id="expand" class="active"><a href="#schedule" data-toggle="collapse" id="manageclick">Manage Schedule</a></li>
@@ -29,7 +27,7 @@
         </ul>
     </div>
 </ul><br>
-
+<br>
 <ul class="nav nav-pills nav-stacked sidebar">
     <li><a href="{{ url('/manageInstructor') }}" onClick="">Manage Instructor</a></li>
 </ul><br>
@@ -49,7 +47,7 @@
 <ul class="nav nav-pills nav-stacked sidebar">
     <li><a href="{{ url('/manageStudents') }}" onClick="">Manage Students</a></li>
 </ul><br>
-
+<br>
 <ul class="nav nav-pills nav-stacked sidebar">
     <li><a href="{{ url('/addUser') }}" onClick="">Add User</a></li>
 </ul><br>

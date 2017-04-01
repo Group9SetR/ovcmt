@@ -42,6 +42,14 @@ class AddUserController extends Controller
         ]);
     }
 
+    public function deleteAdminUser(Request $req) {
+        if (User::find($req->modal_adminUserId_delete)) {
+            $user = User::find($req->modal_adminUserId_delete);
+            $user->delete();
+        }
+        return redirect()->action('AddUserController@index');
+    }
+
     public function index(){
         $admins = DB::table('users')
             ->where('usertype', 'admin')

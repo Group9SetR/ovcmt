@@ -31,13 +31,8 @@
                                         var panelheading = document.createElement('div');
                                         var panelbody = document.createElement('div');
                                         panel.className=['panel panel-default'];
-                                        panelheading.className=('panel-heading');
-                                        var colordiv = document.createElement('div');
-                                        colordiv.style.display='inline-block'
-                                        colordiv.style.width='10px';
-                                        colordiv.style.height = '10px';
-                                        colordiv.style.background = roombyday['am_color'];
-                                        panelheading.append(colordiv);
+                                        panelheading.className=('panel-heading color-panel');
+                                        panelheading.style.backgroundColor=roombyday['am_color'];
                                         panelheading.append(document.createElement('p').appendChild(document.createTextNode(
                                             ' ' + roombyday['am_course_id']+ ' Intake:' + roombyday['am_intake_no'])));
                                         panelbody.className=('panel-body');
@@ -55,13 +50,8 @@
                                         var panelheading = document.createElement('div');
                                         var panelbody = document.createElement('div');
                                         panel.className=['panel panel-default'];
-                                        panelheading.className=('panel-heading');
-                                        var colordiv = document.createElement('div');
-                                        colordiv.style.display='inline-block'
-                                        colordiv.style.width='10px';
-                                        colordiv.style.height = '10px';
-                                        colordiv.style.background = roombyday['pm_color'];
-                                        panelheading.append(colordiv);
+                                        panelheading.className=('panel-heading color-panel');
+                                        panelheading.style.backgroundColor=roombyday['pm_color'];
                                         panelheading.append(document.createElement('p').appendChild(document.createTextNode(
                                             ' ' + roombyday['pm_course_id']+ ' Intake:' + roombyday['pm_intake_no'])));
                                         panelbody.className=('panel-body');
