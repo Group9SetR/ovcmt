@@ -12,6 +12,8 @@
         <div class="col-sm-10">
             <h4><small>Display schedule</small></h4>
             <hr>
+            <!-- TODO Display only schedules by term-->
+            <!-- TODO Date picker -->
             <div>
                 {{Form::open(['url' => '',
                                           'id' => 'dateSelectForm'])}}

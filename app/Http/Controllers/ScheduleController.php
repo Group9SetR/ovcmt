@@ -79,7 +79,8 @@ class ScheduleController extends Controller
             })
             ->join('instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
             ->select('co.crn AS crn','co.course_id AS course_id', 'c.sessions_days AS sessions_days',
-                     'co.instructor_id AS instructor_id', 'co.ta_id AS ta_id','i.first_name AS name')
+                     'co.instructor_id AS instructor_id', 'co.ta_id AS ta_id','i.first_name AS name',
+                     'c.color')
             ->where('co.term_id', $term_id)
             ->get();
         return $courseofferings;
@@ -105,13 +106,17 @@ class ScheduleController extends Controller
     public function getScheduleByWeekQuery($year, $week, $time)
     {
         return DB::table('courses AS c')
-            ->join('course_instructors AS ci', 'c.course_id', '=', 'ci.course_id')
+            ->join('course_offerings AS co', 'c.course_id', '=', 'co.course_id')
+            ->join('course_instructors AS ci', function($join) {
+                $join->on('co.course_id', '=',  'ci.course_id');
+                $join->on('co.instructor_id','=', 'ci.instructor_id');
+                $join->on('co.intake_no','=', 'ci.intake_no');
+            })
             ->join('instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
-            ->join('course_offerings AS co', 'i.instructor_id', '=', 'co.instructor_id')
             ->join('rooms_by_days AS r', 'co.crn', '=', "r."."$time"."_crn")
             ->join('calendar_dates AS ca', 'r.cdate','=','ca.cdate')
             ->select('r.room_id AS room_id', 'r.cdate AS date', "r."."$time"."_crn AS crn",'co.course_id AS course_id',
-                'i.first_name AS name',
+                'i.first_name AS name', 'c.color',
                 'ca.cdayOfWeek AS cdayOfWeek', DB::raw("'$time' AS time"))
             ->where([
                 ["ca.cyear", $year],
