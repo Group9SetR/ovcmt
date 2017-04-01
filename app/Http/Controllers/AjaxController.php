@@ -191,7 +191,7 @@ class AjaxController extends Controller
                                 '<td>'.$course->sessions_days.'</td>'.
                                 '<td>'.$course->course_type.'</td>'.
                                 '<td>'.$course->term_no.'</td>'.
-                                '<td style="background-color:'. $course->color.';"></td>'.
+                                '<td class="color-search" style="background-color:'. $course->color . ';">' . $course->color . '</td>'.
                                 '<td>'. '<button class="btn btn-primary open-EditCourseDialog"
                                             data-toggle="modal"
                                             data-target="#editCourseModal"

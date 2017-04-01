@@ -86,11 +86,11 @@
             </table>
             <script type = "text/javascript">
                 $('#search').on('keyup',function(){
-                    $value = $(this).val();
+                    value = $(this).val();
                     $.ajax ({
                         type : 'GET',
                         url  : '/searchCourse',
-                        data: { 'search' : $value },
+                        data: { 'search' : value },
                         success: function (data) {
                             $('.searchCourseBody').html(data);
                         }
@@ -167,7 +167,7 @@
                                     </tr>
                                     <tr>
                                         <td>{!! Form::label('color', 'Course Color:') !!}</td>
-                                        <td>{{  Form::input('color', 'color', null, ['id' => 'color']) }}</td>
+                                        <td>{{  Form::input('color', 'color', null, ['id' => 'modal_color']) }}</td>
                                     </tr>
                                 </table>
                             </div>
@@ -229,12 +229,14 @@
         var session_days =  $(this).parent().siblings(":nth-child(2)").text();
         var course_type = $(this).parent().siblings(":nth-child(3)").text();
         var term_no = $(this).parent().siblings(":nth-child(4)").text();
+        var color = $(this).parent().siblings(":nth-child(5)").text();
 
         //TODO: repopulate color
         // retaining original values when edit modal comes up
         $('.modal-body #modal_courseid_name').attr('value', course_id);
         $('.modal-body #modal_sessionDays_name').attr('value', session_days);
-        $('.modal-body #modal_courseType_name').val(course_type);
+        $('select[name="course_type').val("");
+        $('select[name="course_type"]').val(course_type);
         if (term_no == 1) {
             $('.modal-body #modal_termNo_name1').attr('checked', 'checked');
         } else if (term_no == 2) {
@@ -245,6 +247,7 @@
             // value is none other than 4 folks
             $('.modal-body #modal_termNo_name4').attr('checked', 'checked');
         }
+        $('.modal-body #modal_color').attr('value', color);
     });
 
     $(document).on('click', '.open-DeleteCourseDialog', function() {
