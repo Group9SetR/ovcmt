@@ -92,9 +92,7 @@
                                     for (let i = 0; i < data['assignedcourses'].length; i++) {
                                         var term = $('#selected_term_id').val();
                                         var panel = "<div class='panel panel-default' id='" + data['assignedcourses'][i]['course_id'] + "-assigned'>" +
-                                            "<div class='panel-heading'>"
-                                            + "<div style='display:inline-block;width:10px;height:10px;background-color:"
-                                            + data['assignedcourses'][i]['color'] + ";'></div>&nbsp;"
+                                            "<div class='panel-heading color-panel' style='background-color:"+ data['assignedcourses'][i]['color'] + ";'>"
                                             + data['assignedcourses'][i]['course_id']
                                             + " - <span id='heading" + i + "i'></span>"
                                             + "<span id='heading" + i + "t'></span>"
@@ -112,13 +110,13 @@
                                         $('#assigned').append(panel);
                                         if (data['assignedcourses'][i]['instructor_id'] != null && data['assignedcourses'][i]['instructor_id'] != 0) {
                                             console.log(data['assignedcourses'][i]['instructor_id']);
-                                            $('#heading' + i + "i").css('color', 'blue');
+                                            $('#heading' + i + "i").css('color', 'white');
                                             $('#heading' + i + "i").append(document.createTextNode("[Instructor] "));
                                             $('#panel' + i).append(document.createTextNode("Instructor: " + data['assignedcourses'][i]['first_name']));
                                             $('#panel' + i).append(document.createElement('br'));
                                         }
                                         if(data['assignedcourses'][i]['ta_id'] != null && data['assignedcourses'][i]['ta_id'] != 0) {
-                                            $('#heading' + i + "t").css('color', 'green');
+                                            $('#heading' + i + "t").css('color', 'white');
                                             $('#heading' + i + "t").append(document.createTextNode("[TA]"));
                                             $('#panel' + i).append(document.createTextNode("TA: " + data['assignedcourses'][i]['ta_first_name']));
                                         }
@@ -127,9 +125,9 @@
                                     $('#unassigned').empty();
                                     for (let i = 0; i < data['unassignedcourses'].length; i++) {
                                         var panel = "<div class='panel panel-default' id='" + data['unassignedcourses'][i]['course_id']
-                                            + "'><div class='panel-heading'>"
-                                            + "<div style='display:inline-block;width:10px;height:10px;background-color:"
-                                            + data['unassignedcourses'][i]['color'] + ";'></div>&nbsp;" + data['unassignedcourses'][i]['course_id']
+                                            + "'>"
+                                            + "<div class='panel-heading color-panel' style='background-color:"+ data['unassignedcourses'][i]['color'] + ";'>"
+                                            + data['unassignedcourses'][i]['course_id']
                                             + "</div><div class='panel-body'>Session Days: " + + data['unassignedcourses'][i]['sessions_days']
                                             + " Type: " + data['unassignedcourses'][i]['course_type']
                                             + " Term No: " + data['unassignedcourses'][i]['term_no']

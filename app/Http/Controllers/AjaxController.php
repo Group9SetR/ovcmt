@@ -6,7 +6,6 @@ use App\Course;
 use App\CourseInstructor;
 use App\CourseOffering;
 use App\InstructAvail;
-use App\Instructor;
 use App\Term;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
@@ -192,7 +191,7 @@ class AjaxController extends Controller
                                 '<td>'.$course->sessions_days.'</td>'.
                                 '<td>'.$course->course_type.'</td>'.
                                 '<td>'.$course->term_no.'</td>'.
-                                '<td>'.$course->color.'</td>'.
+                                '<td style="background-color:'. $course->color.';"></td>'.
                                 '<td>'. '<button class="btn btn-primary open-EditCourseDialog"
                                             data-toggle="modal"
                                             data-target="#editCourseModal"
