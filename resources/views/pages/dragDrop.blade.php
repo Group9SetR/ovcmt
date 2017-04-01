@@ -119,11 +119,15 @@
                                 var dayOfWeek ='<?php echo $timeslot->cdayOfWeek;?>' - 2; //decrement to account for array and MySQL
                                 var room_id ='<?php echo $timeslot->room_id;?>';
                                 var crn='<?php echo $timeslot->crn;?>';
+                                var start_year = '<?php $date= DateTime::createFromFormat('Y-m-d', $term->start_date);
+                                                            echo $date->format('Y');?>';
+                                var intake_no = '<?php echo $term->intake_no;?>';
+                                var color = '<?php echo $timeslot->color;?>';
                                 var course_id ='<?php echo $timeslot->course_id;?>';
                                 var timeSlotName = room_id+'-'+'<?php echo $timeslot->time;?>'+'[]';
                                 var instructor = '<?php echo $timeslot->name;?>';
                                 //TODO set to not hardcoded practical
-                                appendToTimeSlot(CourseOfferingPanel(course_id, crn, instructor),
+                                appendToTimeSlot(new CourseOfferingPanel(course_id, crn, instructor, intake_no, start_year, color),
                                     timeSlotName, dayOfWeek);
                             </script>
                         @endforeach
@@ -133,9 +137,13 @@
                             <script>
                                 var course_id = '<?php echo $course->course_id;?>';
                                 var crn = '<?php echo $course->crn;?>';
+                                var start_year = '<?php $date= DateTime::createFromFormat('Y-m-d', $term->start_date);
+                                    echo $date->format('Y');?>';
+                                var intake_no = '<?php echo $term->intake_no;?>';
+                                var color = '<?php echo $course->color;?>';
                                 var sessions = '<?php echo $courseOfferingsSessions[$course->crn];?>';
                                 var instructor = '<?php echo $course->name;?>';
-                                appendToCourseListings(CourseListingPanel(course_id, crn, instructor, sessions));
+                                appendToCourseListings(new CourseListingPanel(course_id, crn, instructor, intake_no, start_year, color, sessions));
                             </script>
                         @endforeach
                     </div>
