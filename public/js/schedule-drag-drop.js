@@ -74,7 +74,7 @@ function CourseListingPanel (course_id, crn, instructor, intake_no, start_year, 
 function createCoursePanel()
 {
     var coursePanel= document.createElement('DIV');
-    coursePanel.className=['panel panel-default drag_course_offering'];
+    coursePanel.className=['panel panel-default drag_course_offering color_panel'];
     coursePanel.setAttribute('id', 'slid');
     coursePanel.setAttribute('draggable', 'true');
     coursePanel.setAttribute('ondragstart','drag(event)');
@@ -87,6 +87,7 @@ function createCoursePanelHeading(course_id, intake_no, start_year, color)
 {
     var coursePanelHeading=document.createElement('DIV');
     coursePanelHeading.className='panel-heading';
+    coursePanelHeading.style.backgroundColor = color;
     //var colorblock = document.createElement('DIV');
     //colorblock.className='colorblock';
     //colorblock.style.backgroundColor = color;
