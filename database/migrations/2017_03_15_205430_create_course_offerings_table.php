@@ -14,9 +14,9 @@ class CreateCourseOfferingsTable extends Migration
     public function up()
     {
         Schema::create('course_offerings', function (Blueprint $table) {
-            $table->increments('crn');
-            $table->integer('term_id');
-            $table->integer('instructor_id');
+            $table->increments('crn')->length(10)->unsigned();;
+            $table->integer('term_id')->length(10)->unsigned();;
+            $table->integer('instructor_id')->length(10)->unsigned();;
             $table->string('course_id');
             $table->char('intake_no');
             $table->integer('ta_id')->nullable();
