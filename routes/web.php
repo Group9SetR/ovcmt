@@ -83,6 +83,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     /* Admin User Controller */
     Route::get('/addUser', 'AddUserController@index');
     Route::post('/addUsers', 'AddUserController@store');
+    Route::post('/adminUserDelete', 'AddUserController@deleteAdminUser');
 
 /* Staff Routes*/
 Route::group(['middleware' => 'App\Http\Middleware\StaffMiddleware'], function()
