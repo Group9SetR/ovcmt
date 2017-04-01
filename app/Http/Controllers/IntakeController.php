@@ -85,7 +85,7 @@ class IntakeController extends Controller
         $startdate = DateTime::createFromFormat('Y-m-d', $program_start);
         $start_year = idate('Y', $startdate->getTimestamp());
         //INTAKE A
-        if($startdate->format('m') === 9) {
+        if($startdate->format('m') == 9) {
             $term_starts['term1'] = $program_start;
             $term_starts['term2'] = $this->makeTermStartDate(++$start_year, "1");
             $term_starts['term3'] = $this->makeTermStartDate($start_year, "9");
@@ -101,7 +101,7 @@ class IntakeController extends Controller
 
     public function makeTermStartDate($year, $month)
     {
-        return DateTime::createFromFormat('Y-m-d', "$year-$month-01");
+        return DateTime::createFromFormat('Y-m-d', "$year"."-"."$month"."-01");
     }
 
     public function validateIntake(Intake $intake)

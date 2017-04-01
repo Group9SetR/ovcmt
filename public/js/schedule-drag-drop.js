@@ -8,15 +8,16 @@
  * @param instructor
  * @constructor
  */
-function CoursePanel (course_id, crn, instructor)
+function CoursePanel (course_id, crn, instructor, intake_no, start_year, color)
 {
     this.crn = crn;
     this.coursePanel = createCoursePanel();
-    this.coursePanelHeading = createCoursePanelHeading(course_id, crn);
+    this.coursePanelHeading = createCoursePanelHeading(course_id, intake_no, start_year, color);
     this.coursePanelBody = createCoursePanelBody(instructor);
     this.init = function () {
         this.coursePanel.append(this.coursePanelHeading);
         this.coursePanel.append(this.coursePanelBody);
+        this.coursePanel.append(createHiddenCRN(crn));
     };
     this.get = function () {
         return this.coursePanel;
@@ -31,9 +32,9 @@ function CoursePanel (course_id, crn, instructor)
  * @param instructor
  * @constructor
  */
-function CourseOfferingPanel (course_id, crn, instructor)
+function CourseOfferingPanel (course_id, crn, instructor, intake_no, start_year, color)
 {
-    var courseOfferingItem = new CoursePanel(course_id, crn, instructor);
+    var courseOfferingItem = new CoursePanel(course_id, crn, instructor, intake_no, start_year, color);
     courseOfferingItem.coursePanel.classList.add('drag_course_offering_item');
     courseOfferingItem.coursePanelHeading.append(createDeleteCourseButton());
     courseOfferingItem.init();
@@ -61,16 +62,11 @@ function CourseOfferingPanelFromListing (listing)
  * @param sessions
  * @constructor
  */
-function CourseListingPanel (course_id, crn, instructor, sessions)
+function CourseListingPanel (course_id, crn, instructor, intake_no, start_year, color, sessions)
 {
-    var courseListing = new CoursePanel(course_id, crn, instructor);
+    var courseListing = new CoursePanel(course_id, crn, instructor, intake_no, start_year, color);
     courseListing.coursePanel.classList.add('drag_course_listing');
     courseListing.coursePanelBody.append(createSessionsPane(sessions));
-    var hiddenCRN = document.createElement('INPUT');
-    hiddenCRN.setAttribute('type', 'hidden');
-    hiddenCRN.setAttribute('value', crn);
-    hiddenCRN.setAttribute('name', 'listing_crn');
-    courseListing.coursePanel.append(hiddenCRN);
     courseListing.init();
     return courseListing.get();
 }
@@ -87,11 +83,14 @@ function createCoursePanel()
     return coursePanel;
 }
 
-function createCoursePanelHeading(course_id, crn)
+function createCoursePanelHeading(course_id, intake_no, start_year, color)
 {
     var coursePanelHeading=document.createElement('DIV');
     coursePanelHeading.className='panel-heading';
-    coursePanelHeading.append(document.createElement('P').appendChild(document.createTextNode(course_id + ' CRN:' +crn)));
+    //var colorblock = document.createElement('DIV');
+    //colorblock.className='colorblock';
+    //colorblock.style.backgroundColor = color;
+    coursePanelHeading.append(document.createElement('P').appendChild(document.createTextNode(course_id +" "+ start_year+intake_no)));
     return coursePanelHeading;
 }
 
@@ -104,6 +103,14 @@ function createCoursePanelBody(instructor)
     coursePanelBody.append(document.createElement('P').appendChild(document.createTextNode('TA:')));
     coursePanelBody.append(document.createElement('BR'));
     return coursePanelBody;
+}
+
+function createHiddenCRN(crn)
+{
+    var hiddenCRN =  document.createElement('DIV');
+    hiddenCRN.className = ['hidden_crn hide'];
+    hiddenCRN.appendChild(document.createTextNode(crn));
+    return hiddenCRN;
 }
 
 /**
@@ -159,12 +166,16 @@ function onClickDelete(event) {
     var source = event.source || event.srcElement;
     var panelSource = findAncestor(source,'drag_course_offering');
     var inputSource = findChild(findAncestor(panelSource, 'drop-timeslot'), 'timeslot_input');
+
+    var courseOfferingId = $('#'+panelSource.id+' .hidden_crn')[0].textContent;
     panelSource.remove(); //remove the course offering panel
     inputSource.setAttribute('value', 'empty');
-    var courseOfferingId = getCourseIdentifier(source);
     var courseListing = findCourseListing(courseOfferingId);
-    setSessionsDays(courseListing.id, extractSessionsDays(courseListing.id)+1);
-    checkCourseOfferingDisplay(courseListing.id);
+    if(courseListing != false) {
+        setSessionsDays(courseListing.id, extractSessionsDays(courseListing.id)+1);
+        checkCourseOfferingDisplay(courseListing.id);
+    }
+    //else, nothing. panel is simply removed.
 }
 
 function findAncestor (element, className) {
@@ -172,6 +183,12 @@ function findAncestor (element, className) {
     return element;
 }
 
+/**
+ * Return the child element that contains the class name.
+ * @param element
+ * @param className
+ * @returns {Element}
+ */
 function findChild(element, className)
 {
     var child = element.firstElementChild;
@@ -179,20 +196,20 @@ function findChild(element, className)
     return child;
 }
 
-function getCourseIdentifier(element)
-{
-    return findAncestor(element, 'panel-heading').firstChild.textContent;
-}
-
+/**
+ * Returns the course listing panel that matches, false if no match.
+ * @param identifier
+ * @returns {*}
+ */
 function findCourseListing(identifier)
 {
-    var courseOfferingsListed = $('.drag_course_listing .panel-heading');
+    var courseOfferingsListed = $('.drag_course_listing');
     for(var i=0; i<courseOfferingsListed.length; i++) {
-
-        if(courseOfferingsListed[i].innerHTML == identifier){
-            return findAncestor(courseOfferingsListed[i], 'drag_course_offering');
+        if($('#'+courseOfferingsListed[i].id +' .hidden_crn')[0].textContent == identifier) {
+            return courseOfferingsListed[i];
         }
     }
+    return false;
 }
 
 /**
@@ -246,21 +263,19 @@ function drag(ev) {
 function drop(ev, el) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
-
     if(el.childNodes.length > 2) {
         alert("Error: Cannot place more than one entry in a time slot!");
     } else if(!el.classList.contains('drop-timeslot')) {
         alert('Error: you can only drop in empty time slots!');
     } else {
         if(document.getElementById(data).classList.contains('drag_course_listing')) {
-            var transferCRN = $('#'+data+" input[name='listing_crn']").attr('value');
+            var transferCRN = $('#'+data+" .hidden_crn")[0].textContent;
             findChild(el, 'timeslot_input').setAttribute('value', transferCRN);
             var nodeCopy = CourseOfferingPanelFromListing(data);
             var sessionsDays = extractSessionsDays(data)-1;
             setSessionsDays(data,sessionsDays);
             ev.target.appendChild(nodeCopy);
             $('#'+nodeCopy.id+' .drag_course_listing_sessions').remove(); //remove session counter
-            $('#'+nodeCopy.id+" input[name='listing_crn']").remove();
             //add delete button
             $('#'+nodeCopy.id+' .panel-heading').append(createDeleteCourseButton());
             if(sessionsDays == 0) {

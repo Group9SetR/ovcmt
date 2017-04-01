@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.viewscheduleapp')
 
 @section('content')
 <div class="container-fluid">
@@ -12,129 +12,9 @@
         <div class="col-sm-10">
             <h4><small>Display schedule</small></h4>
             <hr>
-
-            <div class="form-group">
-                {!! Form::label('month_id', 'Month:') !!}
-                <select name="schedual_by_month" >
-                        <option value="jan">January</option>
-                        <option value="feb">February</option>
-                        <option value="mar">March</option>
-                        <option value="apr">April</option>
-                        <option value="jan">May</option>
-                        <option value="jun">Jun</option>
-                        <option value="july">July</option>
-                        <option value="agu">Aguest</option>
-                        <option value="sep">September</option>
-                        <option value="oct">October</option>
-                        <option value="nov">November</option>
-                        <option value="dec">December</option>
-
-                </select>
-            </div>
-            <h3>Display Schedule</h3>
-
-                    <table class='table table-bordered' id ="yourTableIdName" >
-                        <colgroup>
-                            <col width="10%">
-                            <col width="10%">
-                            <col width="10%">
-                            <col width="10%">
-                            <col width="10%">
-                            <col width="10%">
-                            <col width="10%">
-                            <col width="10%">
-                        </colgroup>
-                        <thead>
-                        <tr class = "success">
-                            <th>Week</th>
-                            <th>Time</th>
-                            <th>Monday </th>
-                            <th>Tuesday </th>
-                            <th>Wednesday </th>
-                            <th>Thursday </th>
-                            <th>Friday </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        <tr >
-                            <th rowspan="1"> Week1 </th>
-                            <td>AM</td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                        </tr>
-                        <tr>
-                            <th rowspan="1"> Week1 </th>
-                            <td>PM</td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                        </tr>
-                        <tr>
-                            <th rowspan="1"> Week2 </th>
-                            <td>PM</td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-
-                        </tr>
-                        <tr>
-                            <th rowspan="1"> Week2 </th>
-                            <td>PM</td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-
-                        </tr>
-                        <tr>
-                            <th rowspan="1"> Week3 </th>
-                            <td>PM</td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                        </tr>
-                        <tr>
-                            <th rowspan="1"> Week3 </th>
-                            <td>PM</td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                        </tr>
-                        <tr>
-                            <th rowspan="1"> Week4 </th>
-                            <td>PM</td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                        </tr>
-                        <tr>
-                            <th rowspan="1"> Week4 </th>
-                            <td>PM</td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                            <td>C++ Albert </td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-            <div class="col-sm-12 text-right">
+            <!-- TODO Display only schedules by term-->
+            <!-- TODO Date picker -->
+            <div>
                 {{Form::open(['url' => '',
                                           'id' => 'dateSelectForm'])}}
                 {{Form::label('schedule_starting_date', 'Week of:')}}
@@ -143,12 +23,87 @@
                 {{ Form::submit('Choose Starting Date',['class'=> 'btn btn-primary form-inline']) }}
                 {{Form::close()}}
             </div>
+            <h3>Display Schedule</h3>
+                <table class="table table-striped table-bordered table-hover text-center" id="schedule_view_table">
+                    <thead class="thead-default">
+                        <tr class="success">
+                            <th>Mon</th>
+                            <th>Tues</th>
+                            <th>Wed</th>
+                            <th>Thurs</th>
+                            <th>Fri</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @for($i=0; $i<sizeof($weeks);$i++)
+                        <tr class="schedule_wk_{{$i}}">
+                        <!-- first row -->
+                        @if($i==0)
+                            @for($j=0; $j<5-sizeof($weeks[$i]); $j++)
+                                <td></td>
+                            @endfor
+                            @for($j=0; $j<sizeof($weeks[$i]); $j++)
+                                    <td><span>{{$weeks[$i][$j]}}</span>
+                                        <div class="am"></div>
+                                        <div class="pm"></div>
+                                    </td>
+                            @endfor
+                        <!-- last row -->
+                        @elseif($i == sizeof($weeks)-1)
+                            @for($j=0; $j<sizeof($weeks[$i]); $j++)
+                                <td><span>{{$weeks[$i][$j]}}</span>
+                                    <div class="am"></div>
+                                    <div class="pm"></div>
+                                </td>
+                            @endfor
+                            @for($j=0; $j<5-sizeof($weeks[$i]);$j++)
+                                <td></td>
+                            @endfor
+                        @else
+                            @for($j=0; $j<5; $j++)
+                                <td>
+                                    <span>{{$weeks[$i][$j]}}</span>
+                                    <div class="am"></div>
+                                    <div class="pm"></div>
+                                </td>
+                            @endfor
+                        @endif
+                        </tr>
+                    @endfor
+                    </tbody>
+                </table>
+                @foreach($courses['am_courses'] as $amcourse)
+                    <script>
+                        var course_id = '<?php echo $amcourse->course_id;?>';
+                        var room_id =  '<?php echo $amcourse->room_id;?>';
+                        var color = '<?php echo $amcourse->color;?>'
+                        var date = new Date('<?php echo $amcourse->cdate;?>').getDate()+1;
+                        var dates = document.getElementsByTagName('span');
+                        for(var i=0; i<dates.length; i++) {
+                            if(dates.item(i).innerHTML == date) {
+                                dates.item(i).nextElementSibling.append(new Panel(course_id, room_id, color));
+                                break;
+                            }
+                        }
+                    </script>
+                @endforeach
+
+                @foreach($courses['pm_courses'] as $pmcourse)
+                    <script>
+                        var course_id = '<?php echo $pmcourse->course_id;?>';
+                        var room_id =  '<?php echo $pmcourse->room_id;?>';
+                        var color = '<?php echo $pmcourse->color;?>'
+                        var date = new Date('<?php echo $pmcourse->cdate;?>').getDate()+1;
+                        var dates = document.getElementsByTagName('span');
+                        for(var i=0; i<dates.length; i++) {
+                            if(dates.item(i).innerHTML == date) {
+                                dates.item(i).nextElementSibling.nextElementSibling.append(new Panel(course_id, room_id, color));
+                                break;
+                            }
+                        }
+                    </script>
+                @endforeach
         </div>
-
-
-
-
-
     </div>
 </div>
 

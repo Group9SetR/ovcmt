@@ -16,29 +16,21 @@ class TermController extends Controller
                       'break_weeks'=>$req->modal_break_weeks,
                       'exam_weeks'=>$req->modal_exam_weeks,
                       'duration_weeks'=>$req->modal_exam_weeks+$req->modal_break_weeks+$req->modal_course_weeks]);
-        $terms = Term::all();
+        $terms = DB::table('terms AS t')
+            ->join('intakes AS i','t.intake_id', '=', 'i.intake_id')
+            ->select('t.*', 'i.intake_no')
+            ->get();
+
         $intakes = Intake::orderBy('start_date', 'DESC')->get();
         return view('pages.manageTerm', compact('intakes', 'terms'));
     }
 
-    public function createTerm(Request $req)
-    {
-        dd($req);
-        $term_start = $this->makeTermStarts(Intake::find($req->intake_id)->start_date, $req->term_no);
-        $term = new Term;
-        $term->term_no = $req->term_no2;
-        $term->term_start_date = $term_start;
-        $term->course_weeks = $req->course_weeks;
-        $term->break_weeks = $req->break_weeks;
-        $term->exam_weeks = $req->exam_weeks;
-        $term->duration_weeks = $req->course_weeks + $req->break_weeks + $req->exam_weeks;
-        dd($req);
-        $term->save();
-    }
-
     public function searchTerm(Request $req)
     {
-        $terms = Term::where('intake_id', $req->choose_intake)
+        $terms = DB::table('terms AS t')
+            ->join('intakes AS i','t.intake_id', '=', 'i.intake_id')
+            ->select('t.*', 'i.intake_no')
+            ->where('i.intake_id', $req->choose_intake)
             ->get();
         $intakes = Intake::orderBy('start_date', 'DESC')->get();
         return view('pages.manageTerm', compact('intakes', 'terms'));
@@ -89,7 +81,10 @@ class TermController extends Controller
     }
 
     public function index() {
-        $terms = Term::all();
+        $terms =  DB::table('terms AS t')
+            ->join('intakes AS i','t.intake_id', '=', 'i.intake_id')
+            ->select('t.*', 'i.intake_no')
+            ->get();
         $intakes = Intake::orderBy('start_date', 'DESC')->get();
         return view('pages.manageTerm', compact('intakes', 'terms'));
     }
