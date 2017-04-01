@@ -38,8 +38,8 @@ class CourseController extends Controller
     }
 
     public function deleteCourse(Request $req) {
-        if (Course::find($req->course_id3)) {
-            $course = Course::find($req->course_id3);
+        if (Course::find($req->modal_courseid_delete)) {
+            $course = Course::find($req->modal_courseid_delete);
             $course->delete();
         }
         return redirect()->action('CourseController@index');

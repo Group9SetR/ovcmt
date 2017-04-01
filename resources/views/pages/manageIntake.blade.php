@@ -51,9 +51,9 @@
                                             data-target="#editIntakeModal"
                                             data-start_date = "{{$intake->start_date}}"
                                             data-intake_no="{{$intake->intake_no}}">Edit</button></td>
-                                    <td><button class="btn btn-danger open-DeleteCourseDialog"
+                                    <td><button class="btn btn-danger open-DeleteIntakeDialog"
                                                  data-toggle="modal"
-                                                 data-target="#deleteCourseModal">Delete</button>
+                                                 data-target="#deleteIntakeModal">Delete</button>
                                     </td>
                                 </tr>
                             @endforeach
