@@ -40,6 +40,14 @@ class IntakeController extends Controller
         return redirect()->action('IntakeController@index');
     }
 
+    public function deleteIntake(Request $req) {
+        if (Intake::find($req->modal_intakeid_delete)) {
+            $intake = Intake::find($req->modal_intakeid_delete);
+            $intake->delete();
+        }
+        return redirect()->action('InstructorController@index');
+    }
+
     /**
      * Creates terms with default values.
      * @param Intake $intake

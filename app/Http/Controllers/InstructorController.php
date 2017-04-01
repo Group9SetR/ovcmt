@@ -62,6 +62,14 @@ class InstructorController extends Controller
         }
     }
 
+    public function deleteInstructor(Request $req) {
+        if (Instructor::find($req->modal_instructorid_delete)) {
+            $instructor = Instructor::find($req->modal_instructorid_delete);
+            $instructor->delete();
+        }
+        return redirect()->action('InstructorController@index');
+    }
+
 
 
 
