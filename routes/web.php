@@ -66,6 +66,8 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     Route::post('/manageIntake', 'IntakeController@store');
     Route::get('/updateIntake', 'IntakeController@index');
     Route::post('/updateIntake', 'IntakeController@updateIntake');
+    Route::post('/manageIntakeDelete', 'IntakeController@deleteIntake');
+
     /* Propagation Controller */
     Route::post('/getCourseOfferingsByTerm', 'AjaxController@getCourseOfferingsByTerm');
     Route::post('/getWeeklySchedule', 'AjaxController@getWeeklySchedule');
