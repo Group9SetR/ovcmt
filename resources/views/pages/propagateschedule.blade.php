@@ -215,7 +215,7 @@
                 </div>
 
                 <div class='form-group' id='numberWeeksPropForm' style="visibility: hidden">
-                    {{Form::open(['url'=>'/extend', 'class' => 'form-control'])}}
+                    {{Form::open(['url'=>'/extend'])}}
                         {{Form::label('weeks', 'Number of weeks to propagate:')}}
                         {{Form::number('weeks', '', array('id'=>'week',
                                                                         'min'=>1,
