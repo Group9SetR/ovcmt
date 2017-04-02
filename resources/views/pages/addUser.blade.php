@@ -25,7 +25,7 @@
                             @endif
                         </div>
                     </div>
-                    <br>
+                    <br><br>
                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                         <br>
                         <div class="col-sm-3">
@@ -132,7 +132,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" id="closeDeleteCourseBtn" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" id="closeDeleteCourseBtn" class="btn btn-warning" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>

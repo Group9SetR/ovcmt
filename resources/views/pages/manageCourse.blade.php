@@ -166,16 +166,16 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>{!! Form::label('color', 'Course Color:') !!}</td>
+                                        <td>{!! Form::label('color', 'Course Color') !!}</td>
                                         <td>{{  Form::input('color', 'color', null, ['id' => 'modal_color']) }}</td>
                                     </tr>
                                 </table>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" id="closeEditCourseBtn" class="btn btn-warning" data-dismiss="modal">Close</button>
                             {!! Form::submit('Save',['class'=> 'btn btn-primary form-control',
                                                      'id' => 'editCourseBtn']) !!}
+                            <button type="button" id="closeEditCourseBtn" class="btn btn-warning" data-dismiss="modal">Close</button>
                         </div>
                         {!! Form::close() !!}
                     </div>
@@ -204,20 +204,11 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" id="closeDeleteCourseBtn" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" id="closeDeleteCourseBtn" class="btn btn-warning" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
         </div>
     </div>
 </div>
