@@ -9,6 +9,9 @@
         <div class="col-sm-8">
             <h4><small>Manage Course </small></h4>
             <hr>
+            @if(Session::has('duplicate_course_id'))
+                <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('duplicate_course_id') }}</p>
+            @endif
             <button href="#addNewCourse" class="btn btn-default" data-toggle="collapse">Add Course</button>
             <div class="collapse" id="addNewCourse">
                 <h2>Add a New Course</h2>

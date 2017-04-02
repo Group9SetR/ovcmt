@@ -9,6 +9,9 @@
         <div class="col-sm-8">
             <h4><small>Manage Instructors </small></h4>
             <hr>
+            @if(Session::has('duplicate_instructor_email'))
+                <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('duplicate_instructor_email') }}</p>
+            @endif
             <button href="#addNewInstructor" class="btn btn-default" data-toggle="collapse">Add Instructor</button>
             <div class="collapse" id="addNewInstructor">
                 <h2>Add a New Instructor</h2>

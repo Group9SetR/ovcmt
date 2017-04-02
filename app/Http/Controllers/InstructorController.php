@@ -8,36 +8,39 @@ use App\InstructAvail;
 use App\Instructor;
 use App\CourseInstructor;
 use DB;
-use Illuminate\Auth\Access\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 //TODO create a null instructor to "teach" courses where there are no instructors
 class InstructorController extends Controller
 {
     public function store(Request $req)
     {
-        //Save Instructor
-        $instructor = new Instructor;
-        $instructor->first_name = $req->first_name;
-        $instructor->email = $req->email;
-        $instructor->save();
+        if (Instructor::find(array($req->first_name, $req->email))) {
+            Session::flash('duplicate_instructor_email', 'Intructor not added - email already exists.');
+        } else {
+            //Save Instructor
+            $instructor = new Instructor;
+            $instructor->first_name = $req->first_name;
+            $instructor->email = $req->email;
+            $instructor->save();
 
-        //Save InstructAvail
-        $latestInstructorId = $this->getLastInsertedInstructorId()->instructor_id;
-        $instructAvail = new InstructAvail;
-        $instructAvail->instructor_id = $latestInstructorId;
-        $instructAvail->date_start = $req->date_start;
-        $instructAvail->mon_am = isset($req->mon_am) ? 1 : 0;
-        $instructAvail->tues_am = isset($req->tues_am) ? 1 : 0;
-        $instructAvail->wed_am = isset($req->wed_am) ? 1 : 0;
-        $instructAvail->thurs_am = isset($req->thurs_am) ? 1 : 0;
-        $instructAvail->fri_am = isset($req->fri_am) ? 1 : 0;
-        $instructAvail->mon_pm = isset($req->mon_pm) ? 1 : 0;
-        $instructAvail->tues_pm = isset($req->tues_pm) ? 1 : 0;
-        $instructAvail->wed_pm = isset($req->wed_pm) ? 1 : 0;
-        $instructAvail->thurs_pm = isset($req->thurs_pm) ? 1 : 0;
-        $instructAvail->fri_pm = isset($req->fri_pm) ? 1 : 0;
-        $instructAvail->save();
-
+            //Save InstructAvail
+            $latestInstructorId = $this->getLastInsertedInstructorId()->instructor_id;
+            $instructAvail = new InstructAvail;
+            $instructAvail->instructor_id = $latestInstructorId;
+            $instructAvail->date_start = $req->date_start;
+            $instructAvail->mon_am = isset($req->mon_am) ? 1 : 0;
+            $instructAvail->tues_am = isset($req->tues_am) ? 1 : 0;
+            $instructAvail->wed_am = isset($req->wed_am) ? 1 : 0;
+            $instructAvail->thurs_am = isset($req->thurs_am) ? 1 : 0;
+            $instructAvail->fri_am = isset($req->fri_am) ? 1 : 0;
+            $instructAvail->mon_pm = isset($req->mon_pm) ? 1 : 0;
+            $instructAvail->tues_pm = isset($req->tues_pm) ? 1 : 0;
+            $instructAvail->wed_pm = isset($req->wed_pm) ? 1 : 0;
+            $instructAvail->thurs_pm = isset($req->thurs_pm) ? 1 : 0;
+            $instructAvail->fri_pm = isset($req->fri_pm) ? 1 : 0;
+            $instructAvail->save();
+        }
         return redirect()->action('InstructorController@index');
     }
 

@@ -5,18 +5,23 @@ namespace App\Http\Controllers;
 use App\Course;
 use App\Http\Requests;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class CourseController extends Controller
 {
     public function store(Request $req) {
-        $course = new Course;
-        $course->course_id = $req->course_id2;
-        $course->sessions_days = $req->sessions_days2;
-        $course->course_type = $req->course_type2;
-        $course->term_no = $req->term_no2;
-        $course->color = $req->color2;
-        $course->save();
+        if (Course::find($req->course_id2)) {
+            Session::flash('duplicate_course_id', 'Course not added - course id already exists.');
+        } else {
+            // course_id doesn't already exist
+            $course = new Course;
+            $course->course_id = $req->course_id2;
+            $course->sessions_days = $req->sessions_days2;
+            $course->course_type = $req->course_type2;
+            $course->term_no = $req->term_no2;
+            $course->color = $req->color2;
+            $course->save();
+        }
         return redirect()->action('CourseController@manageCourse');
     }
 
