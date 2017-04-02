@@ -9,6 +9,9 @@
         <div class="col-sm-8">
             <h4><small>Manage Course </small></h4>
             <hr>
+            @if(Session::has('duplicate_course_id'))
+                <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('duplicate_course_id') }}</p>
+            @endif
             <button href="#addNewCourse" class="btn btn-default" data-toggle="collapse">Add Course</button>
             <div class="collapse" id="addNewCourse">
                 <h2>Add a New Course</h2>
@@ -86,44 +89,17 @@
             </table>
             <script type = "text/javascript">
                 $('#search').on('keyup',function(){
-                    $value = $(this).val();
+                    value = $(this).val();
                     $.ajax ({
                         type : 'GET',
                         url  : '/searchCourse',
-                        data: { 'search' : $value },
+                        data: { 'search' : value },
                         success: function (data) {
                             $('.searchCourseBody').html(data);
                         }
                     });
                 })
             </script>
-            <div class="modal fade" id="addCourseSaved" tabindex="-1" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">New course added: <b><span id="courseNameAdd"></span></b></h4>
-                        </div>
-                        <div class="modal-body">
-                            <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="changesSaved" tabindex="-1" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">Changes saved for Course Id: <b><span id="courseName"></span></b></h4>
-                        </div>
-                        <div class="modal-body">
-                            <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="modal fade" id="editCourseModal" tabindex="-1" role="dialog" aria-labeleledby="editCourseModalLabel">
                 <div class="modal-dialog" role="document">
@@ -166,16 +142,16 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>{!! Form::label('color', 'Course Color:') !!}</td>
-                                        <td>{{  Form::input('color', 'color', null, ['id' => 'color']) }}</td>
+                                        <td>{!! Form::label('color', 'Course Color') !!}</td>
+                                        <td>{{  Form::input('color', 'color', null, ['id' => 'modal_color']) }}</td>
                                     </tr>
                                 </table>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" id="closeEditCourseBtn" class="btn btn-warning" data-dismiss="modal">Close</button>
                             {!! Form::submit('Save',['class'=> 'btn btn-primary form-control',
                                                      'id' => 'editCourseBtn']) !!}
+                            <button type="button" id="closeEditCourseBtn" class="btn btn-warning" data-dismiss="modal">Close</button>
                         </div>
                         {!! Form::close() !!}
                     </div>
@@ -204,20 +180,11 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" id="closeDeleteCourseBtn" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" id="closeDeleteCourseBtn" class="btn btn-warning" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
         </div>
     </div>
 </div>
@@ -229,12 +196,14 @@
         var session_days =  $(this).parent().siblings(":nth-child(2)").text();
         var course_type = $(this).parent().siblings(":nth-child(3)").text();
         var term_no = $(this).parent().siblings(":nth-child(4)").text();
+        var color = $(this).parent().siblings(":nth-child(5)").text();
 
         //TODO: repopulate color
         // retaining original values when edit modal comes up
         $('.modal-body #modal_courseid_name').attr('value', course_id);
         $('.modal-body #modal_sessionDays_name').attr('value', session_days);
-        $('.modal-body #modal_courseType_name').val(course_type);
+        $('select[name="course_type').val("");
+        $('select[name="course_type"]').val(course_type);
         if (term_no == 1) {
             $('.modal-body #modal_termNo_name1').attr('checked', 'checked');
         } else if (term_no == 2) {
@@ -245,6 +214,7 @@
             // value is none other than 4 folks
             $('.modal-body #modal_termNo_name4').attr('checked', 'checked');
         }
+        $('.modal-body #modal_color').attr('value', color);
     });
 
     $(document).on('click', '.open-DeleteCourseDialog', function() {
@@ -253,43 +223,6 @@
         console.log(course_id);
 
         $('.modal-body #modal_courseid_delete').attr('value', course_id);
-    });
-
-
-    // show success modal after add course
-    $(document).ready(function() {
-        $('#addCourseForm').on('submit', function(event) {
-            var form = this;
-            event.preventDefault();
-            $(document).ready(function() {
-                var newCourse = $('#course_id2').val();
-                // show course id
-                $('#courseNameAdd').html(newCourse);
-                $('#addCourseSaved').modal('show');
-            });
-            setTimeout(function () {
-                form.submit();
-            }, 2000); // wait 2 seconds until form process - so user can read success message
-        });
-    });
-
-    // show success modal after edit course
-    $(document).ready(function() {
-        $('#editCourseForm').on('submit', function(event) {
-            var form = this;
-            event.preventDefault();
-            // close edit course modal
-            $('#editCourseModal').modal('hide');
-            $(document).ready(function() {
-                var course_id = $('#modal_courseid_name').val();
-                // show course id
-                $('#courseName').html(course_id);
-                $('#changesSaved').modal('show');
-            });
-            setTimeout(function () {
-                form.submit();
-            }, 2000); // wait 2 seconds until form process - so user can read success message
-        });
     });
 </script>
 @endsection

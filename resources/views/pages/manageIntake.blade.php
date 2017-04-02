@@ -86,10 +86,8 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <span class="pull-right">
-                                            {!! Form::submit('Edit',['class'=> 'btn btn-primary form-control']) !!}
-                                        </span>
+                                        {!! Form::submit('Save',['class'=> 'btn btn-primary']) !!}
+                                        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
                                     </div>
                                     {{ Form::close() }}
                                 </div>
@@ -116,7 +114,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" id="closeDeleteIntakeBtn" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="button" id="closeDeleteIntakeBtn" class="btn btn-warning" data-dismiss="modal">Close</button>
                                     </div>
                                 </div>
                             </div>
