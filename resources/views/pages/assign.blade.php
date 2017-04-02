@@ -50,7 +50,6 @@
                                     <div class="col-md-6">
                                         <div id="availableTAs">
                                             <h3>TA</h3>
-                                            <!-- TODO fix assign ta -->
                                                 <p id="noTasMsg"></p>
                                                 <select class="form-control" name='ta_id' id='selected_ta_id'>
                                                     <!-- inserting options here through ajax request -->

@@ -97,33 +97,6 @@
                     });
                 })
             </script>
-            <div class="modal fade" id="addCourseSaved" tabindex="-1" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">New course added: <b><span id="courseNameAdd"></span></b></h4>
-                        </div>
-                        <div class="modal-body">
-                            <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="changesSaved" tabindex="-1" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">Changes saved for Course Id: <b><span id="courseName"></span></b></h4>
-                        </div>
-                        <div class="modal-body">
-                            <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="modal fade" id="editCourseModal" tabindex="-1" role="dialog" aria-labeleledby="editCourseModalLabel">
                 <div class="modal-dialog" role="document">
@@ -247,43 +220,6 @@
         console.log(course_id);
 
         $('.modal-body #modal_courseid_delete').attr('value', course_id);
-    });
-
-
-    // show success modal after add course
-    $(document).ready(function() {
-        $('#addCourseForm').on('submit', function(event) {
-            var form = this;
-            event.preventDefault();
-            $(document).ready(function() {
-                var newCourse = $('#course_id2').val();
-                // show course id
-                $('#courseNameAdd').html(newCourse);
-                $('#addCourseSaved').modal('show');
-            });
-            setTimeout(function () {
-                form.submit();
-            }, 2000); // wait 2 seconds until form process - so user can read success message
-        });
-    });
-
-    // show success modal after edit course
-    $(document).ready(function() {
-        $('#editCourseForm').on('submit', function(event) {
-            var form = this;
-            event.preventDefault();
-            // close edit course modal
-            $('#editCourseModal').modal('hide');
-            $(document).ready(function() {
-                var course_id = $('#modal_courseid_name').val();
-                // show course id
-                $('#courseName').html(course_id);
-                $('#changesSaved').modal('show');
-            });
-            setTimeout(function () {
-                form.submit();
-            }, 2000); // wait 2 seconds until form process - so user can read success message
-        });
     });
 </script>
 @endsection
