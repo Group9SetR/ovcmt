@@ -82,20 +82,22 @@
                                         }
                                     }
                                     function updateDate(week) {
-                                        $('#Mon').append(document.createTextNode(" " + week['monday']));
-                                        $('#Tues').append(document.createTextNode(" " + week['tuesday']));
-                                        $('#Weds').append(document.createTextNode(" " + week['wednesday']));
-                                        $('#Thurs').append(document.createTextNode(" " + week['thursday']));
-                                        $('#Fri').append(document.createTextNode(" " + week['friday']));
+                                        $('#Mon').text("");
+                                        $('#Tues').text("");
+                                        $('#Weds').text("");
+                                        $('#Thurs').text("");
+                                        $('#Fri').text("");
+                                        $('#Mon').append(document.createTextNode("Mon " + week['monday']));
+                                        $('#Tues').append(document.createTextNode("Tues " + week['tuesday']));
+                                        $('#Weds').append(document.createTextNode("Weds " + week['wednesday']));
+                                        $('#Thurs').append(document.createTextNode("Thurs " + week['thursday']));
+                                        $('#Fri').append(document.createTextNode("Fri " + week['friday']));
                                     }
 
                                     $(document).ready(function() {
                                         $('#dateSelectForm').on('submit', function(e) {
                                             e.preventDefault();
                                             var selectedDate = $('#schedule_starting_date').val();
-                                            $('#propagateform').empty();
-                                            var header = "<h4><small>Week of: " + selectedDate + "</small></h4><hr>";
-                                            $('#propagateform').append(header);
                                             $.ajaxSetup({
                                                 headers: {
                                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -131,11 +133,11 @@
                             <table class='table table-bordered' id='drag_schedule_table'>
                                 <tr>
                                     <th class='drag_schedule_row_head'>Room</th>
-                                    <th id="Mon">Mon</th>
-                                    <th id="Tues">Tues</th>
-                                    <th id="Weds">Wed</th>
-                                    <th id="Thurs">Thurs</th>
-                                    <th id="Fri">Fri</th>
+                                    <th id="Mon"></th>
+                                    <th id="Tues"></th>
+                                    <th id="Weds"></th>
+                                    <th id="Thurs"></th>
+                                    <th id="Fri"></th>
                                 </tr>
                                 <tbody>
                                     <tr class="M1-AM">
