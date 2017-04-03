@@ -10,7 +10,6 @@ use App\CourseInstructor;
 use DB;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 //TODO create a null instructor to "teach" courses where there are no instructors
 class InstructorController extends Controller
 {
@@ -24,7 +23,7 @@ class InstructorController extends Controller
             try {
                 $instructor->save();
             } catch (QueryException $e) {
-                return redirect()->back()->with('duplicate_instructor_email', 'Email: ' . $req->email . 'already in use, instructor not added.');
+                return redirect()->back()->with('duplicate_instructor_email', 'Email: ' . $req->email . ' already in use - instructor not added.');
             }
 
             //Save InstructAvail
