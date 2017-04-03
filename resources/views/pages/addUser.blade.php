@@ -7,7 +7,7 @@
             </div>
 
             <div class="col-sm-9">
-                <h4><small>Manage Course </small></h4>
+                <h4><small>Add Admin User </small></h4>
                 <hr>
                 <div class="col-sm-9">
                 <form class="form-group" role="form" method="POST" action="{{ url('/addUsers') }}">
