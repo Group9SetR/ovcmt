@@ -11,8 +11,10 @@
                 <div class="row">
                     <div class="col-md-10">
                         <div class="form-group col-md-10 offset-2" id="propagateform">
+
                             {{Form::open(['url' => '',
                                           'id' => 'dateSelectForm'])}}
+                                <button class="glyphicon glyphicon-chevron-left" id="prevweek"></button>
                                 {{Form::label('schedule_starting_date', 'Week of:')}}
                                 @if(isset($errorDate))
                                     {{Form::date('schedule_starting_date', $errorDate,
@@ -21,6 +23,7 @@
                                     {{Form::date('schedule_starting_date', Carbon\Carbon::today(new DateTimeZone('America/Vancouver'),
                                                                            ['id' => 'schedule_starting_date'])) }}
                                 @endif
+                                <button class="glyphicon glyphicon-chevron-right" id="nextweek"></button>
                                 {{ Form::submit('Choose Starting Date',['class'=> 'btn btn-primary form-inline']) }}
                             {{Form::close()}}
                         </div>
@@ -94,7 +97,31 @@
                                         $('#Fri').append(document.createTextNode("Fri " + week['friday']));
                                     }
 
+                                    function convertDate(date) {
+                                        var yyyy = date.getFullYear().toString();
+                                        var mm = (date.getMonth()+1).toString();
+                                        var dd  = date.getDate().toString();
+
+                                        var mmChars = mm.split('');
+                                        var ddChars = dd.split('');
+
+                                        return yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
+                                    }
+
                                     $(document).ready(function() {
+                                        $('#nextweek').click(function(e) {
+                                            e.preventDefault();
+                                            var date = new Date($('#schedule_starting_date').val());
+                                            date.setDate(date.getDate() + 8);
+                                            $('#schedule_starting_date').val(convertDate(date));
+                                        });
+                                        $('#prevweek').click(function(e) {
+                                            e.preventDefault();
+                                            var date = new Date($('#schedule_starting_date').val());
+                                            date.setDate(date.getDate() - 8);
+                                            console.log(date.toString());
+                                            $('#schedule_starting_date').val(convertDate(date));
+                                        });
                                         $('#dateSelectForm').on('submit', function(e) {
                                             e.preventDefault();
                                             var selectedDate = $('#schedule_starting_date').val();
