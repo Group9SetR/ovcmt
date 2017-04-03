@@ -7,9 +7,9 @@
             </div>
             <div class="col-sm-10">
                 <div class="row">
+                    <!--
                     <div class="col-md-4">
 
-                        <!-- TODO Change id's and names and classes to reflect Terms not course/instructors-->
                         <h4><small>Manage Term </small></h4>
                         <hr>
 
@@ -18,13 +18,14 @@
 
                             <h2>Add a New Term</h2>
                             {!! Form::open(['url' => 'saveTerm']) !!}
-                            <!--TODO display intakes from available intakes-->
                             <div class="form-group">
                                 {!! Form::label('intake_id', 'Intake ID:') !!}
                                 <select name="intake_id" class="form-control">
+                                    @if(isset($intakes))
                                     @foreach($intakes as $intake)
                                         <option value="{{$intake->intake_id}}">{{$intake->intake_no}}:{{$intake->start_date}}</option>
                                     @endforeach
+                                    @endif
                                 </select>
                             </div>
 
@@ -58,18 +59,20 @@
                             </div>
                             {!! Form::close() !!}
                         </div>
-                    </div>
+                    </div>-->
                     <div class="col-md-8">
                         <h2>Display Term</h2>
                         {{ Form::open(['url'=>'searchTerm']) }}
                         <div class="form-inline">
                             {{ Form::label('choose_intake', 'Select terms by intake:', ['class'=>'control-label']) }}
                             <select name="choose_intake" class="form-control">
-                            @foreach($intakes as $intake)
+                                @if(isset($intakes))
+                                @foreach($intakes as $intake)
                                 <option value="{{$intake->intake_id}}" class="form-control">
                                     {{DateTime::createFromFormat('Y-m-d', $intake->start_date)->format('Y')}}{{$intake->intake_no}}
                                 </option>
-                            @endforeach
+                                @endforeach
+                                @endif
                             </select>
                             {{ Form::submit('Submit', ['class'=>'btn btn-primary']) }}
                         </div>
@@ -78,8 +81,8 @@
                         <table class="table table-striped table-bordered table-hover table-condensed text-center">
                             <thead class="thead-default">
                                 <tr class = "success">
-                                    <th class = "text-center">ID</th>
-                                    <th class = "text-center">Start Date</th>
+                                    <th class = "text-center">Term Start</th>
+                                    <th class = "text-center">Term</th>
                                     <th class = "text-center">Intake</th>
                                     <th class = "text-center">Total wks</th>
                                     <th class = "text-center">Course wks</th>
@@ -87,10 +90,11 @@
                                     <th class = "text-center">Break wks</th>
                                     <th class = "text-center">Holidays</th>
                                     <th class = "text-center">Edit</th>
-                                    <th class = "text-center">Delete</th>
+                                    <!--<th class = "text-center">Delete</th>-->
                                 </tr>
                             </thead>
                             <tbody>
+                            @if(isset($terms))
                                 @foreach($terms as $term)
                                     <tr>
                                         <td>{{$term->term_start_date}}</td>
@@ -110,11 +114,12 @@
                                                     data-course_weeks ="{{$term->course_weeks}}"
                                                     data-break_weeks="{{$term->break_weeks}}"
                                                     data-exam_weeks="{{$term->exam_weeks}}">Edit</button></td>
-                                        <td><button class="btn btn-danger open-DeleteTermDialog"
+                                        <!--<td><button class="btn btn-danger open-DeleteTermDialog"
                                                  data-toggle="modal"
-                                                 data-target="#deleteTermModal">Delete</button></td>
+                                                 data-target="#deleteTermModal">Delete</button></td>-->
                                     </tr>
                                 @endforeach
+                            @endif
                             </tbody>
                         </table>
                         <!-- TODO edit term functionality -->
@@ -158,7 +163,7 @@
                                             </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button class="btn btn-danger">Delete</button>
+                                        <!--<button class="btn btn-danger">Delete</button>-->
                                         {!! Form::submit('Save',['class'=> 'btn btn-primary']) !!}
                                         <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
                                     </div>
@@ -167,7 +172,7 @@
                             </div>
                         </div>
 
-                        <div class="modal fade" id="deleteTermModal" tabindex="-1" role="dialog" aria-labeleledby="deleteTermModalLabel">
+                        <!--<div class="modal fade" id="deleteTermModal" tabindex="-1" role="dialog" aria-labeleledby="deleteTermModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -191,7 +196,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <script>
                             $(document).on('click', '.open-EditTermDialog', function() {
                                 $('.modal-body #modal_term_start_date').attr('value', '');
