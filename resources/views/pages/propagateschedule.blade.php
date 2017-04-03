@@ -39,11 +39,15 @@
                                         panelheading.append(document.createElement('p').appendChild(document.createTextNode(
                                             ' ' + roombyday['am_course_id']+ ' Intake:' + roombyday['am_intake_no'])));
                                         panelbody.className=('panel-body');
-                                        panelbody.append(document.createElement('p').appendChild(document.createTextNode(
-                                            'Instructor: ' + roombyday['am_instructor_name'])));
+                                        if(roombyday['am_instructor_name'] != null && roombyday['am_instructor_name'] != 0) {
+                                            panelbody.append(document.createElement('p').appendChild(document.createTextNode(
+                                                'Instructor: ' + roombyday['am_instructor_name'])));
+                                        }
                                         panelbody.append(document.createElement('br'));
-                                        panelbody.append(document.createElement('p').appendChild(document.createTextNode(
-                                            ' TA: ' + (roombyday['am_ta_name'] != null ? roombyday['am_ta_name'] : ""))));
+                                        if(roombyday['am_ta_name'] != null && roombyday['am_ta_name'] != 0) {
+                                            panelbody.append(document.createElement('p').appendChild(document.createTextNode(
+                                                ' TA: ' + (roombyday['am_ta_name'] != null ? roombyday['am_ta_name'] : ""))));
+                                        }
                                         panel.append(panelheading);
                                         panel.append(panelbody);
                                         return panel;
@@ -58,11 +62,15 @@
                                         panelheading.append(document.createElement('p').appendChild(document.createTextNode(
                                             ' ' + roombyday['pm_course_id']+ ' Intake:' + roombyday['pm_intake_no'])));
                                         panelbody.className=('panel-body');
-                                        panelbody.append(document.createElement('p').appendChild(document.createTextNode(
-                                           'Instructor: ' + roombyday['pm_instructor_name'])));
+                                        if(roombyday['pm_instructor_name'] != null && roombyday['pm_instructor_name'] != 0) {
+                                            panelbody.append(document.createElement('p').appendChild(document.createTextNode(
+                                                'Instructor: ' + roombyday['pm_instructor_name'])));
+                                        }
                                         panelbody.append(document.createElement('br'));
-                                        panelbody.append(document.createElement('p').appendChild(document.createTextNode(
-                                           ' TA: ' + (roombyday['pm_ta_name'] != null ? roombyday['pm_ta_name'] : ""))));
+                                        if(roombyday['pm_ta_name'] != null && roombyday['pm_ta_name'] != 0) {
+                                            panelbody.append(document.createElement('p').appendChild(document.createTextNode(
+                                                ' TA: ' + (roombyday['pm_ta_name'] != null ? roombyday['pm_ta_name'] : ""))));
+                                        }
                                         panel.append(panelheading);
                                         panel.append(panelbody);
                                         return panel;
