@@ -16,8 +16,8 @@
                 <div class="form-inline">
                     <select name="selected_term_id" id="selected_term_id" class="form-control">
                         @foreach ($terms as $term)
-                            <option value={{$term->term_id}}>Term Id: {{$term->term_id}}, Term Number:{{$term->term_no}},
-                                Intake Number:{{$term->intake_id}}, Start Date:{{$term->term_start_date}} </option>
+                            <option value={{$term->term_id}}>Term Number:{{$term->term_no}},
+                                Intake Number:{{$term->intake_no}}, Start Date:{{$term->term_start_date}} </option>
                         @endforeach
                     </select>
                     {!! Form::submit('Choose Term',['class'=> 'btn btn-primary form-inline']) !!}
@@ -33,11 +33,11 @@
                             </div>
                             <div class="modal-body">
                                 <!-- made dropdown instead of another modal -->
+                                {!! Form::open(['url' => 'assignCourse', 'class' => 'form-inline', 'id' => 'select_instructor']) !!}
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div id="availableInstructors">
                                             <h3>Instructor</h3>
-                                            {!! Form::open(['url' => 'assignCourse', 'class' => 'form-inline', 'id' => 'select_instructor']) !!}
                                                 <p id="noInstructorsMsg"></p>
                                                 <select class="form-control" name='instructor_id' id='selected_instructor_id'>
                                                     <!-- inserting options here through ajax request -->
@@ -50,23 +50,21 @@
                                     <div class="col-md-6">
                                         <div id="availableTAs">
                                             <h3>TA</h3>
-                                            <!-- TODO fix assign ta -->
                                                 <p id="noTasMsg"></p>
                                                 <select class="form-control" name='ta_id' id='selected_ta_id'>
                                                     <!-- inserting options here through ajax request -->
                                                 </select>
-                                                <br><br>
-                                                <div id="assignTaBtn">
-                                                    {!! Form::submit('Assign Instructor/TA',['class'=> 'btn btn-primary form-inline']) !!}
-                                                </div>
-                                            {!! Form::close() !!}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                                <div id="assignTaBtn">
+                                    {!! Form::submit('Assign Instructor/TA',['class'=> 'btn btn-primary form-inline']) !!}
+                                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                                </div>
                             </div>
+                            {!! Form::close() !!}
                         </div>
                     </div>
                 </div>
@@ -156,7 +154,7 @@
                                             $.ajax({
                                                 type: 'POST',
                                                 url: '/getInstructorsForACourse',
-                                                data: {"course_id": courseToPass},
+                                                data: {"course_id": courseToPass, "term_id": term},
                                                 dataType: 'json',
                                                 success: function (data) {
                                                     $('#selected_instructor_id').empty();
@@ -167,6 +165,7 @@
                                                     var emptyOption = "<option value='none'>None</option>";
                                                     $('#selected_instructor_id').append(emptyOption);
                                                     $('#selected_ta_id').append(emptyOption);
+                                                    console.log(data['instructorsbycourse'])
 
 
                                                     for (let i = 0; i < data['instructorsbycourse'].length; i++) {

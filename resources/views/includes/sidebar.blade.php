@@ -47,9 +47,12 @@
 <ul class="nav nav-pills nav-stacked sidebar">
     <li><a href="{{ url('/manageStudents') }}" onClick="">Manage Students</a></li>
 </ul><br>
-<br>
 <ul class="nav nav-pills nav-stacked sidebar">
     <li><a href="{{ url('/addUser') }}" onClick="">Add User</a></li>
+</ul><br>
+
+<ul class="nav nav-pills nav-stacked sidebar">
+    <li><a href="{{ url('/adminauth') }}" onClick="">Instructions</a></li>
 </ul><br>
 
 

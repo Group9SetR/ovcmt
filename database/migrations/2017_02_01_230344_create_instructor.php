@@ -14,7 +14,7 @@ class CreateInstructor extends Migration
     public function up()
     {
         Schema::create('instructors', function (Blueprint $table) {
-            $table->increments('instructor_id');
+            $table->increments('instructor_id')->length(10)->unsigned();;
             $table->string('first_name');
             $table->string('email')->unique();
         });
@@ -27,6 +27,6 @@ class CreateInstructor extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('instructor');
+        Schema::dropIfExists('instructors');
     }
 }

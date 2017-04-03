@@ -45,7 +45,7 @@ class IntakeController extends Controller
             $intake = Intake::find($req->modal_intakeid_delete);
             $intake->delete();
         }
-        return redirect()->action('InstructorController@index');
+        return redirect()->action('IntakeController@index');
     }
 
     /**

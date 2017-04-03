@@ -14,7 +14,7 @@ class CreateInstructAvailTable extends Migration
     public function up()
     {
         Schema::create('instruct_avails', function (Blueprint $table) {
-            $table->integer('instructor_id');
+            $table->integer('instructor_id')->length(10)->unsigned();;
             $table->date('date_start');
             $table->boolean('mon_am');
             $table->boolean('mon_pm');

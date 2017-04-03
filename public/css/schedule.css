@@ -16,6 +16,7 @@
 .drag_course_offering {
     width:150px;
     margin-bottom:0;
+    display:block;
 }
 
 .drag_course_offering_panel {

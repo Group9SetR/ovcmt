@@ -14,12 +14,13 @@ class CreateRoomByDayTable extends Migration
     public function up()
     {
         Schema::create('rooms_by_days', function (Blueprint $table) {
-            $table->string('room_id');
+            $table->string('room_id')->length(2);
             $table->date('cdate');
-            $table->integer('am_crn')->nullable();
-            $table->integer('pm_crn')->nullable();
+            $table->integer('am_crn')->nullable()->length(10)->unsigned();;
+            $table->integer('pm_crn')->nullable()->length(10)->unsigned();;
             $table->primary(['room_id','cdate']);
         });
+
     }
 
     /**

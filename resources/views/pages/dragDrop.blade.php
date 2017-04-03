@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('content')
+    <head>
+        <link href="/css/color.css" rel="stylesheet">
+    </head>
     <div class="container-fluid">
         <div class="row content">
             <div class="col-sm-2 sidenav">
@@ -112,8 +115,8 @@
                         <div class="form-group">
                             {!! Form::submit('Save', ['class'=>'btn btn-primary']) !!}
                             {!! Form::close() !!}
+                            <button class='btn btn-primary' id='clearScheduleBtn' onclick="clearSchedule()">Clear</button>
                         </div>
-                        <button class='btn btn-primary' id='clearScheduleBtn' onclick="clearSchedule()">Clear</button>
                         @foreach ($roomsByWeek as $timeslot)
                             <script>
                                 var dayOfWeek ='<?php echo $timeslot->cdayOfWeek;?>' - 2; //decrement to account for array and MySQL

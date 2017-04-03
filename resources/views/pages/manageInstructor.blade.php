@@ -9,6 +9,9 @@
         <div class="col-sm-8">
             <h4><small>Manage Instructors </small></h4>
             <hr>
+            @if(session('duplicate_instructor_email'))
+                <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('duplicate_instructor_email') }}</p>
+            @endif
             <button href="#addNewInstructor" class="btn btn-default" data-toggle="collapse">Add Instructor</button>
             <div class="collapse" id="addNewInstructor">
                 <h2>Add a New Instructor</h2>
@@ -23,7 +26,7 @@
                     {!! Form::label('email', 'Email:') !!}
                     {!! Form::text('email', null, ['class' => 'form-control']) !!}
                     </div>
-                <p>Check all time slots for which instructor is available:</p>
+                <p>Check all time slots for which the instructor is available:</p>
                 <div class="form-group">
                     {!! Form::label('date_start', 'Date effective:') !!}
                     {!! Form::date('date_start') !!}
@@ -34,7 +37,7 @@
                         <th>Time</th><th>Mon</th><th>Tues</th><th>Wed</th><th>Thurs</th><th>Fri</th>
                     </tr>
                     <tr>
-                        <td>Moring</td>
+                        <td>Morning</td>
                         <td>{!! Form::checkbox('mon_am') !!}</td>
                         <td>{!! Form::checkbox('tues_am') !!}</td>
                         <td>{!! Form::checkbox('wed_am') !!}</td>
@@ -68,7 +71,7 @@
                 <div class="form-group col-md-7">
                     <div class="input-group">
                         <span class="input-group-addon">Search</span>
-                        <input type="text" name="search" id ="search" placeholder="Search instructor name" class ="form-control">
+                        <input type="text" name="search" id ="search" placeholder="Search by Instructor Name" class ="form-control">
                     </div>
                 </div>
                 <br><br><br>
@@ -90,7 +93,7 @@
                         <th class="text-center">Thur PM</th>
                         <th class="text-center">Fri PM</th>
                         <th class="text-center">Edit Instructor</th>
-                        <th class="text-center">Assign Course</th>
+                        <th class="text-center">Teachable Courses</th>
                         <th class="text-center">Delete</th>
                     </tr>
                 </thead>
@@ -164,10 +167,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <span class="pull-right">
-                                {!! Form::submit('Edit',['class'=> 'btn btn-primary form-control']) !!}
-                            </span>
+                            {!! Form::submit('Save',['class'=> 'btn btn-primary']) !!}
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
                             {!! Form::close() !!}
                         </div>
                         <script>
@@ -272,10 +273,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <span class="pull-right">
-                                    {!! Form::submit('Assign',['class'=> 'btn btn-primary ', 'id'=>'addbtn']) !!}
-                            </span>
+                            {!! Form::submit('Assign',['class'=> 'btn btn-primary ', 'id'=>'addbtn']) !!}
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
                             {!! Form::close() !!}
                         </div>
                         <script>
@@ -312,7 +311,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" id="closeDeleteInstructorBtn" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" id="closeDeleteInstructorBtn" class="btn btn-warning" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>

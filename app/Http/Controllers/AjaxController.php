@@ -25,11 +25,16 @@ class AjaxController extends Controller
 
     public function getInstructorsForACourse(Request $req) {
         // added select column, course_instructor is already set at this point, which means intake is set as well
-        if($req->ajax() && isset($req->course_id)) {
+        if($req->ajax() && isset($req->course_id) && ($req->term_id)) {
+            $intake_no = DB::table('terms AS t')
+                ->join('intakes AS i', 't.intake_id', '=', 'i.intake_id')
+                ->where('term_id', $req->term_id)
+                ->pluck('i.intake_no');
             $instructorsbycourse = DB::table('course_instructors AS ci')
                 ->join('instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
                 ->where('ci.course_id', $req->course_id)
                 ->where('ci.instructor_type', 1)
+                ->where('ci.intake_no', $intake_no)
                 ->select("i.instructor_id AS instructor_id",
                     "i.first_name AS first_name",
                     "i.email AS email",
@@ -39,6 +44,7 @@ class AjaxController extends Controller
                 ->join('instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
                 ->where('ci.course_id', $req->course_id)
                 ->where('ci.instructor_type', 0)
+                ->where('ci.intake_no', $intake_no)
                 ->select("i.instructor_id AS instructor_id",
                     "i.first_name AS first_name",
                     "i.email AS email",
@@ -191,7 +197,7 @@ class AjaxController extends Controller
                                 '<td>'.$course->sessions_days.'</td>'.
                                 '<td>'.$course->course_type.'</td>'.
                                 '<td>'.$course->term_no.'</td>'.
-                                '<td style="background-color:'. $course->color.';"></td>'.
+                                '<td class="color-search" style="background-color:'. $course->color . ';">' . $course->color . '</td>'.
                                 '<td>'. '<button class="btn btn-primary open-EditCourseDialog"
                                             data-toggle="modal"
                                             data-target="#editCourseModal"
