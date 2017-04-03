@@ -6,7 +6,7 @@
         <div class="col-sm-2 sidenav">
             <br><br>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="{{ url('/schedulestudent') }}" onClick="">Schedule View</a></li>
+                <li class="active"><a href="{{ url('/selectschedulestudent') }}" onClick="">Schedule View</a></li>
             </ul>
         </div>
         <div class="col-sm-10">
@@ -14,16 +14,30 @@
             <hr>
             <!-- TODO Display only schedules by term-->
             <!-- TODO Date picker -->
-            <div>
-                {{Form::open(['url' => '',
-                                          'id' => 'dateSelectForm'])}}
-                {{Form::label('schedule_starting_date', 'Week of:')}}
-                {{Form::date('schedule_starting_date', Carbon\Carbon::today(new DateTimeZone('America/Vancouver'),
-                                                       ['id' => 'schedule_starting_date']))}}
-                {{ Form::submit('Choose Starting Date',['class'=> 'btn btn-primary form-inline']) }}
-                {{Form::close()}}
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h3><!--<span class="glyphicon glyphicon-chevron-left"></span>-->
+                        {{$details['schedule_date']->format('F Y')}}
+                        <!--<span class="glyphicon glyphicon-chevron-right"></span></h3>-->
+                        {{Form::open(['url' => 'schedulestudent','id' => 'dateSelectForm'])}}
+                        <div class="form-group">
+                            <input type="hidden" name="schedule_intake" value="{{$details['intake_id']}}">
+
+                            <!-- TODO Gylphicons clickable to next/prev week-->
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                            <input type="date" name="schedule_starting_date" value="{{$details['schedule_date']->format('Y-m-01')}}">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                            {{ Form::submit('Submit') }}
+                        </div>
+                    {{Form::close()}}
+                </div>
+                <div class="col-md-6">
+                    <h3 style="float:right">Intake {{$details['intake_info']->start_date->format('Y')}}{{$details['intake_info']->intake_no}}</h3>
+                </div>
             </div>
-            <h3>Display Schedule</h3>
+
+
                 <table class="table table-striped table-bordered table-hover text-center" id="schedule_view_table">
                     <thead class="thead-default">
                         <tr class="success">
@@ -43,7 +57,7 @@
                                 <td></td>
                             @endfor
                             @for($j=0; $j<sizeof($weeks[$i]); $j++)
-                                    <td><span>{{$weeks[$i][$j]}}</span>
+                                    <td><span class="schedule_day_of_month">{{$weeks[$i][$j]}}</span>
                                         <div class="am"></div>
                                         <div class="pm"></div>
                                     </td>
@@ -51,7 +65,7 @@
                         <!-- last row -->
                         @elseif($i == sizeof($weeks)-1)
                             @for($j=0; $j<sizeof($weeks[$i]); $j++)
-                                <td><span>{{$weeks[$i][$j]}}</span>
+                                <td><span class="schedule_day_of_month">{{$weeks[$i][$j]}}</span>
                                     <div class="am"></div>
                                     <div class="pm"></div>
                                 </td>
@@ -62,7 +76,7 @@
                         @else
                             @for($j=0; $j<5; $j++)
                                 <td>
-                                    <span>{{$weeks[$i][$j]}}</span>
+                                    <span class="schedule_day_of_month">{{$weeks[$i][$j]}}</span>
                                     <div class="am"></div>
                                     <div class="pm"></div>
                                 </td>

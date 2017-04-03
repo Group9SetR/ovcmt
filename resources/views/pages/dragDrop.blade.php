@@ -10,16 +10,21 @@
                 <hr>
                 <div class="row">
                     <div class="col-md-10">
-                        <div class="form-group col-md-4">
-                            <h2>Schedule Week of: {{$calendarDetails['firstOfWeek']}}</h2>
+                        <div class="form-group">
+                            <h2>Week of {{$calendarDetails['firstOfWeek']}}</h2>
                             {{Form::open(['url'=>'dragDrop'])}}
-                            <input type="hidden" name="selected_term_id" value="{{$term->term_id}}"/>
-                            {{Form::label('schedule_select_date', 'Go to :')}}
-                            <input type="date" name="schedule_select_date" value="{{$calendarDetails['goToDate']}}">
-                            {{Form::submit()}}
+                            <div class="form-group">
+                                <!-- TODO Gylphicons clickable to next/prev week-->
+                                <input type="hidden" name="selected_term_id" value="{{$term->term_id}}"/>
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                                <input type="date" name="schedule_select_date" value="{{$calendarDetails['goToDate']}}">
+                                <span class="glyphicon glyphicon-chevron-right"></span>
+                                {{Form::submit('Submit')}}
+                            </div>
+                            <div class="form-group">
+
+                            </div>
                             {{Form::close()}}
-                        </div>
-                        <div class="col-md-8">
                         </div>
                     </div>
                     <div class="col-sm-2">
