@@ -66,6 +66,8 @@ class AssignController extends Controller
                 't.intake_id AS intake_id',
                 't.term_no AS term_no',
                 'i.intake_no AS intake_no')
+            ->orderBy('t.term_start_date', 'asc')
+            ->orderBy('t.term_no', 'asc', 'i.intake_no')
             ->get();
         return $terms;
     }

@@ -24,7 +24,7 @@ class InstructorController extends Controller
             try {
                 $instructor->save();
             } catch (QueryException $e) {
-                return redirect()->back()->with('duplicate_instructor_email', 'Email: ' . $req->email . 'already in use, instructor not added');
+                return redirect()->back()->with('duplicate_instructor_email', 'Email: ' . $req->email . 'already in use, instructor not added.');
             }
 
             //Save InstructAvail

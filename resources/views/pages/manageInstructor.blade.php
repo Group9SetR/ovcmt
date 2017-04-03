@@ -71,7 +71,7 @@
                 <div class="form-group col-md-7">
                     <div class="input-group">
                         <span class="input-group-addon">Search</span>
-                        <input type="text" name="search" id ="search" placeholder="Search instructor name" class ="form-control">
+                        <input type="text" name="search" id ="search" placeholder="Search by Instructor Name" class ="form-control">
                     </div>
                 </div>
                 <br><br><br>
