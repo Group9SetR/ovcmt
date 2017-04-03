@@ -132,7 +132,7 @@ class ScheduleController extends Controller
         $dto->setISODate($year, $week);
         $calendar = array('month'=>$date->format('m'),
             'year'=>$date->format('Y'),
-            'firstOfWeek'=>$dto->format('d/m/Y'),
+            'firstOfWeek'=>$dto->format('F d Y'),
             'goToDate'=>$dto->format('Y-m-d'), //MUST TAKE THIS FORMAT
             'mon'=>$dto->format('M d'));
         $dto->modify('+1 days');
