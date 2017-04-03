@@ -30,7 +30,7 @@
                                         var panel = document.createElement('div');
                                         var panelheading = document.createElement('div');
                                         var panelbody = document.createElement('div');
-                                        panel.className=['panel panel-default'];
+                                        panel.className=('panel panel-default');
                                         panelheading.className=('panel-heading color-panel');
                                         panelheading.style.backgroundColor=roombyday['am_color'];
                                         panelheading.append(document.createElement('p').appendChild(document.createTextNode(
@@ -49,7 +49,7 @@
                                         var panel = document.createElement('div');
                                         var panelheading = document.createElement('div');
                                         var panelbody = document.createElement('div');
-                                        panel.className=['panel panel-default'];
+                                        panel.className=('panel panel-default');
                                         panelheading.className=('panel-heading color-panel');
                                         panelheading.style.backgroundColor=roombyday['pm_color'];
                                         panelheading.append(document.createElement('p').appendChild(document.createTextNode(
