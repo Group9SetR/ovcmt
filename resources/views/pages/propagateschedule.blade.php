@@ -119,13 +119,11 @@
                                             e.preventDefault();
                                             var date = new Date($('#schedule_starting_date').val());
                                             date.setDate(date.getDate() - 8);
-                                            console.log(date.toString());
                                             $('#schedule_starting_date').val(convertDate(date));
                                         });
                                         $('#dateSelectForm').on('submit', function(e) {
                                             e.preventDefault();
                                             var selectedDate = $('#schedule_starting_date').val();
-                                            console.log(selectedDate);
                                             $.ajaxSetup({
                                                 headers: {
                                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -139,7 +137,6 @@
                                                 success: function (data) {
                                                     $('#mondayTable').css('visibility', 'visible');
                                                     updateDate(data['datearray']);
-                                                    console.log(data['roomsbyday']);
                                                     for (let i = 0; i < data['roomsbyday'].length; i++) {
                                                         if (data['roomsbyday'][i]['am_crn'] != null) {
                                                             var tdid = '-AM-' + dateSwitcher(data['roomsbyday'][i]['cdate'], data['datearray']);
