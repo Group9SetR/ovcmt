@@ -31,11 +31,12 @@ function createPanelHeading(course_id, color)
 {
     var PanelHeading=document.createElement('DIV');
     PanelHeading.className='panel-heading';
-
+    PanelHeading.style.backgroundColor = color;
+/*
     var colorBlock = document.createElement('DIV');
     colorBlock.className='colorblock';
     colorBlock.style.backgroundColor = color;
-    PanelHeading.append(colorBlock);
+    PanelHeading.append(colorBlock);*/
     PanelHeading.append(document.createElement('P').appendChild(document.createTextNode(course_id)));
     return PanelHeading;
 }
