@@ -19,13 +19,10 @@
                             <div class="form-group">
                                 <!-- TODO Gylphicons clickable to next/prev week-->
                                 <input type="hidden" name="selected_term_id" value="{{$term->term_id}}"/>
-                                <span class="glyphicon glyphicon-chevron-left"></span>
-                                <input type="date" name="schedule_select_date" value="{{$calendarDetails['goToDate']}}">
-                                <span class="glyphicon glyphicon-chevron-right"></span>
+                                <button class="glyphicon glyphicon-chevron-left week_date_control" id="week_back"></button>
+                                <input type="date" id="schedule_select" name="schedule_select_date" value="{{$calendarDetails['goToDate']}}">
+                                <button class="glyphicon glyphicon-chevron-right week_date_control" id="week_forward"></button>
                                 {{Form::submit('Submit')}}
-                            </div>
-                            <div class="form-group">
-
                             </div>
                             {{Form::close()}}
                         </div>
