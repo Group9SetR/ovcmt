@@ -8,6 +8,7 @@ use App\InstructAvail;
 use App\Instructor;
 use App\CourseInstructor;
 use DB;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 //TODO create a null instructor to "teach" courses where there are no instructors
@@ -15,14 +16,16 @@ class InstructorController extends Controller
 {
     public function store(Request $req)
     {
-        if (Instructor::find(array($req->first_name, $req->email))) {
-            Session::flash('duplicate_instructor_email', 'Intructor not added - email already exists.');
-        } else {
+        if (isset($req->first_name) && isset($req->email)) {
             //Save Instructor
             $instructor = new Instructor;
             $instructor->first_name = $req->first_name;
             $instructor->email = $req->email;
-            $instructor->save();
+            try {
+                $instructor->save();
+            } catch (QueryException $e) {
+                return redirect()->back()->with('duplicate_instructor_email', 'Email: ' . $req->email . 'already in use, instructor not added');
+            }
 
             //Save InstructAvail
             $latestInstructorId = $this->getLastInsertedInstructorId()->instructor_id;

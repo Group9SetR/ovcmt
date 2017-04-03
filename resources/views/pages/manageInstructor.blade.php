@@ -9,7 +9,7 @@
         <div class="col-sm-8">
             <h4><small>Manage Instructors </small></h4>
             <hr>
-            @if(Session::has('duplicate_instructor_email'))
+            @if(session('duplicate_instructor_email'))
                 <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('duplicate_instructor_email') }}</p>
             @endif
             <button href="#addNewInstructor" class="btn btn-default" data-toggle="collapse">Add Instructor</button>
@@ -26,7 +26,7 @@
                     {!! Form::label('email', 'Email:') !!}
                     {!! Form::text('email', null, ['class' => 'form-control']) !!}
                     </div>
-                <p>Check all time slots for which instructor is available:</p>
+                <p>Check all time slots for which the instructor is available:</p>
                 <div class="form-group">
                     {!! Form::label('date_start', 'Date effective:') !!}
                     {!! Form::date('date_start') !!}
@@ -37,7 +37,7 @@
                         <th>Time</th><th>Mon</th><th>Tues</th><th>Wed</th><th>Thurs</th><th>Fri</th>
                     </tr>
                     <tr>
-                        <td>Moring</td>
+                        <td>Morning</td>
                         <td>{!! Form::checkbox('mon_am') !!}</td>
                         <td>{!! Form::checkbox('tues_am') !!}</td>
                         <td>{!! Form::checkbox('wed_am') !!}</td>
@@ -93,7 +93,7 @@
                         <th class="text-center">Thur PM</th>
                         <th class="text-center">Fri PM</th>
                         <th class="text-center">Edit Instructor</th>
-                        <th class="text-center">Assign Course</th>
+                        <th class="text-center">Teachable Courses</th>
                         <th class="text-center">Delete</th>
                     </tr>
                 </thead>
