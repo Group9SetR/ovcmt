@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('content')
+    <head>
+        <link href="/css/color.css" rel="stylesheet">
+    </head>
     <div class="container-fluid">
         <div class="row content">
             <div class="col-sm-2 sidenav">
