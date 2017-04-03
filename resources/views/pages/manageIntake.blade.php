@@ -8,7 +8,7 @@
 
             <div class="col-sm-10">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                         <h4><small>Manage Intake </small></h4>
                         <hr>
                         <button href="#addNewIntake" class="btn btn-default" data-toggle="collapse">Add Intake</button>
@@ -28,8 +28,6 @@
                         </div>
                         <hr>
 
-                    </div>
-                    <div class="col-md-8">
                         <table class="table table-striped table-bordered table-hover table-condensed text-center">
                             <tr class = "success">
                                 <th class="text-center">ID</th>
@@ -46,14 +44,14 @@
                                     <td>{{$intake->start_date}}</td>
                                     <td>{{$intake->intake_no}}</td>
                                     <td><button class="btn btn-primary open-EditIntakeDialog"
-                                            data-toggle="modal"
-                                            data-id="{{$intake->intake_id}}"
-                                            data-target="#editIntakeModal"
-                                            data-start_date = "{{$intake->start_date}}"
-                                            data-intake_no="{{$intake->intake_no}}">Edit</button></td>
+                                                data-toggle="modal"
+                                                data-id="{{$intake->intake_id}}"
+                                                data-target="#editIntakeModal"
+                                                data-start_date = "{{$intake->start_date}}"
+                                                data-intake_no="{{$intake->intake_no}}">Edit</button></td>
                                     <td><button class="btn btn-danger open-DeleteIntakeDialog"
-                                                 data-toggle="modal"
-                                                 data-target="#deleteIntakeModal">Delete</button>
+                                                data-toggle="modal"
+                                                data-target="#deleteIntakeModal">Delete</button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -140,6 +138,7 @@
                             });
                         </script>
                     </div>
+
                 </div>
             </div>
         </div>

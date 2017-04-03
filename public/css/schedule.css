@@ -28,6 +28,16 @@
     min-height: 300px;
 }
 
+.introSidebar > li > a {
+    background-color: #5bc0de;
+    color: white;
+}
+
+.introSidebar > li > a:hover {
+    background-color: #f1f1f1;
+    color: #337ab7;
+}
+
 .sidebar > li > a:hover {
     background-color: #f1f1f1;
     color: #337ab7;
