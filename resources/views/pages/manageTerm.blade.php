@@ -175,7 +175,7 @@
                                         <h4 class="modal-title" id="deleteInstructorModalLabel">Delete Individual Term</h4>
                                     </div>
 
-                                    {!! Form::open(['url' => '/manageTermDelete', 'id' => 'deleteTermForm']) !!}
+                                    {!! Form::open(['url' => '/deleteTerm', 'id' => 'deleteTerm']) !!}
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <table class="table table-bordered table-condensed">
@@ -205,6 +205,14 @@
                                 $('.modal-body #modal_course_weeks').attr('value', $(this).data('course_weeks')).text();
                                 $('.modal-body #modal_break_weeks').attr('value', $(this).data('break_weeks')).text();
                                 $('.modal-body #modal_exam_weeks').attr('value', $(this).data('exam_weeks')).text();
+                            });
+
+                            $(document).on('click', '.open-DeleteTermDialog', function() {
+                                document.getElementById('deleteTermForm').reset();
+                                var term_id = $(this).parent().siblings(":first").text();
+                                console.log(term_id);
+
+                                $('.modal-body #modal_termId_delete').attr('value', term_id);
                             });
                         </script>
 
