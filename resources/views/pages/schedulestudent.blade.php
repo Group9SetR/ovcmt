@@ -20,14 +20,14 @@
                     <h3><!--<span class="glyphicon glyphicon-chevron-left"></span>-->
                         {{$details['schedule_date']->format('F Y')}}
                         <!--<span class="glyphicon glyphicon-chevron-right"></span></h3>-->
-                        {{Form::open(['url' => 'schedulestudent','id' => 'dateSelectForm'])}}
+                        {{Form::open(['url' => 'schedulestudent','id' => 'dateSelectForm'])}} </h3>
                         <div class="form-group">
                             <input type="hidden" name="schedule_intake" value="{{$details['intake_id']}}">
 
                             <!-- TODO Gylphicons clickable to next/prev week-->
-                            <span class="glyphicon glyphicon-chevron-left"></span>
-                            <input type="date" name="schedule_starting_date" value="{{$details['schedule_date']->format('Y-m-01')}}">
-                            <span class="glyphicon glyphicon-chevron-right"></span>
+                            <!--<button class="glyphicon glyphicon-chevron-left week_date_control" id="week_back"></button>-->
+                            <input type="date" id="schedule_select" name="schedule_starting_date" value="{{$details['schedule_date']->format('Y-m-01')}}">
+                            <!--<button class="glyphicon glyphicon-chevron-right week_date_control" id="week_forward"></button>-->
                             {{ Form::submit('Submit') }}
                         </div>
                     {{Form::close()}}

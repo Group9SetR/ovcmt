@@ -101,8 +101,8 @@ function createCoursePanelBody(instructor)
     coursePanelBody.className=['panel-body drag_course_offering_panel'];
     coursePanelBody.append(document.createElement('P').appendChild(document.createTextNode('Instructor:'+ instructor)));
     coursePanelBody.append(document.createElement('BR'));
-    coursePanelBody.append(document.createElement('P').appendChild(document.createTextNode('TA:')));
-    coursePanelBody.append(document.createElement('BR'));
+    /*coursePanelBody.append(document.createElement('P').appendChild(document.createTextNode('TA:')));
+    coursePanelBody.append(document.createElement('BR'));*/
     return coursePanelBody;
 }
 

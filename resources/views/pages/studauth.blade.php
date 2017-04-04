@@ -6,7 +6,7 @@
         <div class="col-sm-2 sidenav">
             <br><br>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="{{ url('/schedulestudent') }}" onClick="">Schedule View</a></li>
+                <li class="active"><a href="{{ url('/selectschedulestudent') }}" onClick="">Schedule View</a></li>
             </ul><br>
         </div>
         <div class="col-sm-8">
