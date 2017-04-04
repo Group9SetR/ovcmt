@@ -19,16 +19,41 @@
                             <div class="form-group">
                                 <!-- TODO Gylphicons clickable to next/prev week-->
                                 <input type="hidden" name="selected_term_id" value="{{$term->term_id}}"/>
-                                <span class="glyphicon glyphicon-chevron-left"></span>
-                                <input type="date" name="schedule_select_date" value="{{$calendarDetails['goToDate']}}">
-                                <span class="glyphicon glyphicon-chevron-right"></span>
+                                <button class="glyphicon glyphicon-chevron-left week_date_control" id="week_back"></button>
+                                <input type="date" id="schedule_select" name="schedule_select_date" value="{{$calendarDetails['goToDate']}}">
+                                <button class="glyphicon glyphicon-chevron-right week_date_control" id="week_forward"></button>
                                 {{Form::submit('Submit')}}
-                            </div>
-                            <div class="form-group">
-
                             </div>
                             {{Form::close()}}
                         </div>
+                        <script>
+                            function convertDate(date) {
+                                var yyyy = date.getFullYear().toString();
+                                var mm = (date.getMonth()+1).toString();
+                                var dd  = date.getDate().toString();
+
+                                var mmChars = mm.split('');
+                                var ddChars = dd.split('');
+
+                                return yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
+                            }
+
+                            $('#week_forward').click(function(e) {
+                                e.preventDefault();
+                                var date = new Date($('#schedule_select').val());
+                                date.setDate(date.getDate() + 8);
+                                $('#schedule_select').val(convertDate(date));
+
+                                $(this).submit();
+                            });
+                            $('#week_back').click(function(e) {
+                                e.preventDefault();
+                                var date = new Date($('#schedule_select').val());
+                                date.setDate(date.getDate() - 6);
+                                $('#schedule_select').val(convertDate(date));
+                                $(this).submit();
+                            });
+                        </script>
                     </div>
                     <div class="col-sm-2">
                         <h2>Course List</h2>

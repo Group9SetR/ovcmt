@@ -10,11 +10,12 @@
 
 .drag_schedule_row td {
     width: 150px;
-    height:130px;
+    height:90px;
 }
 
 .drag_course_offering {
     width:150px;
+    height:70px;
     margin-bottom:0;
     display:block;
 }
