@@ -39,11 +39,15 @@
                                         panelheading.append(document.createElement('p').appendChild(document.createTextNode(
                                             ' ' + roombyday['am_course_id']+ ' Intake:' + roombyday['am_intake_no'])));
                                         panelbody.className=('panel-body');
-                                        panelbody.append(document.createElement('p').appendChild(document.createTextNode(
-                                            'Instructor: ' + roombyday['am_instructor_name'])));
+                                        if(roombyday['am_instructor_name'] != null && roombyday['am_instructor_name'] != 0) {
+                                            panelbody.append(document.createElement('p').appendChild(document.createTextNode(
+                                                'Instructor: ' + roombyday['am_instructor_name'])));
+                                        }
                                         panelbody.append(document.createElement('br'));
-                                        panelbody.append(document.createElement('p').appendChild(document.createTextNode(
-                                            ' TA: ' + (roombyday['am_ta_name'] != null ? roombyday['am_ta_name'] : ""))));
+                                        if(roombyday['am_ta_name'] != null && roombyday['am_ta_name'] != 0) {
+                                            panelbody.append(document.createElement('p').appendChild(document.createTextNode(
+                                                ' TA: ' + (roombyday['am_ta_name'] != null ? roombyday['am_ta_name'] : ""))));
+                                        }
                                         panel.append(panelheading);
                                         panel.append(panelbody);
                                         return panel;
@@ -58,11 +62,15 @@
                                         panelheading.append(document.createElement('p').appendChild(document.createTextNode(
                                             ' ' + roombyday['pm_course_id']+ ' Intake:' + roombyday['pm_intake_no'])));
                                         panelbody.className=('panel-body');
-                                        panelbody.append(document.createElement('p').appendChild(document.createTextNode(
-                                           'Instructor: ' + roombyday['pm_instructor_name'])));
+                                        if(roombyday['pm_instructor_name'] != null && roombyday['pm_instructor_name'] != 0) {
+                                            panelbody.append(document.createElement('p').appendChild(document.createTextNode(
+                                                'Instructor: ' + roombyday['pm_instructor_name'])));
+                                        }
                                         panelbody.append(document.createElement('br'));
-                                        panelbody.append(document.createElement('p').appendChild(document.createTextNode(
-                                           ' TA: ' + (roombyday['pm_ta_name'] != null ? roombyday['pm_ta_name'] : ""))));
+                                        if(roombyday['pm_ta_name'] != null && roombyday['pm_ta_name'] != 0) {
+                                            panelbody.append(document.createElement('p').appendChild(document.createTextNode(
+                                                ' TA: ' + (roombyday['pm_ta_name'] != null ? roombyday['pm_ta_name'] : ""))));
+                                        }
                                         panel.append(panelheading);
                                         panel.append(panelbody);
                                         return panel;
@@ -110,7 +118,6 @@
                                             e.preventDefault();
                                             var date = new Date($('#schedule_starting_date').val());
                                             date.setDate(date.getDate() - 8);
-                                            console.log(date.toString());
                                             $('#schedule_starting_date').val(convertDate(date));
                                         });
                                         $('#dateSelectForm').on('submit', function(e) {
@@ -129,7 +136,6 @@
                                                 success: function (data) {
                                                     $('#mondayTable').css('visibility', 'visible');
                                                     updateDate(data['datearray']);
-                                                    console.log(data['roomsbyday']);
                                                     for (let i = 0; i < data['roomsbyday'].length; i++) {
                                                         if (data['roomsbyday'][i]['am_crn'] != null) {
                                                             var tdid = '-AM-' + dateSwitcher(data['roomsbyday'][i]['cdate'], data['datearray']);
