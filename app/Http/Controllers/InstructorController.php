@@ -135,7 +135,19 @@ class InstructorController extends Controller
         return redirect()->action('InstructorController@index');
     }
 
-
+    public function deleteCourseInstructor(Request $req) {
+        if(isset($req->instructor_id) && isset($req->course_id)) {
+            $courseinstructor = CourseInstructor::where('instructor_id', $req->instructor_id)
+                ->where('course_id', $req->course_id);
+            if(sizeof($courseinstructor) == 1) {
+                DB::table('course_instructors')
+                    ->where('course_id', $req->course_id)
+                    ->where('instructor_id', $req->instructor_id)
+                    ->delete();
+            }
+        }
+        return redirect()->action('InstructorController@index');
+    }
 
     public function index() {
         $instructors = $this->listInstructors();
