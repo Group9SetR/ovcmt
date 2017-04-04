@@ -56,7 +56,7 @@
                                         Login
                                     </button>
 
-                                    <a href="{{ url('register') }}" onClick=""><span class="btn btn-warning">Register New User</span></a>
+                                 {{--   <a href="{{ url('register') }}" onClick=""><span class="btn btn-warning">Register New User</span></a>--}}
                                 </div>
                             </div>
                         </form>
