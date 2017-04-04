@@ -98,7 +98,8 @@ Route::group(['middleware' => 'App\Http\Middleware\StaffMiddleware'], function()
 Route::group(['middleware' => 'App\Http\Middleware\StudentMiddleware'], function()
 {
     Route::get('/studauth', 'PagesController@studauth');
-    Route::get('/schedulestudent', 'ScheduleViewController@index');
+    Route::get('/selectschedulestudent', 'ScheduleViewController@select');
+    Route::post('/schedulestudent', 'ScheduleViewController@index');
 });
 
 

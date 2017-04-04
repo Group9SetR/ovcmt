@@ -5,22 +5,23 @@ namespace App\Http\Controllers;
 use App\Course;
 use App\Http\Requests;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Database\QueryException;
 
 class CourseController extends Controller
 {
     public function store(Request $req) {
-        if (Course::find($req->course_id2)) {
-            Session::flash('duplicate_course_id', 'Course not added - course id already exists.');
-        } else {
-            // course_id doesn't already exist
+        if (isset($req->course_id2)) {
             $course = new Course;
             $course->course_id = $req->course_id2;
             $course->sessions_days = $req->sessions_days2;
             $course->course_type = $req->course_type2;
             $course->term_no = $req->term_no2;
             $course->color = $req->color2;
-            $course->save();
+            try {
+                $course->save();
+            } catch (QueryException $e) {
+                return redirect()->back()->with('duplicate_course_id', 'Course Id: ' . $req->course_id2 . ' already in use - course not added.');
+            }
         }
         return redirect()->action('CourseController@manageCourse');
     }

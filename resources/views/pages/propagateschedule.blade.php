@@ -11,8 +11,10 @@
                 <div class="row">
                     <div class="col-md-10">
                         <div class="form-group col-md-10 offset-2" id="propagateform">
+
                             {{Form::open(['url' => '',
                                           'id' => 'dateSelectForm'])}}
+                                <button class="glyphicon glyphicon-chevron-left" id="prevweek"></button>
                                 {{Form::label('schedule_starting_date', 'Week of:')}}
                                 @if(isset($errorDate))
                                     {{Form::date('schedule_starting_date', $errorDate,
@@ -21,6 +23,7 @@
                                     {{Form::date('schedule_starting_date', Carbon\Carbon::today(new DateTimeZone('America/Vancouver'),
                                                                            ['id' => 'schedule_starting_date'])) }}
                                 @endif
+                                <button class="glyphicon glyphicon-chevron-right" id="nextweek"></button>
                                 {{ Form::submit('Choose Starting Date',['class'=> 'btn btn-primary form-inline']) }}
                             {{Form::close()}}
                         </div>
@@ -30,17 +33,21 @@
                                         var panel = document.createElement('div');
                                         var panelheading = document.createElement('div');
                                         var panelbody = document.createElement('div');
-                                        panel.className=['panel panel-default'];
+                                        panel.className=('panel panel-default');
                                         panelheading.className=('panel-heading color-panel');
                                         panelheading.style.backgroundColor=roombyday['am_color'];
                                         panelheading.append(document.createElement('p').appendChild(document.createTextNode(
                                             ' ' + roombyday['am_course_id']+ ' Intake:' + roombyday['am_intake_no'])));
                                         panelbody.className=('panel-body');
-                                        panelbody.append(document.createElement('p').appendChild(document.createTextNode(
-                                            'Instructor: ' + roombyday['am_instructor_name'])));
+                                        if(roombyday['am_instructor_name'] != null && roombyday['am_instructor_name'] != 0) {
+                                            panelbody.append(document.createElement('p').appendChild(document.createTextNode(
+                                                'Instructor: ' + roombyday['am_instructor_name'])));
+                                        }
                                         panelbody.append(document.createElement('br'));
-                                        panelbody.append(document.createElement('p').appendChild(document.createTextNode(
-                                            ' TA: ' + (roombyday['am_ta_name'] != null ? roombyday['am_ta_name'] : ""))));
+                                        if(roombyday['am_ta_name'] != null && roombyday['am_ta_name'] != 0) {
+                                            panelbody.append(document.createElement('p').appendChild(document.createTextNode(
+                                                ' TA: ' + (roombyday['am_ta_name'] != null ? roombyday['am_ta_name'] : ""))));
+                                        }
                                         panel.append(panelheading);
                                         panel.append(panelbody);
                                         return panel;
@@ -49,17 +56,21 @@
                                         var panel = document.createElement('div');
                                         var panelheading = document.createElement('div');
                                         var panelbody = document.createElement('div');
-                                        panel.className=['panel panel-default'];
+                                        panel.className=('panel panel-default');
                                         panelheading.className=('panel-heading color-panel');
                                         panelheading.style.backgroundColor=roombyday['pm_color'];
                                         panelheading.append(document.createElement('p').appendChild(document.createTextNode(
                                             ' ' + roombyday['pm_course_id']+ ' Intake:' + roombyday['pm_intake_no'])));
                                         panelbody.className=('panel-body');
-                                        panelbody.append(document.createElement('p').appendChild(document.createTextNode(
-                                           'Instructor: ' + roombyday['pm_instructor_name'])));
+                                        if(roombyday['pm_instructor_name'] != null && roombyday['pm_instructor_name'] != 0) {
+                                            panelbody.append(document.createElement('p').appendChild(document.createTextNode(
+                                                'Instructor: ' + roombyday['pm_instructor_name'])));
+                                        }
                                         panelbody.append(document.createElement('br'));
-                                        panelbody.append(document.createElement('p').appendChild(document.createTextNode(
-                                           ' TA: ' + (roombyday['pm_ta_name'] != null ? roombyday['pm_ta_name'] : ""))));
+                                        if(roombyday['pm_ta_name'] != null && roombyday['pm_ta_name'] != 0) {
+                                            panelbody.append(document.createElement('p').appendChild(document.createTextNode(
+                                                ' TA: ' + (roombyday['pm_ta_name'] != null ? roombyday['pm_ta_name'] : ""))));
+                                        }
                                         panel.append(panelheading);
                                         panel.append(panelbody);
                                         return panel;
@@ -82,20 +93,36 @@
                                         }
                                     }
                                     function updateDate(week) {
-                                        $('#Mon').append(document.createTextNode(" " + week['monday']));
-                                        $('#Tues').append(document.createTextNode(" " + week['tuesday']));
-                                        $('#Weds').append(document.createTextNode(" " + week['wednesday']));
-                                        $('#Thurs').append(document.createTextNode(" " + week['thursday']));
-                                        $('#Fri').append(document.createTextNode(" " + week['friday']));
+                                        $('#Mon').text("");
+                                        $('#Tues').text("");
+                                        $('#Weds').text("");
+                                        $('#Thurs').text("");
+                                        $('#Fri').text("");
+                                        $('#Mon').append(document.createTextNode("Mon " + week['monday']));
+                                        $('#Tues').append(document.createTextNode("Tues " + week['tuesday']));
+                                        $('#Weds').append(document.createTextNode("Weds " + week['wednesday']));
+                                        $('#Thurs').append(document.createTextNode("Thurs " + week['thursday']));
+                                        $('#Fri').append(document.createTextNode("Fri " + week['friday']));
                                     }
 
+
+
                                     $(document).ready(function() {
+                                        $('#nextweek').click(function(e) {
+                                            e.preventDefault();
+                                            var date = new Date($('#schedule_starting_date').val());
+                                            date.setDate(date.getDate() + 8);
+                                            $('#schedule_starting_date').val(convertDate(date));
+                                        });
+                                        $('#prevweek').click(function(e) {
+                                            e.preventDefault();
+                                            var date = new Date($('#schedule_starting_date').val());
+                                            date.setDate(date.getDate() - 8);
+                                            $('#schedule_starting_date').val(convertDate(date));
+                                        });
                                         $('#dateSelectForm').on('submit', function(e) {
                                             e.preventDefault();
                                             var selectedDate = $('#schedule_starting_date').val();
-                                            $('#propagateform').empty();
-                                            var header = "<h4><small>Week of: " + selectedDate + "</small></h4><hr>";
-                                            $('#propagateform').append(header);
                                             $.ajaxSetup({
                                                 headers: {
                                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -109,7 +136,6 @@
                                                 success: function (data) {
                                                     $('#mondayTable').css('visibility', 'visible');
                                                     updateDate(data['datearray']);
-                                                    console.log(data['roomsbyday']);
                                                     for (let i = 0; i < data['roomsbyday'].length; i++) {
                                                         if (data['roomsbyday'][i]['am_crn'] != null) {
                                                             var tdid = '-AM-' + dateSwitcher(data['roomsbyday'][i]['cdate'], data['datearray']);
@@ -131,11 +157,11 @@
                             <table class='table table-bordered' id='drag_schedule_table'>
                                 <tr>
                                     <th class='drag_schedule_row_head'>Room</th>
-                                    <th id="Mon">Mon</th>
-                                    <th id="Tues">Tues</th>
-                                    <th id="Weds">Wed</th>
-                                    <th id="Thurs">Thurs</th>
-                                    <th id="Fri">Fri</th>
+                                    <th id="Mon"></th>
+                                    <th id="Tues"></th>
+                                    <th id="Weds"></th>
+                                    <th id="Thurs"></th>
+                                    <th id="Fri"></th>
                                 </tr>
                                 <tbody>
                                     <tr class="M1-AM">

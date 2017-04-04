@@ -25,6 +25,8 @@ class IntakeController extends Controller
             //CREATE TERMS FOR EACH INTAKE
             $this->createTerms($intake);
         }
+        //TODO else error message 
+
         return redirect()->action('IntakeController@index');
     }
 

@@ -101,8 +101,8 @@ function createCoursePanelBody(instructor)
     coursePanelBody.className=['panel-body drag_course_offering_panel'];
     coursePanelBody.append(document.createElement('P').appendChild(document.createTextNode('Instructor:'+ instructor)));
     coursePanelBody.append(document.createElement('BR'));
-    coursePanelBody.append(document.createElement('P').appendChild(document.createTextNode('TA:')));
-    coursePanelBody.append(document.createElement('BR'));
+    /*coursePanelBody.append(document.createElement('P').appendChild(document.createTextNode('TA:')));
+    coursePanelBody.append(document.createElement('BR'));*/
     return coursePanelBody;
 }
 
@@ -266,26 +266,32 @@ function drop(ev, el) {
     var data = ev.dataTransfer.getData("text");
     if(el.childNodes.length > 2) {
         alert("Error: Cannot place more than one entry in a time slot!");
-    } else if(!el.classList.contains('drop-timeslot')) {
-        alert('Error: you can only drop in empty time slots!');
     } else {
+        //valid drop slot so continue
+
+        //if this is a Course Listing from the sidebar
         if(document.getElementById(data).classList.contains('drag_course_listing')) {
-            var transferCRN = $('#'+data+" .hidden_crn")[0].textContent;
-            findChild(el, 'timeslot_input').setAttribute('value', transferCRN);
-            var nodeCopy = CourseOfferingPanelFromListing(data);
-            var sessionsDays = extractSessionsDays(data)-1;
-            setSessionsDays(data,sessionsDays);
-            ev.target.appendChild(nodeCopy);
-            $('#'+nodeCopy.id+' .drag_course_listing_sessions').remove(); //remove session counter
-            //add delete button
-            $('#'+nodeCopy.id+' .panel-heading').append(createDeleteCourseButton());
+            sessionsDays = extractSessionsDays(data);
             if(sessionsDays == 0) {
-                $('#'+data).hide();
+                alert("Error: cannot have less than 0 sessions scheduled");
+            } else {
+                sessionsDays--;
+                var transferCRN = $('#'+data+" .hidden_crn")[0].textContent;
+                findChild(el, 'timeslot_input').setAttribute('value', transferCRN);
+                var nodeCopy = CourseOfferingPanelFromListing(data);
+                setSessionsDays(data,sessionsDays);
+                ev.target.appendChild(nodeCopy);
+                $('#'+nodeCopy.id+' .drag_course_listing_sessions').remove(); //remove session counter
+                //add delete button
+                $('#'+nodeCopy.id+' .panel-heading').append(createDeleteCourseButton());
+                $("div[id^='dropcop']").attr('id', function(i) {
+                    return "dropcopy" + ++i;
+                });
             }
-            $("div[id^='dropcop']").attr('id', function(i) {
-                return "dropcopy" + ++i;
-            });
+
+
         } else {
+            //just an existing course panel taken from the RoomsByDays table
             var source = document.getElementById(data).parentNode;
             var transferCRN = source.childNodes[1].getAttribute('value');
             findChild(el, 'timeslot_input').setAttribute('value', transferCRN);
