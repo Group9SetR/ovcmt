@@ -105,11 +105,11 @@
             </table>
             <script type = "text/javascript">
                 $('#search').on('keyup',function(){
-                    $value = $(this).val();
+                    value = $(this).val();
                     $.ajax ({
                         type : 'GET',
                         url  : '/searchInstructor',
-                        data: { 'search' : $value },
+                        data: { 'search' : value },
                         success: function (data) {
                                 $('.searchbody').html(data);
                         }
@@ -190,12 +190,13 @@
                                     success: function (data) {
                                         $('#courseListing').empty();
                                         for (let i = 0; i < data['courses'].length; i++) {
+                                            console.log(data['courses'][i]['instructor_id']);
+                                            console.log(data['courses'][i]['course_id']);
                                             var panel = "<div class='panel panel-default'><div class='panel-heading'><div class='row'><div class='col-sm-4 text-left'>" + data['courses'][i]['course_id']
                                                 + "</div><div class='col-md-8 text-right'>" +
-                                                "<form action='/deleteCourseInstructor' method='post'>" +
+                                                '{{Form::open(["url" => "deleteCourseInstructor"])}}' +
                                                 "<input type='hidden' name='instructor_id' value='" + data['courses'][i]['instructor_id'] + "'>" +
                                                 "<input type='hidden' name='course_id' value='" + data['courses'][i]['course_id'] + "'>" +
-                                                "<input type='hidden' name='_token' value='" + {{csrf_token()}} + "'>" +
                                                 "<button class='btn btn-danger' type='submit' value='Submit'>Delete</button>" + "</form>" +
                                                 "</div></div></div> <div class='panel-body'>" +
                                                 "Intake: " + data['courses'][i]['intake_no'] +

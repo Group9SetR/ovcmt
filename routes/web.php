@@ -37,6 +37,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     Route::post('/editInstructor', 'InstructorController@edit');
     Route::post('/showInstructorDetails', 'AjaxController@instructorDetails');
     Route::post('/manageInstructorDelete', 'InstructorController@deleteInstructor');
+    Route::post('/deleteCourseInstructor', 'InstructorController@deleteCourseInstructor');
 
     /* CourseController */
     Route::get('/manageCourse', 'CourseController@manageCourse');
