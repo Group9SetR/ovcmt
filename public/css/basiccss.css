@@ -89,6 +89,14 @@ html, body {
     color: black;
 }
 
+.instructions_list {
+    list-style-type:none;
+}
+
+.instructions_set img {
+    max-width:800px;
+    max-height:500px;
+}
 
 
 
