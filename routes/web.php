@@ -92,26 +92,28 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 Route::group(['middleware' => 'App\Http\Middleware\StaffMiddleware'], function()
 {
     Route::get('/staffauth', 'PagesController@staffauth');
-    Route::get('/schedulestaff', 'PagesController@schedulestaff');
+
 });
 
 /* Student Routes*/
 Route::group(['middleware' => 'App\Http\Middleware\StudentMiddleware'], function()
 {
     Route::get('/studauth', 'PagesController@studauth');
-    Route::get('/selectschedulestudent', 'ScheduleViewController@select');
-    Route::post('/schedulestudent', 'ScheduleViewController@index');
+    //Route::get('/selectschedulestudent', 'ScheduleViewController@selectStudent');
+    //Route::post('/schedulestudent', 'ScheduleViewController@studentIndex');
 });
-
-
-
 
 /* Public Pages */
 
 Auth::routes();
 
-Route::get('/', 'PagesController@home');
+/* Student and Instructor Schedule View*/
+Route::get('/selectinstructorschedule', 'ScheduleViewController@selectInstructor');
+Route::post('/scheduleinstructor', 'ScheduleViewController@instructorIndex');
+Route::get('/selectschedulestudent', 'ScheduleViewController@selectStudent');
+Route::post('/schedulestudent', 'ScheduleViewController@studentIndex');
 
+Route::get('/', 'PagesController@home');
 
 Route::get('/about', 'PagesController@about');
 
