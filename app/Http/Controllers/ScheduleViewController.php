@@ -50,28 +50,32 @@ class ScheduleViewController extends Controller
         $terms = Term::where('intake_id', $intake)
             ->select('term_id')
             ->get();
-        $amCourses = DB::table('rooms_by_days AS r')
-            ->leftjoin('course_offerings AS co', 'r.am_crn', '=', 'co.crn')
+        $amCourses = DB::table('courses AS c')
+            ->join('course_offerings AS co', 'c.course_id', '=', 'co.course_id')
             ->join('course_instructors AS ci', function($join) {
                 $join->on('co.course_id', '=',  'ci.course_id');
                 $join->on('co.instructor_id','=', 'ci.instructor_id');
                 $join->on('co.intake_no','=', 'ci.intake_no');
             })
-            ->join('courses AS c', 'ci.course_id', '=', 'c.course_id')
-            ->select('r.room_id', 'c.course_id', 'r.cdate', 'c.color')
+            ->join('instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
+            ->join('rooms_by_days AS r', 'co.crn', '=', "r.am_crn")
+            ->join('calendar_dates AS ca', 'r.cdate','=','ca.cdate')
+            ->select('r.room_id', 'c.course_id', 'r.cdate', 'c.color', 'i.first_name')
             ->whereMonth('r.cdate', $date->format('n'))
             ->whereYear('r.cdate', $date->format('Y'))
             ->whereIn('co.term_id', $terms)
             ->get();
-        $pmCourses = DB::table('rooms_by_days AS r')
-            ->leftjoin('course_offerings AS co', 'r.pm_crn', '=', 'co.crn')
+        $pmCourses = DB::table('courses AS c')
+            ->join('course_offerings AS co', 'c.course_id', '=', 'co.course_id')
             ->join('course_instructors AS ci', function($join) {
                 $join->on('co.course_id', '=',  'ci.course_id');
                 $join->on('co.instructor_id','=', 'ci.instructor_id');
                 $join->on('co.intake_no','=', 'ci.intake_no');
             })
-            ->join('courses AS c', 'ci.course_id', '=', 'c.course_id')
-            ->select('r.room_id', 'c.course_id', 'r.cdate', 'c.color')
+            ->join('instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
+            ->join('rooms_by_days AS r', 'co.crn', '=', "r.pm_crn")
+            ->join('calendar_dates AS ca', 'r.cdate','=','ca.cdate')
+            ->select('r.room_id', 'c.course_id', 'r.cdate', 'c.color', 'i.first_name')
             ->whereMonth('r.cdate', $date->format('n'))
             ->whereYear('r.cdate', $date->format('Y'))
             ->whereIn('co.term_id', $terms)
