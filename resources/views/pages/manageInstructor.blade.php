@@ -201,7 +201,8 @@
                                                 "<button class='btn btn-danger' type='submit' value='Submit'>Delete</button>" + "</form>" +
                                                 "</div></div></div> <div class='panel-body'>" +
                                                 "Intake: " + data['courses'][i]['intake_no'] +
-                                                "</div></div>";
+                                                ((data['courses'][i]['instructor_type'] == 1) ? " - Instructor" : " - TA")
+                                                + "</div></div>";
                                             $('#courseListing').append(panel);
                                             //TODO: delete doesn't work
                                         }
