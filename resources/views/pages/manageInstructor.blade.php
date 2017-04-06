@@ -12,6 +12,9 @@
             @if(session('duplicate_instructor_email'))
                 <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('duplicate_instructor_email') }}</p>
             @endif
+            @if(session('duplicate_course_instructor'))
+                <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('duplicate_course_instructor') }}</p>
+            @endif
             <button href="#addNewInstructor" class="btn btn-default" data-toggle="collapse">Add Instructor</button>
             <div class="collapse" id="addNewInstructor">
                 <h2>Add a New Instructor</h2>
@@ -191,7 +194,7 @@
                                         $('#courseListing').empty();
                                         for (let i = 0; i < data['courses'].length; i++) {
                                             var panel = "<div class='panel panel-default'><div class='panel-heading'><div class='row'><div class='col-sm-4 text-left'>" + data['courses'][i]['course_id']
-                                                + "</div><div class='col-md-8 text-right'>" +
+                                                +"</div><div class='col-md-8 text-right'>" +
                                                 '{{Form::open(["url" => "deleteCourseInstructor"])}}' +
                                                 "<input type='hidden' name='instructor_id' value='" + data['courses'][i]['instructor_id'] + "'>" +
                                                 "<input type='hidden' name='course_id' value='" + data['courses'][i]['course_id'] + "'>" +
