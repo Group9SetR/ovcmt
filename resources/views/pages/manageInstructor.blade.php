@@ -190,8 +190,6 @@
                                     success: function (data) {
                                         $('#courseListing').empty();
                                         for (let i = 0; i < data['courses'].length; i++) {
-                                            console.log(data['courses'][i]['instructor_id']);
-                                            console.log(data['courses'][i]['course_id']);
                                             var panel = "<div class='panel panel-default'><div class='panel-heading'><div class='row'><div class='col-sm-4 text-left'>" + data['courses'][i]['course_id']
                                                 + "</div><div class='col-md-8 text-right'>" +
                                                 '{{Form::open(["url" => "deleteCourseInstructor"])}}' +
@@ -281,9 +279,7 @@
                         <script>
                             $(document).on('click', '.open-AssignCourseDialog', function() {
                                 var instructor_id1 = $(this).parent().siblings(":first").text();
-                                console.log(instructor_id1);
                                 $('.modal-body #course_instructor_id').attr('value',instructor_id1);
-                                console.log($('.modal-body #course_instructor_id').attr('value'));
                             });
                         </script>
                     </div>
@@ -324,7 +320,6 @@
         $(document).on('click', '.open-DeleteInstructorDialog', function() {
             document.getElementById('deleteInstructorForm').reset();
             var instructor_id = $(this).parent().siblings(":first").text();
-            console.log(instructor_id);
 
             $('.modal-body #modal_instructorid_delete').attr('value', instructor_id);
         });
