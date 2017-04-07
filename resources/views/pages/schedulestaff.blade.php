@@ -12,7 +12,7 @@
             <div class="col-sm-9">
                 <h4><small>Display schedule</small></h4>
                 <hr>
-                <button id="exportpdf" class="btn btn-lg btn-danger clearfix" onclick="javascript:callme();" >
+                <button id="exportpdf" class="btn btn-mg btn-danger clearfix" onclick="javascript:callme();" >
                     <span class="fa fa-file-pdf-o"></span> Save as PDF</button>
 
                 <h3>Select Month</h3>

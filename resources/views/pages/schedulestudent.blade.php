@@ -14,9 +14,11 @@
             <hr>
             <!-- TODO Display only schedules by term-->
             <!-- TODO Date picker -->
-
-            <div class="row">
+            <button class="btn btn-mg btn-default"> <a href="javascript:pdfToHTML()">Download schedual</a></button>
+        <div id ="pdf2htmldiv">
+            <div class="row" >
                 <div class="col-md-6">
+
                     <h3><!--<span class="glyphicon glyphicon-chevron-left"></span>-->
                         {{$details['schedule_date']->format('F Y')}}
                         <!--<span class="glyphicon glyphicon-chevron-right"></span></h3>-->
@@ -31,13 +33,16 @@
                             {{ Form::submit('Submit') }}
                         </div>
                     {{Form::close()}}
+
+                    <br><br>
+
                 </div>
                 <div class="col-md-6">
                     <h3 style="float:right">Intake {{$details['intake_info']->start_date->format('Y')}}{{$details['intake_info']->intake_no}}</h3>
                 </div>
             </div>
 
-
+            <div >
                 <table class="table table-striped table-bordered table-hover text-center" id="schedule_view_table">
                     <thead class="thead-default">
                         <tr class="success">
@@ -86,6 +91,7 @@
                     @endfor
                     </tbody>
                 </table>
+
                 @foreach($courses['am_courses'] as $amcourse)
                     <script>
                         var course_id = '<?php echo $amcourse->course_id;?>';
@@ -117,53 +123,41 @@
                         }
                     </script>
                 @endforeach
+            </div>
         </div>
+    </div>
     </div>
 </div>
 
 
             <script type="text/javascript">
-                function tableToJson(table) {
-                    var data = [];
-
-                    // first row needs to be headers
-                    var headers = [];
-                    for (var i=0; i<table.rows[0].cells.length; i++) {
-                        headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi,'');
-                    }
-                    data.push(headers);
-                    // go through cells
-                    for (var i=1; i<table.rows.length; i++) {
-
-                        var tableRow = table.rows[i];
-                        var rowData = {};
-
-                        for (var j=0; j<tableRow.cells.length; j++) {
-
-                            rowData[ headers[j] ] = tableRow.cells[j].innerHTML;
-
+                function pdfToHTML(){
+                    var pdf = new jsPDF('p', 'pt', 'letter');
+                    source = $('#pdf2htmldiv')[0];
+                    specialElementHandlers = {
+                        '#bypassme': function(element, renderer){
+                            return true
                         }
-
-                        data.push(rowData);
                     }
-
-                    return data;
-                }
-
-                function callme(){
-                    var table = tableToJson($('#yourTableIdName').get(0));
-                    var doc = new jsPDF('p','pt', 'a4', true);
-
-                    doc.cellInitialize();
-                    $.each(table, function (i, row){
-                        doc.setFontSize(10);
-
-                        $.each(row, function (j, cell){
-                                doc.cell(50, 50, 70, 30, cell, i);
-                        })
-                    })
-
-                    doc.save('OvcmtTimetable.pdf');
+                    margins = {
+                        top: 50,
+                        left: 60,
+                        width: 545
+                    };
+                    pdf.fromHTML(
+                        source // HTML string or DOM elem ref.
+                        , margins.left // x coord
+                        , margins.top // y coord
+                        , {
+                            'width': margins.width // max width of content on PDF
+                            , 'elementHandlers': specialElementHandlers
+                        },
+                        function (dispose) {
+                            // dispose: object with X, Y of the last line add to the PDF
+                            //          this allow the insertion of new lines after html
+                            pdf.save('ovcmtTimetable.pdf');
+                        }
+                    )
                 }
 
             </script>
