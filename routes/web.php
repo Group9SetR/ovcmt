@@ -81,40 +81,39 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     /* OnPropFinish Controller */
     Route::get('/propfinish', 'OnPropFinishController@index');
     Route::get('/propfinish/{date}', 'OnPropFinishController@index');
-});
 
     /* Admin User Controller */
     Route::get('/addUser', 'AddUserController@index');
     Route::post('/addUsers', 'AddUserController@store');
     Route::post('/adminUserDelete', 'AddUserController@deleteAdminUser');
+});
+
 
 /* Staff Routes*/
 Route::group(['middleware' => 'App\Http\Middleware\StaffMiddleware'], function()
 {
     Route::get('/staffauth', 'PagesController@staffauth');
-    Route::get('/schedulestaff', 'PagesController@schedulestaff');
+
 });
 
 /* Student Routes*/
 Route::group(['middleware' => 'App\Http\Middleware\StudentMiddleware'], function()
 {
     Route::get('/studauth', 'PagesController@studauth');
-    Route::get('/selectschedulestudent', 'ScheduleViewController@select');
-    Route::post('/schedulestudent', 'ScheduleViewController@index');
 });
-
-
-
 
 /* Public Pages */
 
 Auth::routes();
 
+
+
 Route::get('/', 'PagesController@home');
-
-
 Route::get('/about', 'PagesController@about');
-
 Route::get('/home', 'HomeController@index');
 
-Route::get('/debug', 'PropagationController@getHolidayArray');
+/* Special routes: Student and Instructor Schedule View*/
+Route::get('/selectinstructorschedule', 'ScheduleViewController@selectInstructor');
+Route::post('/scheduleinstructor', 'ScheduleViewController@instructorIndex');
+Route::get('/selectschedulestudent', 'ScheduleViewController@selectStudent');
+Route::post('/schedulestudent', 'ScheduleViewController@studentIndex');

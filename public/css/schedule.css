@@ -13,7 +13,7 @@
     height:90px;
 }
 
-.drag_course_offering {
+.drag_course_offering_item {
     width:150px;
     height:70px;
     margin-bottom:0;
@@ -31,6 +31,12 @@
 .drag_course_offering_panel {
     padding-top:5px;
     padding-bottom:5px;
+}
+.drag_course_listing .panel {
+    height:100px;
+}
+.drag_course_listing .panel-body{
+    height:50px;
 }
 
 .drag_course_offering_list {
