@@ -26,8 +26,6 @@ class UpdateCourseInstructorFK extends Migration
                 ->onDelete('cascade');
 
         });
-
-
     }
 
     /**

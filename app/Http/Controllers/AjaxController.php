@@ -17,7 +17,7 @@ class AjaxController extends Controller
 {
     public function instructorDetails(Request $req) {
         if ($req->ajax() && isset($req->instructor_id)) {
-            $courses = CourseInstructor::where('instructor_id', $req->instructor_id)->get();
+            $courses = CourseInstructor::where('instructor_id', $req->instructor_id)->orderby('course_id')->get();
             $avail = InstructAvail::where('instructor_id', $req->instructor_id)->get();
         }
         return response()->json(array("courses" => $courses, "avail" => $avail), 200);

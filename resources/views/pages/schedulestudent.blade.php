@@ -4,10 +4,14 @@
 <div class="container-fluid">
     <div class="row content">
         <div class="col-sm-2 sidenav">
-            <br><br>
-            <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="{{ url('/selectschedulestudent') }}" onClick="">Schedule View</a></li>
-            </ul>
+            @if(Auth::user()->usertype == 'admin')
+                @include('includes.sidebar')
+            @else
+                <br>
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active"><a href="{{ url('/selectschedulestudent') }}" onClick="">Schedule View</a></li>
+                </ul>
+            @endif
         </div>
         <div class="col-sm-10">
             <h4><small>Display schedule</small></h4>
@@ -96,12 +100,13 @@
                     <script>
                         var course_id = '<?php echo $amcourse->course_id;?>';
                         var room_id =  '<?php echo $amcourse->room_id;?>';
-                        var color = '<?php echo $amcourse->color;?>'
+                        var color = '<?php echo $amcourse->color;?>';
+                        var instructor = '<?php echo $amcourse->first_name;?>';
                         var date = new Date('<?php echo $amcourse->cdate;?>').getDate()+1;
                         var dates = document.getElementsByTagName('span');
                         for(var i=0; i<dates.length; i++) {
                             if(dates.item(i).innerHTML == date) {
-                                dates.item(i).nextElementSibling.append(new Panel(course_id, room_id, color));
+                                dates.item(i).nextElementSibling.append(new Panel(course_id, room_id, color, instructor));
                                 break;
                             }
                         }
@@ -112,12 +117,13 @@
                     <script>
                         var course_id = '<?php echo $pmcourse->course_id;?>';
                         var room_id =  '<?php echo $pmcourse->room_id;?>';
-                        var color = '<?php echo $pmcourse->color;?>'
+                        var color = '<?php echo $pmcourse->color;?>';
+                        var instructor = '<?php echo $pmcourse->first_name;?>';
                         var date = new Date('<?php echo $pmcourse->cdate;?>').getDate()+1;
                         var dates = document.getElementsByTagName('span');
                         for(var i=0; i<dates.length; i++) {
                             if(dates.item(i).innerHTML == date) {
-                                dates.item(i).nextElementSibling.nextElementSibling.append(new Panel(course_id, room_id, color));
+                                dates.item(i).nextElementSibling.nextElementSibling.append(new Panel(course_id, room_id, color, instructor));
                                 break;
                             }
                         }

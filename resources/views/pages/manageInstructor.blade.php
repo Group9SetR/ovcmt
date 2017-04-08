@@ -12,6 +12,9 @@
             @if(session('duplicate_instructor_email'))
                 <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('duplicate_instructor_email') }}</p>
             @endif
+            @if(session('duplicate_course_instructor'))
+                <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('duplicate_course_instructor') }}</p>
+            @endif
             <button href="#addNewInstructor" class="btn btn-default" data-toggle="collapse">Add Instructor</button>
             <div class="collapse" id="addNewInstructor">
                 <h2>Add a New Instructor</h2>
@@ -190,17 +193,16 @@
                                     success: function (data) {
                                         $('#courseListing').empty();
                                         for (let i = 0; i < data['courses'].length; i++) {
-                                            console.log(data['courses'][i]['instructor_id']);
-                                            console.log(data['courses'][i]['course_id']);
                                             var panel = "<div class='panel panel-default'><div class='panel-heading'><div class='row'><div class='col-sm-4 text-left'>" + data['courses'][i]['course_id']
-                                                + "</div><div class='col-md-8 text-right'>" +
+                                                +"</div><div class='col-md-8 text-right'>" +
                                                 '{{Form::open(["url" => "deleteCourseInstructor"])}}' +
                                                 "<input type='hidden' name='instructor_id' value='" + data['courses'][i]['instructor_id'] + "'>" +
                                                 "<input type='hidden' name='course_id' value='" + data['courses'][i]['course_id'] + "'>" +
                                                 "<button class='btn btn-danger' type='submit' value='Submit'>Delete</button>" + "</form>" +
                                                 "</div></div></div> <div class='panel-body'>" +
                                                 "Intake: " + data['courses'][i]['intake_no'] +
-                                                "</div></div>";
+                                                ((data['courses'][i]['instructor_type'] == 1) ? " - Instructor" : " - TA")
+                                                + "</div></div>";
                                             $('#courseListing').append(panel);
                                             //TODO: delete doesn't work
                                         }
@@ -281,9 +283,7 @@
                         <script>
                             $(document).on('click', '.open-AssignCourseDialog', function() {
                                 var instructor_id1 = $(this).parent().siblings(":first").text();
-                                console.log(instructor_id1);
                                 $('.modal-body #course_instructor_id').attr('value',instructor_id1);
-                                console.log($('.modal-body #course_instructor_id').attr('value'));
                             });
                         </script>
                     </div>
@@ -324,8 +324,6 @@
         $(document).on('click', '.open-DeleteInstructorDialog', function() {
             document.getElementById('deleteInstructorForm').reset();
             var instructor_id = $(this).parent().siblings(":first").text();
-            console.log(instructor_id);
-
             $('.modal-body #modal_instructorid_delete').attr('value', instructor_id);
         });
     </script>

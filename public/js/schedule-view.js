@@ -2,11 +2,11 @@
  * Created by Vincent on 31/03/2017.
  */
 
-function Panel (course_id, room_id, color)
+function Panel (course_id, room_id, color, instructor)
 {
     this.Panel = createPanel();
     this.PanelHeading = createPanelHeading(course_id, color);
-    this.PanelBody = createPanelBody(room_id);
+    this.PanelBody = createPanelBody(room_id, instructor);
     this.Panel.append(this.PanelHeading);
     this.Panel.append(this.PanelBody);
     return this.Panel;
@@ -41,11 +41,11 @@ function createPanelHeading(course_id, color)
     return PanelHeading;
 }
 
-function createPanelBody(room_id)
+function createPanelBody(room_id,instructor)
 {
     var PanelBody = document.createElement('DIV');
     PanelBody.className=['panel-body'];
-    PanelBody.append(document.createElement('P').appendChild(document.createTextNode('instruct placeholder')));
+    PanelBody.append(document.createElement('P').appendChild(document.createTextNode('Instructor: ' + instructor)));
     PanelBody.append(document.createElement('BR'));
     PanelBody.append(document.createElement('P').appendChild(document.createTextNode('Room:' + room_id)));
     return PanelBody;

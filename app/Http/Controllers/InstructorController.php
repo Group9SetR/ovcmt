@@ -50,7 +50,11 @@ class InstructorController extends Controller
         //Assign course to instructor
         $courseinstructor = CourseInstructor::firstOrNew(['instructor_id' => $req->course_instructor_id,
             'course_id' => $req->course_id, 'intake_no' => $req->intake_no, 'instructor_type' => $req->instructor_type]);
-        $courseinstructor->save();
+        try {
+            $courseinstructor->save();
+        } catch (QueryException $e) {
+            return redirect()->back()->with("duplicate_course_instructor", "This instructor already has this course assigned as teachable");
+        }
 
         return redirect()->action('InstructorController@index');
         // TODO: finish insert, handle multiple courses

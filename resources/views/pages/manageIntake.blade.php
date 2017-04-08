@@ -30,8 +30,8 @@
 
                         <table class="table table-striped table-bordered table-hover table-condensed text-center">
                             <tr class = "success">
-                                <th class="text-center">ID</th>
                                 <th class="text-center">Program Start</th>
+                                <th class="text-center">Program Grad</th>
                                 <th class="text-center">Intake</th>
                                 <th class="text-center">Edit</th>
                                 <th class="text-center">Delete</th>
@@ -40,8 +40,14 @@
                             <tbody>
                             @foreach($intakes as $intake)
                                 <tr>
-                                    <td>{{$intake->intake_id}}</td>
-                                    <td>{{$intake->start_date}}</td>
+                                    <td>{{DateTime::createFromFormat('Y-m-d', $intake->start_date)->format('F Y')}}</td>
+                                    <td>
+                                        @if($intake->intake_no == 'A')
+                                            {{DateTime::createFromFormat('Y-m-d', $intake->start_date)->format('Y')+2}}
+                                        @else
+                                            {{DateTime::createFromFormat('Y-m-d', $intake->start_date)->format('Y')+1}}
+                                        @endif
+                                    </td>
                                     <td>{{$intake->intake_no}}</td>
                                     <td><button class="btn btn-primary open-EditIntakeDialog"
                                                 data-toggle="modal"
@@ -132,7 +138,6 @@
                             $(document).on('click', '.open-DeleteIntakeDialog', function() {
                                 document.getElementById('deleteIntakeForm').reset();
                                 var intake_id = $(this).parent().siblings(":first").text();
-                                console.log(intake_id);
 
                                 $('.modal-body #modal_intakeid_delete').attr('value', intake_id);
                             });

@@ -16,8 +16,13 @@
                 <div class="form-inline">
                     <select name="selected_term_id" id="selected_term_id" class="form-control">
                         @foreach ($terms as $term)
-                            <option value={{$term->term_id}}>Term Number:{{$term->term_no}},
-                                Intake Number:{{$term->intake_no}}, Start Date:{{$term->term_start_date}} </option>
+                            <option value={{$term->term_id}}>
+                                @if($term->intake_no == 'A')
+                                    {{DateTime::createFromFormat('Y-m-d', $term->program_start_date)->format('Y')+2}}{{$term->intake_no}}
+                                @else
+                                    {{DateTime::createFromFormat('Y-m-d', $term->program_start_date)->format('Y')+1}}{{$term->intake_no}}
+                                @endif
+                                     Term {{$term->term_no}}</option>
                         @endforeach
                     </select>
                     {!! Form::submit('Choose Term',['class'=> 'btn btn-primary form-inline']) !!}
@@ -85,7 +90,6 @@
                                 data: {"term_id": term_id},
                                 dataType: 'json',
                                 success: function (data) {
-                                    console.log(data['assignedcourses']);
                                     $('#assigned').empty();
                                     for (let i = 0; i < data['assignedcourses'].length; i++) {
                                         var term = $('#selected_term_id').val();
@@ -107,7 +111,6 @@
                                             + "</div></div>";
                                         $('#assigned').append(panel);
                                         if (data['assignedcourses'][i]['instructor_id'] != null && data['assignedcourses'][i]['instructor_id'] != 0) {
-                                            console.log(data['assignedcourses'][i]['instructor_id']);
                                             $('#heading' + i + "i").css('color', 'white');
                                             $('#heading' + i + "i").append(document.createTextNode("[Instructor] "));
                                             $('#panel' + i).append(document.createTextNode("Instructor: " + data['assignedcourses'][i]['first_name']));
@@ -165,8 +168,6 @@
                                                     var emptyOption = "<option value='none'>None</option>";
                                                     $('#selected_instructor_id').append(emptyOption);
                                                     $('#selected_ta_id').append(emptyOption);
-                                                    console.log(data['instructorsbycourse'])
-
 
                                                     for (let i = 0; i < data['instructorsbycourse'].length; i++) {
                                                         var instructorDropdown = "<option value='" + data['instructorsbycourse'][i]['instructor_id'] + "'>" + data['instructorsbycourse'][i]['first_name'] + "</option>";

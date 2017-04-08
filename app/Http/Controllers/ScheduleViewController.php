@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use DB;
-use App\RoomsByDay;
+use App\Instructor;
 use App\Term;
 use App\Intake;
 use DateTime;
@@ -11,6 +11,12 @@ use Illuminate\Http\Request;
 
 class ScheduleViewController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Get all dates in a calendar month.
      * @param $days
@@ -44,6 +50,41 @@ class ScheduleViewController extends Controller
         $terms = Term::where('intake_id', $intake)
             ->select('term_id')
             ->get();
+        $amCourses = DB::table('courses AS c')
+            ->join('course_offerings AS co', 'c.course_id', '=', 'co.course_id')
+            ->join('course_instructors AS ci', function($join) {
+                $join->on('co.course_id', '=',  'ci.course_id');
+                $join->on('co.instructor_id','=', 'ci.instructor_id');
+                $join->on('co.intake_no','=', 'ci.intake_no');
+            })
+            ->join('instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
+            ->join('rooms_by_days AS r', 'co.crn', '=', "r.am_crn")
+            ->join('calendar_dates AS ca', 'r.cdate','=','ca.cdate')
+            ->select('r.room_id', 'c.course_id', 'r.cdate', 'c.color', 'i.first_name')
+            ->whereMonth('r.cdate', $date->format('n'))
+            ->whereYear('r.cdate', $date->format('Y'))
+            ->whereIn('co.term_id', $terms)
+            ->get();
+        $pmCourses = DB::table('courses AS c')
+            ->join('course_offerings AS co', 'c.course_id', '=', 'co.course_id')
+            ->join('course_instructors AS ci', function($join) {
+                $join->on('co.course_id', '=',  'ci.course_id');
+                $join->on('co.instructor_id','=', 'ci.instructor_id');
+                $join->on('co.intake_no','=', 'ci.intake_no');
+            })
+            ->join('instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
+            ->join('rooms_by_days AS r', 'co.crn', '=', "r.pm_crn")
+            ->join('calendar_dates AS ca', 'r.cdate','=','ca.cdate')
+            ->select('r.room_id', 'c.course_id', 'r.cdate', 'c.color', 'i.first_name')
+            ->whereMonth('r.cdate', $date->format('n'))
+            ->whereYear('r.cdate', $date->format('Y'))
+            ->whereIn('co.term_id', $terms)
+            ->get();
+        return array('am_courses'=>$amCourses, 'pm_courses'=>$pmCourses);
+    }
+
+    public function getInstructorScheduleByMonth($date, $instructor)
+    {
         $amCourses = DB::table('rooms_by_days AS r')
             ->leftjoin('course_offerings AS co', 'r.am_crn', '=', 'co.crn')
             ->join('course_instructors AS ci', function($join) {
@@ -55,7 +96,7 @@ class ScheduleViewController extends Controller
             ->select('r.room_id', 'c.course_id', 'r.cdate', 'c.color')
             ->whereMonth('r.cdate', $date->format('n'))
             ->whereYear('r.cdate', $date->format('Y'))
-            ->whereIn('co.term_id', $terms)
+            ->where('co.instructor_id', $instructor)
             ->get();
         $pmCourses = DB::table('rooms_by_days AS r')
             ->leftjoin('course_offerings AS co', 'r.pm_crn', '=', 'co.crn')
@@ -68,7 +109,7 @@ class ScheduleViewController extends Controller
             ->select('r.room_id', 'c.course_id', 'r.cdate', 'c.color')
             ->whereMonth('r.cdate', $date->format('n'))
             ->whereYear('r.cdate', $date->format('Y'))
-            ->whereIn('co.term_id', $terms)
+            ->where('co.instructor_id', $instructor)
             ->get();
         return array('am_courses'=>$amCourses, 'pm_courses'=>$pmCourses);
     }
@@ -77,7 +118,7 @@ class ScheduleViewController extends Controller
      * Provide all intakes for schedule view selection.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function select()
+    public function selectStudent()
     {
         $intakes = DB::table('intakes as i')
             ->select('i.*', DB::raw('YEAR(i.start_date) AS start_year'))
@@ -85,8 +126,20 @@ class ScheduleViewController extends Controller
         return view('pages.selectstudentschedule', compact('intakes'));
     }
 
+    /**
+     * Provide all intakes for schedule view selection.
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function selectInstructor()
+    {
+        $instructors = DB::table('instructors as i')
+            ->select('i.*')
+            ->get();
+        return view('pages.selectinstructorschedule', compact('instructors'));
+    }
+
     //
-    public function index(Request $req)
+    public function studentIndex(Request $req)
     {
         if(isset($req->schedule_starting_date)) {
             //if it's set then we should go to this date
@@ -110,4 +163,25 @@ class ScheduleViewController extends Controller
         return view('pages.schedulestudent', compact('weeks', 'courses','details'));
     }
 
+    public function instructorIndex(Request $req)
+    {
+        if(isset($req->schedule_starting_date)) {
+            //if it's set then we should go to this date
+            $schedule_date = DateTime::createFromFormat('Y-m-d', $req->schedule_starting_date);
+        } else {
+            //Default to current week otherwise
+            $schedule_date = new DateTime(null, new DateTimeZone('America/Vancouver'));
+        }
+        $calendar = DB::table('calendar_dates')
+            ->where('cmonth', $schedule_date->format('n'))
+            ->where('cyear', $schedule_date->format('Y'))
+            ->where('isWeekday', 1)
+            ->get();
+        $weeks = $this->getCalendar($calendar);
+        $courses = $this->getInstructorScheduleByMonth($schedule_date, $req->schedule_instructor);
+        $instructor = DB::table('instructors')
+            ->where('instructor_id', $req->schedule_instructor)
+            ->first();
+        return view('pages.scheduleinstructor', compact('weeks', 'courses', 'instructor', 'schedule_date'));
+    }
 }

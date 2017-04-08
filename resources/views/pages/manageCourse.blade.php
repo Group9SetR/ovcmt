@@ -72,7 +72,7 @@
             <table id="myTalbe" class="table table-striped table-bordered table-hover table-condensed text-center">
                 <thead class="thead-default">
                     <tr class = "success">
-                        <th class="text-center">Course Id</th>
+                        <th class="text-center">Course ID</th>
                         <th class="text-center">Sessions Days</th>
                         <th class="text-center">Course Type</th>
                         <th class="text-center">Term No</th>
@@ -115,7 +115,7 @@
                             <div class="form-group">
                                 <table class="table table-bordered table-condensed">
                                     <tr class="active">
-                                        <td>{!! Form::label('course_id', 'Course Id') !!}</td>
+                                        <td>{!! Form::label('course_id', 'Course ID') !!}</td>
                                         <td>{!! Form::text('course_id', '', array('id'=>'modal_courseid_name',
                                                                                 'class'=>'form-control',
                                                                                 'readonly' => 'true'
@@ -220,7 +220,6 @@
     $(document).on('click', '.open-DeleteCourseDialog', function() {
         document.getElementById('deleteCourseForm').reset();
         var course_id = $(this).parent().siblings(":first").text();
-        console.log(course_id);
 
         $('.modal-body #modal_courseid_delete').attr('value', course_id);
     });

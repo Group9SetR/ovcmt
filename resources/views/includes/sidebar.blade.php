@@ -21,8 +21,7 @@
 </ul><br>
 <ul class="nav nav-pills nav-stacked introSidebar">
     <li><a href="{{ url('/addUser') }}" onClick="">Add User</a></li>
-</ul><br>
-<br>
+</ul>
 <br>
 
 <ul class="nav nav-pills nav-stacked sidebar">
@@ -49,6 +48,8 @@
             <li><a href="{{ url('/assign') }}">Assign Courses</a></li>
             <li><a href="{{ url('/dragDrop') }}">Generate Weekly Schedule</a></li>
             <li><a href="{{ url('/propagateschedule') }}"> Propagate Weekly Schedule</a></li>
+            <li><a href="{{ url('/selectschedulestudent')}}">View Student Schedule</a></li>
+            <li><a href="{{ url('/selectinstructorschedule')}}">View Instructor Schedule</a></li>
         </ul>
     </div>
 </ul><br>
