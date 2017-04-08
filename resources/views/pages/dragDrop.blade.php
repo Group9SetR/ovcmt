@@ -57,7 +57,11 @@
                     </div>
                     <div class="col-sm-2">
                         <h2>Course List</h2>
-                        <h3>{{DateTime::createFromFormat('Y-m-d', $term->start_date)->format('Y')}}{{$term->intake_no}} Term:{{$term->term_no}}</h3>
+                        @if($term->intake_no == 'A')
+                        <h3>{{DateTime::createFromFormat('Y-m-d', $term->start_date)->format('Y')+2}}{{$term->intake_no}} Term:{{$term->term_no}}</h3>
+                        @else
+                        <h3>{{DateTime::createFromFormat('Y-m-d', $term->start_date)->format('Y')+1}}{{$term->intake_no}} Term:{{$term->term_no}}</h3>
+                        @endif
                     </div>
                 </div>
                 <div class="row">
@@ -152,15 +156,20 @@
                                 var dayOfWeek ='<?php echo $timeslot->cdayOfWeek;?>' - 2; //decrement to account for array and MySQL
                                 var room_id ='<?php echo $timeslot->room_id;?>';
                                 var crn='<?php echo $timeslot->crn;?>';
-                                var start_year = '<?php $date= DateTime::createFromFormat('Y-m-d', $term->start_date);
-                                                            echo $date->format('Y');?>';
+                                var grad_year = '<?php
+                                                    $date= DateTime::createFromFormat('Y-m-d', $term->start_date);
+                                                    if($term->intake_no == 'A') {
+                                                        echo $date->format('Y')+2;
+                                                    } else {
+                                                        echo $date->format('Y')+1;
+                                                    }?>';
                                 var intake_no = '<?php echo $term->intake_no;?>';
                                 var color = '<?php echo $timeslot->color;?>';
                                 var course_id ='<?php echo $timeslot->course_id;?>';
                                 var timeSlotName = room_id+'-'+'<?php echo $timeslot->time;?>'+'[]';
                                 var instructor = '<?php echo $timeslot->name;?>';
                                 //TODO set to not hardcoded practical
-                                appendToTimeSlot(new CourseOfferingPanel(course_id, crn, instructor, intake_no, start_year, color),
+                                appendToTimeSlot(new CourseOfferingPanel(course_id, crn, instructor, intake_no, grad_year, color),
                                     timeSlotName, dayOfWeek);
                             </script>
                         @endforeach
@@ -170,13 +179,18 @@
                             <script>
                                 var course_id = '<?php echo $course->course_id;?>';
                                 var crn = '<?php echo $course->crn;?>';
-                                var start_year = '<?php $date= DateTime::createFromFormat('Y-m-d', $term->start_date);
-                                    echo $date->format('Y');?>';
+                                var grad_year = '<?php
+                                    $date= DateTime::createFromFormat('Y-m-d', $term->start_date);
+                                    if($term->intake_no == 'A') {
+                                        echo $date->format('Y')+2;
+                                    } else {
+                                        echo $date->format('Y')+1;
+                                    }?>';
                                 var intake_no = '<?php echo $term->intake_no;?>';
                                 var color = '<?php echo $course->color;?>';
                                 var sessions = '<?php echo $courseOfferingsSessions[$course->crn];?>';
                                 var instructor = '<?php echo $course->name;?>';
-                                appendToCourseListings(new CourseListingPanel(course_id, crn, instructor, intake_no, start_year, color, sessions));
+                                appendToCourseListings(new CourseListingPanel(course_id, crn, instructor, intake_no, grad_year, color, sessions));
                             </script>
                         @endforeach
                     </div>

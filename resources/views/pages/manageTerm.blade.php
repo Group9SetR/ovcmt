@@ -7,72 +7,20 @@
             </div>
             <div class="col-sm-10">
                 <div class="row">
-                    <!--
-                    <div class="col-md-4">
-
-                        <h4><small>Manage Term </small></h4>
-                        <hr>
-
-                        <button href="#addNewTerm" class="btn btn-default" data-toggle="collapse">Add Term</button>
-                        <div class="collapse" id="addNewTerm">
-
-                            <h2>Add a New Term</h2>
-                            {!! Form::open(['url' => 'saveTerm']) !!}
-                            <div class="form-group">
-                                {!! Form::label('intake_id', 'Intake ID:') !!}
-                                <select name="intake_id" class="form-control">
-                                    @if(isset($intakes))
-                                    @foreach($intakes as $intake)
-                                        <option value="{{$intake->intake_id}}">{{$intake->intake_no}}:{{$intake->start_date}}</option>
-                                    @endforeach
-                                    @endif
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                {!! Form::label('term_no2', 'Term No:',['class'=>'control-label']) !!}&nbsp;&nbsp;&nbsp;&nbsp;
-                                {{ Form::radio('term_no2', 1, false, array('id'=>'modal_termNo_name1', 'required'=>'true')) }}&nbsp 1&nbsp;&nbsp;
-                                {{ Form::radio('term_no2', 2, false, array('id'=>'modal_termNo_name2', 'required'=>'true')) }}&nbsp 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                {{ Form::radio('term_no2', 3, false, array('id'=>'modal_termNo_name3', 'required'=>'true')) }}&nbsp 3&nbsp;&nbsp;&nbsp;
-                                {{ Form::radio('term_no2', 4, false, array('id'=>'modal_termNo_name4', 'required'=>'true')) }}&nbsp 4
-                            </div>
-                            <div class="form-group">
-                                {!! Form::label('course_weeks', 'Course Weeks:', ['class'=>'control-label']) !!}
-                                {!! Form::number('course_weeks' , null,
-                                    ['class'=>'form-control', 'required'=>'required', 'min'=>'0', 'max'=>'50']) !!}
-                            </div>
-
-                            <div class="form-group">
-                                {!! Form::label('break_weeks', 'Break Weeks:', ['class'=>'control-label']) !!}
-                                {!! Form::number('break_weeks' , null,
-                                    ['class'=>'form-control' , 'required'=>'required', 'min'=>'0', 'max'=>'10']) !!}
-                            </div>
-
-                            <div class="form-group">
-                                {!! Form::label('exam_weeks', 'Exam Weeks:', ['class'=>'control-label']) !!}
-                                {!! Form::number('exam_weeks' , null,
-                                    ['class'=>'form-control', 'required'=>'required', 'min'=>'0', 'max'=>'10']) !!}
-                            </div>
-
-                            <div class="form-group">
-                                {!! Form::submit('Add Term',['class'=> 'btn btn-primary form-control']) !!}
-                            </div>
-                            {!! Form::close() !!}
-                        </div>
-
-                        <hr>
-
-                    </div>-->
                     <div class="col-md-8">
                         <h2>Display Term</h2>
                         {{ Form::open(['url'=>'searchTerm']) }}
                         <div class="form-inline">
-                            {{ Form::label('choose_intake', 'Select terms by intake:', ['class'=>'control-label']) }}
+                            {{ Form::label('choose_intake', 'Select terms by intake (grad year):', ['class'=>'control-label']) }}
                             <select name="choose_intake" class="form-control">
                                 @if(isset($intakes))
                                 @foreach($intakes as $intake)
                                 <option value="{{$intake->intake_id}}" class="form-control">
-                                    {{DateTime::createFromFormat('Y-m-d', $intake->start_date)->format('Y')}}{{$intake->intake_no}}
+                                    @if($intake->intake_no == 'A')
+                                        {{DateTime::createFromFormat('Y-m-d', $intake->start_date)->format('Y')+2}}{{$intake->intake_no}}
+                                    @else
+                                        {{DateTime::createFromFormat('Y-m-d', $intake->start_date)->format('Y')+1}}{{$intake->intake_no}}
+                                    @endif
                                 </option>
                                 @endforeach
                                 @endif
@@ -138,17 +86,13 @@
                                         {{ Form::open(['url' => 'manageTerm']) }}
                                         <p>Edit Term</p>
                                         <div class="form-group">
-                                            {!! Form::label('modal_term_id', 'Term ID:', ['class'=>'control-label']) !!}
                                             {!! Form::text('modal_term_id', '', array('id'=>'modal_term_id',
-                                                    'class'=>'form-control', 'readonly'=>'readonly')) !!}
-                                        </div>
-                                        <div class="form-group">
-                                            {!! Form::label('modal_intake_id', 'Intake:', ['class'=>'control-label']) !!}
+                                                    'class'=>'form-control hide', 'readonly'=>'readonly')) !!}
                                             {!! Form::text('modal_intake_id', '', array('id'=>'modal_intake_id',
-                                                    'class'=>'form-control','readonly'=>'readonly'))!!}
+                                                    'class'=>'form-control hide','readonly'=>'readonly'))!!}
                                         </div>
                                         <div class="form-group">
-                                            {!! Form::label('modal_term_start_date', 'Term start:', ['class'=>'control-label']) !!}
+                                            {!! Form::label('modal_term_start_date', 'Term Start:', ['class'=>'control-label']) !!}
                                             {!! Form::date('modal_term_start_date', '', array('id'=>'modal_term_start_date',
                                                     'class'=>'form-control')) !!}
                                         </div>
