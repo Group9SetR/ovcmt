@@ -138,7 +138,6 @@
                             $(document).on('click', '.open-DeleteIntakeDialog', function() {
                                 document.getElementById('deleteIntakeForm').reset();
                                 var intake_id = $(this).parent().siblings(":first").text();
-                                console.log(intake_id);
 
                                 $('.modal-body #modal_intakeid_delete').attr('value', intake_id);
                             });

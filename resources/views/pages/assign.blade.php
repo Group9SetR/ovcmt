@@ -90,7 +90,6 @@
                                 data: {"term_id": term_id},
                                 dataType: 'json',
                                 success: function (data) {
-                                    console.log(data['assignedcourses']);
                                     $('#assigned').empty();
                                     for (let i = 0; i < data['assignedcourses'].length; i++) {
                                         var term = $('#selected_term_id').val();
@@ -112,7 +111,6 @@
                                             + "</div></div>";
                                         $('#assigned').append(panel);
                                         if (data['assignedcourses'][i]['instructor_id'] != null && data['assignedcourses'][i]['instructor_id'] != 0) {
-                                            console.log(data['assignedcourses'][i]['instructor_id']);
                                             $('#heading' + i + "i").css('color', 'white');
                                             $('#heading' + i + "i").append(document.createTextNode("[Instructor] "));
                                             $('#panel' + i).append(document.createTextNode("Instructor: " + data['assignedcourses'][i]['first_name']));
@@ -170,8 +168,6 @@
                                                     var emptyOption = "<option value='none'>None</option>";
                                                     $('#selected_instructor_id').append(emptyOption);
                                                     $('#selected_ta_id').append(emptyOption);
-                                                    console.log(data['instructorsbycourse'])
-
 
                                                     for (let i = 0; i < data['instructorsbycourse'].length; i++) {
                                                         var instructorDropdown = "<option value='" + data['instructorsbycourse'][i]['instructor_id'] + "'>" + data['instructorsbycourse'][i]['first_name'] + "</option>";

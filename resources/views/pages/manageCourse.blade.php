@@ -220,7 +220,6 @@
     $(document).on('click', '.open-DeleteCourseDialog', function() {
         document.getElementById('deleteCourseForm').reset();
         var course_id = $(this).parent().siblings(":first").text();
-        console.log(course_id);
 
         $('.modal-body #modal_courseid_delete').attr('value', course_id);
     });
