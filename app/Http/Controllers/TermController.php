@@ -76,6 +76,14 @@ class TermController extends Controller
         return $program_start;
     }
 
+    public function deleteTerm(Request $req) {
+        if (Intake::find($req->modal_termId_delete)) {
+            $intake = Term::find($req->modal_termId_delete);
+            $intake->delete();
+        }
+        return redirect()->action('TermController@index');
+    }
+
     public function makeTermStartDate($year, $month)
     {
         return DateTime::createFromFormat('Y-m-d', "$year-$month-01");

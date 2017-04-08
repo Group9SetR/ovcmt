@@ -14,7 +14,7 @@
                 @endif
             </div>
             <div class="col-sm-10">
-                <h4><small>Display schedule</small></h4>
+                <h4><small>Display Schedule</small></h4>
                 <hr>
                 <!-- TODO Display only schedules by term-->
                 <!-- TODO Date picker -->

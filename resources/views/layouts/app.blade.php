@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="/css/basiccss.css" rel="stylesheet">
     <link href="/css/schedule.css" rel="stylesheet">
+
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'  type='text/css'>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -99,6 +100,7 @@
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
+
     <script>
         $(document).ready(function() {
             // Check if window is vertically scrollable
