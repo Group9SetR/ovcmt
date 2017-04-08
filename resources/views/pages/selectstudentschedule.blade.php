@@ -19,10 +19,16 @@
                 <div class="col-sm-4">
                     {{Form::open(['url' => 'schedulestudent','id' => ''])}}
                     <div class="form-group">
-                        {{Form::label('schedule_intake', 'Your intake and starting year', ['class'=>'control-label'])}}
+                        {{Form::label('schedule_intake', 'Your intake and grad year', ['class'=>'control-label'])}}
                         <select name="schedule_intake" class="form-control">
                             @foreach($intakes as $intake)
-                                <option value="{{$intake->intake_id}}">{{$intake->start_year}}{{$intake->intake_no}}</option>
+                                <option value="{{$intake->intake_id}}">
+                                    @if($intake->intake_no == 'A')
+                                    {{$intake->start_year+2}}{{$intake->intake_no}}
+                                    @else
+                                    {{$intake->start_year+1}}{{$intake->intake_no}}
+                                    @endif
+                                </option>
                             @endforeach
                         </select>
                     </div>

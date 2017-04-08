@@ -16,8 +16,13 @@
                 <div class="form-inline">
                     <select name="selected_term_id" id="selected_term_id" class="form-control">
                         @foreach ($terms as $term)
-                            <option value={{$term->term_id}}>Term Number:{{$term->term_no}},
-                                Intake Number:{{$term->intake_no}}, Start Date:{{$term->term_start_date}} </option>
+                            <option value={{$term->term_id}}>
+                                @if($term->intake_no == 'A')
+                                    {{DateTime::createFromFormat('Y-m-d', $term->program_start_date)->format('Y')+2}}{{$term->intake_no}}
+                                @else
+                                    {{DateTime::createFromFormat('Y-m-d', $term->program_start_date)->format('Y')+1}}{{$term->intake_no}}
+                                @endif
+                                     Term {{$term->term_no}}</option>
                         @endforeach
                     </select>
                     {!! Form::submit('Choose Term',['class'=> 'btn btn-primary form-inline']) !!}
