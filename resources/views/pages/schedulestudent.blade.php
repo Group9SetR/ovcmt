@@ -16,9 +16,7 @@
         <div class="col-sm-10">
             <h4><small>Display schedule</small></h4>
             <hr>
-            <!-- TODO Display only schedules by term-->
-            <!-- TODO Date picker -->
-            <button class="btn btn-mg btn-default"> <a href="javascript:pdfToHTML()">Download schedual</a></button>
+            <button class="btn btn-mg btn-default"> <a href="javascript:pdfToHTML()">Download Schedule</a></button>
         <div id ="pdf2htmldiv">
             <div class="row" >
                 <div class="col-md-6">
@@ -42,7 +40,13 @@
 
                 </div>
                 <div class="col-md-6">
-                    <h3 style="float:right">Intake {{$details['intake_info']->start_date->format('Y')}}{{$details['intake_info']->intake_no}}</h3>
+                    <h3 style="float:right">Intake
+                        @if($details['intake_info']->intake_no=='A')
+                        {{$details['intake_info']->start_date->format('Y')+2}}{{$details['intake_info']->intake_no}}
+                        @else
+                        {{$details['intake_info']->start_date->format('Y')+1}}{{$details['intake_info']->intake_no}}
+                        @endif
+                    </h3>
                 </div>
             </div>
 
