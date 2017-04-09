@@ -323,7 +323,6 @@
         $(document).on('click', '.open-DeleteInstructorDialog', function() {
             document.getElementById('deleteInstructorForm').reset();
             var instructor_id = $(this).parent().siblings(":first").text();
-
             $('.modal-body #modal_instructorid_delete').attr('value', instructor_id);
         });
     </script>

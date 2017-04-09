@@ -23,6 +23,7 @@
                     <h3><small><a href="{{url('/manageIntake')}}">1. Add an Intake</a></small></h3>
                     <p>Add an intake and edit existing intakes on side</p>
                     <p>The four terms will be automatically generated with each intake</p>
+                    <p>Terms are generated with default values so please edit in Manage Terms page before scheduling</p>
                     <div class="intake-image">
                         <span><img src="/images/intake1.png"><img src="/images/intake2.png"></span>
                     </div>

@@ -21,8 +21,7 @@
 </ul><br>
 <ul class="nav nav-pills nav-stacked introSidebar">
     <li><a href="{{ url('/addUser') }}" onClick="">Add User</a></li>
-</ul><br>
-<br>
+</ul>
 <br>
 
 <ul class="nav nav-pills nav-stacked sidebar">
