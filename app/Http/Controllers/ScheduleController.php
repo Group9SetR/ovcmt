@@ -113,10 +113,12 @@ class ScheduleController extends Controller
                 $join->on('co.intake_no','=', 'ci.intake_no');
             })
             ->join('instructors AS i', 'ci.instructor_id', '=', 'i.instructor_id')
+            ->join('terms AS t', 'co.term_id', '=', 't.term_id')
+            ->join('intakes AS in', 't.intake_id','=', 'in.intake_id')
             ->join('rooms_by_days AS r', 'co.crn', '=', "r."."$time"."_crn")
             ->join('calendar_dates AS ca', 'r.cdate','=','ca.cdate')
             ->select('r.room_id AS room_id', 'r.cdate AS date', "r."."$time"."_crn AS crn",'co.course_id AS course_id',
-                'i.first_name AS name', 'c.color',
+                'i.first_name AS name', 'in.start_date','in.intake_no','c.color',
                 'ca.cdayOfWeek AS cdayOfWeek', DB::raw("'$time' AS time"))
             ->where([
                 ["ca.cyear", $year],
@@ -124,6 +126,7 @@ class ScheduleController extends Controller
             ])
             ->whereNotNull("r."."$time"."_crn")
             ->whereIn('ca.cdayOfWeek',[2,3,4,5,6]);
+
     }
 
     public function getCalendarDetails($date, $year, $week)
@@ -204,7 +207,6 @@ class ScheduleController extends Controller
             ->join('intakes AS i', 't.intake_id', '=', 'i.intake_id')
             ->select('t.*', 'i.intake_no', 'i.start_date AS program_start')
             ->orderBy('i.start_date', 'DESC')
-            ->orderBy('t.term_no', 'ASC')
             ->get();
         return view('pages.selecttermschedule', compact('terms'));
     }

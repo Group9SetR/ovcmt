@@ -204,7 +204,6 @@
                                                 ((data['courses'][i]['instructor_type'] == 1) ? " - Instructor" : " - TA")
                                                 + "</div></div>";
                                             $('#courseListing').append(panel);
-                                            //TODO: delete doesn't work
                                         }
                                         var avail = data['avail'][0];
                                         $('input[name="modal_instruct_avail_start_date"]').val(avail['date_start']);

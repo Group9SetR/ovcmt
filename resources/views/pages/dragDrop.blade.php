@@ -157,13 +157,13 @@
                                 var room_id ='<?php echo $timeslot->room_id;?>';
                                 var crn='<?php echo $timeslot->crn;?>';
                                 var grad_year = '<?php
-                                                    $date= DateTime::createFromFormat('Y-m-d', $term->start_date);
-                                                    if($term->intake_no == 'A') {
+                                                    $date= DateTime::createFromFormat('Y-m-d', $timeslot->start_date);
+                                                    if($timeslot->intake_no == 'A') {
                                                         echo $date->format('Y')+2;
                                                     } else {
                                                         echo $date->format('Y')+1;
                                                     }?>';
-                                var intake_no = '<?php echo $term->intake_no;?>';
+                                var intake_no = '<?php echo $timeslot->intake_no;?>';
                                 var color = '<?php echo $timeslot->color;?>';
                                 var course_id ='<?php echo $timeslot->course_id;?>';
                                 var timeSlotName = room_id+'-'+'<?php echo $timeslot->time;?>'+'[]';
