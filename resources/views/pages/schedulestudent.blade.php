@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="row content">
-        <div class="col-sm-2 sidenav">
+        <div class="col-sm-2 sidenav tohide">
             @if(Auth::user()->usertype == 'admin')
                 @include('includes.sidebar')
             @else
@@ -16,7 +16,7 @@
         <div class="col-sm-10">
             <h4><small>Display schedule</small></h4>
             <hr>
-            <button class="btn btn-mg btn-default"> <a href="javascript:pdfToHTML()">Download Schedule</a></button>
+            <!--<button class="btn btn-mg btn-default"> <a href="javascript:pdfToHTML()">Download Schedule</a></button>-->
         <div id ="pdf2htmldiv">
             <div class="row" >
                 <div class="col-md-6">
@@ -139,7 +139,7 @@
     </div>
 </div>
 
-
+<!--
             <script type="text/javascript">
                 function pdfToHTML(){
                     var pdf = new jsPDF('p', 'pt', 'letter');
@@ -170,7 +170,7 @@
                     )
                 }
 
-            </script>
+            </script>-->
 
 
 @endsection

@@ -2,10 +2,10 @@
     table-layout:fixed;
 }
 #schedule_view_table td {
-    height:250px;
+    height:200px;
 }
 #schedule_view_table td div{
-    height:125px;
+    height:100px;
 }
 
 #schedule_view_table td span {
@@ -15,13 +15,13 @@
 }
 
 #schedule_view_table td div div.panel {
-    height:120px;
+    height:90px;
     padding-top:3px;
     padding-bottom:3px;
 }
 
 #schedule_view_table td div div.panel div.panel-heading {
-    height:30px;
+    height:25px;
     padding-top:5px;
     padding-bottom:5px;
     color:white;
@@ -32,7 +32,7 @@
 }
 
 #schedule_view_table td div div.panel div.panel-body {
-    height:80px;
+    height:70px;
 }
 
 .schedule_day_of_month {

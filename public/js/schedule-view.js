@@ -45,9 +45,9 @@ function createPanelBody(room_id,instructor)
 {
     var PanelBody = document.createElement('DIV');
     PanelBody.className=['panel-body'];
-    PanelBody.append(document.createElement('P').appendChild(document.createTextNode('Instructor: ' + instructor)));
+    PanelBody.append(document.createElement('P').appendChild(document.createTextNode(instructor)));
     PanelBody.append(document.createElement('BR'));
-    PanelBody.append(document.createElement('P').appendChild(document.createTextNode('Room:' + room_id)));
+    PanelBody.append(document.createElement('P').appendChild(document.createTextNode(room_id)));
     return PanelBody;
 }
 

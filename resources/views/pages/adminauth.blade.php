@@ -6,9 +6,6 @@
             <div class="col-sm-2 sidenav">
                 @include('includes.sidebar')
             </div>
-
-
-
             <div class="col-sm-9">
                 <h2>Instructions</h2>
                 <ul class="instructions_list">

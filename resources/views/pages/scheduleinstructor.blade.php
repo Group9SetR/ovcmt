@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row content">
-            <div class="col-sm-2 sidenav">
+            <div class="col-sm-2 sidenav tohide">
                 @if(Auth::user()->usertype == 'admin')
                     @include('includes.sidebar')
                 @else
@@ -18,7 +18,7 @@
                 <hr>
                 <!-- TODO Display only schedules by term--S
                 <!-- TODO Date picker -->
-                <button class="btn btn-mg btn-default"> <a href="javascript:pdfToHTML()">Download Schedule</a></button>
+                <!--<button class="btn btn-mg btn-default"> <a href="javascript:pdfToHTML()">Download Schedule</a></button>-->
                 <div id ="pdf2htmldiv">
                 <div class="row">
                     <div class="col-md-6">
@@ -129,7 +129,7 @@
     </div>
 
 
-    <script type="text/javascript">
+    <!--<script type="text/javascript">
         function pdfToHTML(){
             var pdf = new jsPDF('p', 'pt', 'letter');
             source = $('#pdf2htmldiv')[0];
@@ -159,7 +159,7 @@
             )
         }
 
-    </script>
+    </script>-->
 
 
 @endsection

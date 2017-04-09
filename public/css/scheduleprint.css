@@ -1,0 +1,17 @@
+@media print {
+    html body * {
+        visibility: hidden;
+    }
+    .tohide {
+        display:none;
+    }
+    #schedule_view_table, #schedule_view_table * {
+        visibility: visible;
+
+    }
+    #schedule_view_table {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}

@@ -19,6 +19,7 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'  type='text/css'>
 
     <link href="/css/scheduleview.css" rel="stylesheet">
+    <link href="/css/scheduleprint.css" rel="stylesheet" media="print">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
