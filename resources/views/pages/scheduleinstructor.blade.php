@@ -16,9 +16,9 @@
             <div class="col-sm-10">
                 <h4><small>Display Schedule</small></h4>
                 <hr>
-                <!-- TODO Display only schedules by term-->
+                <!-- TODO Display only schedules by term--S
                 <!-- TODO Date picker -->
-                <button class="btn btn-mg btn-default"> <a href="javascript:pdfToHTML()">Download schedual</a></button>
+                <button class="btn btn-mg btn-default"> <a href="javascript:pdfToHTML()">Download Schedule</a></button>
                 <div id ="pdf2htmldiv">
                 <div class="row">
                     <div class="col-md-6">
