@@ -19,7 +19,7 @@
     margin-bottom:0;
     display:block;
 }
-/*TODO get color to display white on panel heading*/
+
 .drag_course_offering .panel-heading {
     color:white;
 }

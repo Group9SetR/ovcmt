@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\DB;
 class PropagationController extends Controller
 {
     public function extend(Request $req) {
-        // TODO: account for holidays :( :( :(
         if (isset($req->week_monday) && isset($req->weeks)) {
             $weeks = trim($req->weeks);
             $holidays = $this->getHolidayArray($req->week_monday, $weeks);

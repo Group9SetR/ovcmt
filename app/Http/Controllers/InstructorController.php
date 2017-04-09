@@ -57,8 +57,6 @@ class InstructorController extends Controller
         }
 
         return redirect()->action('InstructorController@index');
-        // TODO: finish insert, handle multiple courses
-        // TODO: HANDLE REPEAT ADDS
     }
 
     public function delete(Request $req) {
@@ -121,7 +119,6 @@ class InstructorController extends Controller
     public function edit(Request $req) {
         $instructor = Instructor::where('instructor_id', $req->modal_instructor_id)->first();
         $instructor->first_name = $req->modal_instructor_name;
-        //TODO: EMAIL?!
         $instructor->save();
         DB::table('instruct_avails')
             ->where('instructor_id', $req->modal_instructor_id)

@@ -90,7 +90,6 @@ class AjaxController extends Controller
                                     data-toggle="modal"
                                     data-id="{{$instructor->instructor_id}}"
                                     data-target="#assignInstructorModal">Assign</button>'.
-                        // TODO: delete button
                         '</td>'.
                         '<td>'.
                         '<button class=" btn btn-danger open-DeleteInstructorDialog"

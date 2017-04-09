@@ -8,9 +8,7 @@ use App\Term;
 use DB;
 class IntakeController extends Controller
 {
-    //
     public function store(Request $req) {
-        // TODO: add logic for determining other columns
         $intake = new Intake;
         $intake->start_date = $req->start_date;
         $intake_month = DateTime::createFromFormat('Y-m-d', $req->start_date)->format('n');

@@ -11,15 +11,6 @@ use App\Term;
 
 class AssignController extends Controller
 {
-    public function store(Request $req) {
-        DB::table('course_instructors')
-            ->insert(['course_id' => $req->course_id, 'instructor_id' => $req->instructor_id]);
-        //TODO: add intake_no?? but how?
-
-        return redirect()->action('AssignController@index');
-    }
-
-    //TODO assign course to instructor or ta - already linked up front end in assign blade
     public function assignCourse(Request $req) {
         $intake_no = DB::table('terms AS t')
             ->join('intakes AS i', 't.intake_id', '=', 'i.intake_id')
@@ -42,8 +33,7 @@ class AssignController extends Controller
         $courseoffering->save();
         return redirect()->action('AssignController@index');
     }
-
-    //TODO unassign instructor or ta from course - already linked up front end in assign blade
+    
     public function unassignCourse(Request $req) {
         $courseoffering = CourseOffering::where('course_id', $req->course_id)
             ->where('term_id', $req->term_id)
