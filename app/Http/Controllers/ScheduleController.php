@@ -207,7 +207,6 @@ class ScheduleController extends Controller
             ->join('intakes AS i', 't.intake_id', '=', 'i.intake_id')
             ->select('t.*', 'i.intake_no', 'i.start_date AS program_start')
             ->orderBy('i.start_date', 'DESC')
-            ->orderBy('t.term_no', 'ASC')
             ->get();
         return view('pages.selecttermschedule', compact('terms'));
     }
