@@ -105,7 +105,7 @@
                                         $('#Fri').append(document.createTextNode("Fri " + week['friday']));
                                     }
 
-                                    function convertDate(date) {
+                          /*          function convertDate(date) {
                                         var yyyy = date.getFullYear().toString();
                                         var mm = (date.getMonth()+1).toString();
                                         var dd  = date.getDate().toString();
@@ -128,7 +128,7 @@
                                             var date = new Date($('#schedule_starting_date').val());
                                             date.setDate(date.getDate() - 8);
                                             $('#schedule_starting_date').val(convertDate(date));
-                                        });
+                                        });*/
                                         $('#dateSelectForm').on('submit', function(e) {
                                             e.preventDefault();
                                             var selectedDate = $('#schedule_starting_date').val();
