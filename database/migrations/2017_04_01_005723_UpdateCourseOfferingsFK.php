@@ -14,12 +14,12 @@ class UpdateCourseOfferingsFK extends Migration
     public function up()
     {
         //
-        Schema::table('course_offerings', function (Blueprint $table) {
+/*        Schema::table('course_offerings', function (Blueprint $table) {
             $table->foreign(['instructor_id', 'course_id', 'intake_no'])
                 ->references(['instructor_id', 'course_id', 'intake_no'])
                 ->on('course_instructors')
                 ->onDelete('cascade');
-        });
+        });*/
         Schema::table('course_offerings', function (Blueprint $table) {
             $table->foreign('term_id')
                 ->references('term_id')
@@ -36,9 +36,9 @@ class UpdateCourseOfferingsFK extends Migration
     public function down()
     {
         //
-        Schema::table('course_offerings', function (Blueprint $table) {
+/*        Schema::table('course_offerings', function (Blueprint $table) {
             $table->dropForeign(['instructor_id', 'course_id', 'intake_no']);
-        });
+        });*/
         Schema::table('course_offerings', function (Blueprint $table) {
             $table->dropForeign(['term_id']);
         });
