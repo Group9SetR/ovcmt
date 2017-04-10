@@ -10,6 +10,7 @@
                 <hr>
                 <div class="row">
                     <div class="col-md-10">
+                        <div id ="datespot"></div>
                         <div class="form-group col-md-10 offset-2" id="propagateform">
 
                             {{Form::open(['url' => '',
@@ -105,7 +106,7 @@
                                         $('#Fri').append(document.createTextNode("Fri " + week['friday']));
                                     }
 
-                          /*          function convertDate(date) {
+                                    function convertDate(date) {
                                         var yyyy = date.getFullYear().toString();
                                         var mm = (date.getMonth()+1).toString();
                                         var dd  = date.getDate().toString();
@@ -128,7 +129,7 @@
                                             var date = new Date($('#schedule_starting_date').val());
                                             date.setDate(date.getDate() - 8);
                                             $('#schedule_starting_date').val(convertDate(date));
-                                        });*/
+                                        });
                                         $('#dateSelectForm').on('submit', function(e) {
                                             e.preventDefault();
                                             var selectedDate = $('#schedule_starting_date').val();
@@ -157,6 +158,9 @@
                                                     }
                                                     $('#numberWeeksPropForm').css('visibility', 'visible');
                                                     $('#week_monday').val(data['datearray']['monday']);
+                                                    $('#propagateform').css('visibility', 'hidden');
+                                                    $('#datespot').empty()
+                                                    document.getElementById('datespot').innerHTML = "<h4><small>" + data['datearray']['monday'] + "</small></h4>"
                                                 }
                                             });
                                         });
