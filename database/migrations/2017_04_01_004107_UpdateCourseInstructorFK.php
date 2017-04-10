@@ -14,7 +14,7 @@ class UpdateCourseInstructorFK extends Migration
     public function up()
     {
 
-        Schema::table('course_instructors', function (Blueprint $table) {
+   /*     Schema::table('course_instructors', function (Blueprint $table) {
             $table->foreign('instructor_id')->references('instructor_id')
                 ->on('instructors')
                 ->onDelete('cascade');
@@ -25,7 +25,7 @@ class UpdateCourseInstructorFK extends Migration
                 ->on('courses')
                 ->onDelete('cascade');
 
-        });
+        });*/
     }
 
     /**

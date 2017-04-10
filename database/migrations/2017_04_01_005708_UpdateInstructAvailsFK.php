@@ -13,12 +13,12 @@ class UpdateInstructAvailsFK extends Migration
      */
     public function up()
     {
-        //
+/*        //
         Schema::table('instruct_avails', function (Blueprint $table) {
             $table->foreign('instructor_id')->references('instructor_id')
                 ->on('instructors')
                 ->onDelete('cascade');
-        });
+        });*/
     }
 
     /**
@@ -28,9 +28,9 @@ class UpdateInstructAvailsFK extends Migration
      */
     public function down()
     {
-        //
+/*        //
         Schema::table('instruct_avails', function (Blueprint $table) {
             $table->dropForeign(['instructor_id']);
-        });
+        });*/
     }
 }
